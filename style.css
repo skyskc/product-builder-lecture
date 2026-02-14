@@ -6,16 +6,24 @@
     --card: #ffffff;
     --accent: #0f62fe;
     --chip: #f3f4f6;
+    --btn-bg: #111827;
+    --btn-text: #ffffff;
+    --btn-border: #111827;
+    --header-bg: #ffffff;
 }
 
 body.dark-mode {
     --bg: #0f172a;
     --text: #e5e7eb;
-    --muted: #94a3b8;
+    --muted: #cbd5e1;
     --line: #334155;
     --card: #111827;
     --accent: #60a5fa;
     --chip: #1f2937;
+    --btn-bg: #60a5fa;
+    --btn-text: #0b1220;
+    --btn-border: #60a5fa;
+    --header-bg: #111827;
 }
 
 * {
@@ -43,7 +51,7 @@ a {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: #ffffff;
+    background: var(--header-bg);
     border-bottom: 1px solid var(--line);
     display: flex;
     justify-content: space-between;
@@ -152,7 +160,7 @@ a {
     padding: 8px 10px;
     font: inherit;
     color: var(--text);
-    background: #fff;
+    background: var(--card);
 }
 
 .result-count {
@@ -222,9 +230,9 @@ a {
 .button-link,
 .clean-form button {
     display: inline-block;
-    border: 1px solid var(--text);
-    background: var(--text);
-    color: #fff;
+    border: 1px solid var(--btn-border);
+    background: var(--btn-bg);
+    color: var(--btn-text);
     text-decoration: none;
     border-radius: 10px;
     padding: 10px 12px;
@@ -349,7 +357,7 @@ a {
     padding: 10px 12px;
     font: inherit;
     color: var(--text);
-    background: #fff;
+    background: var(--card);
 }
 
 @media (max-width: 760px) {

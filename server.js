@@ -1,9 +1,24 @@
-require('dotenv').config();
-
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
+
+function loadEnvFromFile() {
+  const envPath = path.join(process.cwd(), '.env');
+  if (!fs.existsSync(envPath)) return;
+  const raw = fs.readFileSync(envPath, 'utf8');
+  raw.split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) return;
+    const eq = trimmed.indexOf('=');
+    if (eq < 0) return;
+    const key = trimmed.slice(0, eq).trim();
+    const value = trimmed.slice(eq + 1).trim();
+    if (!process.env[key]) process.env[key] = value;
+  });
+}
+
+loadEnvFromFile();
 
 const HOST = '0.0.0.0';
 const PORT = Number(process.env.PORT || 3000);
@@ -164,6 +179,40 @@ async function fetchGooglePlacePhotoUrl(queryText) {
   return photoUrl;
 }
 
+async function fetchWikipediaPhotoUrl(queryText) {
+  const normalizedQuery = queryText.replace(/\s+seoul$/i, '').trim();
+  const languages = ['ko', 'en'];
+
+  for (const lang of languages) {
+    const searchUrl = `https://${lang}.wikipedia.org/w/api.php?action=query&list=search&srlimit=1&utf8=1&format=json&srsearch=${encodeURIComponent(normalizedQuery)}`;
+    const searchResponse = await fetch(searchUrl);
+    if (!searchResponse.ok) {
+      continue;
+    }
+
+    const searchData = await searchResponse.json();
+    const title = searchData?.query?.search?.[0]?.title;
+    if (!title) {
+      continue;
+    }
+
+    const imageUrl = `https://${lang}.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=1280&format=json&titles=${encodeURIComponent(title)}`;
+    const imageResponse = await fetch(imageUrl);
+    if (!imageResponse.ok) {
+      continue;
+    }
+
+    const imageData = await imageResponse.json();
+    const pages = imageData?.query?.pages ? Object.values(imageData.query.pages) : [];
+    const thumbnail = pages?.[0]?.thumbnail?.source;
+    if (thumbnail) {
+      return thumbnail;
+    }
+  }
+
+  throw new Error(`No wikipedia thumbnail found for query: ${queryText}`);
+}
+
 function resolveStaticPath(urlPathname) {
   const safePath = path.normalize(urlPathname).replace(/^([.][.][/\\])+/, '');
   let relativePath = safePath === '/' ? '/index.html' : safePath;
@@ -204,16 +253,26 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    if (!GOOGLE_PLACES_API_KEY) {
-      sendJson(res, 503, { error: 'GOOGLE_PLACES_API_KEY is not configured' });
-      return;
-    }
-
     try {
-      const photoUrl = await fetchGooglePlacePhotoUrl(query.trim());
-      sendJson(res, 200, { query: query.trim(), photoUrl, source: 'google_places_photo' });
+      let photoUrl = '';
+      let source = '';
+
+      if (GOOGLE_PLACES_API_KEY) {
+        try {
+          photoUrl = await fetchGooglePlacePhotoUrl(query.trim());
+          source = 'google_places_photo';
+        } catch (_) {
+          photoUrl = await fetchWikipediaPhotoUrl(query.trim());
+          source = 'wikipedia_fallback';
+        }
+      } else {
+        photoUrl = await fetchWikipediaPhotoUrl(query.trim());
+        source = 'wikipedia_fallback';
+      }
+
+      sendJson(res, 200, { query: query.trim(), photoUrl, source });
     } catch (error) {
-      sendJson(res, 404, { error: 'Failed to fetch Google place photo', message: error.message });
+      sendJson(res, 404, { error: 'Failed to fetch place photo', message: error.message });
     }
     return;
   }
