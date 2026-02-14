@@ -667,6 +667,198 @@
                 ko: '도시의 시간감과 거리의 결을 체감하는 로컬/역사 동선에서 몰입이 극대화됩니다.',
                 en: 'Immersion peaks in local-and-history routes that carry urban time depth and street texture.'
             }
+        },
+        {
+            id: 'g-dragon',
+            work: { ko: '빅뱅 (BIGBANG)', en: 'BIGBANG' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '지드래곤', en: 'G-Dragon' },
+            portraitPage: 'G-Dragon',
+            styles: ['shopping', 'art'],
+            mood: {
+                ko: '강한 콘셉트 주도력과 스타일 큐레이션이 핵심인 트렌드형 타입',
+                en: 'A trend-led profile driven by concept control and style curation.'
+            },
+            reason: {
+                ko: '패션/공간 감도를 동시에 보는 성향이라 디자인 밀도 높은 쇼핑 동선과 궁합이 좋습니다.',
+                en: 'His fashion-space sensitivity matches high-design shopping itineraries.'
+            }
+        },
+        {
+            id: 'taeyeon',
+            work: { ko: '소녀시대 (Girls’ Generation)', en: 'Girls’ Generation' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '태연', en: 'Taeyeon' },
+            portraitPage: 'Taeyeon',
+            styles: ['art', 'nature'],
+            mood: {
+                ko: '섬세한 감정선과 안정된 호흡을 선호하는 감성형 타입',
+                en: 'An emotional profile preferring delicate expression and steady tempo.'
+            },
+            reason: {
+                ko: '자극보다 분위기와 여운을 중시해 전시+산책 결합 코스가 잘 맞습니다.',
+                en: 'She values mood and aftertaste over speed, fitting exhibition-plus-walk routes.'
+            }
+        },
+        {
+            id: 'iu',
+            work: { ko: '솔로 아티스트 (IU)', en: 'Solo Artist (IU)' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '아이유', en: 'IU' },
+            portraitPage: 'IU_(singer)',
+            styles: ['history', 'art'],
+            mood: {
+                ko: '스토리텔링과 정서적 디테일을 깊게 소비하는 서사형 타입',
+                en: 'A narrative profile that deeply absorbs storytelling and emotional detail.'
+            },
+            reason: {
+                ko: '장소의 맥락과 감정 톤을 함께 체감할 때 만족도가 높아 역사/예술 축이 어울립니다.',
+                en: 'She resonates with context and emotion together, aligning with history/art routes.'
+            }
+        },
+        {
+            id: 'suga',
+            work: { ko: '방탄소년단 (BTS)', en: 'BTS' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '슈가', en: 'Suga' },
+            portraitPage: 'Suga',
+            styles: ['local', 'art'],
+            mood: {
+                ko: '현실 기반 감각과 창작 몰입을 동시에 추구하는 제작형 타입',
+                en: 'A production-oriented profile balancing realism and creative immersion.'
+            },
+            reason: {
+                ko: '생활권 로컬성과 작업형 공간 분위기를 함께 갖춘 동선이 잘 맞습니다.',
+                en: 'He fits routes that combine everyday local texture with creation-focused spaces.'
+            }
+        },
+        {
+            id: 'jimin',
+            work: { ko: '방탄소년단 (BTS)', en: 'BTS' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '지민', en: 'Jimin' },
+            portraitPage: 'Jimin',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '표현력과 퍼포먼스 감도를 크게 살리는 무드형 타입',
+                en: 'A mood-centric profile amplifying expressive performance sensitivity.'
+            },
+            reason: {
+                ko: '조명/동선/분위기 대비가 큰 야간-예술 코스에서 몰입이 극대화됩니다.',
+                en: 'Immersion peaks in night-and-art routes with strong lighting and mood contrast.'
+            }
+        },
+        {
+            id: 'v-bts',
+            work: { ko: '방탄소년단 (BTS)', en: 'BTS' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '뷔', en: 'V' },
+            portraitPage: 'V_(singer)',
+            styles: ['art', 'local'],
+            mood: {
+                ko: '빈티지 질감과 감각적 연출을 선호하는 큐레이션형 타입',
+                en: 'A curation profile drawn to vintage texture and sensory staging.'
+            },
+            reason: {
+                ko: '레트로 감성과 로컬 결을 함께 보는 시선이 강해 예술/로컬 조합이 적합합니다.',
+                en: 'His retro-local gaze is best served by art-plus-local combinations.'
+            }
+        },
+        {
+            id: 'cha-eun-woo',
+            work: { ko: '아스트로 (ASTRO)', en: 'ASTRO' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '차은우', en: 'Cha Eun-woo' },
+            portraitPage: 'Cha_Eun-woo',
+            styles: ['shopping', 'family'],
+            mood: {
+                ko: '정돈된 이미지와 안정적 동선을 선호하는 밸런스형 타입',
+                en: 'A balanced profile preferring polished image and stable movement.'
+            },
+            reason: {
+                ko: '과하지 않은 트렌드 체험과 편안한 휴식 구간을 함께 두면 만족도가 높습니다.',
+                en: 'Satisfaction rises with moderate trend stops paired with comfortable rests.'
+            }
+        },
+        {
+            id: 'wonyoung',
+            work: { ko: '아이브 (IVE)', en: 'IVE' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '장원영', en: 'Jang Won-young' },
+            portraitPage: 'Jang_Won-young',
+            styles: ['shopping', 'art'],
+            mood: {
+                ko: '비주얼 완성도와 트렌드 소비가 빠른 하이브리드 타입',
+                en: 'A hybrid profile with high visual standards and rapid trend adoption.'
+            },
+            reason: {
+                ko: '감도 높은 쇼핑 스팟과 포토제닉 전시 공간을 함께 묶는 구성이 효과적입니다.',
+                en: 'Pairing trend shopping with photogenic exhibitions works especially well.'
+            }
+        },
+        {
+            id: 'nayeon',
+            work: { ko: '트와이스 (TWICE)', en: 'TWICE' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '나연', en: 'Nayeon' },
+            portraitPage: 'Nayeon',
+            styles: ['shopping', 'nature'],
+            mood: {
+                ko: '밝은 에너지와 경쾌한 이동을 선호하는 라이트형 타입',
+                en: 'A light, upbeat profile favoring bright energy and lively movement.'
+            },
+            reason: {
+                ko: '과도한 밀도보다 리듬감 있는 쇼핑+산책 루프가 잘 맞습니다.',
+                en: 'She fits rhythmic shopping-and-walk loops over overloaded schedules.'
+            }
+        },
+        {
+            id: 'taemin',
+            work: { ko: '샤이니 (SHINee)', en: 'SHINee' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '태민', en: 'Taemin' },
+            portraitPage: 'Taemin',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '강한 무대 미학과 실험적 표현을 즐기는 몰입형 타입',
+                en: 'An immersive profile enjoying stage aesthetics and experimental expression.'
+            },
+            reason: {
+                ko: '야간 감도와 퍼포먼스형 공간 연출이 중요한 코스에서 강점이 살아납니다.',
+                en: 'His strengths emerge in routes emphasizing night tone and performative spaces.'
+            }
+        },
+        {
+            id: 'seulgi',
+            work: { ko: '레드벨벳 (Red Velvet)', en: 'Red Velvet' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '슬기', en: 'Seulgi' },
+            portraitPage: 'Seulgi',
+            styles: ['art', 'shopping'],
+            mood: {
+                ko: '세련된 콘셉트와 디테일 실행을 함께 가져가는 타입',
+                en: 'A profile combining refined concept sense with detailed execution.'
+            },
+            reason: {
+                ko: '아트 공간과 트렌드 지역을 균형 있게 순환하는 동선이 가장 효율적입니다.',
+                en: 'Balanced circulation between art spaces and trend districts is most effective.'
+            }
+        },
+        {
+            id: 'hanni',
+            work: { ko: '뉴진스 (NewJeans)', en: 'NewJeans' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '하니', en: 'Hanni' },
+            portraitPage: 'Hanni_(singer)',
+            styles: ['local', 'shopping'],
+            mood: {
+                ko: '가벼운 리듬과 스트리트 감각을 즐기는 실전형 타입',
+                en: 'A practical profile that enjoys light rhythm and street sensibility.'
+            },
+            reason: {
+                ko: '로컬 거리 체험과 트렌드 숍 탐색을 짧게 이어가는 루트가 잘 맞습니다.',
+                en: 'Short loops between local street experiences and trend shops suit her best.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -701,7 +893,19 @@
         'ma-dong-seok': 'assets/kcontent/ma-dong-seok.jpg',
         'kim-tae-ri': 'assets/kcontent/kim-tae-ri.png',
         'bae-doona': 'assets/kcontent/bae-doona.png',
-        'choi-min-sik': 'assets/kcontent/choi-min-sik.jpg'
+        'choi-min-sik': 'assets/kcontent/choi-min-sik.jpg',
+        'g-dragon': 'assets/kcontent/g-dragon.png',
+        'taeyeon': 'assets/kcontent/taeyeon.jpg',
+        'iu': 'assets/kcontent/iu.png',
+        'suga': 'assets/kcontent/suga.png',
+        'jimin': 'assets/kcontent/jimin.jpg',
+        'v-bts': 'assets/kcontent/v-bts.jpg',
+        'cha-eun-woo': 'assets/kcontent/cha-eun-woo.png',
+        'wonyoung': 'assets/kcontent/wonyoung.png',
+        'nayeon': 'assets/kcontent/nayeon.jpg',
+        'taemin': 'assets/kcontent/taemin.jpg',
+        'seulgi': 'assets/kcontent/seulgi.jpg',
+        'hanni': 'assets/kcontent/hanni.jpg'
     };
     const KCONTENT_TRAIT_BY_STYLE = {
         ko: {
@@ -1122,7 +1326,8 @@
         const langQuery = params.get('lang');
         if (langQuery === 'en' || langQuery === 'ko') return langQuery;
         const saved = localStorage.getItem(LANG_STORAGE_KEY);
-        return saved === 'en' ? 'en' : 'ko';
+        if (saved === 'en' || saved === 'ko') return saved;
+        return 'en';
     }
 
     function withCurrentLang(urlText) {
@@ -1580,6 +1785,14 @@
     }
 
     function renderHome() {
+        const openEyebrow = document.getElementById('open-eyebrow');
+        const openTitle = document.getElementById('open-title');
+        const openDesc = document.getElementById('open-desc');
+        const openExplore = document.getElementById('open-card-explore');
+        const openCourse = document.getElementById('open-card-course');
+        const openGeneration = document.getElementById('open-card-generation');
+        const openKcontent = document.getElementById('open-card-kcontent');
+        const openSaju = document.getElementById('open-card-saju');
         const grid = document.getElementById('place-grid');
         const styleTabs = document.getElementById('travel-style-tabs');
         const styleButtons = Array.from(document.querySelectorAll('#travel-style-tabs .style-tab-btn'));
@@ -1695,6 +1908,14 @@
         }
 
         if (CURRENT_LANG === 'en') {
+            if (openEyebrow) openEyebrow.textContent = 'Open Travel Plans';
+            if (openTitle) openTitle.textContent = 'Pick Your Seoul Plan';
+            if (openDesc) openDesc.textContent = 'Start with the plan that matches your travel goal. You can switch anytime.';
+            if (openExplore) openExplore.innerHTML = '<strong>Explore Spots</strong><span>Top places, map links, and filters</span>';
+            if (openCourse) openCourse.innerHTML = '<strong>Course Planner</strong><span>One-day route with hotels and restaurants</span>';
+            if (openGeneration) openGeneration.innerHTML = '<strong>Generation Plans</strong><span>Recommended pace by age group</span>';
+            if (openKcontent) openKcontent.innerHTML = '<strong>Screen Picks</strong><span>Characters, idols, actors, and matching routes</span>';
+            if (openSaju) openSaju.innerHTML = '<strong>Saju Plan</strong><span>Saju analysis and travel suggestions</span>';
             styleButtons.forEach((button) => {
                 const styleKey = button.dataset.style;
                 if (!styleKey) return;
@@ -1705,6 +1926,15 @@
                 if (!tagKey) return;
                 button.textContent = TAG_LABELS_BY_LANG.en[tagKey] || button.textContent;
             });
+        } else {
+            if (openEyebrow) openEyebrow.textContent = '오픈 여행 플랜';
+            if (openTitle) openTitle.textContent = '원하는 서울 여행 플랜을 선택하세요';
+            if (openDesc) openDesc.textContent = '목적에 맞는 플랜부터 시작하고, 필요할 때 언제든 전환할 수 있습니다.';
+            if (openExplore) openExplore.innerHTML = '<strong>여행지 탐색</strong><span>핵심 명소, 지도 링크, 필터 탐색</span>';
+            if (openCourse) openCourse.innerHTML = '<strong>코스 플래너</strong><span>하루 동선 + 호텔 + 맛집 추천</span>';
+            if (openGeneration) openGeneration.innerHTML = '<strong>세대별 플랜</strong><span>세대별 페이스 맞춤 추천</span>';
+            if (openKcontent) openKcontent.innerHTML = '<strong>콘텐츠 플랜</strong><span>캐릭터/아이돌/배우 기반 추천</span>';
+            if (openSaju) openSaju.innerHTML = '<strong>사주 플랜</strong><span>사주 해석 기반 여행 제안</span>';
         }
         renderTravelerTools();
         searchInput.value = searchQuery;
@@ -2625,7 +2855,7 @@
         gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
             const charName = isEn ? entry.character.en : entry.character.ko;
             const workName = isEn ? entry.work.en : entry.work.ko;
-            return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt="${escapeHtml(charName)}"><span class="kcontent-card-overlay"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span></span></span></button>`;
+            return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt=""><span class="kcontent-card-overlay"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span></span></span></button>`;
         }).join('');
 
         const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
@@ -2644,7 +2874,11 @@
             imgEl.src = src;
             imgEl.loading = 'lazy';
             imgEl.decoding = 'async';
-            imgEl.alt = isEn ? `${entry.character.en} character image` : `${entry.character.ko} 캐릭터 이미지`;
+            imgEl.alt = '';
+            imgEl.onerror = () => {
+                imgEl.src = KCONTENT_IMAGE_FALLBACK;
+                imgEl.alt = '';
+            };
         });
     }
 

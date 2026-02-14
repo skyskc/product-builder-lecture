@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seoul Explorer | 서울 여행 추천</title>
-    <meta name="description" content="외국인 여행자를 위한 서울 주요 명소 추천 가이드. 위치, 정보, 별점과 리뷰 요약을 확인하세요.">
+    <title>Seoul Explorer | Open Travel Plans</title>
+    <meta name="description" content="Choose one of five Seoul travel plans and enter the page you need. Built for international visitors.">
     <meta name="keywords" content="Seoul travel, Korea trip, Seoul itinerary, Seoul attractions, Seoul map, Korea tourism, Seoul for foreigners">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <meta property="og:type" content="website">
@@ -29,11 +29,11 @@
         <a class="logo" href="index.html"><span class="logo-mark">SV</span><span class="logo-text"><span class="logo-seoul">Seoul</span><span class="logo-voyager">Voyager</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
-                <a href="index.html">여행지 탐색</a>
-                <a id="course-link" href="course.html">코스 플래너</a>
-                <a id="generation-link" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" href="comments.html">사주 플랜</a>
+                <a href="index.html">Explore</a>
+                <a id="course-link" href="course.html">Planner</a>
+                <a id="generation-link" href="generation.html">Generations</a>
+                <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
+                <a id="comments-link" href="comments.html">Saju</a>
             </nav>
             <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
             <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
@@ -41,7 +41,35 @@
     </header>
 
     <main class="container">
-        <section class="hero">
+        <section class="panel open-landing">
+            <p id="open-eyebrow" class="eyebrow">Open Travel Plans</p>
+            <h1 id="open-title">Pick Your Seoul Plan</h1>
+            <p id="open-desc">Start with the plan that matches your travel goal. You can switch anytime.</p>
+            <div class="open-plan-grid">
+                <a class="open-plan-card" id="open-card-explore" href="#explore-start">
+                    <strong>Explore Spots</strong>
+                    <span>Top places, map links, and filters</span>
+                </a>
+                <a class="open-plan-card" id="open-card-course" href="course.html">
+                    <strong>Course Planner</strong>
+                    <span>One-day route with hotels and restaurants</span>
+                </a>
+                <a class="open-plan-card" id="open-card-generation" href="generation.html">
+                    <strong>Generation Plans</strong>
+                    <span>Recommended pace by age group</span>
+                </a>
+                <a class="open-plan-card" id="open-card-kcontent" href="kcontent.html">
+                    <strong>Screen Picks</strong>
+                    <span>Characters, idols, actors, and matching routes</span>
+                </a>
+                <a class="open-plan-card" id="open-card-saju" href="comments.html">
+                    <strong>Saju Plan</strong>
+                    <span>Saju analysis and travel suggestions</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="explore-start" class="hero">
             <p class="eyebrow">For International Visitors</p>
             <h1>서울에서 꼭 가봐야 할 인기 명소</h1>
             <p>서울을 처음 방문하는 여행자를 위해 많이 방문하는 장소를 엄선했습니다. 장소 상세 페이지에서 Google 지도, 평점, 리뷰 요약까지 바로 확인할 수 있습니다.</p>
