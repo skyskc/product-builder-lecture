@@ -243,8 +243,12 @@
             if (eyebrow) eyebrow.textContent = 'For International Visitors';
             if (h1) h1.textContent = 'Top Seoul Places for Travelers';
             if (p) p.textContent = 'Carefully selected spots for first-time visitors. Open each detail page for map links, ratings, and review summaries.';
-            const label = document.querySelector('.filter-bar label');
-            if (label) label.textContent = 'Travel Style';
+            const tabTitle = document.querySelector('.style-tab-title');
+            if (tabTitle) tabTitle.textContent = 'Choose Travel Style';
+            document.querySelectorAll('#travel-style-tabs .style-tab-btn').forEach((btn) => {
+                const styleKey = btn.dataset.style;
+                if (styleKey) btn.textContent = getStyleLabel(styleKey);
+            });
         }
         if (page === 'course') {
             const hero = document.querySelector('.hero');
@@ -356,8 +360,7 @@
     function initThemeToggle() {
         const btn = document.getElementById('theme-toggle-btn');
         const saved = localStorage.getItem(THEME_STORAGE_KEY);
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(saved === 'dark' || saved === 'light' ? saved : (prefersDark ? 'dark' : 'light'));
+        applyTheme(saved === 'dark' || saved === 'light' ? saved : 'light');
         if (!btn) return;
         btn.addEventListener('click', () => {
             const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
@@ -409,12 +412,22 @@
 
     function renderHome() {
         const grid = document.getElementById('place-grid');
-        const styleSelect = document.getElementById('travel-style-select');
+        const styleTabs = document.getElementById('travel-style-tabs');
+        const styleButtons = Array.from(document.querySelectorAll('#travel-style-tabs .style-tab-btn'));
         const resultCount = document.getElementById('result-count');
-        if (!grid || !styleSelect || !resultCount) return;
+        if (!grid || !styleTabs || !styleButtons.length || !resultCount) return;
+
+        let selectedStyle = 'all';
+
+        function markActiveStyle(styleKey) {
+            styleButtons.forEach((btn) => {
+                const active = btn.dataset.style === styleKey;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+        }
 
         function applyFilter() {
-            const selectedStyle = styleSelect.value;
             const filtered = selectedStyle === 'all'
                 ? places
                 : places.filter((place) => place.styles.includes(selectedStyle));
@@ -439,11 +452,22 @@
         }
 
         if (CURRENT_LANG === 'en') {
-            Array.from(styleSelect.options).forEach((option) => {
-                option.textContent = getStyleLabel(option.value);
+            styleButtons.forEach((button) => {
+                const styleKey = button.dataset.style;
+                if (!styleKey) return;
+                button.textContent = getStyleLabel(styleKey);
             });
         }
-        styleSelect.addEventListener('change', applyFilter);
+        styleTabs.addEventListener('click', (event) => {
+            const button = event.target.closest('.style-tab-btn');
+            if (!button) return;
+            const nextStyle = button.dataset.style;
+            if (!nextStyle || nextStyle === selectedStyle) return;
+            selectedStyle = nextStyle;
+            markActiveStyle(selectedStyle);
+            applyFilter();
+        });
+        markActiveStyle(selectedStyle);
         applyFilter();
     }
 

@@ -33,18 +33,18 @@
             <p>서울을 처음 방문하는 여행자를 위해 많이 방문하는 장소를 엄선했습니다. 장소 상세 페이지에서 Google 지도, 평점, 리뷰 요약까지 바로 확인할 수 있습니다.</p>
         </section>
 
-        <section class="filter-bar" aria-label="여행 스타일 필터">
-            <label for="travel-style-select">여행 형식</label>
-            <select id="travel-style-select">
-                <option value="all">전체</option>
-                <option value="history">역사/문화</option>
-                <option value="shopping">쇼핑/트렌드</option>
-                <option value="night">야경/전망</option>
-                <option value="nature">자연/산책</option>
-                <option value="family">가족/테마</option>
-                <option value="art">예술/뮤지엄</option>
-                <option value="local">로컬/시장</option>
-            </select>
+        <section class="panel style-tab-panel" aria-label="여행 스타일 필터">
+            <p class="style-tab-title">여행 형식 선택</p>
+            <div id="travel-style-tabs" class="style-tab-row" role="tablist" aria-label="여행 스타일">
+                <button class="style-tab-btn" data-style="all" role="tab" type="button">전체</button>
+                <button class="style-tab-btn" data-style="history" role="tab" type="button">역사/문화</button>
+                <button class="style-tab-btn" data-style="shopping" role="tab" type="button">쇼핑/트렌드</button>
+                <button class="style-tab-btn" data-style="night" role="tab" type="button">야경/전망</button>
+                <button class="style-tab-btn" data-style="nature" role="tab" type="button">자연/산책</button>
+                <button class="style-tab-btn" data-style="family" role="tab" type="button">가족/테마</button>
+                <button class="style-tab-btn" data-style="art" role="tab" type="button">예술/뮤지엄</button>
+                <button class="style-tab-btn" data-style="local" role="tab" type="button">로컬/시장</button>
+            </div>
             <p id="result-count" class="result-count"></p>
         </section>
 
