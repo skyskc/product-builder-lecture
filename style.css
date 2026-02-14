@@ -324,6 +324,33 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     font-size: 1.1rem;
 }
 
+.panel h3 {
+    margin: 0 0 8px;
+    font-size: 0.96rem;
+}
+
+.trust-panel {
+    margin-top: 24px;
+}
+
+.trust-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.trust-grid article {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--card);
+}
+
+.trust-grid p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
 .map-frame {
     width: 100%;
     height: 360px;
@@ -492,6 +519,32 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     background: var(--card);
 }
 
+.site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--header-bg);
+}
+
+.footer-inner {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 16px 0 24px;
+    color: var(--muted);
+    font-size: 0.84rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-inner nav {
+    display: flex;
+    gap: 12px;
+}
+
+.footer-inner a {
+    text-decoration: none;
+}
+
 @media (max-width: 1180px) {
     .place-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -550,5 +603,15 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 
     .meal-grid {
         grid-template-columns: 1fr;
+    }
+
+    .trust-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+        width: calc(100% - 16px);
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

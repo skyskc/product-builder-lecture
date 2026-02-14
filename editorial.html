@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seoul Explorer | 댓글</title>
-    <meta name="description" content="선택한 서울 명소에 대한 방문 후기를 남기는 댓글 페이지">
+    <title>Seoul Explorer | 콘텐츠 원칙</title>
+    <meta name="description" content="Seoul Explorer 콘텐츠 작성 및 데이터 표시 원칙">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001204090329044" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="comments">
+<body data-page="editorial">
     <header class="site-header">
         <a class="logo" href="index.html">Seoul Explorer</a>
         <div class="header-controls">
@@ -27,11 +27,22 @@
 
     <main class="container narrow">
         <section class="panel">
-            <p class="eyebrow">Community</p>
-            <h1>여행 후기 댓글</h1>
-            <p>선택된 장소: <strong id="selected-place-name"></strong></p>
-            <div id="disqus_thread"></div>
-            <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+            <p class="eyebrow">Editorial Policy</p>
+            <h1>콘텐츠 원칙</h1>
+            <ul class="review-list">
+                <li>사용자에게 실제 도움이 되는 여행 정보만 게시합니다.</li>
+                <li>장소 설명은 여행 목적(역사/쇼핑/야경 등) 중심으로 직접 재작성합니다.</li>
+                <li>평점/리뷰 수 등 정량 정보는 Google API 기반으로 제공하며, 장애 시 대체 데이터임을 명시합니다.</li>
+                <li>광고와 본문 정보는 구분해서 표시하고, 탐색성을 해치지 않게 배치합니다.</li>
+                <li>오류 제보가 접수되면 확인 후 수정하며, 필요 시 추천 목록을 갱신합니다.</li>
+            </ul>
+            <h2>맛집 추천 기준</h2>
+            <ul class="review-list">
+                <li>기본 우선순위: Google 평점, 리뷰 수</li>
+                <li>방송 큐레이션: 또간집, 맛있는 녀석들 언급 장소를 참고 정보로 병행</li>
+                <li>식사 구분: 아침, 점심, 저녁, 술자리</li>
+            </ul>
+            <p class="data-source-note">정책 시행일: 2026-02-14</p>
         </section>
     </main>
 
