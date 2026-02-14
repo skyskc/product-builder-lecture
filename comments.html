@@ -19,7 +19,6 @@
                 <a href="index.html">추천 장소</a>
                 <a id="course-link" href="course.html">코스 추천</a>
                 <a id="generation-link" href="generation.html">세대별 코스</a>
-                <a id="partner-link" href="partner.html">제휴 문의</a>
                 <a id="comments-link" href="comments.html">사주 여행</a>
             </nav>
             <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
@@ -35,20 +34,25 @@
 
             <form id="saju-form" class="clean-form" autocomplete="off">
                 <div class="saju-grid">
-                    <label for="birth-year">태어난 년도</label>
-                    <input id="birth-year" name="birth-year" type="number" min="1900" max="2100" placeholder="예: 1992" required>
-
-                    <label for="birth-month">태어난 월</label>
-                    <input id="birth-month" name="birth-month" type="number" min="1" max="12" placeholder="예: 8" required>
-
-                    <label for="birth-day">태어난 일</label>
-                    <input id="birth-day" name="birth-day" type="number" min="1" max="31" placeholder="예: 14" required>
-
-                    <label for="calendar-type">달력 구분</label>
-                    <select id="calendar-type" name="calendar-type" class="sort-select">
-                        <option value="solar">양력</option>
-                        <option value="lunar">음력</option>
-                    </select>
+                    <div class="saju-field">
+                        <label id="birth-year-label" for="birth-year">태어난 년도</label>
+                        <input id="birth-year" name="birth-year" type="number" min="1900" max="2100" placeholder="예: 1992" required>
+                    </div>
+                    <div class="saju-field">
+                        <label id="birth-month-label" for="birth-month">태어난 월</label>
+                        <input id="birth-month" name="birth-month" type="number" min="1" max="12" placeholder="예: 8" required>
+                    </div>
+                    <div class="saju-field">
+                        <label id="birth-day-label" for="birth-day">태어난 일</label>
+                        <input id="birth-day" name="birth-day" type="number" min="1" max="31" placeholder="예: 14" required>
+                    </div>
+                    <div class="saju-field">
+                        <label id="calendar-type-label" for="calendar-type">달력 구분</label>
+                        <select id="calendar-type" name="calendar-type" class="sort-select">
+                            <option value="solar">양력</option>
+                            <option value="lunar">음력</option>
+                        </select>
+                    </div>
                 </div>
                 <button id="saju-submit-btn" type="submit">사주/추천 보기</button>
             </form>
@@ -80,6 +84,7 @@
             <span>© 2026 Seoul Explorer</span>
             <nav aria-label="Footer">
                 <a href="about.html">사이트 소개</a>
+                <a href="partner.html">문의</a>
                 <a href="editorial.html">콘텐츠 원칙</a>
                 <a href="privacy.html">개인정보처리방침</a>
             </nav>

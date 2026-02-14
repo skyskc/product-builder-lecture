@@ -656,9 +656,24 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 }
 
 .saju-grid {
-    display: grid;
+    display: flex;
+    flex-wrap: nowrap;
     gap: 8px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.saju-field {
+    flex: 0 0 170px;
+    display: grid;
+    gap: 4px;
+}
+
+.saju-field label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted);
 }
 
 .saju-pillars {
@@ -973,7 +988,11 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .saju-grid {
-        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .saju-field {
+        flex-basis: 155px;
     }
 
     .footer-inner {

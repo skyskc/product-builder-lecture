@@ -564,13 +564,13 @@
         if (navLinks[0]) navLinks[0].textContent = 'Places';
         if (navLinks[1]) navLinks[1].textContent = 'Courses';
         if (navLinks[2]) navLinks[2].textContent = 'By Generation';
-        if (navLinks[3]) navLinks[3].textContent = 'Partner';
-        if (navLinks[4]) navLinks[4].textContent = 'Saju Travel';
+        if (navLinks[3]) navLinks[3].textContent = 'Saju Travel';
 
         const footerLinks = document.querySelectorAll('.footer-inner nav a');
         if (footerLinks[0]) footerLinks[0].textContent = 'About';
-        if (footerLinks[1]) footerLinks[1].textContent = 'Editorial Policy';
-        if (footerLinks[2]) footerLinks[2].textContent = 'Privacy Policy';
+        if (footerLinks[1]) footerLinks[1].textContent = 'Contact';
+        if (footerLinks[2]) footerLinks[2].textContent = 'Editorial Policy';
+        if (footerLinks[3]) footerLinks[3].textContent = 'Privacy Policy';
 
         const page = document.body.dataset.page;
         if (page === 'home') {
@@ -649,8 +649,8 @@
         if (page === 'partner') {
             const eyebrow = document.querySelector('.panel .eyebrow');
             const h1 = document.querySelector('.panel h1');
-            if (eyebrow) eyebrow.textContent = 'Partnership';
-            if (h1) h1.textContent = 'Partner Inquiry';
+            if (eyebrow) eyebrow.textContent = 'Contact';
+            if (h1) h1.textContent = 'Inquiry';
         }
         if (page === 'saju') {
             const eyebrow = document.querySelector('.panel .eyebrow');
@@ -712,14 +712,12 @@
     function updateTopNavLinks(id) {
         const courseLink = document.getElementById('course-link');
         const generationLink = document.getElementById('generation-link');
-        const partnerLink = document.getElementById('partner-link');
         const commentsLink = document.getElementById('comments-link');
         const place = placeMap[id];
         if (courseLink && place) {
             courseLink.href = withCurrentLang(`course.html?style=${encodeURIComponent(place.styles[0])}`);
         }
         if (generationLink) generationLink.href = withCurrentLang('generation.html');
-        if (partnerLink) partnerLink.href = getPlaceLink('partner.html', id);
         if (commentsLink) commentsLink.href = withCurrentLang('comments.html');
     }
 
@@ -730,8 +728,7 @@
         if (page === 'home' || page === 'place') links[0]?.classList.add('active');
         if (page === 'course') links[1]?.classList.add('active');
         if (page === 'generation') links[2]?.classList.add('active');
-        if (page === 'partner') links[3]?.classList.add('active');
-        if (page === 'saju') links[4]?.classList.add('active');
+        if (page === 'saju') links[3]?.classList.add('active');
     }
 
     function applyTheme(theme) {
@@ -1668,8 +1665,12 @@
         const monthInput = document.getElementById('birth-month');
         const dayInput = document.getElementById('birth-day');
         const calendarType = document.getElementById('calendar-type');
+        const yearLabel = document.getElementById('birth-year-label');
+        const monthLabel = document.getElementById('birth-month-label');
+        const dayLabel = document.getElementById('birth-day-label');
+        const calendarLabel = document.getElementById('calendar-type-label');
 
-        if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType) return;
+        if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType || !yearLabel || !monthLabel || !dayLabel || !calendarLabel) return;
 
         const isEn = CURRENT_LANG === 'en';
         pageTitle.textContent = isEn ? 'Saju-Based Travel Recommender' : '사주 기반 여행 추천';
@@ -1686,6 +1687,13 @@
         guide2.textContent = isEn
             ? 'Lunar input uses a simplified conversion model. For exact reading, consult a professional service.'
             : '음력 입력은 간이 계산 방식으로 해석되며, 정확한 개인 사주 감정을 원하면 전문 서비스를 이용하세요.';
+        yearLabel.textContent = isEn ? 'Birth Year' : '태어난 년도';
+        monthLabel.textContent = isEn ? 'Birth Month' : '태어난 월';
+        dayLabel.textContent = isEn ? 'Birth Day' : '태어난 일';
+        calendarLabel.textContent = isEn ? 'Calendar Type' : '달력 구분';
+        yearInput.placeholder = isEn ? 'e.g. 1992' : '예: 1992';
+        monthInput.placeholder = isEn ? 'e.g. 8' : '예: 8';
+        dayInput.placeholder = isEn ? 'e.g. 14' : '예: 14';
         if (calendarType.options[0]) calendarType.options[0].textContent = isEn ? 'Solar' : '양력';
         if (calendarType.options[1]) calendarType.options[1].textContent = isEn ? 'Lunar' : '음력';
         resultNote.textContent = isEn ? 'Fill the form to generate your result.' : '입력 후 결과가 표시됩니다.';
