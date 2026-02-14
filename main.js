@@ -1,15 +1,37 @@
 (function () {
     const THEME_STORAGE_KEY = 'seoul-explorer-theme';
-    const STYLE_LABELS = {
-        all: '전체',
-        history: '역사/문화',
-        shopping: '쇼핑/트렌드',
-        night: '야경/전망',
-        nature: '자연/산책',
-        family: '가족/테마',
-        art: '예술/뮤지엄',
-        local: '로컬/시장'
+    const LANG_STORAGE_KEY = 'seoul-explorer-lang';
+    const STYLE_LABELS_BY_LANG = {
+        ko: {
+            all: '전체',
+            history: '역사/문화',
+            shopping: '쇼핑/트렌드',
+            night: '야경/전망',
+            nature: '자연/산책',
+            family: '가족/테마',
+            art: '예술/뮤지엄',
+            local: '로컬/시장'
+        },
+        en: {
+            all: 'All',
+            history: 'History/Culture',
+            shopping: 'Shopping/Trends',
+            night: 'Night View',
+            nature: 'Nature/Walk',
+            family: 'Family/Theme',
+            art: 'Art/Museum',
+            local: 'Local/Market'
+        }
     };
+    let CURRENT_LANG = 'ko';
+
+    function styleLabels() {
+        return STYLE_LABELS_BY_LANG[CURRENT_LANG] || STYLE_LABELS_BY_LANG.ko;
+    }
+
+    function getStyleLabel(styleKey) {
+        return styleLabels()[styleKey] || styleKey;
+    }
 
     const PLACE_SEEDS = [
         { name: '경복궁', district: '종로구', category: '역사/문화', bestTime: '09:00-13:00', styles: ['history', 'family'] },
@@ -139,10 +161,10 @@
         const ratingBase = 4.3 + (index % 5) * 0.1;
         const reviewBase = 7800 + index * 920;
         const shortDescription = `${seed.name}은(는) ${seed.category} 여행자에게 특히 추천되는 서울 대표 스팟입니다.`;
-        const description = `${seed.name}은(는) ${seed.district}에 위치한 ${seed.category} 명소입니다. 외국인 방문자가 동선에 넣기 쉬운 위치와 콘텐츠를 갖추고 있어, ${STYLE_LABELS[seed.styles[0]]} 중심 일정에 적합합니다.`;
+        const description = `${seed.name}은(는) ${seed.district}에 위치한 ${seed.category} 명소입니다. 외국인 방문자가 동선에 넣기 쉬운 위치와 콘텐츠를 갖추고 있어, ${STYLE_LABELS_BY_LANG.ko[seed.styles[0]]} 중심 일정에 적합합니다.`;
         const reviews = [
             `${seed.name}은(는) 접근성이 좋아 초행 여행자도 방문하기 편하다는 평가가 많습니다.`,
-            `${STYLE_LABELS[seed.styles[0]]} 중심 여행 코스에 넣기 좋고 체류 시간이 유연하다는 의견이 많습니다.`,
+            `${STYLE_LABELS_BY_LANG.ko[seed.styles[0]]} 중심 여행 코스에 넣기 좋고 체류 시간이 유연하다는 의견이 많습니다.`,
             `혼잡 시간대를 피하면 더 쾌적하게 즐길 수 있다는 후기가 있습니다.`
         ];
 
@@ -175,6 +197,122 @@
 
     const placeMap = Object.fromEntries(places.map((p) => [p.id, p]));
 
+    function getLanguageFromQueryOrStorage() {
+        const params = new URLSearchParams(window.location.search);
+        const langQuery = params.get('lang');
+        if (langQuery === 'en' || langQuery === 'ko') return langQuery;
+        const saved = localStorage.getItem(LANG_STORAGE_KEY);
+        return saved === 'en' ? 'en' : 'ko';
+    }
+
+    function withCurrentLang(urlText) {
+        const url = new URL(urlText, window.location.href);
+        if (url.origin !== window.location.origin) return url.toString();
+        if (CURRENT_LANG === 'en') {
+            url.searchParams.set('lang', 'en');
+        } else {
+            url.searchParams.delete('lang');
+        }
+        return `${url.pathname}${url.search}${url.hash}`;
+    }
+
+    function updateLanguageButton() {
+        const btn = document.getElementById('lang-toggle-btn');
+        if (!btn) return;
+        btn.textContent = CURRENT_LANG === 'en' ? 'KO' : 'EN';
+    }
+
+    function applyEnglishCopy() {
+        const navLinks = document.querySelectorAll('.top-nav a');
+        if (navLinks[0]) navLinks[0].textContent = 'Places';
+        if (navLinks[1]) navLinks[1].textContent = 'Courses';
+        if (navLinks[2]) navLinks[2].textContent = 'Partner';
+        if (navLinks[3]) navLinks[3].textContent = 'Comments';
+
+        const footerLinks = document.querySelectorAll('.footer-inner nav a');
+        if (footerLinks[0]) footerLinks[0].textContent = 'About';
+        if (footerLinks[1]) footerLinks[1].textContent = 'Editorial Policy';
+        if (footerLinks[2]) footerLinks[2].textContent = 'Privacy Policy';
+
+        const page = document.body.dataset.page;
+        if (page === 'home') {
+            const hero = document.querySelector('.hero');
+            const eyebrow = hero?.querySelector('.eyebrow');
+            const h1 = hero?.querySelector('h1');
+            const p = hero?.querySelector('p:not(.eyebrow)');
+            if (eyebrow) eyebrow.textContent = 'For International Visitors';
+            if (h1) h1.textContent = 'Top Seoul Places for Travelers';
+            if (p) p.textContent = 'Carefully selected spots for first-time visitors. Open each detail page for map links, ratings, and review summaries.';
+            const label = document.querySelector('.filter-bar label');
+            if (label) label.textContent = 'Travel Style';
+        }
+        if (page === 'course') {
+            const hero = document.querySelector('.hero');
+            const eyebrow = hero?.querySelector('.eyebrow');
+            const h1 = hero?.querySelector('h1');
+            const p = hero?.querySelector('p:not(.eyebrow)');
+            if (eyebrow) eyebrow.textContent = 'Walking Day Plan';
+            if (h1) h1.textContent = 'One-Day Seoul Course by Travel Style';
+            if (p) p.textContent = 'A compact walking plan with district restaurants and hotel recommendations based on Google ratings.';
+            const tabTitle = document.querySelector('.style-tab-title');
+            if (tabTitle) tabTitle.textContent = 'Choose Course Style';
+            document.querySelectorAll('.style-tab-btn').forEach((btn) => {
+                const styleKey = btn.dataset.style;
+                if (styleKey) btn.textContent = getStyleLabel(styleKey);
+            });
+        }
+        if (page === 'place') {
+            const back = document.querySelector('.back-link');
+            if (back) back.textContent = '← Back to list';
+            const h2s = document.querySelectorAll('.panel h2');
+            if (h2s[0]) h2s[0].textContent = 'Google Map';
+            if (h2s[1]) h2s[1].textContent = 'Review Summary';
+            if (h2s[2]) h2s[2].textContent = 'Traveler Notes';
+        }
+        if (page === 'partner') {
+            const eyebrow = document.querySelector('.panel .eyebrow');
+            const h1 = document.querySelector('.panel h1');
+            if (eyebrow) eyebrow.textContent = 'Partnership';
+            if (h1) h1.textContent = 'Partner Inquiry';
+        }
+        if (page === 'comments') {
+            const eyebrow = document.querySelector('.panel .eyebrow');
+            const h1 = document.querySelector('.panel h1');
+            if (eyebrow) eyebrow.textContent = 'Community';
+            if (h1) h1.textContent = 'Travel Comments';
+        }
+    }
+
+    function syncInternalLinksWithLanguage() {
+        document.querySelectorAll('a[href]').forEach((anchor) => {
+            const href = anchor.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            const target = new URL(href, window.location.href);
+            if (target.origin !== window.location.origin) return;
+            anchor.setAttribute('href', withCurrentLang(target.toString()));
+        });
+    }
+
+    function initLanguage() {
+        CURRENT_LANG = getLanguageFromQueryOrStorage();
+        localStorage.setItem(LANG_STORAGE_KEY, CURRENT_LANG);
+        document.documentElement.lang = CURRENT_LANG;
+        updateLanguageButton();
+        if (CURRENT_LANG === 'en') applyEnglishCopy();
+        syncInternalLinksWithLanguage();
+
+        const langBtn = document.getElementById('lang-toggle-btn');
+        if (!langBtn) return;
+        langBtn.addEventListener('click', () => {
+            const nextLang = CURRENT_LANG === 'en' ? 'ko' : 'en';
+            localStorage.setItem(LANG_STORAGE_KEY, nextLang);
+            const nextUrl = new URL(window.location.href);
+            if (nextLang === 'en') nextUrl.searchParams.set('lang', 'en');
+            else nextUrl.searchParams.delete('lang');
+            window.location.href = nextUrl.toString();
+        });
+    }
+
     function getPlaceIdFromQuery() {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
@@ -183,7 +321,7 @@
     }
 
     function getPlaceLink(page, id) {
-        return `${page}?id=${encodeURIComponent(id)}`;
+        return withCurrentLang(`${page}?id=${encodeURIComponent(id)}`);
     }
 
     function updateTopNavLinks(id) {
@@ -192,7 +330,7 @@
         const commentsLink = document.getElementById('comments-link');
         const place = placeMap[id];
         if (courseLink && place) {
-            courseLink.href = `course.html?style=${encodeURIComponent(place.styles[0])}`;
+            courseLink.href = withCurrentLang(`course.html?style=${encodeURIComponent(place.styles[0])}`);
         }
         if (partnerLink) partnerLink.href = getPlaceLink('partner.html', id);
         if (commentsLink) commentsLink.href = getPlaceLink('comments.html', id);
@@ -254,7 +392,7 @@
         const card = document.createElement('article');
         card.className = 'place-card';
         const styleBadges = place.styles.slice(0, 3)
-            .map((style) => `<span class=\"${styleClass(style)}\">${STYLE_LABELS[style]}</span>`)
+            .map((style) => `<span class=\"${styleClass(style)}\">${getStyleLabel(style)}</span>`)
             .join('');
         card.innerHTML = `
             <div class="place-card-body">
@@ -263,7 +401,7 @@
                 <div class="place-meta">${place.category} · ${place.district}</div>
                 <div class="style-badges">${styleBadges}</div>
                 <p class="place-desc">${place.shortDescription}</p>
-                <a class="button-link" href="${getPlaceLink('place.html', place.id)}">상세 보기</a>
+                <a class="button-link" href="${getPlaceLink('place.html', place.id)}">${CURRENT_LANG === 'en' ? 'View Details' : '상세 보기'}</a>
             </div>
         `;
         return card;
@@ -284,18 +422,27 @@
             if (!filtered.length) {
                 const empty = document.createElement('p');
                 empty.className = 'place-desc';
-                empty.textContent = '선택한 여행 형식에 맞는 추천 장소가 없습니다.';
+                empty.textContent = CURRENT_LANG === 'en'
+                    ? 'No recommended places for this travel style.'
+                    : '선택한 여행 형식에 맞는 추천 장소가 없습니다.';
                 grid.appendChild(empty);
-                resultCount.textContent = '0개 추천';
+                resultCount.textContent = CURRENT_LANG === 'en' ? '0 results' : '0개 추천';
                 return;
             }
 
             const fragment = document.createDocumentFragment();
             filtered.forEach((place) => fragment.appendChild(createPlaceCard(place)));
             grid.appendChild(fragment);
-            resultCount.textContent = `${filtered.length}개 추천`;
+            resultCount.textContent = CURRENT_LANG === 'en'
+                ? `${filtered.length} results`
+                : `${filtered.length}개 추천`;
         }
 
+        if (CURRENT_LANG === 'en') {
+            Array.from(styleSelect.options).forEach((option) => {
+                option.textContent = getStyleLabel(option.value);
+            });
+        }
         styleSelect.addEventListener('change', applyFilter);
         applyFilter();
     }
@@ -368,14 +515,17 @@
         ratingEl.textContent = `${place.rating} (기본 데이터)`;
         reviewCountEl.textContent = `${place.reviewCount} (기본 데이터)`;
         styleBadgesEl.innerHTML = place.styles
-            .map((style) => `<span class=\"${styleClass(style)}\">${STYLE_LABELS[style]}</span>`)
+            .map((style) => `<span class=\"${styleClass(style)}\">${getStyleLabel(style)}</span>`)
             .join('');
 
         const mapQuery = encodeURIComponent(place.mapQuery);
         mapEl.src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
         mapExternal.href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+        mapExternal.textContent = CURRENT_LANG === 'en' ? 'Open in Google Maps' : 'Google 지도에서 열기';
         renderReviews(reviewList, place.reviews);
-        dataSourceEl.textContent = '리뷰/평점: 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
+        dataSourceEl.textContent = CURRENT_LANG === 'en'
+            ? 'Ratings/Reviews: Showing default data now. Updating to live Google data shortly.'
+            : '리뷰/평점: 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
 
         try {
             const details = await fetchLivePlaceDetails(place);
@@ -392,16 +542,20 @@
                 renderReviews(reviewList, liveReviews);
             }
             if (details?.googleMapsUri) mapExternal.href = details.googleMapsUri;
-            dataSourceEl.textContent = '리뷰/평점: Google Places API 실시간 데이터 반영됨';
+            dataSourceEl.textContent = CURRENT_LANG === 'en'
+                ? 'Ratings/Reviews: Live Google Places data applied'
+                : '리뷰/평점: Google Places API 실시간 데이터 반영됨';
         } catch (error) {
-            dataSourceEl.textContent = '리뷰/평점: Google API 연결 실패로 기본 데이터 표시 중';
+            dataSourceEl.textContent = CURRENT_LANG === 'en'
+                ? 'Ratings/Reviews: Google API unavailable, showing fallback data'
+                : '리뷰/평점: Google API 연결 실패로 기본 데이터 표시 중';
         }
     }
 
     function getStyleFromQuery() {
         const params = new URLSearchParams(window.location.search);
         const style = params.get('style');
-        if (!style || !STYLE_LABELS[style] || style === 'all') return 'history';
+        if (!style || !styleLabels()[style] || style === 'all') return 'history';
         return style;
     }
 
@@ -447,13 +601,18 @@
             const filtered = places.filter((place) => place.styles.includes(selectedStyle)).slice(0, 6);
             if (filtered.length < 2) return;
 
-            titleEl.textContent = `${STYLE_LABELS[selectedStyle]} 도보 1일 코스`;
+            titleEl.textContent = CURRENT_LANG === 'en'
+                ? `${getStyleLabel(selectedStyle)} One-Day Walking Course`
+                : `${getStyleLabel(selectedStyle)} 도보 1일 코스`;
 
             const totalWalking = filtered.slice(0, -1).reduce((sum, place, idx) => {
                 return sum + makeWalkingMinutes(place, filtered[idx + 1], idx);
             }, 0);
 
             summaryEl.textContent = `총 ${filtered.length}개 스팟, 예상 도보 이동 ${totalWalking}분 기준 추천 코스입니다.`;
+            if (CURRENT_LANG === 'en') {
+                summaryEl.textContent = `${filtered.length} spots with about ${totalWalking} minutes of walking in total.`;
+            }
 
             const grouped = {
                 '오전': [],
@@ -471,8 +630,11 @@
                 box.className = 'time-slot';
                 const items = grouped[slot].length
                     ? grouped[slot].map((place) => `<li>${place.name} (${place.district})</li>`).join('')
-                    : '<li>추천 스팟 없음</li>';
-                box.innerHTML = `<h3>${slot}</h3><ul>${items}</ul>`;
+                    : `<li>${CURRENT_LANG === 'en' ? 'No spots' : '추천 스팟 없음'}</li>`;
+                const slotLabel = CURRENT_LANG === 'en'
+                    ? ({ '오전': 'Morning', '점심': 'Lunch', '오후': 'Afternoon', '저녁': 'Evening' }[slot] || slot)
+                    : slot;
+                box.innerHTML = `<h3>${slotLabel}</h3><ul>${items}</ul>`;
                 timeSlotsEl.appendChild(box);
             });
 
@@ -480,7 +642,11 @@
             filtered.forEach((place, idx) => {
                 const li = document.createElement('li');
                 const next = filtered[idx + 1];
-                const walk = next ? ` · 다음 스팟까지 도보 약 ${makeWalkingMinutes(place, next, idx)}분` : '';
+                const walk = next
+                    ? (CURRENT_LANG === 'en'
+                        ? ` · about ${makeWalkingMinutes(place, next, idx)} min walk to next stop`
+                        : ` · 다음 스팟까지 도보 약 ${makeWalkingMinutes(place, next, idx)}분`)
+                    : '';
                 li.innerHTML = `<span class=\"stop-title\">${idx + 1}. ${place.name}</span> (${place.district})${walk}`;
                 stopListEl.appendChild(li);
             });
@@ -506,7 +672,9 @@
                     `;
                     hotelListEl.appendChild(li);
                 });
-                hotelSourceEl.textContent = '숙소 데이터: Google Places 평점 기준 상위 5개';
+                hotelSourceEl.textContent = CURRENT_LANG === 'en'
+                    ? 'Hotels: Top 5 based on Google Places rating'
+                    : '숙소 데이터: Google Places 평점 기준 상위 5개';
             } catch (error) {
                 const fallback = filtered.slice(0, 5).map((place, idx) => ({
                     name: `${place.district} 중심 호텔 추천 ${idx + 1}`,
@@ -524,15 +692,17 @@
                     `;
                     hotelListEl.appendChild(li);
                 });
-                hotelSourceEl.textContent = '숙소 데이터: Google API 연결 실패로 기본 추천 표시 중';
+                hotelSourceEl.textContent = CURRENT_LANG === 'en'
+                    ? 'Hotels: Google API unavailable, showing fallback list'
+                    : '숙소 데이터: Google API 연결 실패로 기본 추천 표시 중';
             }
 
             const districts = [...new Set(filtered.map((place) => place.district))];
             const mealConfig = [
-                { key: 'breakfast', label: '아침' },
-                { key: 'lunch', label: '점심' },
-                { key: 'dinner', label: '저녁' },
-                { key: 'drinks', label: '술자리' }
+                { key: 'breakfast', label: CURRENT_LANG === 'en' ? 'Breakfast' : '아침' },
+                { key: 'lunch', label: CURRENT_LANG === 'en' ? 'Lunch' : '점심' },
+                { key: 'dinner', label: CURRENT_LANG === 'en' ? 'Dinner' : '저녁' },
+                { key: 'drinks', label: CURRENT_LANG === 'en' ? 'Drinks' : '술자리' }
             ];
 
             restaurantSectionsEl.innerHTML = '';
@@ -541,7 +711,7 @@
             for (const district of districts) {
                 const districtBlock = document.createElement('article');
                 districtBlock.className = 'district-block';
-                districtBlock.innerHTML = `<h3>${district} 맛집 3곳씩 추천</h3><div class=\"meal-grid\"></div>`;
+                districtBlock.innerHTML = `<h3>${CURRENT_LANG === 'en' ? `${district} - Top 3 by meal` : `${district} 맛집 3곳씩 추천`}</h3><div class=\"meal-grid\"></div>`;
                 const mealGrid = districtBlock.querySelector('.meal-grid');
 
                 const mealResults = await Promise.all(mealConfig.map(async (meal) => {
@@ -572,13 +742,15 @@
                     const rows = mealData.restaurants.slice(0, 3).map((r, idx) => {
                         const matchedBroadcast = (mealData.broadcastPicks || []).find((pick) => r.name.includes(pick.name) || pick.name.includes(r.name));
                         const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${matchedBroadcast.show}</span>` : '';
-                        const mapLink = r.googleMapsUri ? ` · <a class=\"text-link\" href=\"${r.googleMapsUri}\" target=\"_blank\" rel=\"noopener noreferrer\">지도</a>` : '';
-                        return `<li><span class=\"hotel-name\">${idx + 1}. ${r.name}</span>${broadcastTag}<br><span class=\"hotel-meta\">평점 ${r.rating || '-'} / 리뷰 ${(r.userRatingCount || 0).toLocaleString()} / 평균가격 ${r.averagePrice || '-'}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
+                        const mapLink = r.googleMapsUri
+                            ? ` · <a class=\"text-link\" href=\"${r.googleMapsUri}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`
+                            : '';
+                        return `<li><span class=\"hotel-name\">${idx + 1}. ${r.name}</span>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${r.averagePrice || '-'}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
                     }).join('');
 
                     const extraBroadcast = (mealData.broadcastPicks || []).filter((pick) => !mealData.restaurants.some((r) => r.name.includes(pick.name) || pick.name.includes(r.name)));
                     const curation = extraBroadcast.length
-                        ? `<p class=\"data-source-note\">방송 큐레이션: ${extraBroadcast.map((pick) => `${pick.name}(${pick.show})`).join(', ')}</p>`
+                        ? `<p class=\"data-source-note\">${CURRENT_LANG === 'en' ? 'Broadcast curation' : '방송 큐레이션'}: ${extraBroadcast.map((pick) => `${pick.name}(${pick.show})`).join(', ')}</p>`
                         : '';
                     mealCard.innerHTML = `<h4>${mealData.label}</h4><ul>${rows}</ul>${curation}`;
                     mealGrid.appendChild(mealCard);
@@ -588,8 +760,12 @@
             }
 
             restaurantSourceEl.textContent = restaurantApiOk
-                ? '맛집 데이터: Google 평점/리뷰 우선 + 방송 큐레이션(또간집/맛있는 녀석들)'
-                : '맛집 데이터: 일부 Google API 실패로 기본 추천을 함께 표시 중';
+                ? (CURRENT_LANG === 'en'
+                    ? 'Restaurants: Google ratings/reviews prioritized with broadcast curation'
+                    : '맛집 데이터: Google 평점/리뷰 우선 + 방송 큐레이션(또간집/맛있는 녀석들)')
+                : (CURRENT_LANG === 'en'
+                    ? 'Restaurants: Some Google API calls failed, fallback recommendations shown'
+                    : '맛집 데이터: 일부 Google API 실패로 기본 추천을 함께 표시 중');
         }
 
         styleTabs.addEventListener('click', (event) => {
@@ -621,7 +797,9 @@
 
         selectedName.textContent = place.name;
         selectedId.value = place.id;
-        message.placeholder = `${place.name} 제휴 관련 문의를 남겨주세요.`;
+        message.placeholder = CURRENT_LANG === 'en'
+            ? `Leave your partnership inquiry for ${place.name}.`
+            : `${place.name} 제휴 관련 문의를 남겨주세요.`;
     }
 
     function renderCommentsPage() {
@@ -646,6 +824,7 @@
     }
 
     function init() {
+        initLanguage();
         initThemeToggle();
         markActiveNav();
         initPageTransition();

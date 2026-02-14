@@ -35,6 +35,7 @@ async function run() {
   const ads = await fetchText(`${SITE_URL}/ads.txt`);
   const adsWellKnown = await fetchText(`${SITE_URL}/.well-known/ads.txt`);
   const robots = await fetchText(`${SITE_URL}/robots.txt`);
+  const sitemap = await fetchText(`${SITE_URL}/sitemap.xml`);
 
   checks.push({
     name: 'Home reachable',
@@ -65,6 +66,11 @@ async function run() {
     name: '/robots.txt reachable',
     ok: robots.status === 200,
     detail: `status=${robots.status}`
+  });
+  checks.push({
+    name: '/sitemap.xml reachable',
+    ok: sitemap.status === 200 && /<urlset/i.test(sitemap.body),
+    detail: `status=${sitemap.status}`
   });
   checks.push({
     name: 'robots allows AdsBot-Google',
