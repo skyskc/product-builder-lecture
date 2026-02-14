@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const themeStorageKey = 'lunch-theme';
     let currentMenuIndex = -1;
-    let currentImageIndex = -1;
 
     const translations = {
         ko: {
@@ -107,17 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    const fallbackFoodImages = [
-        'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1593030668930-8130abedd2cd?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=80'
-    ];
-
     const t = translations[activeLocale];
     const menus = menusByLocale[activeLocale];
 
@@ -175,20 +163,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getGeneratedImageUrl = (menu) => {
         const seed = `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
-        const prompt = `ultra realistic food photography, ${menu.title}, ${menu.category} cuisine, plated lunch, natural light, high detail`;
+        const prompt = `ultra realistic food photography, ${menu.title}, ${menu.category} cuisine, plated lunch, natural light, high detail, no text`;
         return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1200&height=900&seed=${seed}&nologo=true`;
     };
 
+    const getFallbackImageUrl = (menu) => {
+        const query = encodeURIComponent(`${menu.title} ${menu.category} food`);
+        return `https://source.unsplash.com/1200x900/?${query}&sig=${Date.now()}`;
+    };
+
     const setMenuImage = (menu) => {
-        let usedFallback = false;
         foodImage.onerror = () => {
-            if (usedFallback) {
+            if (foodImage.dataset.imageStage === 'fallback') {
+                foodImage.onerror = null;
                 return;
             }
-            usedFallback = true;
-            currentImageIndex = pickRandomIndex(fallbackFoodImages.length, currentImageIndex);
-            foodImage.src = fallbackFoodImages[currentImageIndex];
+            foodImage.dataset.imageStage = 'fallback';
+            foodImage.src = getFallbackImageUrl(menu);
         };
+        foodImage.dataset.imageStage = 'generated';
         foodImage.src = getGeneratedImageUrl(menu);
     };
 
