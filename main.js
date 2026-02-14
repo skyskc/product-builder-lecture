@@ -1654,6 +1654,7 @@
         const resultNote = document.getElementById('saju-result-note');
         const pillarsEl = document.getElementById('saju-pillars');
         const summaryEl = document.getElementById('saju-summary');
+        const analysisLongEl = document.getElementById('saju-analysis-long');
         const warningEl = document.getElementById('saju-warning');
         const recoTitle = document.getElementById('saju-reco-title');
         const styleChipsEl = document.getElementById('saju-style-chips');
@@ -1670,7 +1671,7 @@
         const dayLabel = document.getElementById('birth-day-label');
         const calendarLabel = document.getElementById('calendar-type-label');
 
-        if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType || !yearLabel || !monthLabel || !dayLabel || !calendarLabel) return;
+        if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !analysisLongEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType || !yearLabel || !monthLabel || !dayLabel || !calendarLabel) return;
 
         const isEn = CURRENT_LANG === 'en';
         pageTitle.textContent = isEn ? 'Saju-Based Travel Recommender' : '사주 기반 여행 추천';
@@ -1697,6 +1698,8 @@
         if (calendarType.options[0]) calendarType.options[0].textContent = isEn ? 'Solar' : '양력';
         if (calendarType.options[1]) calendarType.options[1].textContent = isEn ? 'Lunar' : '음력';
         resultNote.textContent = isEn ? 'Fill the form to generate your result.' : '입력 후 결과가 표시됩니다.';
+        summaryEl.textContent = '';
+        analysisLongEl.innerHTML = '';
         warningEl.textContent = '';
 
         const STEMS = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
@@ -1719,18 +1722,48 @@
 
         const summaryByElement = {
             ko: {
-                wood: '성장 지향 성향이 강해 새로운 동네 탐색과 산책형 코스의 만족도가 높습니다.',
-                fire: '활동성과 에너지가 강해 야경, 트렌드, 밤 시간대 콘텐츠와 잘 맞습니다.',
-                earth: '안정성과 균형을 중시해 역사/문화 + 편안한 동선을 선호하는 경향이 있습니다.',
-                metal: '완성도와 디테일을 중시해 전시, 아트, 감도 높은 공간 탐방이 잘 맞습니다.',
-                water: '유연하고 몰입형 성향으로 강변/자연/문화가 섞인 코스에서 만족도가 높습니다.'
+                wood: '목(木) 기운이 강하게 작동하는 명식으로, 확장성과 성장 의지가 여행 동선에도 반영됩니다.',
+                fire: '화(火) 기운이 도드라져 활기·표현·현장 체감형 일정에서 에너지가 상승하는 구조입니다.',
+                earth: '토(土) 기운이 중심을 잡아 안정적 동선, 휴식 리듬, 균형 잡힌 일정에서 만족도가 높습니다.',
+                metal: '금(金) 기운이 선명해 구조화된 공간, 완성도 높은 전시, 정돈된 코스에서 집중력이 살아납니다.',
+                water: '수(水) 기운이 살아 있어 흐름·이동·몰입형 경험에 강점이 있고 유연한 코스 적응력이 높습니다.'
             },
             en: {
-                wood: 'Growth-oriented profile. You may enjoy exploring new neighborhoods and walking routes.',
-                fire: 'Active and energetic profile. Night views, trend spots, and evening plans fit well.',
-                earth: 'Balanced and stable profile. History/culture with comfortable pacing is a good match.',
-                metal: 'Detail-driven profile. Art, exhibitions, and well-curated spaces suit your style.',
-                water: 'Flexible and immersive profile. River, nature, and cultural mixed routes work well.'
+                wood: 'Wood is prominent in your chart, favoring growth-oriented exploration and expanding routes.',
+                fire: 'Fire is active, so energetic, expressive, and experience-heavy plans feel especially rewarding.',
+                earth: 'Earth provides core stability, making balanced pacing and restful flow highly compatible.',
+                metal: 'Metal is clear, supporting structured spaces, curated exhibitions, and organized itineraries.',
+                water: 'Water is vivid, indicating strength in flow, movement, immersion, and adaptive scheduling.'
+            }
+        };
+
+        const seasonByMonth = {
+            ko: {
+                1: '한겨울 수기(水氣)', 2: '입춘 직후 목기(木氣)', 3: '봄 목기(木氣)', 4: '늦봄 화기(火氣) 상승',
+                5: '초여름 화기(火氣)', 6: '한여름 화기(火氣) 극성', 7: '늦여름 토기(土氣)', 8: '초가을 금기(金氣)',
+                9: '가을 금기(金氣)', 10: '늦가을 수기(水氣) 전환', 11: '초겨울 수기(水氣)', 12: '겨울 수기(水氣)'
+            },
+            en: {
+                1: 'deep winter water qi', 2: 'early spring wood qi', 3: 'spring wood qi', 4: 'late spring rising fire qi',
+                5: 'early summer fire qi', 6: 'midsummer peak fire qi', 7: 'late summer earth qi', 8: 'early autumn metal qi',
+                9: 'autumn metal qi', 10: 'late autumn transition to water qi', 11: 'early winter water qi', 12: 'winter water qi'
+            }
+        };
+
+        const styleReasonByElement = {
+            ko: {
+                wood: '목 기운은 확장·성장을 뜻해 공원 산책과 로컬 골목 탐방에서 운세 흐름이 자연스럽게 이어집니다.',
+                fire: '화 기운은 활력·가시성을 중시하므로 야경, 트렌드 상권, 저녁 체험형 코스에서 만족도가 높습니다.',
+                earth: '토 기운은 안정·축적 성향이 강해 역사·가족형 코스처럼 페이스가 안정적인 일정과 궁합이 좋습니다.',
+                metal: '금 기운은 정제·완성도를 선호해 전시/뮤지엄/디자인 스팟처럼 구조화된 콘텐츠가 잘 맞습니다.',
+                water: '수 기운은 흐름과 몰입을 강화해 강변/자연/문화가 이어지는 유동적 동선에서 강점을 보입니다.'
+            },
+            en: {
+                wood: 'Wood favors growth and expansion, so parks and local-neighborhood exploration align naturally.',
+                fire: 'Fire prioritizes vitality and visibility, matching night views and trend-heavy evening districts.',
+                earth: 'Earth favors stability and accumulation, fitting history/family routes with reliable pacing.',
+                metal: 'Metal prefers refinement and structure, resonating with museums, exhibitions, and design spaces.',
+                water: 'Water strengthens flow and immersion, matching river/nature/culture blended itineraries.'
             }
         };
 
@@ -1764,7 +1797,59 @@
             indices.forEach((idx) => {
                 counts[stemElement(idx)] += 1;
             });
-            return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([element]) => element);
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+            return { sorted, counts };
+        }
+
+        function relationBetween(a, b) {
+            const cycle = ['wood', 'fire', 'earth', 'metal', 'water'];
+            const ai = cycle.indexOf(a);
+            const bi = cycle.indexOf(b);
+            if (ai < 0 || bi < 0) return 'neutral';
+            if ((ai + 1) % 5 === bi) return 'generate';
+            if ((ai + 2) % 5 === bi) return 'control';
+            if (ai === bi) return 'same';
+            return 'neutral';
+        }
+
+        function buildLongAnalysis(primary, secondary, counts, pillars, month, calendar) {
+            const relation = relationBetween(primary, secondary);
+            const relationText = isEn
+                ? ({
+                    generate: 'The primary and secondary elements form a productive generating sequence.',
+                    control: 'The two key elements stand in a controlling relationship, creating disciplined tension.',
+                    same: 'Primary and secondary energies are homogeneous, strengthening consistency but reducing variation.',
+                    neutral: 'The two dominant energies interact in a neutral way, leaving room for situational balance.'
+                }[relation])
+                : ({
+                    generate: '주요 오행과 보조 오행이 상생 구조를 이루어 기운이 비교적 순환적으로 작동합니다.',
+                    control: '두 핵심 오행이 상극 축에 걸려 있어 긴장감은 있으나 실행력은 또렷해지는 구조입니다.',
+                    same: '주요·보조 오행이 동질적으로 겹쳐 장점은 선명해지지만 변주 폭은 줄어드는 편입니다.',
+                    neutral: '두 핵심 오행이 중립 관계라, 외부 환경에 따라 균형점이 달라지는 명식입니다.'
+                }[relation]);
+
+            const elementOrder = Object.entries(counts)
+                .sort((a, b) => b[1] - a[1])
+                .map(([el, c]) => `${isEn ? ELEMENT_LABEL.en[el] : ELEMENT_LABEL.ko[el]} ${c}`)
+                .join(isEn ? ', ' : ' / ');
+
+            if (isEn) {
+                return [
+                    `Reading basis: This interpretation follows practical Myeongri principles used in four-pillar reading: day-master centered view, seasonal month force, five-element balance, and generating/controlling relationships among major elements.`,
+                    `Pillar structure: Year ${pillarText(pillars.yearIndex)}, Month ${pillarText(pillars.monthIndex)}, Day ${pillarText(pillars.dayIndex)}, Hour ${pillarText(pillars.hourIndex)}. The month branch indicates ${seasonByMonth.en[month]}, which strongly affects how the chart expresses energy in real-life movement and recovery rhythm.`,
+                    `Element distribution: ${elementOrder}. In this chart, ${ELEMENT_LABEL.en[primary]} leads and ${ELEMENT_LABEL.en[secondary]} follows. ${relationText}`,
+                    `Interpretation logic: when the dominant element supports movement style and sensory preference, travel satisfaction rises. This is why we map your element pattern to route tempo, time slot preference, and content type (nature/history/night/art/local).`,
+                    `Calendar note: ${calendar === 'lunar' ? 'Lunar input is converted with a simplified model in this service, so treat this as trend-oriented guidance.' : 'Solar input is interpreted directly in this simplified model.'}`
+                ];
+            }
+
+            return [
+                `해석 기준: 본 결과는 사주팔자 실무에서 자주 쓰는 명리 프레임(일간 중심 해석, 월지의 계절력, 오행의 균형, 상생/상극 작용)을 간이 모델로 적용한 것입니다.`,
+                `사주 구성: 년주 ${pillarText(pillars.yearIndex)}, 월주 ${pillarText(pillars.monthIndex)}, 일주 ${pillarText(pillars.dayIndex)}, 시주 ${pillarText(pillars.hourIndex)}. 특히 월지에는 ${seasonByMonth.ko[month]} 흐름이 반영되어, 실제 여행 시 체력 소모 방식과 회복 리듬에 영향을 주는 축으로 해석합니다.`,
+                `오행 분포: ${elementOrder}. 본 명식은 ${ELEMENT_LABEL.ko[primary]} 기운이 주도하고 ${ELEMENT_LABEL.ko[secondary]}가 보조하는 양상입니다. ${relationText}`,
+                `판단 논리: 우세 오행이 선호하는 이동 템포·공간 밀도·체험 방식과 일정이 맞으면 만족도가 높아집니다. 그래서 오행 구조를 바탕으로 자연/역사/야경/예술/로컬 축의 코스를 연결해 추천합니다.`,
+                `달력 참고: ${calendar === 'lunar' ? '음력 입력은 본 서비스의 간이 변환 규칙을 사용하므로, 방향성 중심 참고값으로 보시는 것이 적절합니다.' : '양력 입력은 간이 규칙 내에서 직접 해석됩니다.'}`
+            ];
         }
 
         function renderRecommendations(primaryElement, secondaryElement) {
@@ -1777,7 +1862,13 @@
             const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 5);
             placeListEl.innerHTML = picked.map((place, idx) => {
                 const href = getPlaceLink('place.html', place.id);
-                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span></li>`;
+                const matchStyles = place.styles.filter((style) => styles.includes(style)).slice(0, 2);
+                const reasonByStyle = matchStyles.map((style) => `${getStyleLabel(style)} ${isEn ? 'theme' : '테마'}`).join(isEn ? ' + ' : ' + ');
+                const elementReason = styleReasonByElement[isEn ? 'en' : 'ko'][primaryElement];
+                const reasonText = isEn
+                    ? `Why this place: ${place.nameEn || place.name} aligns with ${reasonByStyle || 'your element profile'}, and its ${getCategoryLabel(place.category)} character supports your ${ELEMENT_LABEL.en[primaryElement]}-driven travel rhythm. ${elementReason}`
+                    : `추천 이유: ${getPlaceName(place)}은(는) ${reasonByStyle || '오행 성향'}과 맞물리고, ${getCategoryLabel(place.category)} 성격이 ${ELEMENT_LABEL.ko[primaryElement]} 중심 기운의 이동 리듬과 잘 맞습니다. ${elementReason}`;
+                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span><p class="saju-reason">${escapeHtml(reasonText)}</p></li>`;
             }).join('');
         }
 
@@ -1792,6 +1883,7 @@
                 resultNote.textContent = isEn ? 'Please enter a valid birth date.' : '유효한 생년월일을 입력해 주세요.';
                 pillarsEl.innerHTML = '';
                 summaryEl.textContent = '';
+                analysisLongEl.innerHTML = '';
                 styleChipsEl.innerHTML = '';
                 placeListEl.innerHTML = '';
                 return;
@@ -1802,6 +1894,7 @@
                 resultNote.textContent = isEn ? 'Invalid date. Please check month/day.' : '유효하지 않은 날짜입니다. 월/일을 확인해 주세요.';
                 pillarsEl.innerHTML = '';
                 summaryEl.textContent = '';
+                analysisLongEl.innerHTML = '';
                 styleChipsEl.innerHTML = '';
                 placeListEl.innerHTML = '';
                 return;
@@ -1811,12 +1904,15 @@
             const indices = [pillars.yearIndex, pillars.monthIndex, pillars.dayIndex, pillars.hourIndex];
             pillarsEl.innerHTML = indices.map((idx, i) => `<div class="generation-chip"><strong>${labels[i]}:</strong> ${escapeHtml(pillarText(idx))}</div>`).join('');
 
-            const topElements = getTopElements(indices);
+            const elementMeta = getTopElements(indices);
+            const topElements = elementMeta.sorted.map(([el]) => el);
             const primary = topElements[0];
             const secondary = topElements[1];
             const elementLabel = isEn ? ELEMENT_LABEL.en[primary] : ELEMENT_LABEL.ko[primary];
             resultNote.textContent = isEn ? `Dominant element: ${elementLabel}` : `주요 오행: ${elementLabel}`;
             summaryEl.textContent = summaryByElement[isEn ? 'en' : 'ko'][primary];
+            const analysisParagraphs = buildLongAnalysis(primary, secondary, elementMeta.counts, pillars, month, calendar);
+            analysisLongEl.innerHTML = analysisParagraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('');
             warningEl.textContent = calendar === 'lunar'
                 ? (isEn ? 'Lunar date uses simplified conversion for entertainment purposes.' : '음력 입력은 오락용 간이 변환을 사용합니다.')
                 : (isEn ? 'This result is a lightweight, entertainment-oriented interpretation.' : '본 결과는 오락용 간이 해석입니다.');
