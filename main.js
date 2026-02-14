@@ -514,6 +514,10 @@
             if (panels[3]) panels[3].textContent = 'How to Use This Course';
             const routeLink = document.getElementById('course-route-link');
             if (routeLink) routeLink.textContent = 'Open Walking Route in Google Maps';
+            const journeyLinks = document.querySelectorAll('.journey-step-link');
+            if (journeyLinks[0]) journeyLinks[0].textContent = '1. View Route';
+            if (journeyLinks[1]) journeyLinks[1].textContent = '2. Choose Hotel';
+            if (journeyLinks[2]) journeyLinks[2].textContent = '3. Choose Restaurants';
             const guideParagraphs = document.querySelectorAll('.panel p');
             if (guideParagraphs[guideParagraphs.length - 2]) {
                 guideParagraphs[guideParagraphs.length - 2].textContent = 'This route is optimized for walkable movement with optional short subway transfers. A typical flow is history/culture in the morning, cafe or shopping in the afternoon, and night views or local dining in the evening.';
@@ -1132,7 +1136,7 @@
                 hotels.slice(0, 5).forEach((hotel, idx) => {
                     const li = document.createElement('li');
                     const mapHref = hotel.googleMapsUri || getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`);
-                    const mapAnchor = ` · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`;
+                    const mapAnchor = ` <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a>`;
                     li.innerHTML = `
                         <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
                         <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.userRatingCount?.toLocaleString?.() || '-'} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
@@ -1159,7 +1163,7 @@
                     li.innerHTML = `
                         <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
                         <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.reviewCount} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
-                        <span class=\"hotel-meta\">${hotel.address} · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a></span>
+                        <span class=\"hotel-meta\">${hotel.address} <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a></span>
                     `;
                     hotelListEl.appendChild(li);
                 });
@@ -1214,7 +1218,7 @@
                         const matchedBroadcast = (mealData.broadcastPicks || []).find((pick) => r.name.includes(pick.name) || pick.name.includes(r.name));
                         const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${matchedBroadcast.show}</span>` : '';
                         const mapHref = r.googleMapsUri || getMapSearchUrl(`${r.name} ${district} Seoul`);
-                        const mapLink = ` · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`;
+                        const mapLink = ` <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a>`;
                         return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${r.name}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(r.averagePrice || '-')}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
                     }).join('');
 
