@@ -400,15 +400,25 @@
         return districtBoost + (index % 3) * 4;
     }
 
+    function getTimeSlot(bestTime) {
+        const match = /(\d{1,2})/.exec(bestTime);
+        const hour = match ? Number(match[1]) : 10;
+        if (hour < 11) return '오전';
+        if (hour < 14) return '점심';
+        if (hour < 18) return '오후';
+        return '저녁';
+    }
+
     async function renderCoursePage() {
         const styleSelect = document.getElementById('course-style-select');
         const titleEl = document.getElementById('day-course-title');
         const summaryEl = document.getElementById('day-course-summary');
         const routeLinkEl = document.getElementById('course-route-link');
+        const timeSlotsEl = document.getElementById('course-time-slots');
         const stopListEl = document.getElementById('course-stop-list');
         const hotelListEl = document.getElementById('hotel-list');
         const hotelSourceEl = document.getElementById('hotel-source-note');
-        if (!styleSelect || !titleEl || !summaryEl || !routeLinkEl || !stopListEl || !hotelListEl || !hotelSourceEl) return;
+        if (!styleSelect || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl) return;
 
         const initialStyle = getStyleFromQuery();
         styleSelect.value = initialStyle;
@@ -425,6 +435,27 @@
             }, 0);
 
             summaryEl.textContent = `총 ${filtered.length}개 스팟, 예상 도보 이동 ${totalWalking}분 기준 추천 코스입니다.`;
+
+            const grouped = {
+                '오전': [],
+                '점심': [],
+                '오후': [],
+                '저녁': []
+            };
+            filtered.forEach((place) => {
+                grouped[getTimeSlot(place.bestTime)].push(place);
+            });
+
+            timeSlotsEl.innerHTML = '';
+            ['오전', '점심', '오후', '저녁'].forEach((slot) => {
+                const box = document.createElement('article');
+                box.className = 'time-slot';
+                const items = grouped[slot].length
+                    ? grouped[slot].map((place) => `<li>${place.name} (${place.district})</li>`).join('')
+                    : '<li>추천 스팟 없음</li>';
+                box.innerHTML = `<h3>${slot}</h3><ul>${items}</ul>`;
+                timeSlotsEl.appendChild(box);
+            });
 
             stopListEl.innerHTML = '';
             filtered.forEach((place, idx) => {

@@ -365,6 +365,37 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     line-height: 1.55;
 }
 
+.course-time-slots {
+    margin-top: 14px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.time-slot {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    background: var(--card);
+}
+
+.time-slot h3 {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+}
+
+.time-slot ul {
+    margin: 0;
+    padding-left: 16px;
+    display: grid;
+    gap: 5px;
+}
+
+.time-slot li {
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
 .stop-title,
 .hotel-name {
     color: var(--text);
@@ -450,6 +481,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .place-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-time-slots {
         grid-template-columns: 1fr;
     }
 }
