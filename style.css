@@ -188,13 +188,14 @@ a {
 }
 
 .style-tab-panel {
-    padding: 12px;
+    padding: 8px 10px;
 }
 
 .sticky-panel {
     position: sticky;
     z-index: 18;
     background: var(--card);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
 }
 
 .sticky-primary {
@@ -207,26 +208,30 @@ a {
 }
 
 .style-tab-title {
-    margin: 0 0 10px;
-    font-size: 0.85rem;
+    margin: 0 0 6px;
+    font-size: 0.76rem;
     font-weight: 700;
     color: var(--muted);
 }
 
 .style-tab-row {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
 
 .style-tab-btn {
+    flex: 0 0 auto;
     border: 1px solid var(--line);
     background: var(--card);
     color: var(--muted);
     border-radius: 999px;
-    padding: 8px 10px;
+    padding: 6px 9px;
     font: inherit;
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
@@ -239,13 +244,14 @@ a {
 }
 
 .result-count {
-    margin: 10px 0 0;
-    font-size: 0.86rem;
+    margin: 4px 0 0;
+    font-size: 0.75rem;
     color: var(--muted);
 }
 
 .search-panel {
-    margin-top: 14px;
+    margin-top: 8px;
+    padding: 8px 10px;
 }
 
 .journey-nav {
@@ -280,7 +286,7 @@ a {
 .search-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 170px;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
 }
 
@@ -289,25 +295,30 @@ a {
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 10px 12px;
+    padding: 8px 10px;
     font: inherit;
+    font-size: 0.86rem;
     color: var(--text);
     background: var(--card);
 }
 
 .quick-tag-list {
-    margin-top: 10px;
+    margin-top: 6px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
 
 .tag-chip {
+    flex: 0 0 auto;
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 6px 10px;
+    padding: 5px 9px;
     font: inherit;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     color: var(--muted);
     background: var(--card);
     cursor: pointer;
@@ -826,10 +837,6 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 
     .filter-bar {
         flex-wrap: wrap;
-    }
-
-    .style-tab-row {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .sticky-panel {
