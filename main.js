@@ -1,4 +1,5 @@
 (function () {
+    const THEME_STORAGE_KEY = 'seoul-explorer-theme';
     const STYLE_LABELS = {
         all: '전체',
         history: '역사/문화',
@@ -10,15 +11,10 @@
         local: '로컬/시장'
     };
 
-    const CATEGORY_IMAGE = {
-        '역사/문화': 'https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=1400&q=80',
-        '쇼핑/트렌드': 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=1400&q=80',
-        '야경/전망': 'https://images.unsplash.com/photo-1608403890612-8f00b6e9f54f?auto=format&fit=crop&w=1400&q=80',
-        '자연/산책': 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1400&q=80',
-        '가족/테마': 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1400&q=80',
-        '예술/뮤지엄': 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=1400&q=80',
-        '로컬/시장': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=80'
-    };
+    function fallbackPlaceImage(seed, rank) {
+        const query = encodeURIComponent(`${seed.name} seoul ${seed.category}`);
+        return `https://source.unsplash.com/1400x900/?${query}&sig=${rank}`;
+    }
 
     const PLACE_SEEDS = [
         { name: '경복궁', district: '종로구', category: '역사/문화', bestTime: '09:00-13:00', styles: ['history', 'family'] },
@@ -157,6 +153,7 @@
 
         return {
             id,
+            rank: index + 1,
             name: seed.name,
             category: seed.category,
             district: seed.district,
@@ -165,7 +162,7 @@
             reviewCount: `${reviewBase.toLocaleString()}+`,
             shortDescription,
             description,
-            image: CATEGORY_IMAGE[seed.category] || CATEGORY_IMAGE['역사/문화'],
+            image: fallbackPlaceImage(seed, index + 1),
             mapQuery: `${seed.name} Seoul`,
             styles: seed.styles,
             reviews
@@ -191,6 +188,35 @@
         const commentsLink = document.getElementById('comments-link');
         if (partnerLink) partnerLink.href = getPlaceLink('partner.html', id);
         if (commentsLink) commentsLink.href = getPlaceLink('comments.html', id);
+    }
+
+    function markActiveNav() {
+        const page = document.body.dataset.page;
+        const links = document.querySelectorAll('.top-nav a');
+        links.forEach((link) => link.classList.remove('active'));
+        if (page === 'home' || page === 'place') links[0]?.classList.add('active');
+        if (page === 'partner') links[1]?.classList.add('active');
+        if (page === 'comments') links[2]?.classList.add('active');
+    }
+
+    function applyTheme(theme) {
+        const isDark = theme === 'dark';
+        document.body.classList.toggle('dark-mode', isDark);
+        const btn = document.getElementById('theme-toggle-btn');
+        if (btn) btn.textContent = isDark ? 'Light' : 'Dark';
+    }
+
+    function initThemeToggle() {
+        const btn = document.getElementById('theme-toggle-btn');
+        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(saved === 'dark' || saved === 'light' ? saved : (prefersDark ? 'dark' : 'light'));
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(next);
+            localStorage.setItem(THEME_STORAGE_KEY, next);
+        });
     }
 
     function initPageTransition() {
@@ -220,6 +246,7 @@
         card.innerHTML = `
             <img src="${place.image}" alt="${place.name}" data-place-id="${place.id}">
             <div class="place-card-body">
+                <span class="place-rank">TOP ${place.rank}</span>
                 <h2>${place.name}</h2>
                 <div class="place-meta">${place.category} · ${place.district} · ★ ${place.rating}</div>
                 <div class="place-meta">${styleLabel}</div>
@@ -234,7 +261,8 @@
         if (placePhotoCache.has(place.id)) {
             return placePhotoCache.get(place.id);
         }
-        const response = await fetch(`/api/place-photo?query=${encodeURIComponent(place.mapQuery)}`);
+        const photoQuery = `${place.name} ${place.district} Seoul`;
+        const response = await fetch(`/api/place-photo?query=${encodeURIComponent(photoQuery)}`);
         if (!response.ok) {
             throw new Error(`Photo API request failed: ${response.status}`);
         }
@@ -252,7 +280,7 @@
             fetchPlacePhotoUrl(place).then((photoUrl) => {
                 if (token !== window.__seoulExplorerRenderToken) return;
                 const img = document.querySelector(`img[data-place-id="${place.id}"]`);
-                if (img) img.src = photoUrl;
+            if (img) img.src = photoUrl;
             }).catch(() => {
                 // keep fallback image
             });
@@ -416,6 +444,8 @@
     }
 
     function init() {
+        initThemeToggle();
+        markActiveNav();
         initPageTransition();
         const page = document.body.dataset.page;
         if (page === 'home') renderHome();
