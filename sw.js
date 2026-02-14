@@ -47,15 +47,30 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
+    if (request.mode === 'navigate') {
+        event.respondWith(
+            fetch(request).then((response) => {
+                const copy = response.clone();
+                caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+                return response;
+            }).catch(async () => {
+                const matched = await caches.match(request, { ignoreSearch: true });
+                if (matched) return matched;
+                return caches.match('/index.html');
+            })
+        );
+        return;
+    }
+
     event.respondWith(
-        caches.match(request).then((cached) => {
+        caches.match(request, { ignoreSearch: true }).then((cached) => {
             if (cached) return cached;
             return fetch(request).then((response) => {
                 if (!response || response.status !== 200 || response.type !== 'basic') return response;
                 const copy = response.clone();
                 caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
                 return response;
-            }).catch(() => caches.match('/index.html'));
+            }).catch(() => new Response('', { status: 504, statusText: 'Offline' }));
         })
     );
 });
