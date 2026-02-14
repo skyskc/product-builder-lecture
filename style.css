@@ -193,6 +193,22 @@ a {
     padding: 8px 10px;
 }
 
+.inline-control-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.inline-control-title {
+    margin: 0;
+    flex: 0 0 auto;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
 .sticky-panel {
     position: sticky;
     z-index: 18;
@@ -267,18 +283,23 @@ a {
 }
 
 .journey-steps {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    min-width: 0;
 }
 
 .journey-step-link {
+    flex: 0 0 auto;
     display: block;
     text-decoration: none;
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 9px 10px;
-    font-size: 0.82rem;
+    padding: 6px 9px;
+    font-size: 0.76rem;
     font-weight: 700;
     color: var(--muted);
     background: var(--card);
@@ -871,7 +892,7 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .journey-steps {
-        grid-template-columns: 1fr;
+        gap: 6px;
     }
 
     .place-grid {

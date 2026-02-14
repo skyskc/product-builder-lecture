@@ -534,8 +534,10 @@
             if (eyebrow) eyebrow.textContent = 'Walking Day Plan';
             if (h1) h1.textContent = 'One-Day Seoul Course by Travel Style';
             if (p) p.textContent = 'A compact walking plan with district restaurants and hotel recommendations based on Google ratings.';
-            const tabTitle = document.querySelector('.style-tab-title');
-            if (tabTitle) tabTitle.textContent = 'Choose Course Style';
+            const journeyTitle = document.getElementById('journey-nav-title');
+            if (journeyTitle) journeyTitle.textContent = 'Quick Move';
+            const styleTitle = document.getElementById('course-style-title');
+            if (styleTitle) styleTitle.textContent = 'Choose Course Style';
             document.querySelectorAll('.style-tab-btn').forEach((btn) => {
                 const styleKey = btn.dataset.style;
                 if (styleKey) btn.textContent = getStyleLabel(styleKey);
