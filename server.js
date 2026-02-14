@@ -27,6 +27,7 @@ const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 
 const PLACE_DETAILS_CACHE = new Map();
 const PLACE_PHOTO_CACHE = new Map();
+const HOTELS_CACHE = new Map();
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -213,6 +214,62 @@ async function fetchWikipediaPhotoUrl(queryText) {
   throw new Error(`No wikipedia thumbnail found for query: ${queryText}`);
 }
 
+function priceLevelToAvg(priceLevel) {
+  if (!priceLevel) return '약 ₩140,000';
+  const map = {
+    PRICE_LEVEL_FREE: '약 ₩0',
+    PRICE_LEVEL_INEXPENSIVE: '약 ₩80,000',
+    PRICE_LEVEL_MODERATE: '약 ₩140,000',
+    PRICE_LEVEL_EXPENSIVE: '약 ₩220,000',
+    PRICE_LEVEL_VERY_EXPENSIVE: '약 ₩350,000'
+  };
+  return map[priceLevel] || '약 ₩140,000';
+}
+
+async function fetchTopHotels(queryText) {
+  const cacheItem = HOTELS_CACHE.get(queryText);
+  if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
+    return cacheItem.data;
+  }
+
+  const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
+      'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount,places.formattedAddress,places.priceLevel,places.googleMapsUri'
+    },
+    body: JSON.stringify({
+      textQuery: queryText,
+      languageCode: 'ko'
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Hotel search error (${response.status}): ${errorText}`);
+  }
+
+  const data = await response.json();
+  const hotels = Array.isArray(data.places) ? data.places.map((p) => ({
+    name: p.displayName?.text || '',
+    rating: typeof p.rating === 'number' ? p.rating : 0,
+    userRatingCount: typeof p.userRatingCount === 'number' ? p.userRatingCount : 0,
+    address: p.formattedAddress || '',
+    averagePrice: priceLevelToAvg(p.priceLevel),
+    googleMapsUri: p.googleMapsUri || ''
+  })).filter((h) => h.name) : [];
+
+  hotels.sort((a, b) => {
+    if (b.rating !== a.rating) return b.rating - a.rating;
+    return b.userRatingCount - a.userRatingCount;
+  });
+
+  const top5 = hotels.slice(0, 5);
+  HOTELS_CACHE.set(queryText, { cachedAt: Date.now(), data: top5 });
+  return top5;
+}
+
 function resolveStaticPath(urlPathname) {
   const safePath = path.normalize(urlPathname).replace(/^([.][.][/\\])+/, '');
   let relativePath = safePath === '/' ? '/index.html' : safePath;
@@ -273,6 +330,27 @@ const server = http.createServer(async (req, res) => {
       sendJson(res, 200, { query: query.trim(), photoUrl, source });
     } catch (error) {
       sendJson(res, 404, { error: 'Failed to fetch place photo', message: error.message });
+    }
+    return;
+  }
+
+  if (requestUrl.pathname === '/api/hotels-top' && req.method === 'GET') {
+    const query = requestUrl.searchParams.get('query');
+    if (!query || query.trim().length < 2) {
+      sendJson(res, 400, { error: 'Invalid query parameter' });
+      return;
+    }
+
+    if (!GOOGLE_PLACES_API_KEY) {
+      sendJson(res, 503, { error: 'GOOGLE_PLACES_API_KEY is not configured' });
+      return;
+    }
+
+    try {
+      const hotels = await fetchTopHotels(query.trim());
+      sendJson(res, 200, { query: query.trim(), hotels, source: 'google_places_hotels' });
+    } catch (error) {
+      sendJson(res, 502, { error: 'Failed to fetch top hotels', message: error.message });
     }
     return;
   }

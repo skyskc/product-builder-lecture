@@ -351,6 +351,30 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     color: var(--muted);
 }
 
+.course-stop-list,
+.hotel-list {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 10px;
+}
+
+.course-stop-list li,
+.hotel-list li {
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.stop-title,
+.hotel-name {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.hotel-meta {
+    font-size: 0.88rem;
+}
+
 .selected-place {
     margin: 10px 0 16px;
     font-size: 0.92rem;
