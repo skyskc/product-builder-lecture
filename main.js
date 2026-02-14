@@ -523,6 +523,150 @@
                 ko: '민첩한 판단과 동료 중심 성향이 뚜렷해 로컬 동선에 안정적인 휴식 포인트를 섞는 구성이 좋습니다.',
                 en: 'His fast judgment and team-first nature fit routes mixing local movement with steady rest stops.'
             }
+        },
+        {
+            id: 'jungkook',
+            work: { ko: '방탄소년단 (BTS)', en: 'BTS' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '정국', en: 'Jungkook' },
+            portraitPage: 'Jungkook',
+            styles: ['shopping', 'night'],
+            mood: {
+                ko: '고집중 퍼포먼스와 완성도 집착이 강한 하이텐션 타입',
+                en: 'A high-intensity profile focused on performance precision and completion quality.'
+            },
+            reason: {
+                ko: '디테일 감각과 실행력이 뛰어나 트렌드 스팟과 야간 무드를 빠르게 이어 붙이는 동선이 잘 맞습니다.',
+                en: 'His detail focus and execution speed fit routes linking trend spots with energetic night scenes.'
+            }
+        },
+        {
+            id: 'rm',
+            work: { ko: '방탄소년단 (BTS)', en: 'BTS' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: 'RM', en: 'RM' },
+            portraitPage: 'RM_(musician)',
+            styles: ['art', 'history'],
+            mood: {
+                ko: '사유형 콘텐츠와 맥락 있는 공간에서 영감을 받는 분석형 타입',
+                en: 'An analytical profile inspired by thoughtful content and context-rich spaces.'
+            },
+            reason: {
+                ko: '텍스트·전시·도시 서사를 연결해 읽는 성향이 강해 뮤지엄/역사형 동선에서 몰입이 올라갑니다.',
+                en: 'His tendency to connect text, exhibitions, and urban narratives aligns with museum/history routes.'
+            }
+        },
+        {
+            id: 'jennie',
+            work: { ko: '블랙핑크 (BLACKPINK)', en: 'BLACKPINK' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '제니', en: 'Jennie' },
+            portraitPage: 'Jennie_(singer)',
+            styles: ['shopping', 'art'],
+            mood: {
+                ko: '스타일 밀도와 브랜드 감도를 중심으로 선택하는 큐레이션형 타입',
+                en: 'A curation-driven profile centered on style density and brand sensitivity.'
+            },
+            reason: {
+                ko: '비주얼 완성도와 공간 무드의 균형을 중시해 쇼핑/디자인 동선의 효율이 좋습니다.',
+                en: 'She values visual completeness and mood balance, making shopping/design routes highly efficient.'
+            }
+        },
+        {
+            id: 'jisoo',
+            work: { ko: '블랙핑크 (BLACKPINK)', en: 'BLACKPINK' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '지수', en: 'Jisoo' },
+            portraitPage: 'Jisoo',
+            styles: ['art', 'nature'],
+            mood: {
+                ko: '차분한 고급감과 안정된 페이스를 선호하는 밸런스형 타입',
+                en: 'A balanced profile preferring calm sophistication and steady pacing.'
+            },
+            reason: {
+                ko: '과하지 않은 동선에서 집중력이 살아나 전시/산책형 조합과 궁합이 좋습니다.',
+                en: 'Her focus rises in non-overloaded routes, matching exhibition-and-walk combinations.'
+            }
+        },
+        {
+            id: 'karina',
+            work: { ko: '에스파 (aespa)', en: 'aespa' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '카리나', en: 'Karina' },
+            portraitPage: 'Karina_(South_Korean_singer)',
+            styles: ['night', 'shopping'],
+            mood: {
+                ko: '선명한 콘셉트와 미래지향 무드를 선호하는 비주얼 중심 타입',
+                en: 'A visual-first profile drawn to sharp concepts and futuristic mood.'
+            },
+            reason: {
+                ko: '컨셉 몰입이 강해 야간 조명 포인트와 트렌드 상권을 결합한 구성이 어울립니다.',
+                en: 'Her concept immersion aligns with routes combining lit night points and trend districts.'
+            }
+        },
+        {
+            id: 'ma-dong-seok',
+            work: { ko: '부산행 / 범죄도시', en: 'Train to Busan / The Roundup' },
+            type: { ko: '영화배우', en: 'Film Actor' },
+            character: { ko: '마동석', en: 'Ma Dong-seok' },
+            portraitPage: 'Ma_Dong-seok',
+            styles: ['local', 'family'],
+            mood: {
+                ko: '직선적 에너지와 보호 본능이 강한 액션형 타입',
+                en: 'An action-oriented profile with direct energy and strong protective instinct.'
+            },
+            reason: {
+                ko: '현장감 있는 로컬 이동과 확실한 식사/휴식 포인트를 함께 두는 편이 만족도가 높습니다.',
+                en: 'He fits itineraries that combine grounded local movement with clear meal/rest anchors.'
+            }
+        },
+        {
+            id: 'kim-tae-ri',
+            work: { ko: '아가씨 / 2521', en: 'The Handmaiden / Twenty-Five Twenty-One' },
+            type: { ko: '영화배우', en: 'Film Actor' },
+            character: { ko: '김태리', en: 'Kim Tae-ri' },
+            portraitPage: 'Kim_Tae-ri',
+            styles: ['art', 'history'],
+            mood: {
+                ko: '서사 밀도와 감정 결을 섬세하게 따라가는 타입',
+                en: 'A profile that follows narrative density and emotional texture with precision.'
+            },
+            reason: {
+                ko: '장면의 미장센과 맥락을 중요하게 보는 성향이라 역사/전시형 동선이 설득력 있습니다.',
+                en: 'Her mise-en-scene sensitivity makes history/exhibition routes feel coherent and compelling.'
+            }
+        },
+        {
+            id: 'bae-doona',
+            work: { ko: '괴물 / 센스8', en: 'The Host / Sense8' },
+            type: { ko: '영화배우', en: 'Film Actor' },
+            character: { ko: '배두나', en: 'Bae Doona' },
+            portraitPage: 'Bae_Doona',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '실험적 분위기와 독립적 무드를 선호하는 도시형 타입',
+                en: 'An urban profile favoring experimental atmosphere and independent mood.'
+            },
+            reason: {
+                ko: '비정형 공간과 야간 톤에서 감도가 올라가 예술/야경 결합 코스가 잘 맞습니다.',
+                en: 'She resonates with irregular spaces and night tone, fitting art-plus-night routes.'
+            }
+        },
+        {
+            id: 'choi-min-sik',
+            work: { ko: '올드보이 / 신세계', en: 'Oldboy / New World' },
+            type: { ko: '영화배우', en: 'Film Actor' },
+            character: { ko: '최민식', en: 'Choi Min-sik' },
+            portraitPage: 'Choi_Min-sik',
+            styles: ['history', 'local'],
+            mood: {
+                ko: '강한 서사 압력과 현실 밀도를 중시하는 묵직한 타입',
+                en: 'A weighty profile prioritizing narrative pressure and grounded realism.'
+            },
+            reason: {
+                ko: '도시의 시간감과 거리의 결을 체감하는 로컬/역사 동선에서 몰입이 극대화됩니다.',
+                en: 'Immersion peaks in local-and-history routes that carry urban time depth and street texture.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -548,8 +692,51 @@
         'mira': 'assets/kcontent/mira.png',
         'zoey': 'assets/kcontent/zoey.png',
         'jinu': 'assets/kcontent/jinu.jpg',
-        'glenn-rhee': 'assets/kcontent/glenn-rhee.jpg'
+        'glenn-rhee': 'assets/kcontent/glenn-rhee.jpg',
+        'jungkook': 'assets/kcontent/jungkook.jpg',
+        'rm': 'assets/kcontent/rm.jpg',
+        'jennie': 'assets/kcontent/jennie.jpg',
+        'jisoo': 'assets/kcontent/jisoo.png',
+        'karina': 'assets/kcontent/karina.jpg',
+        'ma-dong-seok': 'assets/kcontent/ma-dong-seok.jpg',
+        'kim-tae-ri': 'assets/kcontent/kim-tae-ri.png',
+        'bae-doona': 'assets/kcontent/bae-doona.png',
+        'choi-min-sik': 'assets/kcontent/choi-min-sik.jpg'
     };
+    const KCONTENT_TRAIT_BY_STYLE = {
+        ko: {
+            history: '서사 밀도',
+            shopping: '트렌드 감각',
+            night: '야간 무드',
+            nature: '회복 리듬',
+            family: '안정 동선',
+            art: '전시 감도',
+            local: '로컬 밀착'
+        },
+        en: {
+            history: 'Narrative Depth',
+            shopping: 'Trend Sense',
+            night: 'Night Mood',
+            nature: 'Recovery Rhythm',
+            family: 'Stable Pace',
+            art: 'Gallery Vibe',
+            local: 'Local Texture'
+        }
+    };
+    const KCONTENT_FOOD_SPOTS = [
+        { name: '광장시장 빈대떡 골목', district: '종로구', styles: ['local', 'night'], desc: { ko: '현장감 있는 로컬 에너지', en: 'High-energy local street food vibe' } },
+        { name: '익선동 한옥 다이닝', district: '종로구', styles: ['art', 'history'], desc: { ko: '한옥 감성과 현대 플레이팅 조합', en: 'Hanok ambiance with modern plating' } },
+        { name: '망원동 미식 골목', district: '마포구', styles: ['local', 'shopping'], desc: { ko: '가성비와 트렌드가 공존', en: 'Budget-friendly yet trend-forward choices' } },
+        { name: '연남동 디저트 바', district: '마포구', styles: ['art', 'shopping'], desc: { ko: '비주얼 디저트와 감성 카페', en: 'Visual desserts and mood cafes' } },
+        { name: '성수 수제버거 라인', district: '성동구', styles: ['shopping', 'night'], desc: { ko: '힙한 공간과 강한 개성 메뉴', en: 'Hip venues with bold signature menus' } },
+        { name: '한남동 파인다이닝 스트리트', district: '용산구', styles: ['art', 'night'], desc: { ko: '디자인 감도 높은 저녁 코스', en: 'Design-forward evening dining routes' } },
+        { name: '이태원 글로벌 푸드존', district: '용산구', styles: ['night', 'local'], desc: { ko: '다국적 메뉴와 늦은 영업', en: 'Global menu options with late-night hours' } },
+        { name: '강남 모던 한식 코스', district: '강남구', styles: ['shopping', 'family'], desc: { ko: '접근성 좋은 고급 한식', en: 'Accessible premium Korean dining' } },
+        { name: '압구정 브런치 라운지', district: '강남구', styles: ['shopping', 'art'], desc: { ko: '스타일 중심 브런치 동선', en: 'Style-driven brunch itinerary stop' } },
+        { name: '서촌 전통주 바', district: '종로구', styles: ['history', 'night'], desc: { ko: '역사 거리와 어울리는 전통주 페어링', en: 'Traditional drink pairing in historic streets' } },
+        { name: '여의도 한강 야식 포인트', district: '영등포구', styles: ['night', 'family'], desc: { ko: '강변 산책 후 가벼운 야식', en: 'Light late bite after riverside walk' } },
+        { name: '송리단길 캐주얼 다이닝', district: '송파구', styles: ['nature', 'shopping'], desc: { ko: '석촌호수 인근 감성 식사', en: 'Mood dining near Seokchon Lake' } }
+    ];
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
@@ -1077,11 +1264,13 @@
             const descEl = document.getElementById('kcontent-result-page-desc');
             const whyTitle = document.getElementById('kcontent-why-title');
             const spotsTitle = document.getElementById('kcontent-spots-title');
+            const foodTitle = document.getElementById('kcontent-food-title');
             if (backEl) backEl.textContent = '← Choose Another Character';
             if (titleEl) titleEl.textContent = 'Character-Based Seoul Recommendation';
             if (descEl) descEl.textContent = 'A long-form interpretation and route recommendation based on your selected character.';
             if (whyTitle) whyTitle.textContent = 'Interpretation and Route Strategy';
             if (spotsTitle) spotsTitle.textContent = 'Recommended Places';
+            if (foodTitle) foodTitle.textContent = 'Recommended Food Spots';
         }
     }
 
@@ -2361,6 +2550,7 @@
         const summaryEl = opts.summaryEl;
         const chipsEl = opts.chipsEl;
         const listEl = opts.listEl;
+        const foodListEl = opts.foodListEl;
         const analysisEl = opts.analysisEl;
         if (!character || !summaryEl || !chipsEl || !listEl) return;
 
@@ -2374,9 +2564,9 @@
             : `${charName} (${workName}, ${typeName}) 해석: ${mood}. 해석 근거: ${reason}`;
 
         const styles = [...new Set(character.styles)];
-        chipsEl.innerHTML = styles.map((style) => {
-            const href = withCurrentLang(`course.html?style=${encodeURIComponent(style)}`);
-            return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
+        const traitLabels = styles.map((style) => KCONTENT_TRAIT_BY_STYLE[isEn ? 'en' : 'ko'][style] || getStyleLabel(style));
+        chipsEl.innerHTML = traitLabels.map((tag) => {
+            return `<span class="generation-chip">${escapeHtml(tag)}</span>`;
         }).join('');
 
         if (analysisEl) {
@@ -2404,6 +2594,16 @@
                 : `추천 이유: ${getPlaceName(place)}은(는) ${matched || '선택한 무드'}를 잘 반영하며, ${charName} 서사의 감정 리듬을 실제 여행 동선에 자연스럽게 연결해 줍니다.`;
             return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span><p class="saju-reason">${escapeHtml(placeReason)}</p></li>`;
         }).join('');
+
+        if (foodListEl) {
+            const foodPicks = KCONTENT_FOOD_SPOTS
+                .filter((food) => styles.some((style) => food.styles.includes(style)))
+                .slice(0, 6);
+            foodListEl.innerHTML = foodPicks.map((food, idx) => {
+                const why = isEn ? food.desc.en : food.desc.ko;
+                return `<li><strong>${idx + 1}. ${escapeHtml(food.name)}</strong> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(food.district))})</span><p class="saju-reason">${escapeHtml(why)}</p></li>`;
+            }).join('');
+        }
     }
 
     function renderKContentPage() {
@@ -2456,9 +2656,11 @@
         const chipsEl = document.getElementById('kcontent-style-chips');
         const analysisEl = document.getElementById('kcontent-why-analysis');
         const listEl = document.getElementById('kcontent-place-list');
+        const foodListEl = document.getElementById('kcontent-food-list');
         const whyTitleEl = document.getElementById('kcontent-why-title');
         const spotsTitleEl = document.getElementById('kcontent-spots-title');
-        if (!backEl || !pageTitleEl || !pageDescEl || !summaryEl || !chipsEl || !analysisEl || !listEl || !whyTitleEl || !spotsTitleEl) return;
+        const foodTitleEl = document.getElementById('kcontent-food-title');
+        if (!backEl || !pageTitleEl || !pageDescEl || !summaryEl || !chipsEl || !analysisEl || !listEl || !foodListEl || !whyTitleEl || !spotsTitleEl || !foodTitleEl) return;
 
         const isEn = CURRENT_LANG === 'en';
         const charId = getKContentCharacterIdFromQuery();
@@ -2472,8 +2674,9 @@
             : '선택한 캐릭터의 성향을 바탕으로, 긴 설명과 함께 서울 여행 동선을 추천합니다.';
         whyTitleEl.textContent = isEn ? 'Interpretation and Route Strategy' : '해석과 이동 전략';
         spotsTitleEl.textContent = isEn ? 'Recommended Places' : '추천 여행지';
+        foodTitleEl.textContent = isEn ? 'Recommended Food Spots' : '추천 맛집';
 
-        renderKContentResultByCharacter(character, { summaryEl, chipsEl, listEl, analysisEl });
+        renderKContentResultByCharacter(character, { summaryEl, chipsEl, listEl, foodListEl, analysisEl });
     }
 
     function init() {
