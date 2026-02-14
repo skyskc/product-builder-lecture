@@ -216,6 +216,11 @@ body {
     cursor: pointer;
 }
 
+.comments-section {
+    border-top: 1px solid var(--line);
+    padding: 16px;
+}
+
 @media (max-width: 640px) {
     .app-shell {
         padding: 0;
