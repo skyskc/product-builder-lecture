@@ -1,22 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lottery Number Generator</title>
+    <title>오늘 뭐 먹지? | 점심 메뉴 추천</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="toolbar">
-            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle theme">Light Mode</button>
-        </div>
-        <h1>Lottery Number Generator</h1>
-        <div class="card">
-            <div id="numbers" class="numbers-display"></div>
-            <button id="generate-btn" class="glowing-button">Generate Numbers</button>
-        </div>
-    </div>
+    <main class="app-shell">
+        <section class="feed-card" aria-live="polite">
+            <header class="feed-header">
+                <div class="brand-wrap">
+                    <h1 class="brand">Lunchstagram</h1>
+                    <p class="subtitle">오늘의 점심 메뉴를 추천해드려요</p>
+                </div>
+                <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드로 전환">Light</button>
+            </header>
+
+            <div class="category-strip" id="category-strip"></div>
+
+            <article class="post" id="menu-post">
+                <img id="food-image" class="food-image" src="" alt="추천 음식 사진">
+                <div class="post-content">
+                    <p class="meta" id="menu-category">한식</p>
+                    <h2 id="menu-title">김치찌개 정식</h2>
+                    <p id="menu-description">따뜻한 국물과 든든한 구성으로 점심에 좋은 메뉴</p>
+                    <p class="tags" id="menu-tags">#국물 #든든함 #직장인점심</p>
+                </div>
+            </article>
+
+            <div class="actions">
+                <button id="recommend-btn" class="recommend-btn" type="button">점심 메뉴 추천받기</button>
+            </div>
+        </section>
+    </main>
+
     <script src="main.js"></script>
 </body>
 </html>
