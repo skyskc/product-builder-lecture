@@ -319,6 +319,16 @@
         return json.hotels || [];
     }
 
+    async function fetchTopRestaurantsByMeal(district, meal) {
+        const response = await fetch(`/api/restaurants-top?district=${encodeURIComponent(district)}&meal=${encodeURIComponent(meal)}&limit=3`);
+        if (!response.ok) throw new Error(`Restaurants API request failed: ${response.status}`);
+        const json = await response.json();
+        return {
+            restaurants: json.restaurants || [],
+            broadcastPicks: json.broadcastPicks || []
+        };
+    }
+
     function renderReviews(reviewList, reviews) {
         reviewList.innerHTML = '';
         reviews.forEach((review) => {
@@ -418,7 +428,9 @@
         const stopListEl = document.getElementById('course-stop-list');
         const hotelListEl = document.getElementById('hotel-list');
         const hotelSourceEl = document.getElementById('hotel-source-note');
-        if (!styleSelect || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl) return;
+        const restaurantSourceEl = document.getElementById('restaurant-source-note');
+        const restaurantSectionsEl = document.getElementById('restaurant-sections');
+        if (!styleSelect || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
 
         const initialStyle = getStyleFromQuery();
         styleSelect.value = initialStyle;
@@ -507,6 +519,70 @@
                 });
                 hotelSourceEl.textContent = '숙소 데이터: Google API 연결 실패로 기본 추천 표시 중';
             }
+
+            const districts = [...new Set(filtered.map((place) => place.district))];
+            const mealConfig = [
+                { key: 'breakfast', label: '아침' },
+                { key: 'lunch', label: '점심' },
+                { key: 'dinner', label: '저녁' },
+                { key: 'drinks', label: '술자리' }
+            ];
+
+            restaurantSectionsEl.innerHTML = '';
+            let restaurantApiOk = true;
+
+            for (const district of districts) {
+                const districtBlock = document.createElement('article');
+                districtBlock.className = 'district-block';
+                districtBlock.innerHTML = `<h3>${district} 맛집 3곳씩 추천</h3><div class=\"meal-grid\"></div>`;
+                const mealGrid = districtBlock.querySelector('.meal-grid');
+
+                const mealResults = await Promise.all(mealConfig.map(async (meal) => {
+                    try {
+                        const data = await fetchTopRestaurantsByMeal(district, meal.key);
+                        return { ...meal, ...data, isFallback: false };
+                    } catch (_) {
+                        restaurantApiOk = false;
+                        return {
+                            ...meal,
+                            restaurants: [1, 2, 3].map((n) => ({
+                                name: `${district} ${meal.label} 추천 ${n}`,
+                                rating: (4.2 + n * 0.1).toFixed(1),
+                                userRatingCount: 1000 + n * 300,
+                                address: `${district} 인기 상권`,
+                                averagePrice: `약 ₩${(9000 + n * 6000).toLocaleString()}`,
+                                googleMapsUri: ''
+                            })),
+                            broadcastPicks: [],
+                            isFallback: true
+                        };
+                    }
+                }));
+
+                mealResults.forEach((mealData) => {
+                    const mealCard = document.createElement('section');
+                    mealCard.className = 'meal-card';
+                    const rows = mealData.restaurants.slice(0, 3).map((r, idx) => {
+                        const matchedBroadcast = (mealData.broadcastPicks || []).find((pick) => r.name.includes(pick.name) || pick.name.includes(r.name));
+                        const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${matchedBroadcast.show}</span>` : '';
+                        const mapLink = r.googleMapsUri ? ` · <a class=\"text-link\" href=\"${r.googleMapsUri}\" target=\"_blank\" rel=\"noopener noreferrer\">지도</a>` : '';
+                        return `<li><span class=\"hotel-name\">${idx + 1}. ${r.name}</span>${broadcastTag}<br><span class=\"hotel-meta\">평점 ${r.rating || '-'} / 리뷰 ${(r.userRatingCount || 0).toLocaleString()} / 평균가격 ${r.averagePrice || '-'}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
+                    }).join('');
+
+                    const extraBroadcast = (mealData.broadcastPicks || []).filter((pick) => !mealData.restaurants.some((r) => r.name.includes(pick.name) || pick.name.includes(r.name)));
+                    const curation = extraBroadcast.length
+                        ? `<p class=\"data-source-note\">방송 큐레이션: ${extraBroadcast.map((pick) => `${pick.name}(${pick.show})`).join(', ')}</p>`
+                        : '';
+                    mealCard.innerHTML = `<h4>${mealData.label}</h4><ul>${rows}</ul>${curation}`;
+                    mealGrid.appendChild(mealCard);
+                });
+
+                restaurantSectionsEl.appendChild(districtBlock);
+            }
+
+            restaurantSourceEl.textContent = restaurantApiOk
+                ? '맛집 데이터: Google 평점/리뷰 우선 + 방송 큐레이션(또간집/맛있는 녀석들)'
+                : '맛집 데이터: 일부 Google API 실패로 기본 추천을 함께 표시 중';
         }
 
         styleSelect.addEventListener('change', drawCourse);

@@ -365,6 +365,66 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     line-height: 1.55;
 }
 
+.restaurant-sections {
+    display: grid;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.district-block {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--card);
+}
+
+.district-block h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+}
+
+.meal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.meal-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px;
+    background: var(--card);
+}
+
+.meal-card h4 {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+}
+
+.meal-card ul {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+}
+
+.meal-card li {
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 0.86rem;
+}
+
+.broadcast-chip {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--chip);
+    color: var(--text);
+}
+
 .course-time-slots {
     margin-top: 14px;
     display: grid;
@@ -485,6 +545,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .course-time-slots {
+        grid-template-columns: 1fr;
+    }
+
+    .meal-grid {
         grid-template-columns: 1fr;
     }
 }
