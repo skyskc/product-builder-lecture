@@ -486,8 +486,9 @@
         const navLinks = document.querySelectorAll('.top-nav a');
         if (navLinks[0]) navLinks[0].textContent = 'Places';
         if (navLinks[1]) navLinks[1].textContent = 'Courses';
-        if (navLinks[2]) navLinks[2].textContent = 'Partner';
-        if (navLinks[3]) navLinks[3].textContent = 'Comments';
+        if (navLinks[2]) navLinks[2].textContent = 'By Generation';
+        if (navLinks[3]) navLinks[3].textContent = 'Partner';
+        if (navLinks[4]) navLinks[4].textContent = 'Comments';
 
         const footerLinks = document.querySelectorAll('.footer-inner nav a');
         if (footerLinks[0]) footerLinks[0].textContent = 'About';
@@ -580,6 +581,14 @@
             if (eyebrow) eyebrow.textContent = 'Community';
             if (h1) h1.textContent = 'Travel Comments';
         }
+        if (page === 'generation') {
+            const heroTitle = document.getElementById('generation-hero-title');
+            const heroDesc = document.getElementById('generation-hero-desc');
+            const panelTitle = document.getElementById('generation-panel-title');
+            if (heroTitle) heroTitle.textContent = 'Seoul Courses by Age Group';
+            if (heroDesc) heroDesc.textContent = 'Pick an itinerary pattern that best matches travel pace, interests, and group profile.';
+            if (panelTitle) panelTitle.textContent = 'Recommended Scenarios by Generation';
+        }
     }
 
     function syncInternalLinksWithLanguage() {
@@ -625,12 +634,14 @@
 
     function updateTopNavLinks(id) {
         const courseLink = document.getElementById('course-link');
+        const generationLink = document.getElementById('generation-link');
         const partnerLink = document.getElementById('partner-link');
         const commentsLink = document.getElementById('comments-link');
         const place = placeMap[id];
         if (courseLink && place) {
             courseLink.href = withCurrentLang(`course.html?style=${encodeURIComponent(place.styles[0])}`);
         }
+        if (generationLink) generationLink.href = withCurrentLang('generation.html');
         if (partnerLink) partnerLink.href = getPlaceLink('partner.html', id);
         if (commentsLink) commentsLink.href = getPlaceLink('comments.html', id);
     }
@@ -641,8 +652,9 @@
         links.forEach((link) => link.classList.remove('active'));
         if (page === 'home' || page === 'place') links[0]?.classList.add('active');
         if (page === 'course') links[1]?.classList.add('active');
-        if (page === 'partner') links[2]?.classList.add('active');
-        if (page === 'comments') links[3]?.classList.add('active');
+        if (page === 'generation') links[2]?.classList.add('active');
+        if (page === 'partner') links[3]?.classList.add('active');
+        if (page === 'comments') links[4]?.classList.add('active');
     }
 
     function applyTheme(theme) {

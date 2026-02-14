@@ -615,6 +615,28 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.generation-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.generation-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--card);
+}
+
+.generation-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.generation-card p {
+    margin-top: 0;
+}
+
 .trust-grid article {
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -912,6 +934,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .trust-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .generation-grid {
         grid-template-columns: 1fr;
     }
 
