@@ -480,6 +480,80 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     margin-top: 24px;
 }
 
+.travel-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.tool-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--card);
+}
+
+.tool-intro {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+}
+
+.phrase-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.phrase-item {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 10px;
+    background: var(--card);
+}
+
+.phrase-kr {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.phrase-sub {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.phrase-copy-btn {
+    margin-top: 7px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 10px;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--muted);
+    background: var(--card);
+}
+
+.phrase-copy-btn:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: var(--chip);
+}
+
+.fx-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.fx-grid label {
+    margin-top: 2px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+
 .trust-grid {
     display: grid;
     gap: 12px;
@@ -783,6 +857,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .meal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .travel-tools-grid {
         grid-template-columns: 1fr;
     }
 

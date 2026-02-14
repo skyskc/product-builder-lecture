@@ -92,6 +92,35 @@
             <div id="place-grid" class="place-grid"></div>
         </section>
 
+        <section class="panel traveler-tools-panel">
+            <h2 id="travel-kit-title">외국인 여행자 실전 도구</h2>
+            <p id="travel-kit-intro">현장에서 바로 쓸 수 있는 한국어 표현과 환율 계산기를 제공합니다.</p>
+
+            <div class="travel-tools-grid">
+                <article class="tool-card">
+                    <h3 id="phrase-tool-title">필수 한국어 표현 (터치 복사)</h3>
+                    <div id="phrase-grid" class="phrase-grid"></div>
+                    <p id="phrase-copy-status" class="data-source-note"></p>
+                </article>
+
+                <article class="tool-card">
+                    <h3 id="fx-tool-title">USD ↔ KRW 빠른 계산기</h3>
+                    <p id="fx-tool-intro" class="tool-intro">예산을 원화/달러로 빠르게 변환해 식비, 교통비, 쇼핑비를 가늠하세요.</p>
+                    <div class="fx-grid">
+                        <label for="krw-input" id="krw-input-label">원화 (KRW)</label>
+                        <input id="krw-input" class="search-input" type="text" inputmode="decimal" placeholder="예: 50000">
+
+                        <label for="usd-input" id="usd-input-label">달러 (USD)</label>
+                        <input id="usd-input" class="search-input" type="text" inputmode="decimal" placeholder="예: 36">
+
+                        <label for="fx-rate-input" id="fx-rate-label">환율 (1 USD = KRW)</label>
+                        <input id="fx-rate-input" class="search-input" type="text" inputmode="decimal" value="1400">
+                    </div>
+                    <p id="fx-rate-note" class="data-source-note">참고용 계산값이며 결제 시점 환율/수수료와 다를 수 있습니다.</p>
+                </article>
+            </div>
+        </section>
+
         <section class="panel trust-panel">
             <h2>운영 원칙</h2>
             <div class="trust-grid">

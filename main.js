@@ -45,6 +45,38 @@
             'family-trip': 'Family Trip'
         }
     };
+    const ESSENTIAL_PHRASES = [
+        {
+            ko: '이 주소로 가 주세요.',
+            roman: 'I juso-ro ga juseyo.',
+            en: 'Please take me to this address.'
+        },
+        {
+            ko: '카드 결제 가능한가요?',
+            roman: 'Kadeu gyeolje ganeunghangayo?',
+            en: 'Can I pay by card?'
+        },
+        {
+            ko: '매운 음식은 빼 주세요.',
+            roman: 'Maeun eumsigeun ppae juseyo.',
+            en: 'Please make it not spicy.'
+        },
+        {
+            ko: '지하철역이 어디예요?',
+            roman: 'Jihacheol-yeogi eodiyeyo?',
+            en: 'Where is the subway station?'
+        },
+        {
+            ko: '화장실이 어디예요?',
+            roman: 'Hwajangsil-i eodiyeyo?',
+            en: 'Where is the restroom?'
+        },
+        {
+            ko: '도와주세요.',
+            roman: 'Dowajuseyo.',
+            en: 'Please help me.'
+        }
+    ];
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
@@ -691,6 +723,146 @@
         return fallbackUrl;
     }
 
+    function parseNumber(value) {
+        const numeric = Number(String(value || '').replace(/,/g, '').trim());
+        if (!Number.isFinite(numeric)) return null;
+        return numeric;
+    }
+
+    function formatNumber(value, maxFractionDigits = 0) {
+        const locale = CURRENT_LANG === 'en' ? 'en-US' : 'ko-KR';
+        return new Intl.NumberFormat(locale, { maximumFractionDigits: maxFractionDigits }).format(value);
+    }
+
+    async function copyToClipboard(text) {
+        const plain = String(text || '');
+        if (!plain) return false;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(plain);
+            return true;
+        }
+        const temp = document.createElement('textarea');
+        temp.value = plain;
+        temp.setAttribute('readonly', 'readonly');
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        const copied = document.execCommand('copy');
+        document.body.removeChild(temp);
+        return copied;
+    }
+
+    function renderTravelerTools() {
+        const titleEl = document.getElementById('travel-kit-title');
+        const introEl = document.getElementById('travel-kit-intro');
+        const phraseTitleEl = document.getElementById('phrase-tool-title');
+        const phraseGridEl = document.getElementById('phrase-grid');
+        const phraseStatusEl = document.getElementById('phrase-copy-status');
+        const fxTitleEl = document.getElementById('fx-tool-title');
+        const fxIntroEl = document.getElementById('fx-tool-intro');
+        const krwLabelEl = document.getElementById('krw-input-label');
+        const usdLabelEl = document.getElementById('usd-input-label');
+        const rateLabelEl = document.getElementById('fx-rate-label');
+        const rateNoteEl = document.getElementById('fx-rate-note');
+        const krwInput = document.getElementById('krw-input');
+        const usdInput = document.getElementById('usd-input');
+        const rateInput = document.getElementById('fx-rate-input');
+        if (!titleEl || !introEl || !phraseTitleEl || !phraseGridEl || !phraseStatusEl || !fxTitleEl || !fxIntroEl || !krwLabelEl || !usdLabelEl || !rateLabelEl || !rateNoteEl || !krwInput || !usdInput || !rateInput) return;
+
+        const isEn = CURRENT_LANG === 'en';
+        titleEl.textContent = isEn ? 'Practical Tools for First-Time Visitors' : '외국인 여행자 실전 도구';
+        introEl.textContent = isEn
+            ? 'Use ready-to-show Korean phrases and a quick exchange converter on the go.'
+            : '현장에서 바로 쓸 수 있는 한국어 표현과 환율 계산기를 제공합니다.';
+        phraseTitleEl.textContent = isEn ? 'Essential Korean Phrases (Tap to Copy)' : '필수 한국어 표현 (터치 복사)';
+        fxTitleEl.textContent = isEn ? 'USD ↔ KRW Quick Converter' : 'USD ↔ KRW 빠른 계산기';
+        fxIntroEl.textContent = isEn
+            ? 'Convert travel budget, food, transportation, and shopping costs instantly.'
+            : '예산을 원화/달러로 빠르게 변환해 식비, 교통비, 쇼핑비를 가늠하세요.';
+        krwLabelEl.textContent = isEn ? 'Korean Won (KRW)' : '원화 (KRW)';
+        usdLabelEl.textContent = isEn ? 'US Dollar (USD)' : '달러 (USD)';
+        rateLabelEl.textContent = isEn ? 'Exchange Rate (1 USD = KRW)' : '환율 (1 USD = KRW)';
+        rateNoteEl.textContent = isEn
+            ? 'Reference-only estimate. Final card/cash amount may differ due to fees.'
+            : '참고용 계산값이며 결제 시점 환율/수수료와 다를 수 있습니다.';
+        krwInput.placeholder = isEn ? 'e.g. 50,000' : '예: 50000';
+        usdInput.placeholder = isEn ? 'e.g. 36' : '예: 36';
+
+        phraseGridEl.innerHTML = ESSENTIAL_PHRASES.map((phrase) => `
+            <article class="phrase-item">
+                <p class="phrase-kr">${escapeHtml(phrase.ko)}</p>
+                <p class="phrase-sub">${escapeHtml(phrase.roman)}</p>
+                <p class="phrase-sub">${escapeHtml(phrase.en)}</p>
+                <button class="phrase-copy-btn" type="button" data-copy="${escapeHtml(phrase.ko)}">
+                    ${isEn ? 'Copy Korean Sentence' : '한국어 문장 복사'}
+                </button>
+            </article>
+        `).join('');
+
+        phraseGridEl.onclick = async (event) => {
+            const button = event.target.closest('.phrase-copy-btn');
+            if (!button) return;
+            const text = button.getAttribute('data-copy') || '';
+            try {
+                const copied = await copyToClipboard(text);
+                phraseStatusEl.textContent = copied
+                    ? (isEn ? 'Copied to clipboard.' : '클립보드에 복사되었습니다.')
+                    : (isEn ? 'Copy failed. Please copy manually.' : '복사에 실패했습니다. 직접 복사해주세요.');
+            } catch (_) {
+                phraseStatusEl.textContent = isEn ? 'Copy failed. Please copy manually.' : '복사에 실패했습니다. 직접 복사해주세요.';
+            }
+        };
+
+        let syncing = false;
+        const syncFromKrw = () => {
+            if (syncing) return;
+            const rate = parseNumber(rateInput.value);
+            const krw = parseNumber(krwInput.value);
+            if (!rate || rate <= 0 || krw === null) {
+                usdInput.value = '';
+                return;
+            }
+            syncing = true;
+            usdInput.value = formatNumber(krw / rate, 2);
+            syncing = false;
+        };
+        const syncFromUsd = () => {
+            if (syncing) return;
+            const rate = parseNumber(rateInput.value);
+            const usd = parseNumber(usdInput.value);
+            if (!rate || rate <= 0 || usd === null) {
+                krwInput.value = '';
+                return;
+            }
+            syncing = true;
+            krwInput.value = formatNumber(usd * rate, 0);
+            syncing = false;
+        };
+        const normalizeField = (inputEl, fractionDigits) => {
+            const numeric = parseNumber(inputEl.value);
+            if (numeric === null) return;
+            inputEl.value = formatNumber(numeric, fractionDigits);
+        };
+
+        krwInput.oninput = syncFromKrw;
+        usdInput.oninput = syncFromUsd;
+        rateInput.oninput = () => {
+            if (document.activeElement === usdInput) syncFromUsd();
+            else syncFromKrw();
+        };
+        krwInput.onblur = () => normalizeField(krwInput, 0);
+        usdInput.onblur = () => normalizeField(usdInput, 2);
+        rateInput.onblur = () => normalizeField(rateInput, 2);
+
+        if (!krwInput.value.trim() && !usdInput.value.trim()) {
+            krwInput.value = '50000';
+        }
+        syncFromKrw();
+        normalizeField(krwInput, 0);
+        normalizeField(rateInput, 2);
+    }
+
     function createPlaceCard(place) {
         const card = document.createElement('article');
         card.className = 'place-card';
@@ -837,6 +1009,7 @@
                 button.textContent = TAG_LABELS_BY_LANG.en[tagKey] || button.textContent;
             });
         }
+        renderTravelerTools();
         searchInput.value = searchQuery;
         sortSelect.value = selectedSort;
         styleTabs.addEventListener('click', (event) => {
