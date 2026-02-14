@@ -154,156 +154,296 @@
             walk: 'low'
         }
     ];
-    const KCONTENT_CATALOG = [
+    const KCONTENT_IMAGE_FALLBACK = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="%23dbe8ff"/><stop offset="1" stop-color="%23c7dcff"/></linearGradient></defs><rect width="420" height="420" rx="30" fill="url(%23g)"/><circle cx="210" cy="165" r="70" fill="%23ffffff" fill-opacity="0.82"/><rect x="90" y="255" width="240" height="100" rx="50" fill="%23ffffff" fill-opacity="0.82"/></svg>';
+    const KCONTENT_IMAGE_CACHE = new Map();
+    const KCONTENT_CHARACTERS = [
         {
+            id: 'gi-hun',
             work: { ko: '오징어 게임', en: 'Squid Game' },
             type: { ko: '드라마', en: 'Drama' },
-            characters: [
-                {
-                    name: { ko: '성기훈', en: 'Seong Gi-hun' },
-                    styles: ['local', 'history'],
-                    mood: {
-                        ko: '사람 냄새 나는 골목과 오래된 동네의 서사를 통해 감정선을 회복하는 타입',
-                        en: 'A profile that reconnects through old neighborhoods and human-centered local streets'
-                    },
-                    reason: {
-                        ko: '현실 감각과 생존 본능이 강한 캐릭터라, 화려함보다 지역의 결을 느끼는 장소와 궁합이 좋습니다.',
-                        en: 'This character leans toward grounded survival instincts, matching places with local texture over flashy spectacle.'
-                    }
-                },
-                {
-                    name: { ko: '프론트맨', en: 'Front Man' },
-                    styles: ['night', 'art'],
-                    mood: {
-                        ko: '통제된 공간, 긴장감 있는 야간 무드, 구조적 미학을 선호하는 타입',
-                        en: 'A profile drawn to controlled spaces, tension-heavy night scenes, and structured aesthetics'
-                    },
-                    reason: {
-                        ko: '질서와 연출의 힘이 큰 캐릭터라, 전망/야경과 디자인적 완성도가 높은 공간에서 몰입도가 올라갑니다.',
-                        en: 'Because this character is defined by control and staging, night-view and design-led places create stronger immersion.'
-                    }
-                }
-            ]
+            character: { ko: '성기훈', en: 'Seong Gi-hun' },
+            portraitPage: 'Lee_Jung-jae',
+            styles: ['local', 'history'],
+            mood: {
+                ko: '감정선이 큰 폭으로 흔들리지만 결국 사람 사이의 온도로 회복되는 타입',
+                en: 'A profile that swings emotionally yet regains balance through human warmth.'
+            },
+            reason: {
+                ko: '극한 상황에서도 사람을 포기하지 않는 결이 강해, 오래된 골목과 생활권 중심 동선에서 몰입이 깊어집니다.',
+                en: 'Because his arc never fully abandons people even under pressure, lived-in districts and old streets feel most immersive.'
+            }
         },
         {
+            id: 'sae-byeok',
+            work: { ko: '오징어 게임', en: 'Squid Game' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '강새벽', en: 'Kang Sae-byeok' },
+            portraitPage: 'HoYeon_Jung',
+            styles: ['night', 'local'],
+            mood: {
+                ko: '과묵한 경계심과 빠른 상황 판단으로 도시의 이면을 읽는 타입',
+                en: 'A guarded, fast-reading profile that navigates the hidden layers of the city.'
+            },
+            reason: {
+                ko: '절제된 감정과 생존형 시선이 강해, 야간 무드와 로컬 마켓이 섞인 코스가 설득력 있습니다.',
+                en: 'With restrained emotion and survival instinct, mixed night scenes and local-market routes fit best.'
+            }
+        },
+        {
+            id: 'front-man',
+            work: { ko: '오징어 게임', en: 'Squid Game' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '프론트맨', en: 'Front Man' },
+            portraitPage: 'Lee_Byung-hun',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '통제와 긴장, 미장센 중심의 구조적 공간을 선호하는 타입',
+                en: 'A profile drawn to control, tension, and composition-driven spaces.'
+            },
+            reason: {
+                ko: '질서와 연출을 중시하는 성향이라 전망/야경과 건축 미학이 또렷한 장소에서 만족도가 높습니다.',
+                en: 'His control-oriented stance matches view-heavy night spots and architecturally strong venues.'
+            }
+        },
+        {
+            id: 'yoon-se-ri',
+            work: { ko: '사랑의 불시착', en: 'Crash Landing on You' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '윤세리', en: 'Yoon Se-ri' },
+            portraitPage: 'Son_Ye-jin',
+            styles: ['shopping', 'art'],
+            mood: {
+                ko: '세련된 감각과 실행력이 결합되어 트렌드와 품격을 함께 보는 타입',
+                en: 'A refined and decisive profile balancing trend awareness with elegance.'
+            },
+            reason: {
+                ko: '브랜드 감도와 디테일 취향이 강해, 쇼핑 중심지와 디자인 스팟이 결합된 동선이 잘 맞습니다.',
+                en: 'Her brand sensitivity and detail focus align with routes combining shopping cores and design spaces.'
+            }
+        },
+        {
+            id: 'ri-jeong-hyeok',
+            work: { ko: '사랑의 불시착', en: 'Crash Landing on You' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '리정혁', en: 'Ri Jeong-hyeok' },
+            portraitPage: 'Hyun_Bin',
+            styles: ['nature', 'history'],
+            mood: {
+                ko: '절제된 태도와 책임감으로 조용한 서사를 쌓는 타입',
+                en: 'A restrained and dutiful profile that builds quiet narrative momentum.'
+            },
+            reason: {
+                ko: '감정 표현은 절제되어도 깊이가 큰 캐릭터라, 고궁/강변처럼 정적인 장소에서 강점이 살아납니다.',
+                en: 'Though emotionally restrained, his depth resonates in serene routes such as palaces and riverside walks.'
+            }
+        },
+        {
+            id: 'kim-shin',
+            work: { ko: '도깨비', en: 'Guardian: The Lonely and Great God' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '김신', en: 'Kim Shin' },
+            portraitPage: 'Gong_Yoo',
+            styles: ['history', 'night'],
+            mood: {
+                ko: '시간의 축적과 운명 서사를 동시에 품는 타입',
+                en: 'A profile that carries both accumulated time and destiny-driven narrative.'
+            },
+            reason: {
+                ko: '장기적 서사에 강한 캐릭터라, 역사 공간과 야간 풍경의 대비가 큰 코스에서 해석이 선명해집니다.',
+                en: 'His long-arc narrative shines on routes contrasting heritage sites with cinematic night views.'
+            }
+        },
+        {
+            id: 'woo-young-woo',
+            work: { ko: '이상한 변호사 우영우', en: 'Extraordinary Attorney Woo' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '우영우', en: 'Woo Young-woo' },
+            portraitPage: 'Park_Eun-bin',
+            styles: ['art', 'nature'],
+            mood: {
+                ko: '관찰력과 몰입력이 높아 정교한 디테일을 천천히 즐기는 타입',
+                en: 'A highly observant profile that enjoys detail through focused, slower immersion.'
+            },
+            reason: {
+                ko: '세밀한 인지 방식이 강해 전시/뮤지엄과 산책형 동선을 조합할 때 여행 만족이 높습니다.',
+                en: 'Her detail-first cognition works especially well with museum-plus-walk combinations.'
+            }
+        },
+        {
+            id: 'moon-dong-eun',
             work: { ko: '더 글로리', en: 'The Glory' },
             type: { ko: '드라마', en: 'Drama' },
-            characters: [
-                {
-                    name: { ko: '문동은', en: 'Moon Dong-eun' },
-                    styles: ['art', 'history'],
-                    mood: {
-                        ko: '정교한 계획, 감정 절제, 서사가 축적되는 공간을 선호하는 타입',
-                        en: 'A profile that values precision, restraint, and spaces with layered narrative'
-                    },
-                    reason: {
-                        ko: '감정의 밀도와 구조가 중요한 캐릭터라, 전시/역사형 공간처럼 맥락이 깊은 동선이 어울립니다.',
-                        en: 'This character thrives in context-rich routes where narrative depth matters, such as art and history spaces.'
-                    }
-                },
-                {
-                    name: { ko: '주여정', en: 'Joo Yeo-jeong' },
-                    styles: ['nature', 'art'],
-                    mood: {
-                        ko: '차분한 회복, 공감, 정서적 환기가 가능한 장소를 선호하는 타입',
-                        en: 'A profile favoring calm recovery, empathy, and emotionally ventilating places'
-                    },
-                    reason: {
-                        ko: '돌봄과 치유 성향이 강해, 자연과 예술이 결합된 완만한 페이스의 코스가 잘 맞습니다.',
-                        en: 'With strong healing tendencies, blended nature-art routes with gentle pacing are the best fit.'
-                    }
-                }
-            ]
+            character: { ko: '문동은', en: 'Moon Dong-eun' },
+            portraitPage: 'Song_Hye-kyo',
+            styles: ['art', 'history'],
+            mood: {
+                ko: '차갑게 정돈된 계획성과 서사적 축적을 중시하는 타입',
+                en: 'A controlled profile centered on precision and narrative accumulation.'
+            },
+            reason: {
+                ko: '장면의 맥락과 구조를 읽는 힘이 강해, 역사-전시형 코스에서 해석 일관성이 높습니다.',
+                en: 'Her strength in reading structural context makes history-and-exhibition routes especially coherent.'
+            }
         },
         {
+            id: 'park-sae-ro-yi',
+            work: { ko: '이태원 클라쓰', en: 'Itaewon Class' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '박새로이', en: 'Park Sae-ro-yi' },
+            portraitPage: 'Park_Seo-joon',
+            styles: ['local', 'shopping'],
+            mood: {
+                ko: '직진형 추진력과 관계 기반 성장 서사를 동시에 가진 타입',
+                en: 'A direct, momentum-driven profile with strong relationship-based growth.'
+            },
+            reason: {
+                ko: '현장 실행력이 강해 로컬 상권과 트렌드 지역을 빠르게 순환하는 동선이 잘 맞습니다.',
+                en: 'His operational drive matches fast loops through local business streets and trend districts.'
+            }
+        },
+        {
+            id: 'vincenzo',
+            work: { ko: '빈센조', en: 'Vincenzo' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '빈센조 카사노', en: 'Vincenzo Cassano' },
+            portraitPage: 'Song_Joong-ki',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '냉정한 계산과 스타일리시한 연출을 결합하는 타입',
+                en: 'A profile blending cool calculation with stylish staging.'
+            },
+            reason: {
+                ko: '극적인 연출 감각이 커서, 야경과 디자인 밀도가 높은 공간에서 캐릭터 톤이 자연스럽게 이어집니다.',
+                en: 'His dramatic style aligns with night-view and design-dense destinations.'
+            }
+        },
+        {
+            id: 'yoon-ji-woo',
+            work: { ko: '마이 네임', en: 'My Name' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '윤지우', en: 'Yoon Ji-woo' },
+            portraitPage: 'Han_So-hee',
+            styles: ['night', 'nature'],
+            mood: {
+                ko: '강한 의지와 긴장 지속력이 높아 몰입형 야간 동선에 강한 타입',
+                en: 'A strong-willed profile with sustained focus for high-immersion night routes.'
+            },
+            reason: {
+                ko: '감정 압력이 큰 캐릭터라 야간 포인트 후 자연 공간에서 완급을 조절하는 구성이 효과적입니다.',
+                en: 'Given her high emotional pressure, pairing intense night spots with calming nature breaks works best.'
+            }
+        },
+        {
+            id: 'cha-hyun-su',
+            work: { ko: '스위트홈', en: 'Sweet Home' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '차현수', en: 'Cha Hyun-su' },
+            portraitPage: 'Song_Kang',
+            styles: ['night', 'local'],
+            mood: {
+                ko: '불안과 회복을 오가며 자극과 안정의 균형을 찾는 타입',
+                en: 'A profile oscillating between anxiety and recovery, seeking balance between stimulus and calm.'
+            },
+            reason: {
+                ko: '긴장-완화 리듬이 중요한 캐릭터라, 야간 명소와 생활권 코스를 함께 배치하면 체감이 좋습니다.',
+                en: 'Because rhythm matters here, a mix of night landmarks and neighborhood routes is effective.'
+            }
+        },
+        {
+            id: 'lee-chang',
+            work: { ko: '킹덤', en: 'Kingdom' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '이창', en: 'Crown Prince Lee Chang' },
+            portraitPage: 'Ju_Ji-hoon',
+            styles: ['history', 'nature'],
+            mood: {
+                ko: '책임감과 위기 대응이 중심인 리더형 타입',
+                en: 'A leadership profile centered on duty and crisis response.'
+            },
+            reason: {
+                ko: '시대극 기반 리더 서사라 궁궐과 자연 지형을 함께 도는 흐름이 가장 설득력 있습니다.',
+                en: 'As a period-lead archetype, routes combining palaces and natural terrain feel most authentic.'
+            }
+        },
+        {
+            id: 'jang-tae-sang',
             work: { ko: '경성크리처', en: 'Gyeongseong Creature' },
             type: { ko: '드라마', en: 'Drama' },
-            characters: [
-                {
-                    name: { ko: '장태상', en: 'Jang Tae-sang' },
-                    styles: ['history', 'local'],
-                    mood: {
-                        ko: '격변기 서사, 도시의 역사 결, 현실적인 이동 동선을 중시하는 타입',
-                        en: 'A profile aligned with turbulent-era stories, historical city texture, and practical movement'
-                    },
-                    reason: {
-                        ko: '시대성·장소성이 핵심인 캐릭터라, 역사 유적과 로컬 시장이 결합된 코스가 설득력이 높습니다.',
-                        en: 'Since era and place are core to this character, routes combining heritage sites and local markets feel most coherent.'
-                    }
-                },
-                {
-                    name: { ko: '윤채옥', en: 'Yoon Chae-ok' },
-                    styles: ['night', 'history'],
-                    mood: {
-                        ko: '긴장 속 집중력, 야간 잠입형 동선, 강한 목적 지향성을 가진 타입',
-                        en: 'A profile with high focus under tension, night-oriented routes, and mission-like movement'
-                    },
-                    reason: {
-                        ko: '목표 지향성이 뚜렷해 야경 포인트와 역사 공간의 대비를 살린 코스에서 몰입이 높습니다.',
-                        en: 'With strong mission focus, contrast between night viewpoints and historical locations amplifies immersion.'
-                    }
-                }
-            ]
+            character: { ko: '장태상', en: 'Jang Tae-sang' },
+            portraitPage: 'Park_Seo-joon',
+            styles: ['history', 'local'],
+            mood: {
+                ko: '시대 전환기의 생존 감각과 인간적 관계성을 함께 보는 타입',
+                en: 'A profile balancing survival instincts and relational nuance in transitional eras.'
+            },
+            reason: {
+                ko: '역사적 밀도와 현실 동선이 함께 살아야 해석이 완성되어, 로컬+역사 조합이 적합합니다.',
+                en: 'This character reads best when historical density and practical movement coexist.'
+            }
         },
         {
-            work: { ko: '기생수: 더 그레이', en: 'Parasyte: The Grey' },
+            id: 'seok-woo',
+            work: { ko: '부산행', en: 'Train to Busan' },
+            type: { ko: '영화', en: 'Film' },
+            character: { ko: '서석우', en: 'Seok-woo' },
+            portraitPage: 'Gong_Yoo',
+            styles: ['family', 'night'],
+            mood: {
+                ko: '방어적 현실주의에서 책임 중심 태도로 전환되는 타입',
+                en: 'A profile shifting from defensive realism to responsibility-first action.'
+            },
+            reason: {
+                ko: '보호 본능이 강화되는 서사라, 가족/테마 동선에 야간 포인트를 가볍게 섞는 구성이 좋습니다.',
+                en: 'His protective arc pairs well with family-themed routes plus selective night highlights.'
+            }
+        },
+        {
+            id: 'kim-ki-taek',
+            work: { ko: '기생충', en: 'Parasite' },
+            type: { ko: '영화', en: 'Film' },
+            character: { ko: '김기택', en: 'Kim Ki-taek' },
+            portraitPage: 'Song_Kang-ho',
+            styles: ['local', 'history'],
+            mood: {
+                ko: '계층 감각과 생활 밀착형 현실 인지가 강한 타입',
+                en: 'A profile with strong class-awareness and grounded daily-life perception.'
+            },
+            reason: {
+                ko: '도시의 층위를 읽는 힘이 큰 캐릭터라, 로컬 생활권과 역사 맥락을 함께 보는 코스가 어울립니다.',
+                en: 'His urban-layer awareness fits routes that connect local neighborhoods and historical context.'
+            }
+        },
+        {
+            id: 'kim-bong-seok',
+            work: { ko: '무빙', en: 'Moving' },
             type: { ko: '드라마', en: 'Drama' },
-            characters: [
-                {
-                    name: { ko: '정수인', en: 'Jeong Su-in' },
-                    styles: ['night', 'nature'],
-                    mood: {
-                        ko: '경계 감각, 생존 반응, 개방된 공간에서의 상황 판단이 강한 타입',
-                        en: 'A profile with alert boundaries, survival reflex, and strong judgment in open spaces'
-                    },
-                    reason: {
-                        ko: '긴장-이완 전환이 빠른 캐릭터라, 야간 포인트와 강변/공원 동선을 섞는 방식이 잘 맞습니다.',
-                        en: 'Because this character switches quickly between tension and release, mixed night and riverside routes work well.'
-                    }
-                },
-                {
-                    name: { ko: '설강우', en: 'Seol Kang-woo' },
-                    styles: ['local', 'shopping'],
-                    mood: {
-                        ko: '현장성, 즉응력, 사람 많은 공간에서 정보를 읽는 능력이 강한 타입',
-                        en: 'A profile that thrives on field immediacy and reading signals in crowded districts'
-                    },
-                    reason: {
-                        ko: '즉응형 판단이 강해 상권 밀도가 높은 로컬/쇼핑 지역에서 동선 효율이 올라갑니다.',
-                        en: 'Fast on-site adaptation makes high-density local and shopping districts an efficient fit.'
-                    }
-                }
-            ]
+            character: { ko: '김봉석', en: 'Kim Bong-seok' },
+            portraitPage: 'Lee_Jung-ha',
+            styles: ['family', 'nature'],
+            mood: {
+                ko: '유쾌함과 보호 본능이 함께 있어 밝은 회복형 이동에 강한 타입',
+                en: 'A cheerful recovery-oriented profile with strong protective instincts.'
+            },
+            reason: {
+                ko: '일상성과 특별함을 동시에 다루는 캐릭터라, 공원 산책과 가족형 스팟 조합이 잘 맞습니다.',
+                en: 'Because his arc bridges ordinary life and special power, parks plus family spots work naturally.'
+            }
         },
         {
-            work: { ko: '외모지상주의', en: 'Lookism' },
-            type: { ko: '애니메이션', en: 'Animation' },
-            characters: [
-                {
-                    name: { ko: '박형석', en: 'Park Hyung-seok' },
-                    styles: ['shopping', 'family'],
-                    mood: {
-                        ko: '자기 인식 변화, 관계 확장, 다양한 분위기를 경험하며 균형을 찾는 타입',
-                        en: 'A profile focused on self-reframing and social expansion through varied experiences'
-                    },
-                    reason: {
-                        ko: '다층적 자아 변화가 핵심이라, 트렌드 지역과 테마형 공간을 함께 도는 코스가 효과적입니다.',
-                        en: 'Because identity shifts are central, routes combining trend districts and themed spaces are highly effective.'
-                    }
-                },
-                {
-                    name: { ko: '바스코', en: 'Vasco' },
-                    styles: ['nature', 'family'],
-                    mood: {
-                        ko: '직진형 에너지, 명확한 가치관, 활동량이 있는 동선에서 만족이 높은 타입',
-                        en: 'A profile with direct energy and clear values, satisfied by active movement'
-                    },
-                    reason: {
-                        ko: '행동성이 강한 캐릭터라 산책/공원 + 체험형 스팟을 묶은 코스가 잘 맞습니다.',
-                        en: 'This action-driven profile matches routes that pair parks/walks with experiential spots.'
-                    }
-                }
-            ]
+            id: 'jang-hui-soo',
+            work: { ko: '무빙', en: 'Moving' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '장희수', en: 'Jang Hui-soo' },
+            portraitPage: 'Go_Youn-jung',
+            styles: ['shopping', 'nature'],
+            mood: {
+                ko: '도전 의식과 회복 탄력이 커서 다양한 분위기 전환을 즐기는 타입',
+                en: 'A resilient profile that enjoys shifts between energetic and calm atmospheres.'
+            },
+            reason: {
+                ko: '활동성과 감정 회복 속도가 빠른 캐릭터라, 트렌드 지역과 산책 코스를 함께 묶는 게 좋습니다.',
+                en: 'Her high resilience supports itineraries that pair trend districts with restorative walks.'
+            }
         }
     ];
     let CURRENT_LANG = 'ko';
@@ -2084,60 +2224,104 @@
     }
 
     function renderKContentPage() {
-        const form = document.getElementById('kcontent-form');
         const titleEl = document.getElementById('kcontent-title');
         const descEl = document.getElementById('kcontent-desc');
-        const workLabel = document.getElementById('kcontent-work-label');
-        const charLabel = document.getElementById('kcontent-character-label');
-        const submitBtn = document.getElementById('kcontent-submit-btn');
-        const workSelect = document.getElementById('kcontent-work');
-        const characterSelect = document.getElementById('kcontent-character');
+        const selectedNoteEl = document.getElementById('kcontent-selected-note');
+        const gridEl = document.getElementById('kcontent-character-grid');
         const resultTitle = document.getElementById('kcontent-result-title');
         const resultSummary = document.getElementById('kcontent-result-summary');
         const styleChipsEl = document.getElementById('kcontent-style-chips');
         const placeListEl = document.getElementById('kcontent-place-list');
-        if (!form || !titleEl || !descEl || !workLabel || !charLabel || !submitBtn || !workSelect || !characterSelect || !resultTitle || !resultSummary || !styleChipsEl || !placeListEl) return;
+        if (!titleEl || !descEl || !selectedNoteEl || !gridEl || !resultTitle || !resultSummary || !styleChipsEl || !placeListEl) return;
 
         const isEn = CURRENT_LANG === 'en';
+        let selectedId = KCONTENT_CHARACTERS[0]?.id || null;
+
         titleEl.textContent = isEn ? 'K-Content Character Travel Recommender' : '한국 콘텐츠 캐릭터 기반 여행 추천';
         descEl.textContent = isEn
-            ? 'Pick a Korean series/film/animation character and get Seoul places that match the character mood.'
-            : '좋아하는 작품과 캐릭터를 선택하면, 분위기와 성격에 맞는 서울 여행 동선을 추천합니다.';
-        workLabel.textContent = isEn ? 'Select Title' : '작품 선택';
-        charLabel.textContent = isEn ? 'Select Character' : '캐릭터 선택';
-        submitBtn.textContent = isEn ? 'Show Recommendations' : '추천 보기';
+            ? 'Choose globally popular Korean content characters by photo and get Seoul spots that match their mood.'
+            : '해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 캐릭터 무드에 맞는 서울 동선을 추천받으세요.';
+        selectedNoteEl.textContent = isEn
+            ? 'Tap a character card to instantly see interpretation and recommendations.'
+            : '캐릭터 카드를 누르면 해석과 추천이 바로 갱신됩니다.';
         resultTitle.textContent = isEn ? 'Character Mood Interpretation' : '캐릭터 무드 해석';
-        resultSummary.textContent = isEn ? 'Choose title and character to view analysis.' : '작품과 캐릭터를 선택하면 해석이 표시됩니다.';
+        resultSummary.textContent = isEn ? 'Select a character card to view analysis.' : '캐릭터 카드를 선택하면 해석이 표시됩니다.';
 
-        function populateWorkOptions() {
-            workSelect.innerHTML = KCONTENT_CATALOG.map((entry, idx) => {
-                const workName = isEn ? entry.work.en : entry.work.ko;
-                const typeName = isEn ? entry.type.en : entry.type.ko;
-                return `<option value="${idx}">${escapeHtml(workName)} (${escapeHtml(typeName)})</option>`;
-            }).join('');
+        async function fetchWikiThumbnail(pageTitle) {
+            if (!pageTitle) return KCONTENT_IMAGE_FALLBACK;
+            if (KCONTENT_IMAGE_CACHE.has(pageTitle)) return KCONTENT_IMAGE_CACHE.get(pageTitle);
+            try {
+                const encoded = encodeURIComponent(pageTitle);
+                const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encoded}`);
+                if (!response.ok) throw new Error('thumbnail fetch failed');
+                const payload = await response.json();
+                const imageUrl = payload?.thumbnail?.source || KCONTENT_IMAGE_FALLBACK;
+                KCONTENT_IMAGE_CACHE.set(pageTitle, imageUrl);
+                return imageUrl;
+            } catch (error) {
+                KCONTENT_IMAGE_CACHE.set(pageTitle, KCONTENT_IMAGE_FALLBACK);
+                return KCONTENT_IMAGE_FALLBACK;
+            }
         }
 
-        function populateCharacterOptions(workIndex) {
-            const entry = KCONTENT_CATALOG[workIndex];
-            if (!entry) {
-                characterSelect.innerHTML = '';
-                return;
-            }
-            characterSelect.innerHTML = entry.characters.map((char, idx) => {
-                return `<option value="${idx}">${escapeHtml(isEn ? char.name.en : char.name.ko)}</option>`;
+        async function hydrateCardImages() {
+            const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
+            await Promise.all(cards.map(async (card) => {
+                const id = card.dataset.id;
+                const entry = KCONTENT_CHARACTERS.find((item) => item.id === id);
+                if (!entry) return;
+                const imgEl = card.querySelector('img');
+                if (!imgEl) return;
+                const src = await fetchWikiThumbnail(entry.portraitPage);
+                imgEl.src = src;
+                imgEl.loading = 'lazy';
+                imgEl.decoding = 'async';
+                imgEl.alt = isEn ? `${entry.character.en} portrait` : `${entry.character.ko} 이미지`;
+            }));
+        }
+
+        function updateCardSelectionState() {
+            gridEl.querySelectorAll('.kcontent-card').forEach((card) => {
+                const isActive = card.dataset.id === selectedId;
+                card.classList.toggle('active', isActive);
+                card.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+        }
+
+        function renderCharacterCards() {
+            gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
+                const charName = isEn ? entry.character.en : entry.character.ko;
+                const workName = isEn ? entry.work.en : entry.work.ko;
+                return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt="${escapeHtml(charName)}"></span><p class="kcontent-card-name">${escapeHtml(charName)}</p></button>`;
             }).join('');
+
+            gridEl.querySelectorAll('.kcontent-card').forEach((card) => {
+                card.addEventListener('click', () => {
+                    selectedId = card.dataset.id;
+                    updateCardSelectionState();
+                    renderCharacterPlan();
+                });
+            });
+
+            updateCardSelectionState();
+            hydrateCardImages();
         }
 
         function renderCharacterPlan() {
-            const entry = KCONTENT_CATALOG[Number(workSelect.value)];
-            const char = entry?.characters?.[Number(characterSelect.value)];
-            if (!entry || !char) return;
-
+            const char = KCONTENT_CHARACTERS.find((entry) => entry.id === selectedId) || KCONTENT_CHARACTERS[0];
+            if (!char) {
+                styleChipsEl.innerHTML = '';
+                placeListEl.innerHTML = '';
+                return;
+            }
+            const workName = isEn ? char.work.en : char.work.ko;
+            const typeName = isEn ? char.type.en : char.type.ko;
+            const charName = isEn ? char.character.en : char.character.ko;
             const mood = isEn ? char.mood.en : char.mood.ko;
             const reason = isEn ? char.reason.en : char.reason.ko;
             resultSummary.textContent = isEn
-                ? `${entry.work.en} / ${char.name.en}: ${mood}. Interpretation basis: ${reason}`
-                : `${entry.work.ko} / ${char.name.ko}: ${mood}. 해석 근거: ${reason}`;
+                ? `${charName} (${workName}, ${typeName}): ${mood} Interpretation basis: ${reason}`
+                : `${charName} (${workName}, ${typeName}): ${mood}. 해석 근거: ${reason}`;
 
             const styles = [...new Set(char.styles)];
             styleChipsEl.innerHTML = styles.map((style) => {
@@ -2145,7 +2329,7 @@
                 return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
             }).join('');
 
-            const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 5);
+            const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 6);
             placeListEl.innerHTML = picked.map((place, idx) => {
                 const href = getPlaceLink('place.html', place.id);
                 const matched = place.styles.filter((style) => styles.includes(style)).slice(0, 2).map((style) => getStyleLabel(style)).join(isEn ? ' + ' : ' + ');
@@ -2156,19 +2340,8 @@
             }).join('');
         }
 
-        populateWorkOptions();
-        populateCharacterOptions(0);
+        renderCharacterCards();
         renderCharacterPlan();
-
-        workSelect.addEventListener('change', () => {
-            populateCharacterOptions(Number(workSelect.value));
-            renderCharacterPlan();
-        });
-        characterSelect.addEventListener('change', renderCharacterPlan);
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            renderCharacterPlan();
-        });
     }
 
     function init() {
