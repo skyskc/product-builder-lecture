@@ -2542,17 +2542,39 @@
             return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(queryText)}`;
         }
 
-        function toUsdCeilFromKrwText(priceText) {
-            if (!priceText) return '-';
-            const numeric = Number(String(priceText).replace(/[^\d]/g, ''));
-            if (!Number.isFinite(numeric) || numeric <= 0) return '-';
-            const usd = Math.ceil(numeric / 1400);
-            return `about $${usd.toLocaleString()}`;
+        function getFxRateForDisplay() {
+            const rateInputEl = document.getElementById('fx-rate-input');
+            const rate = parseNumber(rateInputEl?.value || '');
+            if (!rate || rate <= 0) return 1400;
+            return rate;
+        }
+
+        function parsePriceForDisplay(priceText) {
+            if (!priceText) return null;
+            const raw = String(priceText).trim();
+            if (!raw) return null;
+            const numeric = Number(raw.replace(/[^\d.]/g, ''));
+            if (!Number.isFinite(numeric) || numeric <= 0) return null;
+            if (/\$|usd/i.test(raw)) return { currency: 'USD', amount: numeric };
+            return { currency: 'KRW', amount: numeric };
         }
 
         function displayPrice(priceText) {
-            if (CURRENT_LANG !== 'en') return priceText || '-';
-            return toUsdCeilFromKrwText(priceText);
+            const parsed = parsePriceForDisplay(priceText);
+            if (!parsed) return '-';
+
+            const rate = getFxRateForDisplay();
+            const isEn = CURRENT_LANG === 'en';
+
+            if (parsed.currency === 'USD') {
+                const usd = parsed.amount;
+                const krw = Math.round(usd * rate);
+                return `$${formatNumber(usd, 2)} (${isEn ? 'about' : '약'} ₩${formatNumber(krw, 0)})`;
+            }
+
+            const krw = Math.round(parsed.amount);
+            const usd = Math.ceil(krw / rate);
+            return `₩${formatNumber(krw, 0)} (${isEn ? 'about' : '약'} $${formatNumber(usd, 0)})`;
         }
 
         function markActiveStyle(styleKey) {
