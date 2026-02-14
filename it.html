@@ -17,18 +17,19 @@
                     <h1 class="brand">Lunchstagram</h1>
                     <p class="subtitle" id="subtitle-text"></p>
                 </div>
-                <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle theme">Light</button>
+                <div class="header-controls">
+                    <select id="locale-select" class="locale-select" aria-label="Select language">
+                        <option value="index.html">한국어</option>
+                        <option value="en.html">English</option>
+                        <option value="ja.html">日本語</option>
+                        <option value="fr.html">Français</option>
+                        <option value="it.html">Italiano</option>
+                        <option value="de.html">Deutsch</option>
+                        <option value="zh.html">中文</option>
+                    </select>
+                    <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle theme">Light</button>
+                </div>
             </header>
-
-            <nav class="locale-nav" aria-label="Language Pages">
-                <a class="locale-link" href="index.html" data-page="index.html">KO</a>
-                <a class="locale-link" href="en.html" data-page="en.html">EN</a>
-                <a class="locale-link" href="ja.html" data-page="ja.html">JP</a>
-                <a class="locale-link" href="fr.html" data-page="fr.html">FR</a>
-                <a class="locale-link" href="it.html" data-page="it.html">IT</a>
-                <a class="locale-link" href="de.html" data-page="de.html">DE</a>
-                <a class="locale-link" href="zh.html" data-page="zh.html">ZH</a>
-            </nav>
 
             <div class="category-strip" id="category-strip"></div>
 

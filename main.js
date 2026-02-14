@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const recommendBtn = document.getElementById('recommend-btn');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const localeSelect = document.getElementById('locale-select');
     const subtitleText = document.getElementById('subtitle-text');
     const categoryStrip = document.getElementById('category-strip');
     const menuPost = document.getElementById('menu-post');
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const themeStorageKey = 'lunch-theme';
     let currentIndex = -1;
+    let currentImageIndex = -1;
 
     const translations = {
         ko: {
@@ -156,6 +158,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    const foodImages = [
+        'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1593030668930-8130abedd2cd?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80'
+    ];
+
     const t = translations[activeLocale] || translations.en;
     const menus = menusByLocale[activeLocale] || menusByLocale.en;
 
@@ -182,11 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
         applyTheme(prefersDark ? 'dark' : 'light');
     };
 
-    const highlightCurrentLocalePage = () => {
-        const current = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('.locale-link').forEach((link) => {
-            const page = link.dataset.page;
-            link.classList.toggle('active', page === current);
+    const initLocaleSelector = () => {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        localeSelect.value = currentPage;
+        localeSelect.addEventListener('change', (event) => {
+            const targetPage = event.target.value;
+            if (targetPage && targetPage !== currentPage) {
+                window.location.href = targetPage;
+            }
         });
     };
 
@@ -218,7 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
         menuDescription.textContent = selected.description;
         menuTags.textContent = selected.tags.map((tag) => `#${tag}`).join(' ');
 
-        foodImage.src = selected.image;
+        let nextImageIndex = Math.floor(Math.random() * foodImages.length);
+        if (foodImages.length > 1) {
+            while (nextImageIndex === currentImageIndex) {
+                nextImageIndex = Math.floor(Math.random() * foodImages.length);
+            }
+        }
+        currentImageIndex = nextImageIndex;
+        foodImage.src = foodImages[nextImageIndex];
         foodImage.alt = t.imageAlt(selected.title);
 
         menuPost.style.animation = 'none';
@@ -238,6 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderStaticText();
     initTheme();
-    highlightCurrentLocalePage();
+    initLocaleSelector();
     recommendMenu();
 });
