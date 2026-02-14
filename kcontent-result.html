@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seoul Voyager | 콘텐츠 플랜</title>
-    <meta name="description" content="한국 콘텐츠(드라마/영화/애니) 속 인기 캐릭터를 선택하면 캐릭터 무드에 맞는 서울 여행지를 추천합니다.">
+    <title>Seoul Voyager | 콘텐츠 플랜 결과</title>
+    <meta name="description" content="선택한 한국 콘텐츠 캐릭터 무드에 맞춘 서울 여행지 추천 결과를 확인하세요.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001204090329044" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="kcontent">
+<body data-page="kcontent-result">
     <header class="site-header">
         <a class="logo" href="index.html"><span class="logo-mark">SV</span><span class="logo-text"><span class="logo-seoul">Seoul</span><span class="logo-voyager">Voyager</span></span></a>
         <div class="header-controls">
@@ -29,11 +29,22 @@
 
     <main class="container narrow">
         <section class="panel">
+            <a id="kcontent-back-link" class="back-link" href="kcontent.html">← 캐릭터 다시 선택</a>
             <p class="eyebrow">Screen-Inspired Plan</p>
-            <h1 id="kcontent-title">한국 콘텐츠 캐릭터 기반 여행 추천</h1>
-            <p id="kcontent-desc">해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 캐릭터 무드에 맞는 서울 동선을 추천받으세요.</p>
-            <p id="kcontent-selected-note" class="data-source-note">캐릭터 카드를 누르면 결과 화면으로 넘어가 상세 추천이 표시됩니다.</p>
-            <div id="kcontent-character-grid" class="kcontent-character-grid" role="listbox" aria-label="캐릭터 선택"></div>
+            <h1 id="kcontent-result-page-title">캐릭터 기반 서울 추천 결과</h1>
+            <p id="kcontent-result-page-desc">선택한 캐릭터의 성향을 바탕으로, 분위기와 동선이 맞는 여행지를 추천합니다.</p>
+            <p id="kcontent-result-summary" class="data-source-note">캐릭터를 불러오는 중입니다.</p>
+            <div id="kcontent-style-chips" class="generation-meta"></div>
+        </section>
+
+        <section class="panel">
+            <h2 id="kcontent-why-title">해석과 이동 전략</h2>
+            <div id="kcontent-why-analysis" class="saju-analysis"></div>
+        </section>
+
+        <section class="panel">
+            <h2 id="kcontent-spots-title">추천 여행지</h2>
+            <ul id="kcontent-place-list" class="hotel-list saju-place-list"></ul>
         </section>
     </main>
 

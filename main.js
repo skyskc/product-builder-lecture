@@ -446,6 +446,26 @@
             }
         }
     ];
+    const KCONTENT_CHARACTER_PAGE_HINTS = {
+        'gi-hun': ['Seong_Gi-hun'],
+        'sae-byeok': ['Kang_Sae-byeok'],
+        'front-man': ['Front_Man_(Squid_Game)'],
+        'yoon-se-ri': ['Yoon_Se-ri'],
+        'ri-jeong-hyeok': ['Ri_Jeong-hyeok'],
+        'kim-shin': ['Kim_Shin_(Guardian:_The_Lonely_and_Great_God)'],
+        'woo-young-woo': ['Woo_Young-woo'],
+        'moon-dong-eun': ['Moon_Dong-eun'],
+        'park-sae-ro-yi': ['Park_Sae-ro-yi'],
+        'vincenzo': ['Vincenzo_Cassano'],
+        'yoon-ji-woo': ['Yoon_Ji-woo'],
+        'cha-hyun-su': ['Cha_Hyun-su'],
+        'lee-chang': ['Lee_Chang_(Kingdom)'],
+        'jang-tae-sang': ['Jang_Tae-sang'],
+        'seok-woo': ['Seok-woo'],
+        'kim-ki-taek': ['Kim_Ki-taek'],
+        'kim-bong-seok': ['Kim_Bong-seok'],
+        'jang-hui-soo': ['Jang_Hui-soo']
+    };
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
@@ -962,8 +982,22 @@
         if (page === 'kcontent') {
             const titleEl = document.getElementById('kcontent-title');
             const descEl = document.getElementById('kcontent-desc');
+            const noteEl = document.getElementById('kcontent-selected-note');
             if (titleEl) titleEl.textContent = 'K-Content Character Travel Recommender';
-            if (descEl) descEl.textContent = 'Pick a Korean series/film/animation character and get Seoul places that match the character mood.';
+            if (descEl) descEl.textContent = 'Choose globally popular Korean content characters by photo and open a full recommendation screen.';
+            if (noteEl) noteEl.textContent = 'Tap a character card to move to the full recommendation page.';
+        }
+        if (page === 'kcontent-result') {
+            const backEl = document.getElementById('kcontent-back-link');
+            const titleEl = document.getElementById('kcontent-result-page-title');
+            const descEl = document.getElementById('kcontent-result-page-desc');
+            const whyTitle = document.getElementById('kcontent-why-title');
+            const spotsTitle = document.getElementById('kcontent-spots-title');
+            if (backEl) backEl.textContent = '← Choose Another Character';
+            if (titleEl) titleEl.textContent = 'Character-Based Seoul Recommendation';
+            if (descEl) descEl.textContent = 'A long-form interpretation and route recommendation based on your selected character.';
+            if (whyTitle) whyTitle.textContent = 'Interpretation and Route Strategy';
+            if (spotsTitle) spotsTitle.textContent = 'Recommended Places';
         }
     }
 
@@ -1029,7 +1063,7 @@
         if (page === 'home' || page === 'place') links[0]?.classList.add('active');
         if (page === 'course') links[1]?.classList.add('active');
         if (page === 'generation') links[2]?.classList.add('active');
-        if (page === 'kcontent') links[3]?.classList.add('active');
+        if (page === 'kcontent' || page === 'kcontent-result') links[3]?.classList.add('active');
         if (page === 'saju') links[4]?.classList.add('active');
     }
 
@@ -2223,125 +2257,180 @@
         });
     }
 
+    function getKContentCharacterById(characterId) {
+        return KCONTENT_CHARACTERS.find((entry) => entry.id === characterId) || KCONTENT_CHARACTERS[0] || null;
+    }
+
+    function getKContentCharacterIdFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const charId = params.get('char');
+        return getKContentCharacterById(charId)?.id || (KCONTENT_CHARACTERS[0]?.id || null);
+    }
+
+    function getKContentImageCandidates(entry) {
+        const normalizedEn = (entry.character?.en || '').replace(/[()]/g, '').trim();
+        const compactEn = normalizedEn.replace(/\s+/g, '_');
+        const plainEn = compactEn.replace(/[^A-Za-z0-9_\-]/g, '');
+        const candidates = [
+            ...(KCONTENT_CHARACTER_PAGE_HINTS[entry.id] || []),
+            compactEn,
+            plainEn,
+            entry.character?.ko || '',
+            entry.portraitPage || ''
+        ].filter(Boolean);
+        return [...new Set(candidates)];
+    }
+
+    async function fetchKContentThumbnail(entry) {
+        if (!entry) return KCONTENT_IMAGE_FALLBACK;
+        const candidates = getKContentImageCandidates(entry);
+        const domains = ['en', 'ko'];
+
+        for (const domain of domains) {
+            for (const title of candidates) {
+                const cacheKey = `${domain}:${title}`;
+                if (KCONTENT_IMAGE_CACHE.has(cacheKey)) {
+                    const cached = KCONTENT_IMAGE_CACHE.get(cacheKey);
+                    if (cached) return cached;
+                    continue;
+                }
+                try {
+                    const encoded = encodeURIComponent(title);
+                    const response = await fetch(`https://${domain}.wikipedia.org/api/rest_v1/page/summary/${encoded}`);
+                    if (!response.ok) {
+                        KCONTENT_IMAGE_CACHE.set(cacheKey, '');
+                        continue;
+                    }
+                    const payload = await response.json();
+                    const imageUrl = payload?.thumbnail?.source || '';
+                    KCONTENT_IMAGE_CACHE.set(cacheKey, imageUrl);
+                    if (imageUrl) return imageUrl;
+                } catch (error) {
+                    KCONTENT_IMAGE_CACHE.set(cacheKey, '');
+                }
+            }
+        }
+        return KCONTENT_IMAGE_FALLBACK;
+    }
+
+    function renderKContentResultByCharacter(character, opts = {}) {
+        const isEn = CURRENT_LANG === 'en';
+        const summaryEl = opts.summaryEl;
+        const chipsEl = opts.chipsEl;
+        const listEl = opts.listEl;
+        const analysisEl = opts.analysisEl;
+        if (!character || !summaryEl || !chipsEl || !listEl) return;
+
+        const workName = isEn ? character.work.en : character.work.ko;
+        const typeName = isEn ? character.type.en : character.type.ko;
+        const charName = isEn ? character.character.en : character.character.ko;
+        const mood = isEn ? character.mood.en : character.mood.ko;
+        const reason = isEn ? character.reason.en : character.reason.ko;
+        summaryEl.textContent = isEn
+            ? `${charName} (${workName}, ${typeName}) interpretation: ${mood} Reasoning: ${reason}`
+            : `${charName} (${workName}, ${typeName}) 해석: ${mood}. 해석 근거: ${reason}`;
+
+        const styles = [...new Set(character.styles)];
+        chipsEl.innerHTML = styles.map((style) => {
+            const href = withCurrentLang(`course.html?style=${encodeURIComponent(style)}`);
+            return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
+        }).join('');
+
+        if (analysisEl) {
+            const styleText = styles.map((style) => getStyleLabel(style)).join(isEn ? ', ' : ', ');
+            const paragraphs = isEn
+                ? [
+                    `${charName} is interpreted as a traveler profile that values ${styleText}. This route is designed to maintain the same emotional tempo found in the character's narrative arc.`,
+                    `The first movement prioritizes place identity and atmosphere rather than checklist tourism. That is why the selected districts combine scene-making visual tone with realistic movement flow between nearby spots.`,
+                    `The final movement adds contrast to avoid emotional flattening: intense sections are followed by calmer views or local streets, so the entire day feels like a coherent character-led storyline rather than disconnected stops.`
+                ]
+                : [
+                    `${charName}은(는) ${styleText} 성향이 강한 여행자 프로필로 해석됩니다. 그래서 추천 동선은 캐릭터 서사의 감정 리듬을 실제 이동 흐름으로 옮기는 방식으로 설계했습니다.`,
+                    `첫 구간은 체크리스트형 관광보다 장소의 분위기와 결을 먼저 체감하도록 구성했습니다. 선택된 지역은 장면 연출감과 실제 이동 편의가 동시에 확보되는 지점을 우선 반영했습니다.`,
+                    `마지막 구간은 감정 피로를 줄이기 위해 대비를 넣었습니다. 몰입도가 높은 스팟 뒤에 안정적인 산책/로컬 구간을 붙여, 하루 전체가 끊기지 않는 '캐릭터 중심 여행 서사'로 이어지도록 맞췄습니다.`
+                ];
+            analysisEl.innerHTML = paragraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('');
+        }
+
+        const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 8);
+        listEl.innerHTML = picked.map((place, idx) => {
+            const href = getPlaceLink('place.html', place.id);
+            const matched = place.styles.filter((style) => styles.includes(style)).slice(0, 2).map((style) => getStyleLabel(style)).join(isEn ? ' + ' : ' + ');
+            const placeReason = isEn
+                ? `Why this spot: ${place.nameEn || place.name} reflects ${matched || 'the selected mood'} and keeps the travel tone consistent with ${charName}'s narrative rhythm.`
+                : `추천 이유: ${getPlaceName(place)}은(는) ${matched || '선택한 무드'}를 잘 반영하며, ${charName} 서사의 감정 리듬을 실제 여행 동선에 자연스럽게 연결해 줍니다.`;
+            return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span><p class="saju-reason">${escapeHtml(placeReason)}</p></li>`;
+        }).join('');
+    }
+
     function renderKContentPage() {
         const titleEl = document.getElementById('kcontent-title');
         const descEl = document.getElementById('kcontent-desc');
         const selectedNoteEl = document.getElementById('kcontent-selected-note');
         const gridEl = document.getElementById('kcontent-character-grid');
-        const resultTitle = document.getElementById('kcontent-result-title');
-        const resultSummary = document.getElementById('kcontent-result-summary');
-        const styleChipsEl = document.getElementById('kcontent-style-chips');
-        const placeListEl = document.getElementById('kcontent-place-list');
-        if (!titleEl || !descEl || !selectedNoteEl || !gridEl || !resultTitle || !resultSummary || !styleChipsEl || !placeListEl) return;
+        if (!titleEl || !descEl || !selectedNoteEl || !gridEl) return;
 
         const isEn = CURRENT_LANG === 'en';
-        let selectedId = KCONTENT_CHARACTERS[0]?.id || null;
-
         titleEl.textContent = isEn ? 'K-Content Character Travel Recommender' : '한국 콘텐츠 캐릭터 기반 여행 추천';
         descEl.textContent = isEn
-            ? 'Choose globally popular Korean content characters by photo and get Seoul spots that match their mood.'
-            : '해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 캐릭터 무드에 맞는 서울 동선을 추천받으세요.';
+            ? 'Choose globally popular Korean content characters by photo and open a full recommendation screen.'
+            : '해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 결과 화면에서 상세 추천을 확인하세요.';
         selectedNoteEl.textContent = isEn
-            ? 'Tap a character card to instantly see interpretation and recommendations.'
-            : '캐릭터 카드를 누르면 해석과 추천이 바로 갱신됩니다.';
-        resultTitle.textContent = isEn ? 'Character Mood Interpretation' : '캐릭터 무드 해석';
-        resultSummary.textContent = isEn ? 'Select a character card to view analysis.' : '캐릭터 카드를 선택하면 해석이 표시됩니다.';
+            ? 'Tap a character card to move to the full recommendation page.'
+            : '캐릭터 카드를 누르면 화면이 넘어가며 추천 결과가 표시됩니다.';
 
-        async function fetchWikiThumbnail(pageTitle) {
-            if (!pageTitle) return KCONTENT_IMAGE_FALLBACK;
-            if (KCONTENT_IMAGE_CACHE.has(pageTitle)) return KCONTENT_IMAGE_CACHE.get(pageTitle);
-            try {
-                const encoded = encodeURIComponent(pageTitle);
-                const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encoded}`);
-                if (!response.ok) throw new Error('thumbnail fetch failed');
-                const payload = await response.json();
-                const imageUrl = payload?.thumbnail?.source || KCONTENT_IMAGE_FALLBACK;
-                KCONTENT_IMAGE_CACHE.set(pageTitle, imageUrl);
-                return imageUrl;
-            } catch (error) {
-                KCONTENT_IMAGE_CACHE.set(pageTitle, KCONTENT_IMAGE_FALLBACK);
-                return KCONTENT_IMAGE_FALLBACK;
-            }
-        }
+        gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
+            const charName = isEn ? entry.character.en : entry.character.ko;
+            const workName = isEn ? entry.work.en : entry.work.ko;
+            return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt="${escapeHtml(charName)}"></span><p class="kcontent-card-name">${escapeHtml(charName)}</p></button>`;
+        }).join('');
 
-        async function hydrateCardImages() {
-            const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
-            await Promise.all(cards.map(async (card) => {
-                const id = card.dataset.id;
-                const entry = KCONTENT_CHARACTERS.find((item) => item.id === id);
-                if (!entry) return;
-                const imgEl = card.querySelector('img');
-                if (!imgEl) return;
-                const src = await fetchWikiThumbnail(entry.portraitPage);
-                imgEl.src = src;
-                imgEl.loading = 'lazy';
-                imgEl.decoding = 'async';
-                imgEl.alt = isEn ? `${entry.character.en} portrait` : `${entry.character.ko} 이미지`;
-            }));
-        }
-
-        function updateCardSelectionState() {
-            gridEl.querySelectorAll('.kcontent-card').forEach((card) => {
-                const isActive = card.dataset.id === selectedId;
-                card.classList.toggle('active', isActive);
-                card.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
+        cards.forEach((card) => {
+            card.addEventListener('click', () => {
+                const charId = card.dataset.id;
+                window.location.href = withCurrentLang(`kcontent-result.html?char=${encodeURIComponent(charId)}`);
             });
-        }
+        });
 
-        function renderCharacterCards() {
-            gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
-                const charName = isEn ? entry.character.en : entry.character.ko;
-                const workName = isEn ? entry.work.en : entry.work.ko;
-                return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt="${escapeHtml(charName)}"></span><p class="kcontent-card-name">${escapeHtml(charName)}</p></button>`;
-            }).join('');
+        Promise.all(cards.map(async (card) => {
+            const entry = getKContentCharacterById(card.dataset.id);
+            const imgEl = card.querySelector('img');
+            if (!entry || !imgEl) return;
+            const src = await fetchKContentThumbnail(entry);
+            imgEl.src = src;
+            imgEl.loading = 'lazy';
+            imgEl.decoding = 'async';
+            imgEl.alt = isEn ? `${entry.character.en} character image` : `${entry.character.ko} 캐릭터 이미지`;
+        }));
+    }
 
-            gridEl.querySelectorAll('.kcontent-card').forEach((card) => {
-                card.addEventListener('click', () => {
-                    selectedId = card.dataset.id;
-                    updateCardSelectionState();
-                    renderCharacterPlan();
-                });
-            });
+    function renderKContentResultPage() {
+        const backEl = document.getElementById('kcontent-back-link');
+        const pageTitleEl = document.getElementById('kcontent-result-page-title');
+        const pageDescEl = document.getElementById('kcontent-result-page-desc');
+        const summaryEl = document.getElementById('kcontent-result-summary');
+        const chipsEl = document.getElementById('kcontent-style-chips');
+        const analysisEl = document.getElementById('kcontent-why-analysis');
+        const listEl = document.getElementById('kcontent-place-list');
+        const whyTitleEl = document.getElementById('kcontent-why-title');
+        const spotsTitleEl = document.getElementById('kcontent-spots-title');
+        if (!backEl || !pageTitleEl || !pageDescEl || !summaryEl || !chipsEl || !analysisEl || !listEl || !whyTitleEl || !spotsTitleEl) return;
 
-            updateCardSelectionState();
-            hydrateCardImages();
-        }
+        const isEn = CURRENT_LANG === 'en';
+        const charId = getKContentCharacterIdFromQuery();
+        const character = getKContentCharacterById(charId);
+        if (!character) return;
 
-        function renderCharacterPlan() {
-            const char = KCONTENT_CHARACTERS.find((entry) => entry.id === selectedId) || KCONTENT_CHARACTERS[0];
-            if (!char) {
-                styleChipsEl.innerHTML = '';
-                placeListEl.innerHTML = '';
-                return;
-            }
-            const workName = isEn ? char.work.en : char.work.ko;
-            const typeName = isEn ? char.type.en : char.type.ko;
-            const charName = isEn ? char.character.en : char.character.ko;
-            const mood = isEn ? char.mood.en : char.mood.ko;
-            const reason = isEn ? char.reason.en : char.reason.ko;
-            resultSummary.textContent = isEn
-                ? `${charName} (${workName}, ${typeName}): ${mood} Interpretation basis: ${reason}`
-                : `${charName} (${workName}, ${typeName}): ${mood}. 해석 근거: ${reason}`;
+        backEl.href = withCurrentLang('kcontent.html');
+        pageTitleEl.textContent = isEn ? 'Character-Based Seoul Recommendation' : '캐릭터 기반 서울 추천 결과';
+        pageDescEl.textContent = isEn
+            ? 'A long-form interpretation and route recommendation based on your selected character.'
+            : '선택한 캐릭터의 성향을 바탕으로, 긴 설명과 함께 서울 여행 동선을 추천합니다.';
+        whyTitleEl.textContent = isEn ? 'Interpretation and Route Strategy' : '해석과 이동 전략';
+        spotsTitleEl.textContent = isEn ? 'Recommended Places' : '추천 여행지';
 
-            const styles = [...new Set(char.styles)];
-            styleChipsEl.innerHTML = styles.map((style) => {
-                const href = withCurrentLang(`course.html?style=${encodeURIComponent(style)}`);
-                return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
-            }).join('');
-
-            const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 6);
-            placeListEl.innerHTML = picked.map((place, idx) => {
-                const href = getPlaceLink('place.html', place.id);
-                const matched = place.styles.filter((style) => styles.includes(style)).slice(0, 2).map((style) => getStyleLabel(style)).join(isEn ? ' + ' : ' + ');
-                const placeReason = isEn
-                    ? `Why this match: ${place.nameEn || place.name} reflects ${matched || 'the selected mood'} and fits the character-driven route tone.`
-                    : `추천 이유: ${getPlaceName(place)}은(는) ${matched || '선택한 무드'}와 맞물려 캐릭터 중심 동선의 분위기를 자연스럽게 이어줍니다.`;
-                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span><p class="saju-reason">${escapeHtml(placeReason)}</p></li>`;
-            }).join('');
-        }
-
-        renderCharacterCards();
-        renderCharacterPlan();
+        renderKContentResultByCharacter(character, { summaryEl, chipsEl, listEl, analysisEl });
     }
 
     function init() {
@@ -2356,6 +2445,7 @@
         else if (page === 'course') renderCoursePage();
         else if (page === 'generation') renderGenerationPage();
         else if (page === 'kcontent') renderKContentPage();
+        else if (page === 'kcontent-result') renderKContentResultPage();
         else if (page === 'partner') renderPartnerPage();
         else if (page === 'saju') renderSajuPage();
     }
