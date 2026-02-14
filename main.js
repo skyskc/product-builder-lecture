@@ -154,7 +154,30 @@
         grid.appendChild(fragment);
     }
 
-    function renderPlaceDetail() {
+    function formatReviewCount(count) {
+        if (typeof count !== 'number') return '-';
+        return `${count.toLocaleString()}+`;
+    }
+
+    async function fetchLivePlaceDetails(placeId) {
+        const response = await fetch(`/api/place-details?id=${encodeURIComponent(placeId)}`);
+        if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+        }
+        const json = await response.json();
+        return json.details;
+    }
+
+    function renderReviews(reviewList, reviews) {
+        reviewList.innerHTML = '';
+        reviews.forEach((review) => {
+            const li = document.createElement('li');
+            li.textContent = review;
+            reviewList.appendChild(li);
+        });
+    }
+
+    async function renderPlaceDetail() {
         const place = placeMap[getPlaceIdFromQuery()];
         if (!place) return;
 
@@ -171,6 +194,7 @@
         const mapEl = document.getElementById('place-map');
         const mapExternal = document.getElementById('map-external-link');
         const reviewList = document.getElementById('review-list');
+        const dataSourceEl = document.getElementById('place-data-source');
 
         document.title = `${place.name} | Seoul Explorer`;
         nameEl.textContent = place.name;
@@ -178,21 +202,40 @@
         descEl.textContent = place.description;
         districtEl.textContent = place.district;
         bestTimeEl.textContent = place.bestTime;
-        ratingEl.textContent = place.rating;
-        reviewCountEl.textContent = place.reviewCount;
+        ratingEl.textContent = `${place.rating} (기본 데이터)`;
+        reviewCountEl.textContent = `${place.reviewCount} (기본 데이터)`;
         imageEl.src = place.image;
         imageEl.alt = `${place.name} 이미지`;
 
         const mapQuery = encodeURIComponent(place.mapQuery);
         mapEl.src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
         mapExternal.href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+        renderReviews(reviewList, place.reviews);
+        dataSourceEl.textContent = '리뷰/평점: 로컬 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
 
-        reviewList.innerHTML = '';
-        place.reviews.forEach((review) => {
-            const li = document.createElement('li');
-            li.textContent = review;
-            reviewList.appendChild(li);
-        });
+        try {
+            const details = await fetchLivePlaceDetails(place.id);
+            if (details?.rating) {
+                ratingEl.textContent = `${details.rating.toFixed(1)} / 5`;
+            }
+            if (details?.userRatingCount !== null && details?.userRatingCount !== undefined) {
+                reviewCountEl.textContent = formatReviewCount(details.userRatingCount);
+            }
+            if (Array.isArray(details?.reviews) && details.reviews.length > 0) {
+                const liveReviews = details.reviews.map((review) => {
+                    const author = review.author || 'Google User';
+                    const score = review.rating ? `(${review.rating}/5)` : '';
+                    return `${author} ${score} - ${review.text}`.trim();
+                });
+                renderReviews(reviewList, liveReviews);
+            }
+            if (details?.googleMapsUri) {
+                mapExternal.href = details.googleMapsUri;
+            }
+            dataSourceEl.textContent = '리뷰/평점: Google Places API 실시간 데이터 반영됨';
+        } catch (error) {
+            dataSourceEl.textContent = '리뷰/평점: Google API 연결 실패로 기본 데이터 표시 중';
+        }
     }
 
     function renderPartnerPage() {
