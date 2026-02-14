@@ -508,6 +508,19 @@
                 const styleKey = btn.dataset.style;
                 if (styleKey) btn.textContent = getStyleLabel(styleKey);
             });
+            const panels = document.querySelectorAll('.panel h2');
+            if (panels[1]) panels[1].textContent = 'Top 5 Hotels (Google Rating)';
+            if (panels[2]) panels[2].textContent = 'District Restaurant Picks (Breakfast/Lunch/Dinner/Drinks)';
+            if (panels[3]) panels[3].textContent = 'How to Use This Course';
+            const routeLink = document.getElementById('course-route-link');
+            if (routeLink) routeLink.textContent = 'Open Walking Route in Google Maps';
+            const guideParagraphs = document.querySelectorAll('.panel p');
+            if (guideParagraphs[guideParagraphs.length - 2]) {
+                guideParagraphs[guideParagraphs.length - 2].textContent = 'This route is optimized for walkable movement with optional short subway transfers. A typical flow is history/culture in the morning, cafe or shopping in the afternoon, and night views or local dining in the evening.';
+            }
+            if (guideParagraphs[guideParagraphs.length - 1]) {
+                guideParagraphs[guideParagraphs.length - 1].textContent = 'Hotel and restaurant recommendations are prioritized by Google ratings and review counts, with broadcast curation shown as a secondary reference. Check map links for latest opening hours and reservations.';
+            }
         }
         if (page === 'place') {
             const back = document.querySelector('.back-link');
@@ -1032,6 +1045,19 @@
             return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(queryText)}`;
         }
 
+        function toUsdCeilFromKrwText(priceText) {
+            if (!priceText) return '-';
+            const numeric = Number(String(priceText).replace(/[^\d]/g, ''));
+            if (!Number.isFinite(numeric) || numeric <= 0) return '-';
+            const usd = Math.ceil(numeric / 1400);
+            return `about $${usd.toLocaleString()}`;
+        }
+
+        function displayPrice(priceText) {
+            if (CURRENT_LANG !== 'en') return priceText || '-';
+            return toUsdCeilFromKrwText(priceText);
+        }
+
         function markActiveStyle(styleKey) {
             styleButtons.forEach((btn) => {
                 const active = btn.dataset.style === styleKey;
@@ -1109,7 +1135,7 @@
                     const mapAnchor = ` · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`;
                     li.innerHTML = `
                         <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
-                        <span class=\"hotel-meta\">평점 ${hotel.rating || '-'} / 리뷰 ${hotel.userRatingCount?.toLocaleString?.() || '-'} / 평균가격 ${hotel.averagePrice}</span><br>
+                        <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.userRatingCount?.toLocaleString?.() || '-'} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
                         <span class=\"hotel-meta\">${hotel.address || ''}${mapAnchor}</span>
                     `;
                     hotelListEl.appendChild(li);
@@ -1132,7 +1158,7 @@
                     const mapHref = getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`);
                     li.innerHTML = `
                         <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
-                        <span class=\"hotel-meta\">평점 ${hotel.rating} / 리뷰 ${hotel.reviewCount} / 평균가격 ${hotel.averagePrice}</span><br>
+                        <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.reviewCount} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
                         <span class=\"hotel-meta\">${hotel.address} · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a></span>
                     `;
                     hotelListEl.appendChild(li);
@@ -1189,7 +1215,7 @@
                         const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${matchedBroadcast.show}</span>` : '';
                         const mapHref = r.googleMapsUri || getMapSearchUrl(`${r.name} ${district} Seoul`);
                         const mapLink = ` · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`;
-                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${r.name}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${r.averagePrice || '-'}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
+                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${r.name}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(r.averagePrice || '-')}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
                     }).join('');
 
                     const extraBroadcast = (mealData.broadcastPicks || []).filter((pick) => !mealData.restaurants.some((r) => r.name.includes(pick.name) || pick.name.includes(r.name)));
