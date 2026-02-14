@@ -22,8 +22,10 @@ loadEnvFromFile();
 
 const HOST = '0.0.0.0';
 const PORT = Number(process.env.PORT || 3000);
+const ROOT_DIR = process.cwd();
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+const MAX_CACHE_ENTRIES = 300;
 
 const PLACE_DETAILS_CACHE = new Map();
 const PLACE_PHOTO_CACHE = new Map();
@@ -83,6 +85,25 @@ const MIME_TYPES = {
   '.txt': 'text/plain; charset=utf-8'
 };
 
+function getFromCache(cacheMap, cacheKey) {
+  const cacheItem = cacheMap.get(cacheKey);
+  if (!cacheItem) return null;
+  if (Date.now() - cacheItem.cachedAt >= CACHE_TTL_MS) {
+    cacheMap.delete(cacheKey);
+    return null;
+  }
+  return cacheItem.data;
+}
+
+function setInCache(cacheMap, cacheKey, data) {
+  cacheMap.set(cacheKey, { cachedAt: Date.now(), data });
+  if (cacheMap.size <= MAX_CACHE_ENTRIES) return;
+  const oldestKey = cacheMap.keys().next().value;
+  if (oldestKey !== undefined) {
+    cacheMap.delete(oldestKey);
+  }
+}
+
 function sendJson(res, status, payload) {
   const body = JSON.stringify(payload);
   res.writeHead(status, {
@@ -136,10 +157,8 @@ async function searchGooglePlaceId(queryText, languageCode = 'ko') {
 
 async function fetchGooglePlaceDetails(queryText, languageCode = 'ko') {
   const cacheKey = `${queryText}:${languageCode}`;
-  const cacheItem = PLACE_DETAILS_CACHE.get(cacheKey);
-  if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
-    return cacheItem.data;
-  }
+  const cached = getFromCache(PLACE_DETAILS_CACHE, cacheKey);
+  if (cached) return cached;
 
   const googlePlaceId = await searchGooglePlaceId(queryText, languageCode);
 
@@ -174,15 +193,13 @@ async function fetchGooglePlaceDetails(queryText, languageCode = 'ko') {
       : []
   };
 
-  PLACE_DETAILS_CACHE.set(cacheKey, { cachedAt: Date.now(), data: normalized });
+  setInCache(PLACE_DETAILS_CACHE, cacheKey, normalized);
   return normalized;
 }
 
 async function fetchGooglePlacePhotoUrl(queryText) {
-  const cacheItem = PLACE_PHOTO_CACHE.get(queryText);
-  if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
-    return cacheItem.data;
-  }
+  const cached = getFromCache(PLACE_PHOTO_CACHE, queryText);
+  if (cached) return cached;
 
   const googlePlaceId = await searchGooglePlaceId(queryText);
   const placeResponse = await fetch(`https://places.googleapis.com/v1/places/${googlePlaceId}`, {
@@ -220,7 +237,7 @@ async function fetchGooglePlacePhotoUrl(queryText) {
     throw new Error(`No photoUri returned for query: ${queryText}`);
   }
 
-  PLACE_PHOTO_CACHE.set(queryText, { cachedAt: Date.now(), data: photoUrl });
+  setInCache(PLACE_PHOTO_CACHE, queryText, photoUrl);
   return photoUrl;
 }
 
@@ -271,10 +288,8 @@ function priceLevelToAvg(priceLevel) {
 }
 
 async function fetchTopHotels(queryText) {
-  const cacheItem = HOTELS_CACHE.get(queryText);
-  if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
-    return cacheItem.data;
-  }
+  const cached = getFromCache(HOTELS_CACHE, queryText);
+  if (cached) return cached;
 
   const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
@@ -310,16 +325,14 @@ async function fetchTopHotels(queryText) {
   });
 
   const top5 = hotels.slice(0, 5);
-  HOTELS_CACHE.set(queryText, { cachedAt: Date.now(), data: top5 });
+  setInCache(HOTELS_CACHE, queryText, top5);
   return top5;
 }
 
 async function fetchTopRestaurants(district, meal, limit = 3) {
   const cacheKey = `${district}:${meal}:${limit}`;
-  const cacheItem = RESTAURANTS_CACHE.get(cacheKey);
-  if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
-    return cacheItem.data;
-  }
+  const cached = getFromCache(RESTAURANTS_CACHE, cacheKey);
+  if (cached) return cached;
 
   const hint = MEAL_QUERY_HINT[meal] || 'restaurant';
   const textQuery = `${district} Seoul ${hint}`;
@@ -361,21 +374,31 @@ async function fetchTopRestaurants(district, meal, limit = 3) {
   const top = restaurants.slice(0, limit);
   const curation = BROADCAST_PICKS[district]?.[meal] || [];
   const result = { top, curation };
-  RESTAURANTS_CACHE.set(cacheKey, { cachedAt: Date.now(), data: result });
+  setInCache(RESTAURANTS_CACHE, cacheKey, result);
   return result;
 }
 
 function resolveStaticPath(urlPathname) {
-  const safePath = path.normalize(urlPathname).replace(/^([.][.][/\\])+/, '');
-  let relativePath = safePath === '/' ? '/index.html' : safePath;
+  let decodedPath = urlPathname;
+  try {
+    decodedPath = decodeURIComponent(urlPathname);
+  } catch (_) {
+    return null;
+  }
+  const normalizedPath = path.posix.normalize(decodedPath.replace(/\\/g, '/'));
+  let relativePath = normalizedPath === '/' ? '/index.html' : normalizedPath;
   if (relativePath.endsWith('/')) {
     relativePath += 'index.html';
   }
-  return path.join(process.cwd(), relativePath);
+  const resolved = path.resolve(ROOT_DIR, `.${relativePath}`);
+  if (resolved !== ROOT_DIR && !resolved.startsWith(`${ROOT_DIR}${path.sep}`)) {
+    return null;
+  }
+  return resolved;
 }
 
 const server = http.createServer(async (req, res) => {
-  const requestUrl = new URL(req.url, `http://${req.headers.host}`);
+  const requestUrl = new URL(req.url, 'http://localhost');
 
   if (requestUrl.pathname === '/api/place-details' && req.method === 'GET') {
     const query = requestUrl.searchParams.get('query');
@@ -486,6 +509,10 @@ const server = http.createServer(async (req, res) => {
   }
 
   const filePath = resolveStaticPath(requestUrl.pathname);
+  if (!filePath) {
+    sendJson(res, 400, { error: 'Invalid path' });
+    return;
+  }
   sendFile(res, filePath);
 });
 

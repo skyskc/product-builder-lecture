@@ -670,6 +670,27 @@
         return `style-badge style-${styleKey}`;
     }
 
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function safeExternalUrl(urlText, fallbackUrl) {
+        try {
+            const parsed = new URL(String(urlText || ''), window.location.href);
+            if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+                return parsed.toString();
+            }
+        } catch (_) {
+            // Fall through to fallback URL.
+        }
+        return fallbackUrl;
+    }
+
     function createPlaceCard(place) {
         const card = document.createElement('article');
         card.className = 'place-card';
@@ -1014,7 +1035,9 @@
                 });
                 renderReviews(reviewList, liveReviews);
             }
-            if (details?.googleMapsUri) mapExternal.href = details.googleMapsUri;
+            if (details?.googleMapsUri) {
+                mapExternal.href = safeExternalUrl(details.googleMapsUri, mapExternal.href);
+            }
             dataSourceEl.textContent = CURRENT_LANG === 'en'
                 ? 'Ratings/Reviews: Live Google Places data applied'
                 : '리뷰/평점: Google Places API 실시간 데이터 반영됨';
@@ -1153,12 +1176,17 @@
                 const hotels = await fetchTopHotels(hotelQuery);
                 hotels.slice(0, 5).forEach((hotel, idx) => {
                     const li = document.createElement('li');
-                    const mapHref = hotel.googleMapsUri || getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`);
+                    const mapHref = safeExternalUrl(
+                        hotel.googleMapsUri,
+                        getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`)
+                    );
+                    const safeHotelName = escapeHtml(hotel.name || '-');
+                    const safeHotelAddress = escapeHtml(hotel.address || '');
                     const mapAnchor = ` <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a>`;
                     li.innerHTML = `
-                        <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
+                        <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeHotelName}</a><br>
                         <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.userRatingCount?.toLocaleString?.() || '-'} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
-                        <span class=\"hotel-meta\">${hotel.address || ''}${mapAnchor}</span>
+                        <span class=\"hotel-meta\">${safeHotelAddress}${mapAnchor}</span>
                     `;
                     hotelListEl.appendChild(li);
                 });
@@ -1178,10 +1206,12 @@
                 fallback.forEach((hotel, idx) => {
                     const li = document.createElement('li');
                     const mapHref = getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`);
+                    const safeHotelName = escapeHtml(hotel.name || '-');
+                    const safeHotelAddress = escapeHtml(hotel.address || '');
                     li.innerHTML = `
-                        <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
+                        <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeHotelName}</a><br>
                         <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.reviewCount} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
-                        <span class=\"hotel-meta\">${hotel.address} <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a></span>
+                        <span class=\"hotel-meta\">${safeHotelAddress} <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a></span>
                     `;
                     hotelListEl.appendChild(li);
                 });
@@ -1204,7 +1234,10 @@
             for (const district of districts) {
                 const districtBlock = document.createElement('article');
                 districtBlock.className = 'district-block';
-                districtBlock.innerHTML = `<h3>${CURRENT_LANG === 'en' ? `${getDistrictLabel(district)} - Top 3 by meal` : `${district} 맛집 3곳씩 추천`}</h3><div class=\"meal-grid\"></div>`;
+                const districtTitle = CURRENT_LANG === 'en'
+                    ? `${getDistrictLabel(district)} - Top 3 by meal`
+                    : `${district} 맛집 3곳씩 추천`;
+                districtBlock.innerHTML = `<h3>${escapeHtml(districtTitle)}</h3><div class=\"meal-grid\"></div>`;
                 const mealGrid = districtBlock.querySelector('.meal-grid');
 
                 const mealResults = await Promise.all(mealConfig.map(async (meal) => {
@@ -1234,17 +1267,22 @@
                     mealCard.className = 'meal-card';
                     const rows = mealData.restaurants.slice(0, 3).map((r, idx) => {
                         const matchedBroadcast = (mealData.broadcastPicks || []).find((pick) => r.name.includes(pick.name) || pick.name.includes(r.name));
-                        const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${matchedBroadcast.show}</span>` : '';
-                        const mapHref = r.googleMapsUri || getMapSearchUrl(`${r.name} ${district} Seoul`);
+                        const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${escapeHtml(matchedBroadcast.show)}</span>` : '';
+                        const mapHref = safeExternalUrl(
+                            r.googleMapsUri,
+                            getMapSearchUrl(`${r.name} ${district} Seoul`)
+                        );
+                        const safeRestaurantName = escapeHtml(r.name || '-');
+                        const safeRestaurantAddress = escapeHtml(r.address || '');
                         const mapLink = ` <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a>`;
-                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${r.name}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(r.averagePrice || '-')}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
+                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeRestaurantName}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(r.averagePrice || '-')}</span><br><span class=\"hotel-meta\">${safeRestaurantAddress}${mapLink}</span></li>`;
                     }).join('');
 
                     const extraBroadcast = (mealData.broadcastPicks || []).filter((pick) => !mealData.restaurants.some((r) => r.name.includes(pick.name) || pick.name.includes(r.name)));
                     const curation = extraBroadcast.length
-                        ? `<p class=\"data-source-note\">${CURRENT_LANG === 'en' ? 'Broadcast curation' : '방송 큐레이션'}: ${extraBroadcast.map((pick) => `${pick.name}(${pick.show})`).join(', ')}</p>`
+                        ? `<p class=\"data-source-note\">${CURRENT_LANG === 'en' ? 'Broadcast curation' : '방송 큐레이션'}: ${extraBroadcast.map((pick) => `${escapeHtml(pick.name)}(${escapeHtml(pick.show)})`).join(', ')}</p>`
                         : '';
-                    mealCard.innerHTML = `<h4>${mealData.label}</h4><ul>${rows}</ul>${curation}`;
+                    mealCard.innerHTML = `<h4>${escapeHtml(mealData.label)}</h4><ul>${rows}</ul>${curation}`;
                     mealGrid.appendChild(mealCard);
                 });
 
