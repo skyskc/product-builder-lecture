@@ -60,7 +60,11 @@
         '영등포구': 'Yeongdeungpo-gu',
         '동작구': 'Dongjak-gu',
         '강서구': 'Gangseo-gu',
-        '성북구': 'Seongbuk-gu'
+        '성북구': 'Seongbuk-gu',
+        '동대문구': 'Dongdaemun-gu',
+        '강북구': 'Gangbuk-gu',
+        '노원구': 'Nowon-gu',
+        '관악구': 'Gwanak-gu'
     };
     const CATEGORY_LABELS_EN = {
         '역사/문화': 'History/Culture',
@@ -181,7 +185,27 @@
         '대학로': 'Daehangno',
         '혜화': 'Hyehwa',
         '성균관 명륜당': 'Sungkyunkwan Myeongnyundang Hall',
-        '길상사': 'Gilsangsa Temple'
+        '길상사': 'Gilsangsa Temple',
+        '경희궁': 'Gyeonghuigung Palace',
+        '국립민속박물관': 'National Folk Museum of Korea',
+        '북악스카이웨이 팔각정': 'Bugak Skyway Pavilion',
+        '서울성곽박물관': 'Seoul City Wall Museum',
+        '보신각': 'Bosingak Belfry',
+        '청운문학도서관': 'Cheongun Literature Library',
+        '서울한방진흥센터': 'Seoul K-Medi Center',
+        '서울풍물시장': 'Seoul Folk Flea Market',
+        '응봉산 야경포인트': 'Eungbongsan Night View Point',
+        '서울함공원': 'Seoul Battleship Park',
+        '북서울꿈의숲': 'Dream Forest',
+        '경춘선숲길': 'Gyeongchun Line Forest Trail',
+        '화랑대 철도공원': 'Hwarangdae Railway Park',
+        '낙성대공원': 'Nakseongdae Park',
+        '암사동선사유적지': 'Amsa-dong Prehistoric Site',
+        '몽촌토성': 'Mongchontoseong Fortress',
+        '서울책보고': 'Seoul Book Repository',
+        '잠실롯데월드몰': 'Jamsil Lotte World Mall',
+        '서울아차산성': 'Achasanseong Fortress',
+        '이촌한강공원': 'Ichon Hangang Park'
     };
 
     function styleLabels() {
@@ -329,7 +353,27 @@
         { name: '대학로', district: '종로구', category: '예술/뮤지엄', bestTime: '18:00-22:00', styles: ['art', 'night'] },
         { name: '혜화', district: '종로구', category: '쇼핑/트렌드', bestTime: '17:00-22:00', styles: ['shopping', 'night'] },
         { name: '성균관 명륜당', district: '종로구', category: '역사/문화', bestTime: '10:00-14:00', styles: ['history'] },
-        { name: '길상사', district: '성북구', category: '역사/문화', bestTime: '10:00-16:00', styles: ['history', 'nature'] }
+        { name: '길상사', district: '성북구', category: '역사/문화', bestTime: '10:00-16:00', styles: ['history', 'nature'] },
+        { name: '경희궁', district: '종로구', category: '역사/문화', bestTime: '10:00-16:00', styles: ['history', 'nature'] },
+        { name: '국립민속박물관', district: '종로구', category: '예술/뮤지엄', bestTime: '10:00-17:00', styles: ['history', 'art', 'family'] },
+        { name: '북악스카이웨이 팔각정', district: '종로구', category: '야경/전망', bestTime: '18:00-22:00', styles: ['night', 'nature'] },
+        { name: '서울성곽박물관', district: '종로구', category: '예술/뮤지엄', bestTime: '10:00-17:00', styles: ['history', 'art'] },
+        { name: '보신각', district: '종로구', category: '역사/문화', bestTime: '17:00-21:00', styles: ['history', 'night'] },
+        { name: '청운문학도서관', district: '종로구', category: '예술/뮤지엄', bestTime: '11:00-18:00', styles: ['art', 'nature'] },
+        { name: '서울한방진흥센터', district: '동대문구', category: '예술/뮤지엄', bestTime: '10:00-17:00', styles: ['history', 'art'] },
+        { name: '서울풍물시장', district: '동대문구', category: '로컬/시장', bestTime: '11:00-19:00', styles: ['local', 'shopping'] },
+        { name: '응봉산 야경포인트', district: '성동구', category: '야경/전망', bestTime: '18:00-22:00', styles: ['night', 'nature'] },
+        { name: '서울함공원', district: '마포구', category: '가족/테마', bestTime: '14:00-19:00', styles: ['family', 'night'] },
+        { name: '북서울꿈의숲', district: '강북구', category: '자연/산책', bestTime: '16:00-20:00', styles: ['nature', 'family', 'night'] },
+        { name: '경춘선숲길', district: '노원구', category: '자연/산책', bestTime: '15:00-19:00', styles: ['nature', 'local'] },
+        { name: '화랑대 철도공원', district: '노원구', category: '가족/테마', bestTime: '12:00-18:00', styles: ['family', 'history'] },
+        { name: '낙성대공원', district: '관악구', category: '역사/문화', bestTime: '10:00-16:00', styles: ['history', 'nature'] },
+        { name: '암사동선사유적지', district: '강동구', category: '역사/문화', bestTime: '10:00-16:00', styles: ['history', 'family'] },
+        { name: '몽촌토성', district: '송파구', category: '역사/문화', bestTime: '10:00-17:00', styles: ['history', 'nature'] },
+        { name: '서울책보고', district: '송파구', category: '예술/뮤지엄', bestTime: '12:00-19:00', styles: ['art', 'local'] },
+        { name: '잠실롯데월드몰', district: '송파구', category: '쇼핑/트렌드', bestTime: '12:00-21:00', styles: ['shopping', 'family'] },
+        { name: '서울아차산성', district: '광진구', category: '역사/문화', bestTime: '09:00-14:00', styles: ['history', 'nature'] },
+        { name: '이촌한강공원', district: '용산구', category: '자연/산책', bestTime: '17:00-21:00', styles: ['nature', 'night'] }
     ];
 
     const places = PLACE_SEEDS.map((seed, index) => {
