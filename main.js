@@ -808,6 +808,73 @@
         });
     }
 
+    function updatePlaceStructuredData(place, details) {
+        const langParam = CURRENT_LANG === 'en' ? '&lang=en' : '';
+        const canonicalUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}${langParam}`;
+        const canonicalEl = document.getElementById('canonical-link');
+        const altKoEl = document.getElementById('alternate-ko-link');
+        const altEnEl = document.getElementById('alternate-en-link');
+        if (canonicalEl) canonicalEl.href = canonicalUrl;
+        if (altKoEl) altKoEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}`;
+        if (altEnEl) altEnEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}&lang=en`;
+
+        const breadcrumbScript = document.getElementById('ld-breadcrumb');
+        const attractionScript = document.getElementById('ld-attraction');
+        const placeName = (CURRENT_LANG === 'en' && details?.displayName) ? details.displayName : getPlaceName(place);
+        const placeDescription = (CURRENT_LANG === 'en' && details?.editorialSummary)
+            ? details.editorialSummary
+            : (CURRENT_LANG === 'en' ? place.descriptionEn : place.description);
+        const mapUrl = details?.googleMapsUri || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.mapQuery)}`;
+        const addressText = details?.formattedAddress || `${getDistrictLabel(place.district)}, Seoul, South Korea`;
+        const ratingValue = details?.rating || place.ratingValue || 0;
+        const reviewCount = details?.userRatingCount || place.reviewCountValue || 0;
+
+        const breadcrumbData = {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                {
+                    '@type': 'ListItem',
+                    position: 1,
+                    name: 'Seoul Explorer',
+                    item: `${window.location.origin}/`
+                },
+                {
+                    '@type': 'ListItem',
+                    position: 2,
+                    name: placeName,
+                    item: canonicalUrl
+                }
+            ]
+        };
+
+        const attractionData = {
+            '@context': 'https://schema.org',
+            '@type': 'TouristAttraction',
+            name: placeName,
+            description: placeDescription,
+            url: canonicalUrl,
+            touristType: place.styles.map((style) => getStyleLabel(style)),
+            address: {
+                '@type': 'PostalAddress',
+                addressLocality: getDistrictLabel(place.district),
+                addressRegion: 'Seoul',
+                addressCountry: 'KR',
+                streetAddress: addressText
+            },
+            aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: Number(ratingValue.toFixed ? ratingValue.toFixed(1) : ratingValue),
+                reviewCount: Number(reviewCount)
+            },
+            hasMap: mapUrl,
+            sameAs: mapUrl
+        };
+
+        if (breadcrumbScript) breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+        if (attractionScript) attractionScript.textContent = JSON.stringify(attractionData);
+    }
+
     async function renderPlaceDetail() {
         const place = placeMap[getPlaceIdFromQuery()];
         if (!place) return;
@@ -849,6 +916,7 @@
         dataSourceEl.textContent = CURRENT_LANG === 'en'
             ? 'Ratings/Reviews: Showing default data now. Updating to live Google data shortly.'
             : '리뷰/평점: 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
+        updatePlaceStructuredData(place, null);
 
         try {
             const details = await fetchLivePlaceDetails(place, CURRENT_LANG === 'en' ? 'en' : 'ko');
@@ -871,6 +939,7 @@
             dataSourceEl.textContent = CURRENT_LANG === 'en'
                 ? 'Ratings/Reviews: Live Google Places data applied'
                 : '리뷰/평점: Google Places API 실시간 데이터 반영됨';
+            updatePlaceStructuredData(place, details);
         } catch (error) {
             dataSourceEl.textContent = CURRENT_LANG === 'en'
                 ? 'Ratings/Reviews: Google API unavailable, showing fallback data'
