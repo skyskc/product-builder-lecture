@@ -8,14 +8,6 @@ const PORT = Number(process.env.PORT || 3000);
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 
-const PLACE_QUERY_MAP = {
-  gyeongbokgung: 'Gyeongbokgung Palace Seoul',
-  myeongdong: 'Myeong-dong Shopping Street Seoul',
-  nseoultower: 'N Seoul Tower',
-  bukchon: 'Bukchon Hanok Village Seoul',
-  hongdae: 'Hongdae Street Seoul'
-};
-
 const PLACE_DETAILS_CACHE = new Map();
 
 const MIME_TYPES = {
@@ -55,13 +47,12 @@ function sendFile(res, filePath) {
   });
 }
 
-async function fetchGooglePlaceDetails(localPlaceId) {
-  const cacheItem = PLACE_DETAILS_CACHE.get(localPlaceId);
+async function fetchGooglePlaceDetails(queryText) {
+  const cacheItem = PLACE_DETAILS_CACHE.get(queryText);
   if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
     return cacheItem.data;
   }
 
-  const query = PLACE_QUERY_MAP[localPlaceId];
   const searchResponse = await fetch('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
     headers: {
@@ -70,7 +61,7 @@ async function fetchGooglePlaceDetails(localPlaceId) {
       'X-Goog-FieldMask': 'places.id'
     },
     body: JSON.stringify({
-      textQuery: query,
+      textQuery: queryText,
       languageCode: 'ko'
     })
   });
@@ -83,7 +74,7 @@ async function fetchGooglePlaceDetails(localPlaceId) {
   const searchData = await searchResponse.json();
   const googlePlaceId = searchData.places?.[0]?.id;
   if (!googlePlaceId) {
-    throw new Error(`No Google place id found for ${localPlaceId}`);
+    throw new Error(`No Google place id found for query: ${queryText}`);
   }
 
   const url = `https://places.googleapis.com/v1/places/${googlePlaceId}`;
@@ -115,7 +106,7 @@ async function fetchGooglePlaceDetails(localPlaceId) {
       : []
   };
 
-  PLACE_DETAILS_CACHE.set(localPlaceId, { cachedAt: Date.now(), data: normalized });
+  PLACE_DETAILS_CACHE.set(queryText, { cachedAt: Date.now(), data: normalized });
   return normalized;
 }
 
@@ -132,9 +123,9 @@ const server = http.createServer(async (req, res) => {
   const requestUrl = new URL(req.url, `http://${req.headers.host}`);
 
   if (requestUrl.pathname === '/api/place-details' && req.method === 'GET') {
-    const id = requestUrl.searchParams.get('id');
-    if (!id || !PLACE_QUERY_MAP[id]) {
-      sendJson(res, 400, { error: 'Invalid place id' });
+    const query = requestUrl.searchParams.get('query');
+    if (!query || query.trim().length < 2) {
+      sendJson(res, 400, { error: 'Invalid query parameter' });
       return;
     }
 
@@ -144,8 +135,8 @@ const server = http.createServer(async (req, res) => {
     }
 
     try {
-      const details = await fetchGooglePlaceDetails(id);
-      sendJson(res, 200, { placeId: id, details, source: 'google_places' });
+      const details = await fetchGooglePlaceDetails(query.trim());
+      sendJson(res, 200, { query: query.trim(), details, source: 'google_places' });
     } catch (error) {
       sendJson(res, 502, { error: 'Failed to fetch Google place details', message: error.message });
     }

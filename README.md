@@ -24,7 +24,7 @@ npm start
 
 ## 3) 실시간 데이터 동작
 
-- 장소 상세 페이지(`place.html?id=...`)에서 `/api/place-details?id=...` 호출
+- 장소 상세 페이지(`place.html?id=...`)에서 `/api/place-details?query=...` 호출
 - 서버가 Google Places Text Search + Place Details를 호출
 - 평점, 리뷰 수, 리뷰 요약을 실시간 데이터로 갱신
 - 실패 시 페이지 기본 데이터로 자동 폴백

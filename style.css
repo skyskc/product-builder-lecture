@@ -103,6 +103,36 @@ a {
     line-height: 1.65;
 }
 
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 18px;
+}
+
+.filter-bar label {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.filter-bar select {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font: inherit;
+    color: var(--text);
+    background: #fff;
+}
+
+.result-count {
+    margin: 0 0 0 auto;
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
 .place-grid {
     display: grid;
     gap: 18px;
@@ -303,5 +333,13 @@ a {
 
     .map-frame {
         height: 280px;
+    }
+
+    .filter-bar {
+        flex-wrap: wrap;
+    }
+
+    .result-count {
+        margin-left: 0;
     }
 }
