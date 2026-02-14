@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seoul Explorer | Open Travel Plans</title>
-    <meta name="description" content="Choose one of five Seoul travel plans and enter the page you need. Built for international visitors.">
-    <meta name="keywords" content="Seoul travel, Korea trip, Seoul itinerary, Seoul attractions, Seoul map, Korea tourism, Seoul for foreigners">
+    <title>Seoul Explorer | Start</title>
+    <meta name="description" content="Choose one of five Seoul travel plans and move to the page you need.">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Seoul Explorer | Top Seoul Places for International Travelers">
-    <meta property="og:description" content="Discover top places in Seoul with style-based filters, walking courses, map links, and travel-ready recommendations.">
+    <meta property="og:title" content="Seoul Explorer | Start Your Korea Plan">
+    <meta property="og:description" content="Select Explore, Course Planner, Generations, Screen Picks, or Saju.">
     <meta property="og:url" content="https://www.skyskc.com/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Seoul Explorer">
-    <meta name="twitter:description" content="Seoul travel guide for international visitors.">
+    <meta name="twitter:description" content="Open one of five Seoul travel plans.">
     <link rel="canonical" href="https://www.skyskc.com/">
     <link rel="alternate" hreflang="ko" href="https://www.skyskc.com/">
     <link rel="alternate" hreflang="en" href="https://www.skyskc.com/?lang=en">
@@ -24,12 +23,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="home">
+<body data-page="entry">
     <header class="site-header">
         <a class="logo" href="index.html"><span class="logo-mark">SV</span><span class="logo-text"><span class="logo-seoul">Seoul</span><span class="logo-voyager">Voyager</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
-                <a href="index.html">Explore</a>
+                <a href="explore.html">Explore</a>
                 <a id="course-link" href="course.html">Planner</a>
                 <a id="generation-link" href="generation.html">Generations</a>
                 <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
@@ -42,131 +41,31 @@
 
     <main class="container">
         <section class="panel open-landing">
-            <p id="open-eyebrow" class="eyebrow">Open Travel Plans</p>
-            <h1 id="open-title">Pick Your Seoul Plan</h1>
-            <p id="open-desc">Start with the plan that matches your travel goal. You can switch anytime.</p>
+            <p id="entry-eyebrow" class="eyebrow">Open Travel Plans</p>
+            <h1 id="entry-title">Pick Your Seoul Plan</h1>
+            <p id="entry-desc">Start with the plan that matches your travel goal. You can switch anytime.</p>
             <div class="open-plan-grid">
-                <a class="open-plan-card" id="open-card-explore" href="#explore-start">
+                <a class="open-plan-card" id="entry-card-explore" href="explore.html">
                     <strong>Explore Spots</strong>
                     <span>Top places, map links, and filters</span>
                 </a>
-                <a class="open-plan-card" id="open-card-course" href="course.html">
+                <a class="open-plan-card" id="entry-card-course" href="course.html">
                     <strong>Course Planner</strong>
                     <span>One-day route with hotels and restaurants</span>
                 </a>
-                <a class="open-plan-card" id="open-card-generation" href="generation.html">
+                <a class="open-plan-card" id="entry-card-generation" href="generation.html">
                     <strong>Generation Plans</strong>
                     <span>Recommended pace by age group</span>
                 </a>
-                <a class="open-plan-card" id="open-card-kcontent" href="kcontent.html">
+                <a class="open-plan-card" id="entry-card-kcontent" href="kcontent.html">
                     <strong>Screen Picks</strong>
                     <span>Characters, idols, actors, and matching routes</span>
                 </a>
-                <a class="open-plan-card" id="open-card-saju" href="comments.html">
+                <a class="open-plan-card" id="entry-card-saju" href="comments.html">
                     <strong>Saju Plan</strong>
                     <span>Saju analysis and travel suggestions</span>
                 </a>
             </div>
-        </section>
-
-        <section id="explore-start" class="hero">
-            <p class="eyebrow">For International Visitors</p>
-            <h1>서울에서 꼭 가봐야 할 인기 명소</h1>
-            <p>서울을 처음 방문하는 여행자를 위해 많이 방문하는 장소를 엄선했습니다. 장소 상세 페이지에서 Google 지도, 평점, 리뷰 요약까지 바로 확인할 수 있습니다.</p>
-            <div class="global-badges">
-                <span class="badge-lite">English Support</span>
-                <span class="badge-lite">Google Maps Ready</span>
-                <span class="badge-lite">Walking Itinerary</span>
-                <span class="badge-lite">Local Food Picks</span>
-            </div>
-        </section>
-
-        <section class="panel style-tab-panel sticky-panel sticky-primary" aria-label="여행 스타일 필터">
-            <p class="style-tab-title">여행 형식 선택</p>
-            <div id="travel-style-tabs" class="style-tab-row" role="tablist" aria-label="여행 스타일">
-                <button class="style-tab-btn" data-style="all" role="tab" type="button">전체</button>
-                <button class="style-tab-btn" data-style="history" role="tab" type="button">역사/문화</button>
-                <button class="style-tab-btn" data-style="shopping" role="tab" type="button">쇼핑/트렌드</button>
-                <button class="style-tab-btn" data-style="night" role="tab" type="button">야경/전망</button>
-                <button class="style-tab-btn" data-style="nature" role="tab" type="button">자연/산책</button>
-                <button class="style-tab-btn" data-style="family" role="tab" type="button">가족/테마</button>
-                <button class="style-tab-btn" data-style="art" role="tab" type="button">예술/뮤지엄</button>
-                <button class="style-tab-btn" data-style="local" role="tab" type="button">로컬/시장</button>
-            </div>
-        </section>
-
-        <section class="panel search-panel sticky-panel sticky-secondary" aria-label="검색 및 태그 필터">
-            <div class="search-row">
-                <p id="result-count" class="result-count"></p>
-                <input id="place-search-input" class="search-input" type="search" placeholder="장소명, 지역명, 카테고리로 검색">
-                <select id="sort-select" class="sort-select">
-                    <option value="popular">인기순</option>
-                    <option value="rating">평점순</option>
-                    <option value="reviews">리뷰수순</option>
-                </select>
-                <div id="quick-tag-list" class="quick-tag-list">
-                    <button class="tag-chip active" data-tag="all" type="button">전체</button>
-                    <button class="tag-chip" data-tag="palace" type="button">궁궐</button>
-                    <button class="tag-chip" data-tag="night-view" type="button">야경</button>
-                    <button class="tag-chip" data-tag="shopping" type="button">쇼핑</button>
-                    <button class="tag-chip" data-tag="museum" type="button">박물관</button>
-                    <button class="tag-chip" data-tag="nature" type="button">공원/산책</button>
-                    <button class="tag-chip" data-tag="local-market" type="button">시장/로컬</button>
-                    <button class="tag-chip" data-tag="family-trip" type="button">가족여행</button>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div id="place-grid" class="place-grid"></div>
-        </section>
-
-        <section class="panel traveler-tools-panel">
-            <h2 id="travel-kit-title">외국인 여행자 실전 도구</h2>
-            <p id="travel-kit-intro">현장에서 바로 쓸 수 있는 한국어 표현과 환율 계산기를 제공합니다.</p>
-
-            <div class="travel-tools-grid">
-                <article class="tool-card">
-                    <h3 id="phrase-tool-title">필수 한국어 표현 (터치 복사)</h3>
-                    <div id="phrase-grid" class="phrase-grid"></div>
-                    <p id="phrase-copy-status" class="data-source-note"></p>
-                </article>
-
-                <article class="tool-card">
-                    <h3 id="fx-tool-title">USD ↔ KRW 빠른 계산기</h3>
-                    <p id="fx-tool-intro" class="tool-intro">예산을 원화/달러로 빠르게 변환해 식비, 교통비, 쇼핑비를 가늠하세요.</p>
-                    <div class="fx-grid">
-                        <label for="krw-input" id="krw-input-label">원화 (KRW)</label>
-                        <input id="krw-input" class="search-input" type="text" inputmode="decimal" placeholder="예: 50000">
-
-                        <label for="usd-input" id="usd-input-label">달러 (USD)</label>
-                        <input id="usd-input" class="search-input" type="text" inputmode="decimal" placeholder="예: 36">
-
-                        <label for="fx-rate-input" id="fx-rate-label">환율 (1 USD = KRW)</label>
-                        <input id="fx-rate-input" class="search-input" type="text" inputmode="decimal" value="1400">
-                    </div>
-                    <p id="fx-rate-note" class="data-source-note">참고용 계산값이며 결제 시점 환율/수수료와 다를 수 있습니다.</p>
-                </article>
-            </div>
-        </section>
-
-        <section class="panel trust-panel">
-            <h2>운영 원칙</h2>
-            <div class="trust-grid">
-                <article>
-                    <h3>독창적 여행 정보</h3>
-                    <p>서울 방문자 관점에서 직접 재구성한 동선형 추천 정보를 제공합니다. 장소별 핵심 포인트와 방문 시간대를 함께 제시합니다.</p>
-                </article>
-                <article>
-                    <h3>데이터 출처 고지</h3>
-                    <p>지도, 평점, 리뷰 수는 Google Maps/Places 기반으로 표시되며, 일부 항목은 API 장애 시 기본 데이터로 대체됩니다.</p>
-                </article>
-                <article>
-                    <h3>광고/콘텐츠 분리</h3>
-                    <p>광고가 있더라도 본문 탐색 흐름을 방해하지 않도록 구성하며, 사용자에게 유용한 정보 제공을 최우선으로 유지합니다.</p>
-                </article>
-            </div>
-            <p class="data-source-note">최근 업데이트: 2026-02-14</p>
         </section>
     </main>
 
@@ -182,33 +81,6 @@
         </div>
     </footer>
 
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Seoul Explorer",
-            "url": "https://www.skyskc.com/",
-            "inLanguage": ["ko", "en"],
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://www.skyskc.com/?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-            }
-        }
-    </script>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Seoul Explorer",
-            "url": "https://www.skyskc.com/",
-            "logo": "https://www.skyskc.com/favicon.ico",
-            "sameAs": [
-                "https://www.google.com/maps/search/?api=1&query=Seoul+South+Korea"
-            ],
-            "description": "Travel planning platform for international visitors to Korea, featuring Seoul attractions, walking courses, local food spots, and map-based recommendations."
-        }
-    </script>
     <script src="main.js"></script>
 </body>
 </html>

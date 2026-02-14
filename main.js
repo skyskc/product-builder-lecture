@@ -1477,6 +1477,24 @@
             if (spotsTitle) spotsTitle.textContent = 'Recommended Places';
             if (foodTitle) foodTitle.textContent = 'Recommended Food Spots';
         }
+        if (page === 'entry') {
+            const eyebrow = document.getElementById('entry-eyebrow');
+            const title = document.getElementById('entry-title');
+            const desc = document.getElementById('entry-desc');
+            const explore = document.getElementById('entry-card-explore');
+            const course = document.getElementById('entry-card-course');
+            const generation = document.getElementById('entry-card-generation');
+            const kcontent = document.getElementById('entry-card-kcontent');
+            const saju = document.getElementById('entry-card-saju');
+            if (eyebrow) eyebrow.textContent = 'Open Travel Plans';
+            if (title) title.textContent = 'Pick Your Seoul Plan';
+            if (desc) desc.textContent = 'Start with the plan that matches your travel goal. You can switch anytime.';
+            if (explore) explore.innerHTML = '<strong>Explore Spots</strong><span>Top places, map links, and filters</span>';
+            if (course) course.innerHTML = '<strong>Course Planner</strong><span>One-day route with hotels and restaurants</span>';
+            if (generation) generation.innerHTML = '<strong>Generation Plans</strong><span>Recommended pace by age group</span>';
+            if (kcontent) kcontent.innerHTML = '<strong>Screen Picks</strong><span>Characters, idols, actors, and matching routes</span>';
+            if (saju) saju.innerHTML = '<strong>Saju Plan</strong><span>Saju analysis and travel suggestions</span>';
+        }
     }
 
     function syncInternalLinksWithLanguage() {
@@ -1968,6 +1986,50 @@
         markActiveStyle(selectedStyle);
         markActiveTag(selectedTag);
         applyFilter();
+    }
+
+    function renderEntryPage() {
+        const eyebrow = document.getElementById('entry-eyebrow');
+        const title = document.getElementById('entry-title');
+        const desc = document.getElementById('entry-desc');
+        const explore = document.getElementById('entry-card-explore');
+        const course = document.getElementById('entry-card-course');
+        const generation = document.getElementById('entry-card-generation');
+        const kcontent = document.getElementById('entry-card-kcontent');
+        const saju = document.getElementById('entry-card-saju');
+        const navLinks = document.querySelectorAll('.top-nav a');
+        if (!eyebrow || !title || !desc || !explore || !course || !generation || !kcontent || !saju) return;
+
+        const isEn = CURRENT_LANG === 'en';
+        if (isEn) {
+            eyebrow.textContent = 'Open Travel Plans';
+            title.textContent = 'Pick Your Seoul Plan';
+            desc.textContent = 'Start with the plan that matches your travel goal. You can switch anytime.';
+            explore.innerHTML = '<strong>Explore Spots</strong><span>Top places, map links, and filters</span>';
+            course.innerHTML = '<strong>Course Planner</strong><span>One-day route with hotels and restaurants</span>';
+            generation.innerHTML = '<strong>Generation Plans</strong><span>Recommended pace by age group</span>';
+            kcontent.innerHTML = '<strong>Screen Picks</strong><span>Characters, idols, actors, and matching routes</span>';
+            saju.innerHTML = '<strong>Saju Plan</strong><span>Saju analysis and travel suggestions</span>';
+            if (navLinks[0]) navLinks[0].textContent = 'Explore';
+            if (navLinks[1]) navLinks[1].textContent = 'Planner';
+            if (navLinks[2]) navLinks[2].textContent = 'Generations';
+            if (navLinks[3]) navLinks[3].textContent = 'Screen Picks';
+            if (navLinks[4]) navLinks[4].textContent = 'Saju';
+        } else {
+            eyebrow.textContent = '오픈 여행 플랜';
+            title.textContent = '서울 여행 플랜을 선택하세요';
+            desc.textContent = '여행 목적에 맞는 플랜부터 시작하고 언제든 다른 플랜으로 이동할 수 있습니다.';
+            explore.innerHTML = '<strong>여행지 탐색</strong><span>핵심 명소, 지도 링크, 필터 탐색</span>';
+            course.innerHTML = '<strong>코스 플래너</strong><span>하루 동선 + 호텔 + 맛집 추천</span>';
+            generation.innerHTML = '<strong>세대별 플랜</strong><span>세대별 이동 강도 맞춤 추천</span>';
+            kcontent.innerHTML = '<strong>콘텐츠 플랜</strong><span>캐릭터, 아이돌, 배우 기반 추천</span>';
+            saju.innerHTML = '<strong>사주 플랜</strong><span>사주 해석 기반 여행 제안</span>';
+            if (navLinks[0]) navLinks[0].textContent = '여행지 탐색';
+            if (navLinks[1]) navLinks[1].textContent = '코스 플래너';
+            if (navLinks[2]) navLinks[2].textContent = '세대별 플랜';
+            if (navLinks[3]) navLinks[3].textContent = '콘텐츠 플랜';
+            if (navLinks[4]) navLinks[4].textContent = '사주 플랜';
+        }
     }
 
     function renderGenerationPage() {
@@ -2921,6 +2983,7 @@
         initStickyOffsets();
         const page = document.body.dataset.page;
         if (page === 'home') renderHome();
+        else if (page === 'entry') renderEntryPage();
         else if (page === 'place') renderPlaceDetail();
         else if (page === 'course') renderCoursePage();
         else if (page === 'generation') renderGenerationPage();
