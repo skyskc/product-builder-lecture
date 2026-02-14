@@ -154,6 +154,158 @@
             walk: 'low'
         }
     ];
+    const KCONTENT_CATALOG = [
+        {
+            work: { ko: '오징어 게임', en: 'Squid Game' },
+            type: { ko: '드라마', en: 'Drama' },
+            characters: [
+                {
+                    name: { ko: '성기훈', en: 'Seong Gi-hun' },
+                    styles: ['local', 'history'],
+                    mood: {
+                        ko: '사람 냄새 나는 골목과 오래된 동네의 서사를 통해 감정선을 회복하는 타입',
+                        en: 'A profile that reconnects through old neighborhoods and human-centered local streets'
+                    },
+                    reason: {
+                        ko: '현실 감각과 생존 본능이 강한 캐릭터라, 화려함보다 지역의 결을 느끼는 장소와 궁합이 좋습니다.',
+                        en: 'This character leans toward grounded survival instincts, matching places with local texture over flashy spectacle.'
+                    }
+                },
+                {
+                    name: { ko: '프론트맨', en: 'Front Man' },
+                    styles: ['night', 'art'],
+                    mood: {
+                        ko: '통제된 공간, 긴장감 있는 야간 무드, 구조적 미학을 선호하는 타입',
+                        en: 'A profile drawn to controlled spaces, tension-heavy night scenes, and structured aesthetics'
+                    },
+                    reason: {
+                        ko: '질서와 연출의 힘이 큰 캐릭터라, 전망/야경과 디자인적 완성도가 높은 공간에서 몰입도가 올라갑니다.',
+                        en: 'Because this character is defined by control and staging, night-view and design-led places create stronger immersion.'
+                    }
+                }
+            ]
+        },
+        {
+            work: { ko: '더 글로리', en: 'The Glory' },
+            type: { ko: '드라마', en: 'Drama' },
+            characters: [
+                {
+                    name: { ko: '문동은', en: 'Moon Dong-eun' },
+                    styles: ['art', 'history'],
+                    mood: {
+                        ko: '정교한 계획, 감정 절제, 서사가 축적되는 공간을 선호하는 타입',
+                        en: 'A profile that values precision, restraint, and spaces with layered narrative'
+                    },
+                    reason: {
+                        ko: '감정의 밀도와 구조가 중요한 캐릭터라, 전시/역사형 공간처럼 맥락이 깊은 동선이 어울립니다.',
+                        en: 'This character thrives in context-rich routes where narrative depth matters, such as art and history spaces.'
+                    }
+                },
+                {
+                    name: { ko: '주여정', en: 'Joo Yeo-jeong' },
+                    styles: ['nature', 'art'],
+                    mood: {
+                        ko: '차분한 회복, 공감, 정서적 환기가 가능한 장소를 선호하는 타입',
+                        en: 'A profile favoring calm recovery, empathy, and emotionally ventilating places'
+                    },
+                    reason: {
+                        ko: '돌봄과 치유 성향이 강해, 자연과 예술이 결합된 완만한 페이스의 코스가 잘 맞습니다.',
+                        en: 'With strong healing tendencies, blended nature-art routes with gentle pacing are the best fit.'
+                    }
+                }
+            ]
+        },
+        {
+            work: { ko: '경성크리처', en: 'Gyeongseong Creature' },
+            type: { ko: '드라마', en: 'Drama' },
+            characters: [
+                {
+                    name: { ko: '장태상', en: 'Jang Tae-sang' },
+                    styles: ['history', 'local'],
+                    mood: {
+                        ko: '격변기 서사, 도시의 역사 결, 현실적인 이동 동선을 중시하는 타입',
+                        en: 'A profile aligned with turbulent-era stories, historical city texture, and practical movement'
+                    },
+                    reason: {
+                        ko: '시대성·장소성이 핵심인 캐릭터라, 역사 유적과 로컬 시장이 결합된 코스가 설득력이 높습니다.',
+                        en: 'Since era and place are core to this character, routes combining heritage sites and local markets feel most coherent.'
+                    }
+                },
+                {
+                    name: { ko: '윤채옥', en: 'Yoon Chae-ok' },
+                    styles: ['night', 'history'],
+                    mood: {
+                        ko: '긴장 속 집중력, 야간 잠입형 동선, 강한 목적 지향성을 가진 타입',
+                        en: 'A profile with high focus under tension, night-oriented routes, and mission-like movement'
+                    },
+                    reason: {
+                        ko: '목표 지향성이 뚜렷해 야경 포인트와 역사 공간의 대비를 살린 코스에서 몰입이 높습니다.',
+                        en: 'With strong mission focus, contrast between night viewpoints and historical locations amplifies immersion.'
+                    }
+                }
+            ]
+        },
+        {
+            work: { ko: '기생수: 더 그레이', en: 'Parasyte: The Grey' },
+            type: { ko: '드라마', en: 'Drama' },
+            characters: [
+                {
+                    name: { ko: '정수인', en: 'Jeong Su-in' },
+                    styles: ['night', 'nature'],
+                    mood: {
+                        ko: '경계 감각, 생존 반응, 개방된 공간에서의 상황 판단이 강한 타입',
+                        en: 'A profile with alert boundaries, survival reflex, and strong judgment in open spaces'
+                    },
+                    reason: {
+                        ko: '긴장-이완 전환이 빠른 캐릭터라, 야간 포인트와 강변/공원 동선을 섞는 방식이 잘 맞습니다.',
+                        en: 'Because this character switches quickly between tension and release, mixed night and riverside routes work well.'
+                    }
+                },
+                {
+                    name: { ko: '설강우', en: 'Seol Kang-woo' },
+                    styles: ['local', 'shopping'],
+                    mood: {
+                        ko: '현장성, 즉응력, 사람 많은 공간에서 정보를 읽는 능력이 강한 타입',
+                        en: 'A profile that thrives on field immediacy and reading signals in crowded districts'
+                    },
+                    reason: {
+                        ko: '즉응형 판단이 강해 상권 밀도가 높은 로컬/쇼핑 지역에서 동선 효율이 올라갑니다.',
+                        en: 'Fast on-site adaptation makes high-density local and shopping districts an efficient fit.'
+                    }
+                }
+            ]
+        },
+        {
+            work: { ko: '외모지상주의', en: 'Lookism' },
+            type: { ko: '애니메이션', en: 'Animation' },
+            characters: [
+                {
+                    name: { ko: '박형석', en: 'Park Hyung-seok' },
+                    styles: ['shopping', 'family'],
+                    mood: {
+                        ko: '자기 인식 변화, 관계 확장, 다양한 분위기를 경험하며 균형을 찾는 타입',
+                        en: 'A profile focused on self-reframing and social expansion through varied experiences'
+                    },
+                    reason: {
+                        ko: '다층적 자아 변화가 핵심이라, 트렌드 지역과 테마형 공간을 함께 도는 코스가 효과적입니다.',
+                        en: 'Because identity shifts are central, routes combining trend districts and themed spaces are highly effective.'
+                    }
+                },
+                {
+                    name: { ko: '바스코', en: 'Vasco' },
+                    styles: ['nature', 'family'],
+                    mood: {
+                        ko: '직진형 에너지, 명확한 가치관, 활동량이 있는 동선에서 만족이 높은 타입',
+                        en: 'A profile with direct energy and clear values, satisfied by active movement'
+                    },
+                    reason: {
+                        ko: '행동성이 강한 캐릭터라 산책/공원 + 체험형 스팟을 묶은 코스가 잘 맞습니다.',
+                        en: 'This action-driven profile matches routes that pair parks/walks with experiential spots.'
+                    }
+                }
+            ]
+        }
+    ];
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
@@ -564,7 +716,8 @@
         if (navLinks[0]) navLinks[0].textContent = 'Explore';
         if (navLinks[1]) navLinks[1].textContent = 'Planner';
         if (navLinks[2]) navLinks[2].textContent = 'Generations';
-        if (navLinks[3]) navLinks[3].textContent = 'Saju';
+        if (navLinks[3]) navLinks[3].textContent = 'Screen Picks';
+        if (navLinks[4]) navLinks[4].textContent = 'Saju';
 
         const footerLinks = document.querySelectorAll('.footer-inner nav a');
         if (footerLinks[0]) footerLinks[0].textContent = 'About';
@@ -666,6 +819,12 @@
             if (heroDesc) heroDesc.textContent = 'Choose by travel pace and group profile, then jump directly to the matching course.';
             if (panelTitle) panelTitle.textContent = 'Recommended Scenarios by Generation';
         }
+        if (page === 'kcontent') {
+            const titleEl = document.getElementById('kcontent-title');
+            const descEl = document.getElementById('kcontent-desc');
+            if (titleEl) titleEl.textContent = 'K-Content Character Travel Recommender';
+            if (descEl) descEl.textContent = 'Pick a Korean series/film/animation character and get Seoul places that match the character mood.';
+        }
     }
 
     function syncInternalLinksWithLanguage() {
@@ -712,12 +871,14 @@
     function updateTopNavLinks(id) {
         const courseLink = document.getElementById('course-link');
         const generationLink = document.getElementById('generation-link');
+        const kcontentLink = document.getElementById('kcontent-link');
         const commentsLink = document.getElementById('comments-link');
         const place = placeMap[id];
         if (courseLink && place) {
             courseLink.href = withCurrentLang(`course.html?style=${encodeURIComponent(place.styles[0])}`);
         }
         if (generationLink) generationLink.href = withCurrentLang('generation.html');
+        if (kcontentLink) kcontentLink.href = withCurrentLang('kcontent.html');
         if (commentsLink) commentsLink.href = withCurrentLang('comments.html');
     }
 
@@ -728,7 +889,8 @@
         if (page === 'home' || page === 'place') links[0]?.classList.add('active');
         if (page === 'course') links[1]?.classList.add('active');
         if (page === 'generation') links[2]?.classList.add('active');
-        if (page === 'saju') links[3]?.classList.add('active');
+        if (page === 'kcontent') links[3]?.classList.add('active');
+        if (page === 'saju') links[4]?.classList.add('active');
     }
 
     function applyTheme(theme) {
@@ -1921,6 +2083,94 @@
         });
     }
 
+    function renderKContentPage() {
+        const form = document.getElementById('kcontent-form');
+        const titleEl = document.getElementById('kcontent-title');
+        const descEl = document.getElementById('kcontent-desc');
+        const workLabel = document.getElementById('kcontent-work-label');
+        const charLabel = document.getElementById('kcontent-character-label');
+        const submitBtn = document.getElementById('kcontent-submit-btn');
+        const workSelect = document.getElementById('kcontent-work');
+        const characterSelect = document.getElementById('kcontent-character');
+        const resultTitle = document.getElementById('kcontent-result-title');
+        const resultSummary = document.getElementById('kcontent-result-summary');
+        const styleChipsEl = document.getElementById('kcontent-style-chips');
+        const placeListEl = document.getElementById('kcontent-place-list');
+        if (!form || !titleEl || !descEl || !workLabel || !charLabel || !submitBtn || !workSelect || !characterSelect || !resultTitle || !resultSummary || !styleChipsEl || !placeListEl) return;
+
+        const isEn = CURRENT_LANG === 'en';
+        titleEl.textContent = isEn ? 'K-Content Character Travel Recommender' : '한국 콘텐츠 캐릭터 기반 여행 추천';
+        descEl.textContent = isEn
+            ? 'Pick a Korean series/film/animation character and get Seoul places that match the character mood.'
+            : '좋아하는 작품과 캐릭터를 선택하면, 분위기와 성격에 맞는 서울 여행 동선을 추천합니다.';
+        workLabel.textContent = isEn ? 'Select Title' : '작품 선택';
+        charLabel.textContent = isEn ? 'Select Character' : '캐릭터 선택';
+        submitBtn.textContent = isEn ? 'Show Recommendations' : '추천 보기';
+        resultTitle.textContent = isEn ? 'Character Mood Interpretation' : '캐릭터 무드 해석';
+        resultSummary.textContent = isEn ? 'Choose title and character to view analysis.' : '작품과 캐릭터를 선택하면 해석이 표시됩니다.';
+
+        function populateWorkOptions() {
+            workSelect.innerHTML = KCONTENT_CATALOG.map((entry, idx) => {
+                const workName = isEn ? entry.work.en : entry.work.ko;
+                const typeName = isEn ? entry.type.en : entry.type.ko;
+                return `<option value="${idx}">${escapeHtml(workName)} (${escapeHtml(typeName)})</option>`;
+            }).join('');
+        }
+
+        function populateCharacterOptions(workIndex) {
+            const entry = KCONTENT_CATALOG[workIndex];
+            if (!entry) {
+                characterSelect.innerHTML = '';
+                return;
+            }
+            characterSelect.innerHTML = entry.characters.map((char, idx) => {
+                return `<option value="${idx}">${escapeHtml(isEn ? char.name.en : char.name.ko)}</option>`;
+            }).join('');
+        }
+
+        function renderCharacterPlan() {
+            const entry = KCONTENT_CATALOG[Number(workSelect.value)];
+            const char = entry?.characters?.[Number(characterSelect.value)];
+            if (!entry || !char) return;
+
+            const mood = isEn ? char.mood.en : char.mood.ko;
+            const reason = isEn ? char.reason.en : char.reason.ko;
+            resultSummary.textContent = isEn
+                ? `${entry.work.en} / ${char.name.en}: ${mood}. Interpretation basis: ${reason}`
+                : `${entry.work.ko} / ${char.name.ko}: ${mood}. 해석 근거: ${reason}`;
+
+            const styles = [...new Set(char.styles)];
+            styleChipsEl.innerHTML = styles.map((style) => {
+                const href = withCurrentLang(`course.html?style=${encodeURIComponent(style)}`);
+                return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
+            }).join('');
+
+            const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 5);
+            placeListEl.innerHTML = picked.map((place, idx) => {
+                const href = getPlaceLink('place.html', place.id);
+                const matched = place.styles.filter((style) => styles.includes(style)).slice(0, 2).map((style) => getStyleLabel(style)).join(isEn ? ' + ' : ' + ');
+                const placeReason = isEn
+                    ? `Why this match: ${place.nameEn || place.name} reflects ${matched || 'the selected mood'} and fits the character-driven route tone.`
+                    : `추천 이유: ${getPlaceName(place)}은(는) ${matched || '선택한 무드'}와 맞물려 캐릭터 중심 동선의 분위기를 자연스럽게 이어줍니다.`;
+                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span><p class="saju-reason">${escapeHtml(placeReason)}</p></li>`;
+            }).join('');
+        }
+
+        populateWorkOptions();
+        populateCharacterOptions(0);
+        renderCharacterPlan();
+
+        workSelect.addEventListener('change', () => {
+            populateCharacterOptions(Number(workSelect.value));
+            renderCharacterPlan();
+        });
+        characterSelect.addEventListener('change', renderCharacterPlan);
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            renderCharacterPlan();
+        });
+    }
+
     function init() {
         initLanguage();
         initThemeToggle();
@@ -1932,6 +2182,7 @@
         else if (page === 'place') renderPlaceDetail();
         else if (page === 'course') renderCoursePage();
         else if (page === 'generation') renderGenerationPage();
+        else if (page === 'kcontent') renderKContentPage();
         else if (page === 'partner') renderPartnerPage();
         else if (page === 'saju') renderSajuPage();
     }

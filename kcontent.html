@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seoul Explorer | 세대별 추천 코스</title>
-    <meta name="description" content="20대, 30대, 40대, 50대+ 여행 성향에 맞춘 서울 추천 코스를 한 번에 비교하고 바로 이동할 수 있는 가이드입니다.">
+    <title>Seoul Voyager | 콘텐츠 플랜</title>
+    <meta name="description" content="한국 콘텐츠(드라마/영화/애니) 속 인기 캐릭터를 선택하면 캐릭터 무드에 맞는 서울 여행지를 추천합니다.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001204090329044" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="generation">
+<body data-page="kcontent">
     <header class="site-header">
         <a class="logo" href="index.html"><span class="logo-mark">SV</span><span class="logo-text"><span class="logo-seoul">Seoul</span><span class="logo-voyager">Voyager</span></span></a>
         <div class="header-controls">
@@ -27,23 +27,34 @@
         </div>
     </header>
 
-    <main class="container">
-        <section class="hero">
-            <p class="eyebrow">Generation Picks</p>
-            <h1 id="generation-hero-title">세대별 서울 추천 코스</h1>
-            <p id="generation-hero-desc">여행 목적과 이동 강도에 따라 세대별로 가장 만족도가 높은 코스를 빠르게 선택하세요.</p>
+    <main class="container narrow">
+        <section class="panel">
+            <p class="eyebrow">Screen-Inspired Plan</p>
+            <h1 id="kcontent-title">한국 콘텐츠 캐릭터 기반 여행 추천</h1>
+            <p id="kcontent-desc">좋아하는 작품과 캐릭터를 선택하면, 분위기와 성격에 맞는 서울 여행 동선을 추천합니다.</p>
+
+            <form id="kcontent-form" class="clean-form" autocomplete="off">
+                <label id="kcontent-work-label" for="kcontent-work">작품 선택</label>
+                <select id="kcontent-work" class="sort-select"></select>
+
+                <label id="kcontent-character-label" for="kcontent-character">캐릭터 선택</label>
+                <select id="kcontent-character" class="sort-select"></select>
+
+                <button id="kcontent-submit-btn" type="submit">추천 보기</button>
+            </form>
         </section>
 
         <section class="panel">
-            <h2 id="generation-panel-title">세대별 추천 시나리오</h2>
-            <div id="generation-grid" class="generation-grid"></div>
-            <p id="generation-note" class="data-source-note">팁: 실제 이동은 날씨/인원/예산에 맞춰 코스 페이지에서 바로 조정할 수 있습니다.</p>
+            <h2 id="kcontent-result-title">캐릭터 무드 해석</h2>
+            <p id="kcontent-result-summary" class="data-source-note">작품과 캐릭터를 선택하면 해석이 표시됩니다.</p>
+            <div id="kcontent-style-chips" class="generation-meta"></div>
+            <ul id="kcontent-place-list" class="hotel-list saju-place-list"></ul>
         </section>
     </main>
 
     <footer class="site-footer">
         <div class="footer-inner">
-            <span>© 2026 Seoul Explorer</span>
+            <span>© 2026 Seoul Voyager</span>
             <nav aria-label="Footer">
                 <a href="about.html">사이트 소개</a>
                 <a href="partner.html">문의</a>
