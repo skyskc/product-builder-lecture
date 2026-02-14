@@ -24,6 +24,31 @@
         }
     };
     let CURRENT_LANG = 'ko';
+    const DISTRICT_LABELS_EN = {
+        '종로구': 'Jongno-gu',
+        '중구': 'Jung-gu',
+        '용산구': 'Yongsan-gu',
+        '마포구': 'Mapo-gu',
+        '성동구': 'Seongdong-gu',
+        '광진구': 'Gwangjin-gu',
+        '강동구': 'Gangdong-gu',
+        '강남구': 'Gangnam-gu',
+        '서초구': 'Seocho-gu',
+        '송파구': 'Songpa-gu',
+        '영등포구': 'Yeongdeungpo-gu',
+        '동작구': 'Dongjak-gu',
+        '강서구': 'Gangseo-gu',
+        '성북구': 'Seongbuk-gu'
+    };
+    const CATEGORY_LABELS_EN = {
+        '역사/문화': 'History/Culture',
+        '쇼핑/트렌드': 'Shopping/Trends',
+        '야경/전망': 'Night View',
+        '자연/산책': 'Nature/Walk',
+        '가족/테마': 'Family/Theme',
+        '예술/뮤지엄': 'Art/Museum',
+        '로컬/시장': 'Local/Market'
+    };
 
     function styleLabels() {
         return STYLE_LABELS_BY_LANG[CURRENT_LANG] || STYLE_LABELS_BY_LANG.ko;
@@ -31,6 +56,16 @@
 
     function getStyleLabel(styleKey) {
         return styleLabels()[styleKey] || styleKey;
+    }
+
+    function getDistrictLabel(district) {
+        if (CURRENT_LANG !== 'en') return district;
+        return DISTRICT_LABELS_EN[district] || district;
+    }
+
+    function getCategoryLabel(category) {
+        if (CURRENT_LANG !== 'en') return category;
+        return CATEGORY_LABELS_EN[category] || category;
     }
 
     const PLACE_SEEDS = [
@@ -162,6 +197,10 @@
         const reviewBase = 7800 + index * 920;
         const shortDescription = `${seed.name}은(는) ${seed.category} 여행자에게 특히 추천되는 서울 대표 스팟입니다.`;
         const description = `${seed.name}은(는) ${seed.district}에 위치한 ${seed.category} 명소입니다. 외국인 방문자가 동선에 넣기 쉬운 위치와 콘텐츠를 갖추고 있어, ${STYLE_LABELS_BY_LANG.ko[seed.styles[0]]} 중심 일정에 적합합니다.`;
+        const districtEn = DISTRICT_LABELS_EN[seed.district] || seed.district;
+        const categoryEn = CATEGORY_LABELS_EN[seed.category] || seed.category;
+        const shortDescriptionEn = `${seed.name} is a representative Seoul spot recommended for ${categoryEn.toLowerCase()} travelers.`;
+        const descriptionEn = `${seed.name} is located in ${districtEn} and is a major ${categoryEn.toLowerCase()} destination. It is easy to include in a first-time Seoul itinerary and works well for a ${STYLE_LABELS_BY_LANG.en[seed.styles[0]].toLowerCase()} focused plan.`;
         const reviews = [
             `${seed.name}은(는) 접근성이 좋아 초행 여행자도 방문하기 편하다는 평가가 많습니다.`,
             `${STYLE_LABELS_BY_LANG.ko[seed.styles[0]]} 중심 여행 코스에 넣기 좋고 체류 시간이 유연하다는 의견이 많습니다.`,
@@ -180,6 +219,8 @@
             reviewCount: `${reviewBase.toLocaleString()}+`,
             shortDescription,
             description,
+            shortDescriptionEn,
+            descriptionEn,
             mapQuery: `${seed.name} Seoul`,
             styles: seed.styles,
             reviews
@@ -401,9 +442,9 @@
             <div class="place-card-body">
                 <span class="place-rank">TOP ${place.rank}</span>
                 <h2>${place.name}</h2>
-                <div class="place-meta">${place.category} · ${place.district}</div>
+                <div class="place-meta">${getCategoryLabel(place.category)} · ${getDistrictLabel(place.district)}</div>
                 <div class="style-badges">${styleBadges}</div>
-                <p class="place-desc">${place.shortDescription}</p>
+                <p class="place-desc">${CURRENT_LANG === 'en' ? place.shortDescriptionEn : place.shortDescription}</p>
                 <a class="button-link" href="${getPlaceLink('place.html', place.id)}">${CURRENT_LANG === 'en' ? 'View Details' : '상세 보기'}</a>
             </div>
         `;
@@ -476,8 +517,8 @@
         return `${count.toLocaleString()}+`;
     }
 
-    async function fetchLivePlaceDetails(place) {
-        const response = await fetch(`/api/place-details?query=${encodeURIComponent(place.mapQuery)}`);
+    async function fetchLivePlaceDetails(place, lang) {
+        const response = await fetch(`/api/place-details?query=${encodeURIComponent(place.mapQuery)}&lang=${encodeURIComponent(lang || 'ko')}`);
         if (!response.ok) throw new Error(`API request failed: ${response.status}`);
         const json = await response.json();
         return json.details;
@@ -531,10 +572,10 @@
 
         document.title = `${place.name} | Seoul Explorer`;
         nameEl.textContent = place.name;
-        categoryEl.textContent = place.category;
-        descEl.textContent = place.description;
+        categoryEl.textContent = getCategoryLabel(place.category);
+        descEl.textContent = CURRENT_LANG === 'en' ? place.descriptionEn : place.description;
         rankEl.textContent = `TOP ${place.rank}`;
-        districtEl.textContent = place.district;
+        districtEl.textContent = getDistrictLabel(place.district);
         bestTimeEl.textContent = place.bestTime;
         ratingEl.textContent = `${place.rating} (기본 데이터)`;
         reviewCountEl.textContent = `${place.reviewCount} (기본 데이터)`;
@@ -552,7 +593,10 @@
             : '리뷰/평점: 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
 
         try {
-            const details = await fetchLivePlaceDetails(place);
+            const details = await fetchLivePlaceDetails(place, CURRENT_LANG === 'en' ? 'en' : 'ko');
+            if (CURRENT_LANG === 'en' && details?.displayName) nameEl.textContent = details.displayName;
+            if (CURRENT_LANG === 'en' && details?.formattedAddress) districtEl.textContent = details.formattedAddress;
+            if (CURRENT_LANG === 'en' && details?.editorialSummary) descEl.textContent = details.editorialSummary;
             if (details?.rating) ratingEl.textContent = `${details.rating.toFixed(1)} / 5`;
             if (details?.userRatingCount !== null && details?.userRatingCount !== undefined) {
                 reviewCountEl.textContent = formatReviewCount(details.userRatingCount);
@@ -653,7 +697,7 @@
                 const box = document.createElement('article');
                 box.className = 'time-slot';
                 const items = grouped[slot].length
-                    ? grouped[slot].map((place) => `<li>${place.name} (${place.district})</li>`).join('')
+                    ? grouped[slot].map((place) => `<li>${place.name} (${getDistrictLabel(place.district)})</li>`).join('')
                     : `<li>${CURRENT_LANG === 'en' ? 'No spots' : '추천 스팟 없음'}</li>`;
                 const slotLabel = CURRENT_LANG === 'en'
                     ? ({ '오전': 'Morning', '점심': 'Lunch', '오후': 'Afternoon', '저녁': 'Evening' }[slot] || slot)
@@ -671,7 +715,7 @@
                         ? ` · about ${makeWalkingMinutes(place, next, idx)} min walk to next stop`
                         : ` · 다음 스팟까지 도보 약 ${makeWalkingMinutes(place, next, idx)}분`)
                     : '';
-                li.innerHTML = `<span class=\"stop-title\">${idx + 1}. ${place.name}</span> (${place.district})${walk}`;
+                li.innerHTML = `<span class=\"stop-title\">${idx + 1}. ${place.name}</span> (${getDistrictLabel(place.district)})${walk}`;
                 stopListEl.appendChild(li);
             });
 
@@ -701,11 +745,13 @@
                     : '숙소 데이터: Google Places 평점 기준 상위 5개';
             } catch (error) {
                 const fallback = filtered.slice(0, 5).map((place, idx) => ({
-                    name: `${place.district} 중심 호텔 추천 ${idx + 1}`,
+                    name: CURRENT_LANG === 'en'
+                        ? `${getDistrictLabel(place.district)} Recommended Hotel ${idx + 1}`
+                        : `${place.district} 중심 호텔 추천 ${idx + 1}`,
                     rating: (4.3 + idx * 0.1).toFixed(1),
                     reviewCount: `${(1200 + idx * 330).toLocaleString()}+`,
                     averagePrice: `약 ₩${(110000 + idx * 25000).toLocaleString()}`,
-                    address: `${place.district} 주요 관광 동선 인접`
+                    address: `${getDistrictLabel(place.district)} ${CURRENT_LANG === 'en' ? 'near major attractions' : '주요 관광 동선 인접'}`
                 }));
                 fallback.forEach((hotel, idx) => {
                     const li = document.createElement('li');
@@ -735,7 +781,7 @@
             for (const district of districts) {
                 const districtBlock = document.createElement('article');
                 districtBlock.className = 'district-block';
-                districtBlock.innerHTML = `<h3>${CURRENT_LANG === 'en' ? `${district} - Top 3 by meal` : `${district} 맛집 3곳씩 추천`}</h3><div class=\"meal-grid\"></div>`;
+                districtBlock.innerHTML = `<h3>${CURRENT_LANG === 'en' ? `${getDistrictLabel(district)} - Top 3 by meal` : `${district} 맛집 3곳씩 추천`}</h3><div class=\"meal-grid\"></div>`;
                 const mealGrid = districtBlock.querySelector('.meal-grid');
 
                 const mealResults = await Promise.all(mealConfig.map(async (meal) => {
@@ -747,10 +793,10 @@
                         return {
                             ...meal,
                             restaurants: [1, 2, 3].map((n) => ({
-                                name: `${district} ${meal.label} 추천 ${n}`,
+                                name: CURRENT_LANG === 'en' ? `${getDistrictLabel(district)} ${meal.label} Pick ${n}` : `${district} ${meal.label} 추천 ${n}`,
                                 rating: (4.2 + n * 0.1).toFixed(1),
                                 userRatingCount: 1000 + n * 300,
-                                address: `${district} 인기 상권`,
+                                address: CURRENT_LANG === 'en' ? `${getDistrictLabel(district)} hot area` : `${district} 인기 상권`,
                                 averagePrice: `약 ₩${(9000 + n * 6000).toLocaleString()}`,
                                 googleMapsUri: ''
                             })),

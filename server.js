@@ -107,7 +107,7 @@ function sendFile(res, filePath) {
   });
 }
 
-async function searchGooglePlaceId(queryText) {
+async function searchGooglePlaceId(queryText, languageCode = 'ko') {
   const searchResponse = await fetch('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
     headers: {
@@ -117,7 +117,7 @@ async function searchGooglePlaceId(queryText) {
     },
     body: JSON.stringify({
       textQuery: queryText,
-      languageCode: 'ko'
+      languageCode
     })
   });
 
@@ -134,19 +134,20 @@ async function searchGooglePlaceId(queryText) {
   return googlePlaceId;
 }
 
-async function fetchGooglePlaceDetails(queryText) {
-  const cacheItem = PLACE_DETAILS_CACHE.get(queryText);
+async function fetchGooglePlaceDetails(queryText, languageCode = 'ko') {
+  const cacheKey = `${queryText}:${languageCode}`;
+  const cacheItem = PLACE_DETAILS_CACHE.get(cacheKey);
   if (cacheItem && Date.now() - cacheItem.cachedAt < CACHE_TTL_MS) {
     return cacheItem.data;
   }
 
-  const googlePlaceId = await searchGooglePlaceId(queryText);
+  const googlePlaceId = await searchGooglePlaceId(queryText, languageCode);
 
   const url = `https://places.googleapis.com/v1/places/${googlePlaceId}`;
   const response = await fetch(url, {
     headers: {
       'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
-      'X-Goog-FieldMask': 'displayName,rating,userRatingCount,reviews,googleMapsUri'
+      'X-Goog-FieldMask': 'displayName,formattedAddress,editorialSummary,rating,userRatingCount,reviews,googleMapsUri'
     }
   });
 
@@ -159,6 +160,8 @@ async function fetchGooglePlaceDetails(queryText) {
   const normalized = {
     placeId: googlePlaceId,
     displayName: data.displayName?.text || '',
+    formattedAddress: data.formattedAddress || '',
+    editorialSummary: data.editorialSummary?.text || '',
     rating: data.rating || null,
     userRatingCount: data.userRatingCount || null,
     googleMapsUri: data.googleMapsUri || '',
@@ -171,7 +174,7 @@ async function fetchGooglePlaceDetails(queryText) {
       : []
   };
 
-  PLACE_DETAILS_CACHE.set(queryText, { cachedAt: Date.now(), data: normalized });
+  PLACE_DETAILS_CACHE.set(cacheKey, { cachedAt: Date.now(), data: normalized });
   return normalized;
 }
 
@@ -376,6 +379,8 @@ const server = http.createServer(async (req, res) => {
 
   if (requestUrl.pathname === '/api/place-details' && req.method === 'GET') {
     const query = requestUrl.searchParams.get('query');
+    const langParam = requestUrl.searchParams.get('lang');
+    const languageCode = langParam === 'en' ? 'en' : 'ko';
     if (!query || query.trim().length < 2) {
       sendJson(res, 400, { error: 'Invalid query parameter' });
       return;
@@ -387,8 +392,8 @@ const server = http.createServer(async (req, res) => {
     }
 
     try {
-      const details = await fetchGooglePlaceDetails(query.trim());
-      sendJson(res, 200, { query: query.trim(), details, source: 'google_places' });
+      const details = await fetchGooglePlaceDetails(query.trim(), languageCode);
+      sendJson(res, 200, { query: query.trim(), languageCode, details, source: 'google_places' });
     } catch (error) {
       sendJson(res, 502, { error: 'Failed to fetch Google place details', message: error.message });
     }
