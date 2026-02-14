@@ -40,6 +40,23 @@
             <div class="actions">
                 <button id="recommend-btn" class="recommend-btn" type="button"></button>
             </div>
+
+            <section class="partner-section">
+                <h3 id="partner-title" class="partner-title"></h3>
+                <form class="partner-form" action="https://formspree.io/f/xpqjdavl" method="POST">
+                    <input type="hidden" name="_subject" value="Lunch Pick Partnership Inquiry">
+                    <label class="partner-label" id="name-label" for="partner-name"></label>
+                    <input class="partner-input" id="partner-name" name="name" type="text" required>
+
+                    <label class="partner-label" id="email-label" for="partner-email"></label>
+                    <input class="partner-input" id="partner-email" name="email" type="email" required>
+
+                    <label class="partner-label" id="message-label" for="partner-message"></label>
+                    <textarea class="partner-textarea" id="partner-message" name="message" rows="4" required></textarea>
+
+                    <button class="partner-submit" id="partner-submit" type="submit"></button>
+                </form>
+            </section>
         </section>
     </main>
 

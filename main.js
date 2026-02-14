@@ -13,6 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuDescription = document.getElementById('menu-description');
     const menuTags = document.getElementById('menu-tags');
     const foodImage = document.getElementById('food-image');
+    const partnerTitle = document.getElementById('partner-title');
+    const nameLabel = document.getElementById('name-label');
+    const emailLabel = document.getElementById('email-label');
+    const messageLabel = document.getElementById('message-label');
+    const partnerSubmit = document.getElementById('partner-submit');
+    const partnerNameInput = document.getElementById('partner-name');
+    const partnerEmailInput = document.getElementById('partner-email');
+    const partnerMessageInput = document.getElementById('partner-message');
 
     const themeStorageKey = 'lunch-theme';
     let currentMenuIndex = -1;
@@ -27,7 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
             lightLabel: 'Light',
             darkAria: '다크 모드로 전환',
             lightAria: '라이트 모드로 전환',
-            imageAlt: (title) => `${title} 대표 이미지`
+            imageAlt: (title) => `${title} 대표 이미지`,
+            partnerTitle: '제휴 문의',
+            nameLabel: '이름',
+            emailLabel: '이메일',
+            messageLabel: '문의 내용',
+            submitLabel: '문의 보내기',
+            namePlaceholder: '홍길동',
+            emailPlaceholder: 'you@example.com',
+            messagePlaceholder: '제휴 관련 내용을 입력해주세요.'
         },
         en: {
             pageTitle: 'What Should I Eat? | Lunch Recommendation',
@@ -37,7 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
             lightLabel: 'Light',
             darkAria: 'Switch to dark mode',
             lightAria: 'Switch to light mode',
-            imageAlt: (title) => `${title} featured image`
+            imageAlt: (title) => `${title} featured image`,
+            partnerTitle: 'Partnership Inquiry',
+            nameLabel: 'Name',
+            emailLabel: 'Email',
+            messageLabel: 'Message',
+            submitLabel: 'Send Inquiry',
+            namePlaceholder: 'Your name',
+            emailPlaceholder: 'you@example.com',
+            messagePlaceholder: 'Tell us about your partnership proposal.'
         },
         ja: {
             pageTitle: '今日のランチは？ | ランチおすすめ',
@@ -47,7 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
             lightLabel: 'Light',
             darkAria: 'ダークモードに切り替え',
             lightAria: 'ライトモードに切り替え',
-            imageAlt: (title) => `${title}のイメージ`
+            imageAlt: (title) => `${title}のイメージ`,
+            partnerTitle: '提携お問い合わせ',
+            nameLabel: 'お名前',
+            emailLabel: 'メール',
+            messageLabel: 'お問い合わせ内容',
+            submitLabel: '送信する',
+            namePlaceholder: '山田 太郎',
+            emailPlaceholder: 'you@example.com',
+            messagePlaceholder: '提携内容をご記入ください。'
         }
     };
 
@@ -93,6 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.title = t.pageTitle;
         subtitleText.textContent = t.subtitle;
         recommendBtn.textContent = t.recommend;
+        partnerTitle.textContent = t.partnerTitle;
+        nameLabel.textContent = t.nameLabel;
+        emailLabel.textContent = t.emailLabel;
+        messageLabel.textContent = t.messageLabel;
+        partnerSubmit.textContent = t.submitLabel;
+        partnerNameInput.placeholder = t.namePlaceholder;
+        partnerEmailInput.placeholder = t.emailPlaceholder;
+        partnerMessageInput.placeholder = t.messagePlaceholder;
     };
 
     const applyTheme = (theme) => {
