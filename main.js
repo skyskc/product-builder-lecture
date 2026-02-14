@@ -155,7 +155,6 @@
         }
     ];
     const KCONTENT_IMAGE_FALLBACK = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="%23dbe8ff"/><stop offset="1" stop-color="%23c7dcff"/></linearGradient></defs><rect width="420" height="420" rx="30" fill="url(%23g)"/><circle cx="210" cy="165" r="70" fill="%23ffffff" fill-opacity="0.82"/><rect x="90" y="255" width="240" height="100" rx="50" fill="%23ffffff" fill-opacity="0.82"/></svg>';
-    const KCONTENT_IMAGE_CACHE = new Map();
     const KCONTENT_CHARACTERS = [
         {
             id: 'gi-hun',
@@ -446,25 +445,25 @@
             }
         }
     ];
-    const KCONTENT_CHARACTER_PAGE_HINTS = {
-        'gi-hun': ['Seong_Gi-hun'],
-        'sae-byeok': ['Kang_Sae-byeok'],
-        'front-man': ['Front_Man_(Squid_Game)'],
-        'yoon-se-ri': ['Yoon_Se-ri'],
-        'ri-jeong-hyeok': ['Ri_Jeong-hyeok'],
-        'kim-shin': ['Kim_Shin_(Guardian:_The_Lonely_and_Great_God)'],
-        'woo-young-woo': ['Woo_Young-woo'],
-        'moon-dong-eun': ['Moon_Dong-eun'],
-        'park-sae-ro-yi': ['Park_Sae-ro-yi'],
-        'vincenzo': ['Vincenzo_Cassano'],
-        'yoon-ji-woo': ['Yoon_Ji-woo'],
-        'cha-hyun-su': ['Cha_Hyun-su'],
-        'lee-chang': ['Lee_Chang_(Kingdom)'],
-        'jang-tae-sang': ['Jang_Tae-sang'],
-        'seok-woo': ['Seok-woo'],
-        'kim-ki-taek': ['Kim_Ki-taek'],
-        'kim-bong-seok': ['Kim_Bong-seok'],
-        'jang-hui-soo': ['Jang_Hui-soo']
+    const KCONTENT_LOCAL_IMAGE_MAP = {
+        'gi-hun': 'assets/kcontent/gi-hun.png',
+        'sae-byeok': 'assets/kcontent/sae-byeok.png',
+        'front-man': 'assets/kcontent/front-man.jpg',
+        'yoon-se-ri': 'assets/kcontent/yoon-se-ri.png',
+        'ri-jeong-hyeok': 'assets/kcontent/ri-jeong-hyeok.jpg',
+        'kim-shin': 'assets/kcontent/kim-shin.png',
+        'woo-young-woo': 'assets/kcontent/woo-young-woo.png',
+        'moon-dong-eun': 'assets/kcontent/moon-dong-eun.jpg',
+        'park-sae-ro-yi': 'assets/kcontent/park-sae-ro-yi.jpg',
+        'vincenzo': 'assets/kcontent/vincenzo.jpg',
+        'yoon-ji-woo': 'assets/kcontent/yoon-ji-woo.jpg',
+        'cha-hyun-su': 'assets/kcontent/cha-hyun-su.png',
+        'lee-chang': 'assets/kcontent/lee-chang.png',
+        'jang-tae-sang': 'assets/kcontent/jang-tae-sang.jpg',
+        'seok-woo': 'assets/kcontent/seok-woo.png',
+        'kim-ki-taek': 'assets/kcontent/kim-ki-taek.jpg',
+        'kim-bong-seok': 'assets/kcontent/kim-bong-seok.jpg',
+        'jang-hui-soo': 'assets/kcontent/jang-hui-soo.png'
     };
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
@@ -2267,50 +2266,9 @@
         return getKContentCharacterById(charId)?.id || (KCONTENT_CHARACTERS[0]?.id || null);
     }
 
-    function getKContentImageCandidates(entry) {
-        const normalizedEn = (entry.character?.en || '').replace(/[()]/g, '').trim();
-        const compactEn = normalizedEn.replace(/\s+/g, '_');
-        const plainEn = compactEn.replace(/[^A-Za-z0-9_\-]/g, '');
-        const candidates = [
-            ...(KCONTENT_CHARACTER_PAGE_HINTS[entry.id] || []),
-            compactEn,
-            plainEn,
-            entry.character?.ko || '',
-            entry.portraitPage || ''
-        ].filter(Boolean);
-        return [...new Set(candidates)];
-    }
-
-    async function fetchKContentThumbnail(entry) {
-        if (!entry) return KCONTENT_IMAGE_FALLBACK;
-        const candidates = getKContentImageCandidates(entry);
-        const domains = ['en', 'ko'];
-
-        for (const domain of domains) {
-            for (const title of candidates) {
-                const cacheKey = `${domain}:${title}`;
-                if (KCONTENT_IMAGE_CACHE.has(cacheKey)) {
-                    const cached = KCONTENT_IMAGE_CACHE.get(cacheKey);
-                    if (cached) return cached;
-                    continue;
-                }
-                try {
-                    const encoded = encodeURIComponent(title);
-                    const response = await fetch(`https://${domain}.wikipedia.org/api/rest_v1/page/summary/${encoded}`);
-                    if (!response.ok) {
-                        KCONTENT_IMAGE_CACHE.set(cacheKey, '');
-                        continue;
-                    }
-                    const payload = await response.json();
-                    const imageUrl = payload?.thumbnail?.source || '';
-                    KCONTENT_IMAGE_CACHE.set(cacheKey, imageUrl);
-                    if (imageUrl) return imageUrl;
-                } catch (error) {
-                    KCONTENT_IMAGE_CACHE.set(cacheKey, '');
-                }
-            }
-        }
-        return KCONTENT_IMAGE_FALLBACK;
+    function getKContentLocalImagePath(characterId) {
+        const path = KCONTENT_LOCAL_IMAGE_MAP[characterId];
+        return path ? withCurrentLang(path) : KCONTENT_IMAGE_FALLBACK;
     }
 
     function renderKContentResultByCharacter(character, opts = {}) {
@@ -2393,16 +2351,16 @@
             });
         });
 
-        Promise.all(cards.map(async (card) => {
+        cards.forEach((card) => {
             const entry = getKContentCharacterById(card.dataset.id);
             const imgEl = card.querySelector('img');
             if (!entry || !imgEl) return;
-            const src = await fetchKContentThumbnail(entry);
+            const src = getKContentLocalImagePath(entry.id);
             imgEl.src = src;
             imgEl.loading = 'lazy';
             imgEl.decoding = 'async';
             imgEl.alt = isEn ? `${entry.character.en} character image` : `${entry.character.ko} 캐릭터 이미지`;
-        }));
+        });
     }
 
     function renderKContentResultPage() {
