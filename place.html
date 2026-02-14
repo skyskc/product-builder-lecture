@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seoul Explorer | 장소 상세</title>
+    <meta name="description" content="서울 인기 여행지 상세 정보, 지도, 별점, 리뷰를 제공합니다.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="place">
+    <header class="site-header">
+        <a class="logo" href="index.html">Seoul Explorer</a>
+        <nav class="top-nav" aria-label="Primary">
+            <a href="index.html">추천 장소</a>
+            <a id="partner-link" href="partner.html">제휴 문의</a>
+            <a id="comments-link" href="comments.html">댓글</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <a class="back-link" href="index.html">← 목록으로 돌아가기</a>
+
+        <article class="detail-card">
+            <img id="place-image" class="detail-image" src="" alt="">
+            <div class="detail-content">
+                <p id="place-category" class="eyebrow"></p>
+                <h1 id="place-name"></h1>
+                <p id="place-description"></p>
+
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span>지역</span>
+                        <strong id="place-district"></strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>추천 시간</span>
+                        <strong id="place-best-time"></strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Google 평점</span>
+                        <strong id="place-rating"></strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Google 리뷰 수</span>
+                        <strong id="place-review-count"></strong>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <section class="panel">
+            <h2>Google 지도</h2>
+            <iframe id="place-map" class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <a id="map-external-link" class="text-link" target="_blank" rel="noopener noreferrer">Google 지도에서 열기</a>
+        </section>
+
+        <section class="panel">
+            <h2>리뷰 요약</h2>
+            <ul id="review-list" class="review-list"></ul>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

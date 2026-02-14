@@ -1,209 +1,250 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const locale = document.body.dataset.locale || 'ko';
-    const supportedLocales = ['ko', 'en', 'ja'];
-    const activeLocale = supportedLocales.includes(locale) ? locale : 'en';
-
-    const recommendBtn = document.getElementById('recommend-btn');
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const localeSelect = document.getElementById('locale-select');
-    const subtitleText = document.getElementById('subtitle-text');
-    const menuPost = document.getElementById('menu-post');
-    const menuCategory = document.getElementById('menu-category');
-    const menuTitle = document.getElementById('menu-title');
-    const menuDescription = document.getElementById('menu-description');
-    const menuTags = document.getElementById('menu-tags');
-    const foodImage = document.getElementById('food-image');
-    const partnerTitle = document.getElementById('partner-title');
-    const nameLabel = document.getElementById('name-label');
-    const emailLabel = document.getElementById('email-label');
-    const messageLabel = document.getElementById('message-label');
-    const partnerSubmit = document.getElementById('partner-submit');
-    const partnerNameInput = document.getElementById('partner-name');
-    const partnerEmailInput = document.getElementById('partner-email');
-    const partnerMessageInput = document.getElementById('partner-message');
-
-    const themeStorageKey = 'lunch-theme';
-    let currentMenuIndex = -1;
-
-    const translations = {
-        ko: {
-            pageTitle: '오늘 뭐 먹지? | 점심 메뉴 추천',
-            subtitle: '간단하게 오늘의 점심 메뉴를 추천받으세요',
-            recommend: '메뉴 다시 추천',
-            darkLabel: 'Dark',
-            lightLabel: 'Light',
-            darkAria: '다크 모드로 전환',
-            lightAria: '라이트 모드로 전환',
-            imageAlt: (title) => `${title} 대표 이미지`,
-            partnerTitle: '제휴 문의',
-            nameLabel: '이름',
-            emailLabel: '이메일',
-            messageLabel: '문의 내용',
-            submitLabel: '문의 보내기',
-            namePlaceholder: '홍길동',
-            emailPlaceholder: 'you@example.com',
-            messagePlaceholder: '제휴 관련 내용을 입력해주세요.'
+(function () {
+    const places = [
+        {
+            id: 'gyeongbokgung',
+            name: '경복궁 (Gyeongbokgung Palace)',
+            category: '역사/문화',
+            district: '종로구',
+            bestTime: '오전 9시 - 오후 1시',
+            rating: '4.6 / 5',
+            reviewCount: '57,000+',
+            shortDescription: '조선 왕조의 대표 궁궐로, 서울 여행의 첫 코스로 인기 높은 장소입니다.',
+            description: '근정전, 경회루 등 주요 전각과 넓은 궁궐 정원을 함께 둘러볼 수 있습니다. 한복 체험과 함께 방문하는 외국인 여행자가 많습니다.',
+            image: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=1400&q=80',
+            mapQuery: 'Gyeongbokgung Palace Seoul',
+            reviews: [
+                '궁궐 건축미가 뛰어나고 사진 포인트가 많다는 평가가 많습니다.',
+                '광화문과 북촌, 인사동 동선과 연결하기 좋아 일정 구성에 유리합니다.',
+                '영어 안내 표지와 가이드 프로그램 접근성이 좋다는 의견이 있습니다.'
+            ]
         },
-        en: {
-            pageTitle: 'What Should I Eat? | Lunch Recommendation',
-            subtitle: 'Get a simple lunch recommendation instantly',
-            recommend: 'Recommend Again',
-            darkLabel: 'Dark',
-            lightLabel: 'Light',
-            darkAria: 'Switch to dark mode',
-            lightAria: 'Switch to light mode',
-            imageAlt: (title) => `${title} featured image`,
-            partnerTitle: 'Partnership Inquiry',
-            nameLabel: 'Name',
-            emailLabel: 'Email',
-            messageLabel: 'Message',
-            submitLabel: 'Send Inquiry',
-            namePlaceholder: 'Your name',
-            emailPlaceholder: 'you@example.com',
-            messagePlaceholder: 'Tell us about your partnership proposal.'
+        {
+            id: 'myeongdong',
+            name: '명동 거리 (Myeong-dong)',
+            category: '쇼핑/스트리트',
+            district: '중구',
+            bestTime: '오후 5시 - 밤 9시',
+            rating: '4.4 / 5',
+            reviewCount: '89,000+',
+            shortDescription: '쇼핑, 길거리 음식, 환전 인프라가 밀집된 대표 관광 상권입니다.',
+            description: 'K-뷰티 매장과 패션 스토어, 스트리트 푸드를 한 번에 즐길 수 있어 첫 서울 방문자에게 익숙하고 접근하기 쉬운 지역입니다.',
+            image: 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=1400&q=80',
+            mapQuery: 'Myeongdong Shopping Street Seoul',
+            reviews: [
+                '교통 접근성이 좋아 호텔-관광지 이동이 편하다는 평가가 많습니다.',
+                '저녁 시간대 분위기와 먹거리 선택지가 다양하다는 반응이 많습니다.',
+                '피크타임에는 혼잡하므로 시간대를 나눠 방문하면 좋다는 후기가 있습니다.'
+            ]
         },
-        ja: {
-            pageTitle: '今日のランチは？ | ランチおすすめ',
-            subtitle: 'シンプルに今日のランチをおすすめします',
-            recommend: 'もう一度おすすめ',
-            darkLabel: 'Dark',
-            lightLabel: 'Light',
-            darkAria: 'ダークモードに切り替え',
-            lightAria: 'ライトモードに切り替え',
-            imageAlt: (title) => `${title}のイメージ`,
-            partnerTitle: '提携お問い合わせ',
-            nameLabel: 'お名前',
-            emailLabel: 'メール',
-            messageLabel: 'お問い合わせ内容',
-            submitLabel: '送信する',
-            namePlaceholder: '山田 太郎',
-            emailPlaceholder: 'you@example.com',
-            messagePlaceholder: '提携内容をご記入ください。'
+        {
+            id: 'nseoultower',
+            name: 'N서울타워 (N Seoul Tower)',
+            category: '전망/야경',
+            district: '용산구',
+            bestTime: '오후 6시 - 밤 10시',
+            rating: '4.5 / 5',
+            reviewCount: '76,000+',
+            shortDescription: '서울 전경을 한눈에 볼 수 있는 야경 명소입니다.',
+            description: '남산 케이블카 또는 도보로 접근 가능하며, 전망대에서 한강과 도심 스카이라인을 조망할 수 있어 커플 및 가족 여행자에게 인기가 높습니다.',
+            image: 'https://images.unsplash.com/photo-1608403890612-8f00b6e9f54f?auto=format&fit=crop&w=1400&q=80',
+            mapQuery: 'N Seoul Tower',
+            reviews: [
+                '야간 조명과 서울 전경이 인상적이라는 후기가 많습니다.',
+                '케이블카 대기 시간을 고려해 사전 시간 계획이 필요하다는 의견이 있습니다.',
+                '남산 산책과 연계하면 만족도가 높다는 반응이 많습니다.'
+            ]
+        },
+        {
+            id: 'bukchon',
+            name: '북촌한옥마을 (Bukchon Hanok Village)',
+            category: '전통/산책',
+            district: '종로구',
+            bestTime: '오전 10시 - 오후 4시',
+            rating: '4.4 / 5',
+            reviewCount: '31,000+',
+            shortDescription: '전통 한옥 골목 풍경을 경험할 수 있는 도심 속 문화 공간입니다.',
+            description: '한옥 골목과 공방, 전통 카페가 어우러져 있어 걷기 여행에 적합합니다. 경복궁, 창덕궁과 함께 묶어 방문하기 좋습니다.',
+            image: 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1400&q=80',
+            mapQuery: 'Bukchon Hanok Village Seoul',
+            reviews: [
+                '한국 전통 건축 분위기를 가까이서 볼 수 있다는 점이 강점으로 꼽힙니다.',
+                '골목 경사가 있어 편한 신발이 필요하다는 조언이 많습니다.',
+                '예절 안내를 지키며 조용히 관람하면 더 좋은 경험이 된다는 후기가 있습니다.'
+            ]
+        },
+        {
+            id: 'hongdae',
+            name: '홍대 거리 (Hongdae)',
+            category: '트렌드/야간',
+            district: '마포구',
+            bestTime: '오후 4시 - 밤 11시',
+            rating: '4.5 / 5',
+            reviewCount: '42,000+',
+            shortDescription: '공연, 카페, 쇼핑이 결합된 젊은 분위기의 대표 상권입니다.',
+            description: '버스킹, 컨셉 카페, 스트리트 브랜드 매장을 한 번에 즐길 수 있어 친구 단위 여행객이 많이 방문합니다.',
+            image: 'https://images.unsplash.com/photo-1523906630133-f6934a1ab2b9?auto=format&fit=crop&w=1400&q=80',
+            mapQuery: 'Hongdae Street Seoul',
+            reviews: [
+                '밤 시간대 활기찬 분위기를 좋아하는 여행자 만족도가 높습니다.',
+                '개성 있는 카페와 편집숍 탐방에 적합하다는 평가가 많습니다.',
+                '주말에는 유동인구가 많아 동선 계획이 중요하다는 의견이 있습니다.'
+            ]
         }
-    };
+    ];
 
-    const menusByLocale = {
-        ko: [
-            { key: 'kimchi', title: '김치찌개 정식', category: '한식', description: '칼칼한 국물과 밥 조합으로 든든한 점심', tags: ['국물', '든든함', '인기'] },
-            { key: 'poke', title: '연어 포케 볼', category: '헬시', description: '신선한 연어와 채소로 가볍고 깔끔한 메뉴', tags: ['가벼움', '단백질', '신선함'] },
-            { key: 'mala', title: '마라탕', category: '중식', description: '취향대로 재료를 고르는 매콤한 한 그릇', tags: ['매콤함', '커스텀', '중독성'] },
-            { key: 'tonkatsu', title: '돈까스 정식', category: '일식', description: '바삭한 식감과 소스가 어우러진 클래식 메뉴', tags: ['바삭함', '클래식', '만족감'] },
-            { key: 'bulgogi', title: '불고기 덮밥', category: '한식', description: '달콤짭짤한 불고기로 실패 없는 선택', tags: ['단짠', '대중픽', '든든함'] }
-        ],
-        en: [
-            { key: 'kimchi', title: 'Kimchi Stew Set', category: 'Korean', description: 'A warm spicy stew with rice for a hearty lunch', tags: ['hearty', 'spicy', 'comfort'] },
-            { key: 'poke', title: 'Salmon Poke Bowl', category: 'Healthy', description: 'Fresh salmon and vegetables in a light bowl', tags: ['fresh', 'protein', 'light'] },
-            { key: 'mala', title: 'Mala Hot Pot Bowl', category: 'Chinese', description: 'Custom toppings in a bold and numbing broth', tags: ['bold', 'custom', 'hot'] },
-            { key: 'tonkatsu', title: 'Tonkatsu Set', category: 'Japanese', description: 'Crispy cutlet with rich sauce and rice', tags: ['crispy', 'classic', 'satisfying'] },
-            { key: 'bulgogi', title: 'Bulgogi Rice Bowl', category: 'Korean', description: 'Sweet and savory beef over rice', tags: ['savory', 'popular', 'filling'] }
-        ],
-        ja: [
-            { key: 'kimchi', title: 'キムチチゲ定食', category: '韓国料理', description: 'ピリ辛スープで体が温まる満足ランチ', tags: ['あたたかい', '定番', '満足'] },
-            { key: 'poke', title: 'サーモンポキボウル', category: 'ヘルシー', description: '新鮮なサーモンと野菜の軽めランチ', tags: ['さっぱり', 'たんぱく質', '軽め'] },
-            { key: 'mala', title: '麻辣湯', category: '中華', description: '具材を選べる刺激的なスープメニュー', tags: ['刺激', 'カスタム', '人気'] },
-            { key: 'tonkatsu', title: 'とんかつ定食', category: '和食', description: 'サクサク食感と濃厚ソースの定番', tags: ['サクサク', '定番', '満腹'] },
-            { key: 'bulgogi', title: 'プルコギ丼', category: '韓国料理', description: '甘辛い味付けで食べやすい人気メニュー', tags: ['甘辛', '人気', 'ボリューム'] }
-        ]
-    };
+    const placeMap = Object.fromEntries(places.map((p) => [p.id, p]));
 
-    const imageByMenuKey = {
-        kimchi: 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1200&q=80',
-        poke: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80',
-        mala: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1200&q=80',
-        tonkatsu: 'https://images.unsplash.com/photo-1593030668930-8130abedd2cd?auto=format&fit=crop&w=1200&q=80',
-        bulgogi: 'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&q=80'
-    };
+    function getPlaceIdFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (id && placeMap[id]) return id;
+        return places[0].id;
+    }
 
-    const t = translations[activeLocale];
-    const menus = menusByLocale[activeLocale];
+    function getPlaceLink(page, id) {
+        return `${page}?id=${encodeURIComponent(id)}`;
+    }
 
-    const renderStaticText = () => {
-        document.title = t.pageTitle;
-        subtitleText.textContent = t.subtitle;
-        recommendBtn.textContent = t.recommend;
-        partnerTitle.textContent = t.partnerTitle;
-        nameLabel.textContent = t.nameLabel;
-        emailLabel.textContent = t.emailLabel;
-        messageLabel.textContent = t.messageLabel;
-        partnerSubmit.textContent = t.submitLabel;
-        partnerNameInput.placeholder = t.namePlaceholder;
-        partnerEmailInput.placeholder = t.emailPlaceholder;
-        partnerMessageInput.placeholder = t.messagePlaceholder;
-    };
+    function updateTopNavLinks(id) {
+        const partnerLink = document.getElementById('partner-link');
+        const commentsLink = document.getElementById('comments-link');
+        if (partnerLink) partnerLink.href = getPlaceLink('partner.html', id);
+        if (commentsLink) commentsLink.href = getPlaceLink('comments.html', id);
+    }
 
-    const applyTheme = (theme) => {
-        const isDark = theme === 'dark';
-        document.body.classList.toggle('dark-mode', isDark);
-        themeToggleBtn.textContent = isDark ? t.lightLabel : t.darkLabel;
-        themeToggleBtn.setAttribute('aria-label', isDark ? t.lightAria : t.darkAria);
-    };
+    function initPageTransition() {
+        requestAnimationFrame(() => document.body.classList.add('page-ready'));
+        document.addEventListener('click', (event) => {
+            const anchor = event.target.closest('a[href]');
+            if (!anchor) return;
+            if (anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+            const href = anchor.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            const targetUrl = new URL(href, window.location.href);
+            if (targetUrl.origin !== window.location.origin) return;
 
-    const initTheme = () => {
-        const saved = localStorage.getItem(themeStorageKey);
-        if (saved === 'light' || saved === 'dark') {
-            applyTheme(saved);
-            return;
-        }
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(prefersDark ? 'dark' : 'light');
-    };
-
-    const initLocaleSelector = () => {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        localeSelect.value = currentPage;
-        localeSelect.addEventListener('change', (event) => {
-            const targetPage = event.target.value;
-            if (targetPage && targetPage !== currentPage) {
-                window.location.href = targetPage;
-            }
+            event.preventDefault();
+            document.body.classList.remove('page-ready');
+            document.body.classList.add('page-exit');
+            setTimeout(() => {
+                window.location.href = targetUrl.href;
+            }, 180);
         });
-    };
+    }
 
-    const pickRandomIndex = (length, current) => {
-        let next = Math.floor(Math.random() * length);
-        if (length > 1) {
-            while (next === current) {
-                next = Math.floor(Math.random() * length);
-            }
+    function renderHome() {
+        const grid = document.getElementById('place-grid');
+        if (!grid) return;
+
+        const fragment = document.createDocumentFragment();
+        places.forEach((place) => {
+            const card = document.createElement('article');
+            card.className = 'place-card';
+            card.innerHTML = `
+                <img src="${place.image}" alt="${place.name}">
+                <div class="place-card-body">
+                    <h2>${place.name}</h2>
+                    <div class="place-meta">${place.category} · ${place.district} · ★ ${place.rating}</div>
+                    <p class="place-desc">${place.shortDescription}</p>
+                    <a class="button-link" href="${getPlaceLink('place.html', place.id)}">상세 보기</a>
+                </div>
+            `;
+            fragment.appendChild(card);
+        });
+        grid.appendChild(fragment);
+    }
+
+    function renderPlaceDetail() {
+        const place = placeMap[getPlaceIdFromQuery()];
+        if (!place) return;
+
+        updateTopNavLinks(place.id);
+
+        const nameEl = document.getElementById('place-name');
+        const categoryEl = document.getElementById('place-category');
+        const descEl = document.getElementById('place-description');
+        const districtEl = document.getElementById('place-district');
+        const bestTimeEl = document.getElementById('place-best-time');
+        const ratingEl = document.getElementById('place-rating');
+        const reviewCountEl = document.getElementById('place-review-count');
+        const imageEl = document.getElementById('place-image');
+        const mapEl = document.getElementById('place-map');
+        const mapExternal = document.getElementById('map-external-link');
+        const reviewList = document.getElementById('review-list');
+
+        document.title = `${place.name} | Seoul Explorer`;
+        nameEl.textContent = place.name;
+        categoryEl.textContent = place.category;
+        descEl.textContent = place.description;
+        districtEl.textContent = place.district;
+        bestTimeEl.textContent = place.bestTime;
+        ratingEl.textContent = place.rating;
+        reviewCountEl.textContent = place.reviewCount;
+        imageEl.src = place.image;
+        imageEl.alt = `${place.name} 이미지`;
+
+        const mapQuery = encodeURIComponent(place.mapQuery);
+        mapEl.src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+        mapExternal.href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+        reviewList.innerHTML = '';
+        place.reviews.forEach((review) => {
+            const li = document.createElement('li');
+            li.textContent = review;
+            reviewList.appendChild(li);
+        });
+    }
+
+    function renderPartnerPage() {
+        const place = placeMap[getPlaceIdFromQuery()];
+        if (!place) return;
+
+        updateTopNavLinks(place.id);
+
+        const selectedName = document.getElementById('selected-place-name');
+        const selectedId = document.getElementById('selected-place-id');
+        const message = document.getElementById('message');
+
+        selectedName.textContent = place.name;
+        selectedId.value = place.id;
+        message.placeholder = `${place.name} 제휴 관련 문의를 남겨주세요.`;
+    }
+
+    function renderCommentsPage() {
+        const place = placeMap[getPlaceIdFromQuery()];
+        if (!place) return;
+
+        updateTopNavLinks(place.id);
+
+        const selectedName = document.getElementById('selected-place-name');
+        selectedName.textContent = place.name;
+
+        window.disqus_config = function () {
+            this.page.url = `${window.location.origin}${window.location.pathname}?id=${place.id}`;
+            this.page.identifier = `seoul-explorer-${place.id}`;
+        };
+
+        const d = document;
+        const s = d.createElement('script');
+        s.src = 'https://product-builder-lecture-2.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', String(+new Date()));
+        (d.head || d.body).appendChild(s);
+    }
+
+    function init() {
+        initPageTransition();
+
+        const page = document.body.dataset.page;
+        if (page === 'home') {
+            renderHome();
+        } else if (page === 'place') {
+            renderPlaceDetail();
+        } else if (page === 'partner') {
+            renderPartnerPage();
+        } else if (page === 'comments') {
+            renderCommentsPage();
         }
-        return next;
-    };
+    }
 
-    const setMenuImage = (menu) => {
-        foodImage.onerror = null;
-        foodImage.src = imageByMenuKey[menu.key] || imageByMenuKey.kimchi;
-    };
-
-    const recommendMenu = () => {
-        menuPost.classList.add('is-switching');
-
-        setTimeout(() => {
-            currentMenuIndex = pickRandomIndex(menus.length, currentMenuIndex);
-
-            const selected = menus[currentMenuIndex];
-
-            menuCategory.textContent = selected.category;
-            menuTitle.textContent = selected.title;
-            menuDescription.textContent = selected.description;
-            menuTags.textContent = selected.tags.map((tag) => `#${tag}`).join(' ');
-
-            setMenuImage(selected);
-            foodImage.alt = t.imageAlt(selected.title);
-
-            menuPost.classList.remove('is-switching');
-        }, 180);
-    };
-
-    themeToggleBtn.addEventListener('click', () => {
-        const nextTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
-        applyTheme(nextTheme);
-        localStorage.setItem(themeStorageKey, nextTheme);
-    });
-
-    recommendBtn.addEventListener('click', recommendMenu);
-
-    renderStaticText();
-    initTheme();
-    initLocaleSelector();
-    recommendMenu();
-});
+    document.addEventListener('DOMContentLoaded', init);
+})();

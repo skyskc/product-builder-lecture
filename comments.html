@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seoul Explorer | 댓글</title>
+    <meta name="description" content="선택한 서울 명소에 대한 방문 후기를 남기는 댓글 페이지">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="comments">
+    <header class="site-header">
+        <a class="logo" href="index.html">Seoul Explorer</a>
+        <nav class="top-nav" aria-label="Primary">
+            <a href="index.html">추천 장소</a>
+            <a id="partner-link" href="partner.html">제휴 문의</a>
+            <a id="comments-link" href="comments.html" class="active">댓글</a>
+        </nav>
+    </header>
+
+    <main class="container narrow">
+        <section class="panel">
+            <p class="eyebrow">Community</p>
+            <h1>여행 후기 댓글</h1>
+            <p>선택된 장소: <strong id="selected-place-name"></strong></p>
+            <div id="disqus_thread"></div>
+            <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

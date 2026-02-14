@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seoul Explorer | 제휴 문의</title>
+    <meta name="description" content="서울 여행 추천 사이트 제휴 문의 페이지">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="partner">
+    <header class="site-header">
+        <a class="logo" href="index.html">Seoul Explorer</a>
+        <nav class="top-nav" aria-label="Primary">
+            <a href="index.html">추천 장소</a>
+            <a id="partner-link" href="partner.html" class="active">제휴 문의</a>
+            <a id="comments-link" href="comments.html">댓글</a>
+        </nav>
+    </header>
+
+    <main class="container narrow">
+        <section class="panel">
+            <p class="eyebrow">Partnership</p>
+            <h1>제휴 문의</h1>
+            <p>선택한 장소 기준으로 제휴 문의를 남길 수 있습니다.</p>
+            <div class="selected-place">선택된 장소: <strong id="selected-place-name"></strong></div>
+
+            <form class="clean-form" action="https://formspree.io/f/xpqjdavl" method="POST">
+                <input type="hidden" id="selected-place-id" name="place_id" value="">
+
+                <label for="name">이름</label>
+                <input id="name" name="name" type="text" required>
+
+                <label for="email">이메일</label>
+                <input id="email" name="email" type="email" required>
+
+                <label for="organization">회사/브랜드명</label>
+                <input id="organization" name="organization" type="text" required>
+
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">문의 보내기</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
