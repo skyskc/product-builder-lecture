@@ -561,10 +561,10 @@
 
     function applyEnglishCopy() {
         const navLinks = document.querySelectorAll('.top-nav a');
-        if (navLinks[0]) navLinks[0].textContent = 'Places';
-        if (navLinks[1]) navLinks[1].textContent = 'Courses';
-        if (navLinks[2]) navLinks[2].textContent = 'By Generation';
-        if (navLinks[3]) navLinks[3].textContent = 'Saju Travel';
+        if (navLinks[0]) navLinks[0].textContent = 'Explore';
+        if (navLinks[1]) navLinks[1].textContent = 'Planner';
+        if (navLinks[2]) navLinks[2].textContent = 'Generations';
+        if (navLinks[3]) navLinks[3].textContent = 'Saju';
 
         const footerLinks = document.querySelectorAll('.footer-inner nav a');
         if (footerLinks[0]) footerLinks[0].textContent = 'About';
