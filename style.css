@@ -117,6 +117,23 @@ a {
     margin-bottom: 20px;
 }
 
+.global-badges {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge-lite {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--card);
+}
+
 .eyebrow {
     margin: 0 0 10px;
     color: var(--accent);
@@ -204,9 +221,56 @@ a {
 }
 
 .result-count {
-    margin: 0 0 0 auto;
+    margin: 10px 0 0;
     font-size: 0.86rem;
     color: var(--muted);
+}
+
+.search-panel {
+    margin-top: 14px;
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 170px;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input,
+.sort-select {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--text);
+    background: var(--card);
+}
+
+.quick-tag-list {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-chip {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font: inherit;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--card);
+    cursor: pointer;
+}
+
+.tag-chip.active {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--chip);
+    font-weight: 700;
 }
 
 .place-grid {
@@ -632,6 +696,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 
     .result-count {
         margin-left: 0;
+    }
+
+    .search-row {
+        grid-template-columns: 1fr;
     }
 
     .place-grid {

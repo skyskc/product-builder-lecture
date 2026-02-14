@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seoul Explorer | 서울 여행 추천</title>
     <meta name="description" content="외국인 여행자를 위한 서울 주요 명소 추천 가이드. 위치, 정보, 별점과 리뷰 요약을 확인하세요.">
+    <meta name="keywords" content="Seoul travel, Korea trip, Seoul itinerary, Seoul attractions, Seoul map, Korea tourism, Seoul for foreigners">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Seoul Explorer | Top Seoul Places for International Travelers">
+    <meta property="og:description" content="Discover top places in Seoul with style-based filters, walking courses, map links, and travel-ready recommendations.">
+    <meta property="og:url" content="https://www.skyskc.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Seoul Explorer">
+    <meta name="twitter:description" content="Seoul travel guide for international visitors.">
+    <link rel="canonical" href="https://www.skyskc.com/">
+    <link rel="alternate" hreflang="ko" href="https://www.skyskc.com/">
+    <link rel="alternate" hreflang="en" href="https://www.skyskc.com/?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://www.skyskc.com/">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001204090329044" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +44,12 @@
             <p class="eyebrow">For International Visitors</p>
             <h1>서울에서 꼭 가봐야 할 인기 명소</h1>
             <p>서울을 처음 방문하는 여행자를 위해 많이 방문하는 장소를 엄선했습니다. 장소 상세 페이지에서 Google 지도, 평점, 리뷰 요약까지 바로 확인할 수 있습니다.</p>
+            <div class="global-badges">
+                <span class="badge-lite">English Support</span>
+                <span class="badge-lite">Google Maps Ready</span>
+                <span class="badge-lite">Walking Itinerary</span>
+                <span class="badge-lite">Local Food Picks</span>
+            </div>
         </section>
 
         <section class="panel style-tab-panel" aria-label="여행 스타일 필터">
@@ -44,6 +63,27 @@
                 <button class="style-tab-btn" data-style="family" role="tab" type="button">가족/테마</button>
                 <button class="style-tab-btn" data-style="art" role="tab" type="button">예술/뮤지엄</button>
                 <button class="style-tab-btn" data-style="local" role="tab" type="button">로컬/시장</button>
+            </div>
+        </section>
+
+        <section class="panel search-panel" aria-label="검색 및 태그 필터">
+            <div class="search-row">
+                <input id="place-search-input" class="search-input" type="search" placeholder="장소명, 지역명, 카테고리로 검색">
+                <select id="sort-select" class="sort-select">
+                    <option value="popular">인기순</option>
+                    <option value="rating">평점순</option>
+                    <option value="reviews">리뷰수순</option>
+                </select>
+            </div>
+            <div id="quick-tag-list" class="quick-tag-list">
+                <button class="tag-chip active" data-tag="all" type="button">전체</button>
+                <button class="tag-chip" data-tag="palace" type="button">궁궐</button>
+                <button class="tag-chip" data-tag="night-view" type="button">야경</button>
+                <button class="tag-chip" data-tag="shopping" type="button">쇼핑</button>
+                <button class="tag-chip" data-tag="museum" type="button">박물관</button>
+                <button class="tag-chip" data-tag="nature" type="button">공원/산책</button>
+                <button class="tag-chip" data-tag="local-market" type="button">시장/로컬</button>
+                <button class="tag-chip" data-tag="family-trip" type="button">가족여행</button>
             </div>
             <p id="result-count" class="result-count"></p>
         </section>
@@ -83,6 +123,20 @@
         </div>
     </footer>
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Seoul Explorer",
+            "url": "https://www.skyskc.com/",
+            "inLanguage": ["ko", "en"],
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://www.skyskc.com/?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
     <script src="main.js"></script>
 </body>
 </html>

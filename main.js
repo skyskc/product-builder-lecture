@@ -23,6 +23,28 @@
             local: 'Local/Market'
         }
     };
+    const TAG_LABELS_BY_LANG = {
+        ko: {
+            all: '전체',
+            palace: '궁궐',
+            'night-view': '야경',
+            shopping: '쇼핑',
+            museum: '박물관',
+            nature: '공원/산책',
+            'local-market': '시장/로컬',
+            'family-trip': '가족여행'
+        },
+        en: {
+            all: 'All',
+            palace: 'Palaces',
+            'night-view': 'Night View',
+            shopping: 'Shopping',
+            museum: 'Museums',
+            nature: 'Nature Walks',
+            'local-market': 'Local Markets',
+            'family-trip': 'Family Trip'
+        }
+    };
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
@@ -411,6 +433,22 @@
                 const styleKey = btn.dataset.style;
                 if (styleKey) btn.textContent = getStyleLabel(styleKey);
             });
+            const searchInput = document.getElementById('place-search-input');
+            if (searchInput) searchInput.placeholder = 'Search by place, district, or category';
+            const sortSelect = document.getElementById('sort-select');
+            if (sortSelect) {
+                const popularOption = sortSelect.querySelector('option[value="popular"]');
+                const ratingOption = sortSelect.querySelector('option[value="rating"]');
+                const reviewsOption = sortSelect.querySelector('option[value="reviews"]');
+                if (popularOption) popularOption.textContent = 'Most Popular';
+                if (ratingOption) ratingOption.textContent = 'Top Rated';
+                if (reviewsOption) reviewsOption.textContent = 'Most Reviewed';
+            }
+            document.querySelectorAll('#quick-tag-list .tag-chip').forEach((btn) => {
+                const tagKey = btn.dataset.tag;
+                if (!tagKey) return;
+                btn.textContent = TAG_LABELS_BY_LANG.en[tagKey] || btn.textContent;
+            });
         }
         if (page === 'course') {
             const hero = document.querySelector('.hero');
@@ -576,10 +614,57 @@
         const grid = document.getElementById('place-grid');
         const styleTabs = document.getElementById('travel-style-tabs');
         const styleButtons = Array.from(document.querySelectorAll('#travel-style-tabs .style-tab-btn'));
+        const searchInput = document.getElementById('place-search-input');
+        const sortSelect = document.getElementById('sort-select');
+        const tagButtons = Array.from(document.querySelectorAll('#quick-tag-list .tag-chip'));
         const resultCount = document.getElementById('result-count');
-        if (!grid || !styleTabs || !styleButtons.length || !resultCount) return;
+        if (!grid || !styleTabs || !styleButtons.length || !searchInput || !sortSelect || !tagButtons.length || !resultCount) return;
 
-        let selectedStyle = 'all';
+        const params = new URLSearchParams(window.location.search);
+        let selectedStyle = params.get('style') && styleLabels()[params.get('style')] ? params.get('style') : 'all';
+        let selectedTag = params.get('tag') || 'all';
+        let searchQuery = (params.get('q') || '').trim();
+        let selectedSort = ['popular', 'rating', 'reviews'].includes(params.get('sort')) ? params.get('sort') : 'popular';
+
+        function matchesTag(place, tagKey) {
+            if (tagKey === 'all') return true;
+            if (tagKey === 'palace') return /(궁|Palace|Shrine|Temple|Hanok)/i.test(`${place.name} ${place.nameEn}`);
+            if (tagKey === 'night-view') return place.styles.includes('night');
+            if (tagKey === 'shopping') return place.styles.includes('shopping');
+            if (tagKey === 'museum') return place.styles.includes('art') || /Museum|미술관|박물관/.test(place.name);
+            if (tagKey === 'nature') return place.styles.includes('nature');
+            if (tagKey === 'local-market') return place.styles.includes('local') || /Market|시장/.test(place.name);
+            if (tagKey === 'family-trip') return place.styles.includes('family');
+            return true;
+        }
+
+        function matchesQuery(place, query) {
+            if (!query) return true;
+            const haystack = [
+                place.name,
+                place.nameEn,
+                place.district,
+                getDistrictLabel(place.district),
+                place.category,
+                getCategoryLabel(place.category),
+                place.shortDescription,
+                place.shortDescriptionEn
+            ].join(' ').toLowerCase();
+            return haystack.includes(query.toLowerCase());
+        }
+
+        function sortPlaces(list) {
+            if (selectedSort === 'rating') {
+                return [...list].sort((a, b) => {
+                    if (b.ratingValue !== a.ratingValue) return b.ratingValue - a.ratingValue;
+                    return b.reviewCountValue - a.reviewCountValue;
+                });
+            }
+            if (selectedSort === 'reviews') {
+                return [...list].sort((a, b) => b.reviewCountValue - a.reviewCountValue);
+            }
+            return [...list].sort((a, b) => b.popularityScore - a.popularityScore);
+        }
 
         function markActiveStyle(styleKey) {
             styleButtons.forEach((btn) => {
@@ -589,10 +674,36 @@
             });
         }
 
+        function markActiveTag(tagKey) {
+            tagButtons.forEach((btn) => {
+                const active = btn.dataset.tag === tagKey;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+        }
+
+        function syncHomeUrlState() {
+            const url = new URL(window.location.href);
+            if (selectedStyle && selectedStyle !== 'all') url.searchParams.set('style', selectedStyle);
+            else url.searchParams.delete('style');
+            if (selectedTag && selectedTag !== 'all') url.searchParams.set('tag', selectedTag);
+            else url.searchParams.delete('tag');
+            if (searchQuery) url.searchParams.set('q', searchQuery);
+            else url.searchParams.delete('q');
+            if (selectedSort !== 'popular') url.searchParams.set('sort', selectedSort);
+            else url.searchParams.delete('sort');
+            if (CURRENT_LANG === 'en') url.searchParams.set('lang', 'en');
+            else url.searchParams.delete('lang');
+            window.history.replaceState({}, '', url.toString());
+        }
+
         function applyFilter() {
-            const filtered = selectedStyle === 'all'
+            const styleFiltered = selectedStyle === 'all'
                 ? places
                 : places.filter((place) => place.styles.includes(selectedStyle));
+            const filtered = sortPlaces(styleFiltered.filter((place) => {
+                return matchesTag(place, selectedTag) && matchesQuery(place, searchQuery);
+            }));
             grid.innerHTML = '';
             if (!filtered.length) {
                 const empty = document.createElement('p');
@@ -611,6 +722,7 @@
             resultCount.textContent = CURRENT_LANG === 'en'
                 ? `${filtered.length} results`
                 : `${filtered.length}개 추천`;
+            syncHomeUrlState();
         }
 
         if (CURRENT_LANG === 'en') {
@@ -619,7 +731,14 @@
                 if (!styleKey) return;
                 button.textContent = getStyleLabel(styleKey);
             });
+            tagButtons.forEach((button) => {
+                const tagKey = button.dataset.tag;
+                if (!tagKey) return;
+                button.textContent = TAG_LABELS_BY_LANG.en[tagKey] || button.textContent;
+            });
         }
+        searchInput.value = searchQuery;
+        sortSelect.value = selectedSort;
         styleTabs.addEventListener('click', (event) => {
             const button = event.target.closest('.style-tab-btn');
             if (!button) return;
@@ -629,7 +748,25 @@
             markActiveStyle(selectedStyle);
             applyFilter();
         });
+        document.getElementById('quick-tag-list')?.addEventListener('click', (event) => {
+            const button = event.target.closest('.tag-chip');
+            if (!button) return;
+            const nextTag = button.dataset.tag || 'all';
+            if (nextTag === selectedTag) return;
+            selectedTag = nextTag;
+            markActiveTag(selectedTag);
+            applyFilter();
+        });
+        searchInput.addEventListener('input', () => {
+            searchQuery = searchInput.value.trim();
+            applyFilter();
+        });
+        sortSelect.addEventListener('change', () => {
+            selectedSort = sortSelect.value;
+            applyFilter();
+        });
         markActiveStyle(selectedStyle);
+        markActiveTag(selectedTag);
         applyFilter();
     }
 
