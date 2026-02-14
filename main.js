@@ -173,6 +173,7 @@
     });
 
     const placeMap = Object.fromEntries(places.map((p) => [p.id, p]));
+    const placePhotoCache = new Map();
 
     function getPlaceIdFromQuery() {
         const params = new URLSearchParams(window.location.search);
@@ -217,7 +218,7 @@
         card.className = 'place-card';
         const styleLabel = place.styles.slice(0, 2).map((style) => STYLE_LABELS[style]).join(' · ');
         card.innerHTML = `
-            <img src="${place.image}" alt="${place.name}">
+            <img src="${place.image}" alt="${place.name}" data-place-id="${place.id}">
             <div class="place-card-body">
                 <h2>${place.name}</h2>
                 <div class="place-meta">${place.category} · ${place.district} · ★ ${place.rating}</div>
@@ -227,6 +228,35 @@
             </div>
         `;
         return card;
+    }
+
+    async function fetchPlacePhotoUrl(place) {
+        if (placePhotoCache.has(place.id)) {
+            return placePhotoCache.get(place.id);
+        }
+        const response = await fetch(`/api/place-photo?query=${encodeURIComponent(place.mapQuery)}`);
+        if (!response.ok) {
+            throw new Error(`Photo API request failed: ${response.status}`);
+        }
+        const json = await response.json();
+        const photoUrl = json?.photoUrl;
+        if (!photoUrl) {
+            throw new Error('Photo URL missing');
+        }
+        placePhotoCache.set(place.id, photoUrl);
+        return photoUrl;
+    }
+
+    function updateCardImagesWithPlacePhotos(renderedPlaces, token) {
+        renderedPlaces.forEach((place) => {
+            fetchPlacePhotoUrl(place).then((photoUrl) => {
+                if (token !== window.__seoulExplorerRenderToken) return;
+                const img = document.querySelector(`img[data-place-id="${place.id}"]`);
+                if (img) img.src = photoUrl;
+            }).catch(() => {
+                // keep fallback image
+            });
+        });
     }
 
     function renderHome() {
@@ -240,6 +270,8 @@
             const filtered = selectedStyle === 'all'
                 ? places
                 : places.filter((place) => place.styles.includes(selectedStyle));
+            window.__seoulExplorerRenderToken = (window.__seoulExplorerRenderToken || 0) + 1;
+            const renderToken = window.__seoulExplorerRenderToken;
 
             grid.innerHTML = '';
             if (!filtered.length) {
@@ -255,6 +287,7 @@
             filtered.forEach((place) => fragment.appendChild(createPlaceCard(place)));
             grid.appendChild(fragment);
             resultCount.textContent = `${filtered.length}개 추천`;
+            updateCardImagesWithPlacePhotos(filtered, renderToken);
         }
 
         styleSelect.addEventListener('change', applyFilter);
@@ -317,6 +350,13 @@
         mapExternal.href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         renderReviews(reviewList, place.reviews);
         dataSourceEl.textContent = '리뷰/평점: 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
+
+        try {
+            const placePhotoUrl = await fetchPlacePhotoUrl(place);
+            imageEl.src = placePhotoUrl;
+        } catch (error) {
+            // keep fallback place image
+        }
 
         try {
             const details = await fetchLivePlaceDetails(place);

@@ -25,8 +25,10 @@ npm start
 ## 3) 실시간 데이터 동작
 
 - 장소 상세 페이지(`place.html?id=...`)에서 `/api/place-details?query=...` 호출
+- 장소 이미지는 `/api/place-photo?query=...`로 Google Places 실제 장소 사진 조회
 - 서버가 Google Places Text Search + Place Details를 호출
 - 평점, 리뷰 수, 리뷰 요약을 실시간 데이터로 갱신
+- 장소 사진은 Google Places Photo API 결과를 우선 사용하고 실패 시 로컬 폴백 이미지 표시
 - 실패 시 페이지 기본 데이터로 자동 폴백
 
 ## 4) 현재 페이지 구성
