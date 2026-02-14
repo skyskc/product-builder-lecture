@@ -443,15 +443,95 @@
                 ko: '활동성과 감정 회복 속도가 빠른 캐릭터라, 트렌드 지역과 산책 코스를 함께 묶는 게 좋습니다.',
                 en: 'Her high resilience supports itineraries that pair trend districts with restorative walks.'
             }
+        },
+        {
+            id: 'rumi',
+            work: { ko: '케이팝 데몬 헌터스', en: 'KPop Demon Hunters' },
+            type: { ko: '애니메이션', en: 'Animation' },
+            character: { ko: '루미', en: 'Rumi' },
+            portraitPage: 'KPop_Demon_Hunters',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '무대 에너지와 전투 집중력을 동시에 끌어올리는 몰입형 타입',
+                en: 'An immersion-driven profile that blends stage energy with battle focus.'
+            },
+            reason: {
+                ko: '강한 퍼포먼스 감각이 핵심이라 야경 포인트와 시각 밀도 높은 공간을 묶는 동선이 잘 맞습니다.',
+                en: 'Her performance-centric tone matches itineraries that combine night landmarks with visually dense spaces.'
+            }
+        },
+        {
+            id: 'mira',
+            work: { ko: '케이팝 데몬 헌터스', en: 'KPop Demon Hunters' },
+            type: { ko: '애니메이션', en: 'Animation' },
+            character: { ko: '미라', en: 'Mira' },
+            portraitPage: 'KPop_Demon_Hunters',
+            styles: ['shopping', 'night'],
+            mood: {
+                ko: '강렬한 스타일링과 속도감 있는 전개를 선호하는 타입',
+                en: 'A profile that prefers bold styling and fast-paced progression.'
+            },
+            reason: {
+                ko: '캐릭터 톤이 선명하고 카리스마가 강해 트렌드 상권과 야간 동선을 결합할 때 시너지가 큽니다.',
+                en: 'Her vivid charisma works best when trend districts are paired with night-oriented routes.'
+            }
+        },
+        {
+            id: 'zoey',
+            work: { ko: '케이팝 데몬 헌터스', en: 'KPop Demon Hunters' },
+            type: { ko: '애니메이션', en: 'Animation' },
+            character: { ko: '조이', en: 'Zoey' },
+            portraitPage: 'KPop_Demon_Hunters',
+            styles: ['local', 'shopping'],
+            mood: {
+                ko: '리듬감과 즉흥성이 좋아 활기 있는 거리에서 에너지가 오르는 타입',
+                en: 'A rhythmic, spontaneous profile energized by lively city streets.'
+            },
+            reason: {
+                ko: '민첩한 반응과 스트리트 감성이 강해 로컬 동선과 쇼핑 구간을 함께 두는 편이 효율적입니다.',
+                en: 'Her quick, street-driven vibe is best matched by combining local neighborhoods with shopping segments.'
+            }
+        },
+        {
+            id: 'jinu',
+            work: { ko: '케이팝 데몬 헌터스', en: 'KPop Demon Hunters' },
+            type: { ko: '애니메이션', en: 'Animation' },
+            character: { ko: '지누', en: 'Jinu' },
+            portraitPage: 'KPop_Demon_Hunters',
+            styles: ['night', 'history'],
+            mood: {
+                ko: '어두운 서사와 압도적 존재감을 중심으로 몰입하는 타입',
+                en: 'A profile immersed in dark narrative weight and commanding presence.'
+            },
+            reason: {
+                ko: '긴장감 있는 분위기와 상징성이 중요해 야간 포인트와 역사 공간의 대비가 특히 잘 맞습니다.',
+                en: 'His symbolic intensity pairs especially well with contrast between historical sites and night views.'
+            }
+        },
+        {
+            id: 'glenn-rhee',
+            work: { ko: '워킹 데드', en: 'The Walking Dead' },
+            type: { ko: '드라마', en: 'Drama' },
+            character: { ko: '글렌 리', en: 'Glenn Rhee' },
+            portraitPage: 'Glenn_Rhee',
+            styles: ['local', 'family'],
+            mood: {
+                ko: '현장 대응력과 인간적 유대를 함께 챙기는 생존형 타입',
+                en: 'A survival-oriented profile balancing field adaptability with human bonds.'
+            },
+            reason: {
+                ko: '민첩한 판단과 동료 중심 성향이 뚜렷해 로컬 동선에 안정적인 휴식 포인트를 섞는 구성이 좋습니다.',
+                en: 'His fast judgment and team-first nature fit routes mixing local movement with steady rest stops.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
         'gi-hun': 'assets/kcontent/gi-hun.png',
         'sae-byeok': 'assets/kcontent/sae-byeok.png',
         'front-man': 'assets/kcontent/front-man.jpg',
-        'yoon-se-ri': 'assets/kcontent/yoon-se-ri.png',
+        'yoon-se-ri': 'assets/kcontent/yoon-se-ri.jpg',
         'ri-jeong-hyeok': 'assets/kcontent/ri-jeong-hyeok.jpg',
-        'kim-shin': 'assets/kcontent/kim-shin.png',
+        'kim-shin': 'assets/kcontent/kim-shin.jpg',
         'woo-young-woo': 'assets/kcontent/woo-young-woo.png',
         'moon-dong-eun': 'assets/kcontent/moon-dong-eun.jpg',
         'park-sae-ro-yi': 'assets/kcontent/park-sae-ro-yi.jpg',
@@ -461,9 +541,14 @@
         'lee-chang': 'assets/kcontent/lee-chang.png',
         'jang-tae-sang': 'assets/kcontent/jang-tae-sang.jpg',
         'seok-woo': 'assets/kcontent/seok-woo.webp',
-        'kim-ki-taek': 'assets/kcontent/kim-ki-taek.jpg',
-        'kim-bong-seok': 'assets/kcontent/kim-bong-seok.jpg',
-        'jang-hui-soo': 'assets/kcontent/jang-hui-soo.png'
+        'kim-ki-taek': 'assets/kcontent/kim-ki-taek.png',
+        'kim-bong-seok': 'assets/kcontent/kim-bong-seok.png',
+        'jang-hui-soo': 'assets/kcontent/jang-hui-soo.png',
+        'rumi': 'assets/kcontent/rumi.png',
+        'mira': 'assets/kcontent/mira.png',
+        'zoey': 'assets/kcontent/zoey.png',
+        'jinu': 'assets/kcontent/jinu.jpg',
+        'glenn-rhee': 'assets/kcontent/glenn-rhee.jpg'
     };
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
