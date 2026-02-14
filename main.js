@@ -457,10 +457,10 @@
         'park-sae-ro-yi': 'assets/kcontent/park-sae-ro-yi.jpg',
         'vincenzo': 'assets/kcontent/vincenzo.jpg',
         'yoon-ji-woo': 'assets/kcontent/yoon-ji-woo.jpg',
-        'cha-hyun-su': 'assets/kcontent/cha-hyun-su.png',
+        'cha-hyun-su': 'assets/kcontent/cha-hyun-su.jpg',
         'lee-chang': 'assets/kcontent/lee-chang.png',
         'jang-tae-sang': 'assets/kcontent/jang-tae-sang.jpg',
-        'seok-woo': 'assets/kcontent/seok-woo.png',
+        'seok-woo': 'assets/kcontent/seok-woo.webp',
         'kim-ki-taek': 'assets/kcontent/kim-ki-taek.jpg',
         'kim-bong-seok': 'assets/kcontent/kim-bong-seok.jpg',
         'jang-hui-soo': 'assets/kcontent/jang-hui-soo.png'
