@@ -725,6 +725,7 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 }
 
 .kcontent-card-thumb {
+    position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 10px;
@@ -742,13 +743,49 @@ body.dark-mode .kcontent-card-thumb {
     height: 100%;
     display: block;
     object-fit: cover;
+    transform: scale(1.02);
+    transition: filter 0.24s ease, transform 0.24s ease;
 }
 
-.kcontent-card-name {
-    margin: 8px 0 0;
-    font-size: 0.82rem;
-    line-height: 1.3;
+.kcontent-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: end;
+    gap: 2px;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.08) 65%);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.24s ease;
+}
+
+.kcontent-card-title {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.25;
     font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+.kcontent-card-work {
+    font-family: "Cinzel", serif;
+    font-size: 0.68rem;
+    line-height: 1.25;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    opacity: 0.92;
+}
+
+.kcontent-card:hover .kcontent-card-thumb img,
+.kcontent-card:focus-visible .kcontent-card-thumb img {
+    filter: grayscale(100%);
+    transform: scale(1.05);
+}
+
+.kcontent-card:hover .kcontent-card-overlay,
+.kcontent-card:focus-visible .kcontent-card-overlay {
+    opacity: 1;
 }
 
 .saju-grid {

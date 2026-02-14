@@ -2340,7 +2340,7 @@
         gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
             const charName = isEn ? entry.character.en : entry.character.ko;
             const workName = isEn ? entry.work.en : entry.work.ko;
-            return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt="${escapeHtml(charName)}"></span><p class="kcontent-card-name">${escapeHtml(charName)}</p></button>`;
+            return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt="${escapeHtml(charName)}"><span class="kcontent-card-overlay"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span></span></span></button>`;
         }).join('');
 
         const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
