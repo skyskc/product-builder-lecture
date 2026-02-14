@@ -1,6 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     const numbersContainer = document.getElementById('numbers');
     const generateBtn = document.getElementById('generate-btn');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeStorageKey = 'lottery-theme';
+
+    const applyTheme = (theme) => {
+        const isLight = theme === 'light';
+        document.body.classList.toggle('light-mode', isLight);
+        themeToggleBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        themeToggleBtn.setAttribute(
+            'aria-label',
+            isLight ? 'Switch to dark mode' : 'Switch to light mode'
+        );
+    };
+
+    const initializeTheme = () => {
+        const savedTheme = localStorage.getItem(themeStorageKey);
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+            applyTheme(savedTheme);
+            return;
+        }
+
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        applyTheme(prefersLight ? 'light' : 'dark');
+    };
 
     const getNumberColor = (number) => {
         if (number <= 10) return '#fbc400'; // Yellow
@@ -31,7 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     generateBtn.addEventListener('click', generateAndDisplayNumbers);
+    themeToggleBtn.addEventListener('click', () => {
+        const nextTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+        applyTheme(nextTheme);
+        localStorage.setItem(themeStorageKey, nextTheme);
+    });
 
     // Generate numbers on initial load
+    initializeTheme();
     generateAndDisplayNumbers();
 });
