@@ -84,26 +84,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const menusByLocale = {
         ko: [
-            { title: '김치찌개 정식', category: '한식', description: '칼칼한 국물과 밥 조합으로 든든한 점심', tags: ['국물', '든든함', '인기'] },
-            { title: '연어 포케 볼', category: '헬시', description: '신선한 연어와 채소로 가볍고 깔끔한 메뉴', tags: ['가벼움', '단백질', '신선함'] },
-            { title: '마라탕', category: '중식', description: '취향대로 재료를 고르는 매콤한 한 그릇', tags: ['매콤함', '커스텀', '중독성'] },
-            { title: '돈까스 정식', category: '일식', description: '바삭한 식감과 소스가 어우러진 클래식 메뉴', tags: ['바삭함', '클래식', '만족감'] },
-            { title: '불고기 덮밥', category: '한식', description: '달콤짭짤한 불고기로 실패 없는 선택', tags: ['단짠', '대중픽', '든든함'] }
+            { key: 'kimchi', title: '김치찌개 정식', category: '한식', description: '칼칼한 국물과 밥 조합으로 든든한 점심', tags: ['국물', '든든함', '인기'] },
+            { key: 'poke', title: '연어 포케 볼', category: '헬시', description: '신선한 연어와 채소로 가볍고 깔끔한 메뉴', tags: ['가벼움', '단백질', '신선함'] },
+            { key: 'mala', title: '마라탕', category: '중식', description: '취향대로 재료를 고르는 매콤한 한 그릇', tags: ['매콤함', '커스텀', '중독성'] },
+            { key: 'tonkatsu', title: '돈까스 정식', category: '일식', description: '바삭한 식감과 소스가 어우러진 클래식 메뉴', tags: ['바삭함', '클래식', '만족감'] },
+            { key: 'bulgogi', title: '불고기 덮밥', category: '한식', description: '달콤짭짤한 불고기로 실패 없는 선택', tags: ['단짠', '대중픽', '든든함'] }
         ],
         en: [
-            { title: 'Kimchi Stew Set', category: 'Korean', description: 'A warm spicy stew with rice for a hearty lunch', tags: ['hearty', 'spicy', 'comfort'] },
-            { title: 'Salmon Poke Bowl', category: 'Healthy', description: 'Fresh salmon and vegetables in a light bowl', tags: ['fresh', 'protein', 'light'] },
-            { title: 'Mala Hot Pot Bowl', category: 'Chinese', description: 'Custom toppings in a bold and numbing broth', tags: ['bold', 'custom', 'hot'] },
-            { title: 'Tonkatsu Set', category: 'Japanese', description: 'Crispy cutlet with rich sauce and rice', tags: ['crispy', 'classic', 'satisfying'] },
-            { title: 'Bulgogi Rice Bowl', category: 'Korean', description: 'Sweet and savory beef over rice', tags: ['savory', 'popular', 'filling'] }
+            { key: 'kimchi', title: 'Kimchi Stew Set', category: 'Korean', description: 'A warm spicy stew with rice for a hearty lunch', tags: ['hearty', 'spicy', 'comfort'] },
+            { key: 'poke', title: 'Salmon Poke Bowl', category: 'Healthy', description: 'Fresh salmon and vegetables in a light bowl', tags: ['fresh', 'protein', 'light'] },
+            { key: 'mala', title: 'Mala Hot Pot Bowl', category: 'Chinese', description: 'Custom toppings in a bold and numbing broth', tags: ['bold', 'custom', 'hot'] },
+            { key: 'tonkatsu', title: 'Tonkatsu Set', category: 'Japanese', description: 'Crispy cutlet with rich sauce and rice', tags: ['crispy', 'classic', 'satisfying'] },
+            { key: 'bulgogi', title: 'Bulgogi Rice Bowl', category: 'Korean', description: 'Sweet and savory beef over rice', tags: ['savory', 'popular', 'filling'] }
         ],
         ja: [
-            { title: 'キムチチゲ定食', category: '韓国料理', description: 'ピリ辛スープで体が温まる満足ランチ', tags: ['あたたかい', '定番', '満足'] },
-            { title: 'サーモンポキボウル', category: 'ヘルシー', description: '新鮮なサーモンと野菜の軽めランチ', tags: ['さっぱり', 'たんぱく質', '軽め'] },
-            { title: '麻辣湯', category: '中華', description: '具材を選べる刺激的なスープメニュー', tags: ['刺激', 'カスタム', '人気'] },
-            { title: 'とんかつ定食', category: '和食', description: 'サクサク食感と濃厚ソースの定番', tags: ['サクサク', '定番', '満腹'] },
-            { title: 'プルコギ丼', category: '韓国料理', description: '甘辛い味付けで食べやすい人気メニュー', tags: ['甘辛', '人気', 'ボリューム'] }
+            { key: 'kimchi', title: 'キムチチゲ定食', category: '韓国料理', description: 'ピリ辛スープで体が温まる満足ランチ', tags: ['あたたかい', '定番', '満足'] },
+            { key: 'poke', title: 'サーモンポキボウル', category: 'ヘルシー', description: '新鮮なサーモンと野菜の軽めランチ', tags: ['さっぱり', 'たんぱく質', '軽め'] },
+            { key: 'mala', title: '麻辣湯', category: '中華', description: '具材を選べる刺激的なスープメニュー', tags: ['刺激', 'カスタム', '人気'] },
+            { key: 'tonkatsu', title: 'とんかつ定食', category: '和食', description: 'サクサク食感と濃厚ソースの定番', tags: ['サクサク', '定番', '満腹'] },
+            { key: 'bulgogi', title: 'プルコギ丼', category: '韓国料理', description: '甘辛い味付けで食べやすい人気メニュー', tags: ['甘辛', '人気', 'ボリューム'] }
         ]
+    };
+
+    const imageByMenuKey = {
+        kimchi: 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1200&q=80',
+        poke: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80',
+        mala: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1200&q=80',
+        tonkatsu: 'https://images.unsplash.com/photo-1593030668930-8130abedd2cd?auto=format&fit=crop&w=1200&q=80',
+        bulgogi: 'https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&q=80'
     };
 
     const t = translations[activeLocale];
@@ -161,28 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return next;
     };
 
-    const getGeneratedImageUrl = (menu) => {
-        const seed = `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
-        const prompt = `ultra realistic food photography, ${menu.title}, ${menu.category} cuisine, plated lunch, natural light, high detail, no text`;
-        return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1200&height=900&seed=${seed}&nologo=true`;
-    };
-
-    const getFallbackImageUrl = (menu) => {
-        const query = encodeURIComponent(`${menu.title} ${menu.category} food`);
-        return `https://source.unsplash.com/1200x900/?${query}&sig=${Date.now()}`;
-    };
-
     const setMenuImage = (menu) => {
-        foodImage.onerror = () => {
-            if (foodImage.dataset.imageStage === 'fallback') {
-                foodImage.onerror = null;
-                return;
-            }
-            foodImage.dataset.imageStage = 'fallback';
-            foodImage.src = getFallbackImageUrl(menu);
-        };
-        foodImage.dataset.imageStage = 'generated';
-        foodImage.src = getGeneratedImageUrl(menu);
+        foodImage.onerror = null;
+        foodImage.src = imageByMenuKey[menu.key] || imageByMenuKey.kimchi;
     };
 
     const recommendMenu = () => {
