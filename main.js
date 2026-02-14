@@ -77,6 +77,83 @@
             en: 'Please help me.'
         }
     ];
+    const GENERATION_COURSES = [
+        {
+            title: { ko: '20대 트렌드 코스', en: '20s Trend Course' },
+            desc: {
+                ko: '쇼핑, 야경, 로컬 맛집 위주로 늦은 시간까지 즐기는 일정.',
+                en: 'Late-day itinerary focused on shopping, night views, and local food.'
+            },
+            bullets: {
+                ko: ['낮: 성수/홍대 트렌드 스팟', '저녁: 한강/전망 포인트', '밤: 로컬바/야시장 감성'],
+                en: ['Day: Seongsu/Hongdae trend spots', 'Evening: Han River viewpoints', 'Night: local bars and market vibe']
+            },
+            cta: { ko: '쇼핑/트렌드 코스 보기', en: 'Open Shopping/Trends Course' },
+            style: 'shopping',
+            budget: 'mid',
+            walk: 'high'
+        },
+        {
+            title: { ko: '30대 밸런스 코스', en: '30s Balanced Course' },
+            desc: {
+                ko: '핵심 명소 + 감도 높은 카페/미식으로 균형 잡힌 하루.',
+                en: 'Balanced day with key landmarks plus refined cafe and food stops.'
+            },
+            bullets: {
+                ko: ['오전: 역사/뮤지엄 1~2곳', '오후: 카페/산책/쇼핑', '저녁: 평점 높은 식당'],
+                en: ['Morning: 1-2 history/museum spots', 'Afternoon: cafe, walk, shopping', 'Evening: top-rated restaurants']
+            },
+            cta: { ko: '예술/뮤지엄 코스 보기', en: 'Open Art/Museum Course' },
+            style: 'art',
+            budget: 'mid',
+            walk: 'mid'
+        },
+        {
+            title: { ko: '40대 가족 동행 코스', en: '40s Family Course' },
+            desc: {
+                ko: '무리 없는 동선과 휴식 가능한 공간 중심 일정.',
+                en: 'Family-friendly plan with easy movement and comfortable rest points.'
+            },
+            bullets: {
+                ko: ['이동 시간 짧은 구간 우선', '공원/테마형 스팟 포함', '아이/부모 동반 식사 동선'],
+                en: ['Prioritize short transfers', 'Include parks and theme spots', 'Meal flow for kids and parents']
+            },
+            cta: { ko: '가족/테마 코스 보기', en: 'Open Family/Theme Course' },
+            style: 'family',
+            budget: 'high',
+            walk: 'low'
+        },
+        {
+            title: { ko: '50대+ 편안한 코스', en: '50+ Comfort Course' },
+            desc: {
+                ko: '역사/문화 중심으로 걷기 난이도를 낮춘 안정형 일정.',
+                en: 'Stable history-focused route with reduced walking intensity.'
+            },
+            bullets: {
+                ko: ['오전: 궁궐/박물관 집중', '오후: 전통 거리 가벼운 산책', '저녁: 조용한 식사 스팟'],
+                en: ['Morning: palaces and museums', 'Afternoon: light walk in traditional streets', 'Evening: quiet dining spots']
+            },
+            cta: { ko: '역사/문화 코스 보기', en: 'Open History/Culture Course' },
+            style: 'history',
+            budget: 'mid',
+            walk: 'low'
+        },
+        {
+            title: { ko: '시니어/힐링 코스', en: 'Senior Healing Course' },
+            desc: {
+                ko: '자연, 강변, 공원 중심으로 체력 부담이 적은 일정.',
+                en: 'Low-intensity healing route focused on parks, river views, and nature.'
+            },
+            bullets: {
+                ko: ['오전: 공원/산책로', '오후: 카페 휴식 + 전망', '저녁: 조기 귀가형 동선'],
+                en: ['Morning: parks and walking trails', 'Afternoon: cafe rest and viewpoints', 'Evening: early-return flow']
+            },
+            cta: { ko: '자연/산책 코스 보기', en: 'Open Nature/Walk Course' },
+            style: 'nature',
+            budget: 'low',
+            walk: 'low'
+        }
+    ];
     let CURRENT_LANG = 'ko';
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
@@ -586,7 +663,7 @@
             const heroDesc = document.getElementById('generation-hero-desc');
             const panelTitle = document.getElementById('generation-panel-title');
             if (heroTitle) heroTitle.textContent = 'Seoul Courses by Age Group';
-            if (heroDesc) heroDesc.textContent = 'Pick an itinerary pattern that best matches travel pace, interests, and group profile.';
+            if (heroDesc) heroDesc.textContent = 'Choose by travel pace and group profile, then jump directly to the matching course.';
             if (panelTitle) panelTitle.textContent = 'Recommended Scenarios by Generation';
         }
     }
@@ -1055,6 +1132,58 @@
         markActiveStyle(selectedStyle);
         markActiveTag(selectedTag);
         applyFilter();
+    }
+
+    function renderGenerationPage() {
+        const heroTitle = document.getElementById('generation-hero-title');
+        const heroDesc = document.getElementById('generation-hero-desc');
+        const panelTitle = document.getElementById('generation-panel-title');
+        const gridEl = document.getElementById('generation-grid');
+        const noteEl = document.getElementById('generation-note');
+        if (!heroTitle || !heroDesc || !panelTitle || !gridEl || !noteEl) return;
+
+        const isEn = CURRENT_LANG === 'en';
+        heroTitle.textContent = isEn ? 'Seoul Courses by Age Group' : '세대별 서울 추천 코스';
+        heroDesc.textContent = isEn
+            ? 'Choose by travel pace and group profile, then jump directly to the matching course.'
+            : '여행 목적과 이동 강도에 따라 세대별로 가장 만족도가 높은 코스를 빠르게 선택하세요.';
+        panelTitle.textContent = isEn ? 'Recommended Scenarios by Generation' : '세대별 추천 시나리오';
+        noteEl.textContent = isEn
+            ? 'Tip: adjust route details in the course page by weather, group size, and budget.'
+            : '팁: 실제 이동은 날씨/인원/예산에 맞춰 코스 페이지에서 바로 조정할 수 있습니다.';
+
+        const budgetLabel = {
+            ko: { low: '예산대: 절약형', mid: '예산대: 보통', high: '예산대: 여유형' },
+            en: { low: 'Budget: Low', mid: 'Budget: Medium', high: 'Budget: Premium' }
+        };
+        const walkLabel = {
+            ko: { low: '도보 강도: 낮음', mid: '도보 강도: 보통', high: '도보 강도: 높음' },
+            en: { low: 'Walking: Light', mid: 'Walking: Moderate', high: 'Walking: High' }
+        };
+
+        gridEl.innerHTML = GENERATION_COURSES.map((course) => {
+            const title = isEn ? course.title.en : course.title.ko;
+            const desc = isEn ? course.desc.en : course.desc.ko;
+            const bullets = isEn ? course.bullets.en : course.bullets.ko;
+            const cta = isEn ? course.cta.en : course.cta.ko;
+            const budget = (isEn ? budgetLabel.en : budgetLabel.ko)[course.budget];
+            const walk = (isEn ? walkLabel.en : walkLabel.ko)[course.walk];
+            const href = withCurrentLang(`course.html?style=${encodeURIComponent(course.style)}`);
+            return `
+                <article class="generation-card">
+                    <h3>${escapeHtml(title)}</h3>
+                    <div class="generation-meta">
+                        <span class="generation-chip">${escapeHtml(budget)}</span>
+                        <span class="generation-chip">${escapeHtml(walk)}</span>
+                    </div>
+                    <p>${escapeHtml(desc)}</p>
+                    <ul class="review-list">
+                        ${bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join('')}
+                    </ul>
+                    <a class="button-link" href="${href}">${escapeHtml(cta)}</a>
+                </article>
+            `;
+        }).join('');
     }
 
     function formatReviewCount(count) {
@@ -1550,6 +1679,7 @@
         if (page === 'home') renderHome();
         else if (page === 'place') renderPlaceDetail();
         else if (page === 'course') renderCoursePage();
+        else if (page === 'generation') renderGenerationPage();
         else if (page === 'partner') renderPartnerPage();
         else if (page === 'comments') renderCommentsPage();
     }

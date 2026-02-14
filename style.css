@@ -637,6 +637,24 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     margin-top: 0;
 }
 
+.generation-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 4px 0 10px;
+}
+
+.generation-chip {
+    display: inline-block;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--chip);
+}
+
 .trust-grid article {
     border: 1px solid var(--line);
     border-radius: 12px;
