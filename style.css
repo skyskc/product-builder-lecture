@@ -188,6 +188,21 @@ a {
     padding: 12px;
 }
 
+.sticky-panel {
+    position: sticky;
+    z-index: 18;
+    background: var(--card);
+}
+
+.sticky-primary {
+    top: 68px;
+}
+
+.sticky-secondary {
+    top: 146px;
+    z-index: 17;
+}
+
 .style-tab-title {
     margin: 0 0 10px;
     font-size: 0.85rem;
@@ -738,6 +753,14 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 
     .style-tab-row {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .sticky-primary {
+        top: 118px;
+    }
+
+    .sticky-secondary {
+        top: 206px;
     }
 
     .result-count {
