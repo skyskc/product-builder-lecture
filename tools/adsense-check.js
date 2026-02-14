@@ -83,6 +83,21 @@ function checkAdsTxt(report) {
   if (!/^google\.com,\s*pub-\d+,\s*DIRECT,\s*f08c47fec0942fa0$/i.test(ads)) {
     report.warnings.push('ads.txt format unexpected (verify publisher id and format)');
   }
+
+  if (!exists('.well-known/ads.txt')) {
+    report.warnings.push('.well-known/ads.txt missing (optional but recommended for crawler compatibility)');
+  }
+}
+
+function checkRobots(report) {
+  if (!exists('robots.txt')) {
+    report.warnings.push('robots.txt missing');
+    return;
+  }
+  const robots = readText('robots.txt');
+  if (!/AdsBot-Google/i.test(robots) || !/Allow:\s*\/$/m.test(robots)) {
+    report.warnings.push('robots.txt should explicitly allow AdsBot-Google');
+  }
 }
 
 function checkServiceIntegrations(report) {
@@ -118,6 +133,7 @@ function run() {
   });
 
   checkAdsTxt(report);
+  checkRobots(report);
   checkServiceIntegrations(report);
 
   console.log('=== AdSense Readiness Report ===');

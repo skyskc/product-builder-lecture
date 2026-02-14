@@ -420,7 +420,8 @@
     }
 
     async function renderCoursePage() {
-        const styleSelect = document.getElementById('course-style-select');
+        const styleTabs = document.getElementById('course-style-tabs');
+        const styleButtons = Array.from(document.querySelectorAll('.style-tab-btn'));
         const titleEl = document.getElementById('day-course-title');
         const summaryEl = document.getElementById('day-course-summary');
         const routeLinkEl = document.getElementById('course-route-link');
@@ -430,13 +431,19 @@
         const hotelSourceEl = document.getElementById('hotel-source-note');
         const restaurantSourceEl = document.getElementById('restaurant-source-note');
         const restaurantSectionsEl = document.getElementById('restaurant-sections');
-        if (!styleSelect || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
+        if (!styleTabs || !styleButtons.length || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
 
-        const initialStyle = getStyleFromQuery();
-        styleSelect.value = initialStyle;
+        let currentStyle = getStyleFromQuery();
 
-        async function drawCourse() {
-            const selectedStyle = styleSelect.value;
+        function markActiveStyle(styleKey) {
+            styleButtons.forEach((btn) => {
+                const active = btn.dataset.style === styleKey;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+        }
+
+        async function drawCourse(selectedStyle) {
             const filtered = places.filter((place) => place.styles.includes(selectedStyle)).slice(0, 6);
             if (filtered.length < 2) return;
 
@@ -585,8 +592,21 @@
                 : '맛집 데이터: 일부 Google API 실패로 기본 추천을 함께 표시 중';
         }
 
-        styleSelect.addEventListener('change', drawCourse);
-        drawCourse();
+        styleTabs.addEventListener('click', (event) => {
+            const button = event.target.closest('.style-tab-btn');
+            if (!button) return;
+            const nextStyle = button.dataset.style;
+            if (!nextStyle || nextStyle === currentStyle) return;
+            currentStyle = nextStyle;
+            markActiveStyle(currentStyle);
+            const nextUrl = new URL(window.location.href);
+            nextUrl.searchParams.set('style', currentStyle);
+            window.history.replaceState({}, '', nextUrl.toString());
+            drawCourse(currentStyle);
+        });
+
+        markActiveStyle(currentStyle);
+        drawCourse(currentStyle);
     }
 
     function renderPartnerPage() {

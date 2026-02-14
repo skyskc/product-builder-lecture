@@ -167,6 +167,42 @@ a {
     background: var(--card);
 }
 
+.style-tab-panel {
+    padding: 12px;
+}
+
+.style-tab-title {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.style-tab-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.style-tab-btn {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.style-tab-btn.active {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--chip);
+}
+
 .result-count {
     margin: 0 0 0 auto;
     font-size: 0.86rem;
@@ -587,6 +623,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 
     .filter-bar {
         flex-wrap: wrap;
+    }
+
+    .style-tab-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .result-count {
