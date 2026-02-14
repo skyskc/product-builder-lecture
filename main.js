@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    const foodImages = [
+    const fallbackFoodImages = [
         'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1000&q=80',
         'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=80',
         'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1000&q=80',
@@ -133,12 +133,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return next;
     };
 
+    const getGeneratedImageUrl = (menu) => {
+        const seed = `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
+        const prompt = `ultra realistic food photography, ${menu.title}, ${menu.category} cuisine, plated lunch, natural light, high detail`;
+        return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1200&height=900&seed=${seed}&nologo=true`;
+    };
+
+    const setMenuImage = (menu) => {
+        let usedFallback = false;
+        foodImage.onerror = () => {
+            if (usedFallback) {
+                return;
+            }
+            usedFallback = true;
+            currentImageIndex = pickRandomIndex(fallbackFoodImages.length, currentImageIndex);
+            foodImage.src = fallbackFoodImages[currentImageIndex];
+        };
+        foodImage.src = getGeneratedImageUrl(menu);
+    };
+
     const recommendMenu = () => {
         menuPost.classList.add('is-switching');
 
         setTimeout(() => {
             currentMenuIndex = pickRandomIndex(menus.length, currentMenuIndex);
-            currentImageIndex = pickRandomIndex(foodImages.length, currentImageIndex);
 
             const selected = menus[currentMenuIndex];
 
@@ -147,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             menuDescription.textContent = selected.description;
             menuTags.textContent = selected.tags.map((tag) => `#${tag}`).join(' ');
 
-            foodImage.src = foodImages[currentImageIndex];
+            setMenuImage(selected);
             foodImage.alt = t.imageAlt(selected.title);
 
             menuPost.classList.remove('is-switching');
