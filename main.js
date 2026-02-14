@@ -1657,12 +1657,14 @@
             const insightTitle = document.getElementById('course-insight-title');
             const saveBtn = document.getElementById('course-save-offline-btn');
             const shareBtn = document.getElementById('course-share-card-btn');
+            const offlinePlanTitle = document.getElementById('offline-plan-title');
             const toolsNote = document.getElementById('course-tools-note');
             if (budgetTitle) budgetTitle.textContent = 'Travel Budget Mode';
             if (budgetDesc) budgetDesc.textContent = 'Automatically adjusts price level and transport cost estimate by budget.';
             if (insightTitle) insightTitle.textContent = 'Time and Cost Summary';
             if (saveBtn) saveBtn.textContent = 'Save Offline';
             if (shareBtn) shareBtn.textContent = 'Create Share Card';
+            if (offlinePlanTitle) offlinePlanTitle.textContent = 'Saved Offline Plans';
             if (toolsNote) toolsNote.textContent = 'Saved plans are stored in your browser on this device.';
             document.querySelectorAll('.style-tab-btn').forEach((btn) => {
                 const styleKey = btn.dataset.style;
@@ -2668,6 +2670,7 @@
         const insightSummaryEl = document.getElementById('course-insight-summary');
         const saveOfflineBtn = document.getElementById('course-save-offline-btn');
         const shareCardBtn = document.getElementById('course-share-card-btn');
+        const offlinePlanListEl = document.getElementById('offline-plan-list');
         const toolsNoteEl = document.getElementById('course-tools-note');
         const titleEl = document.getElementById('day-course-title');
         const summaryEl = document.getElementById('day-course-summary');
@@ -2678,7 +2681,7 @@
         const hotelSourceEl = document.getElementById('hotel-source-note');
         const restaurantSourceEl = document.getElementById('restaurant-source-note');
         const restaurantSectionsEl = document.getElementById('restaurant-sections');
-        if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
+        if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !offlinePlanListEl || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
 
         const BUDGET_PRESETS = {
             budget: { ko: '실속형', en: 'Budget', lodgingFactor: 0.82, foodFactor: 0.86, transitFarePerLeg: 1500, transitMinutesPerLeg: 14 },
@@ -2802,6 +2805,48 @@
             return y + (lines * lineHeight);
         }
 
+        function readOfflinePlans() {
+            try {
+                const raw = localStorage.getItem(OFFLINE_COURSE_PLAN_STORAGE_KEY);
+                const parsed = raw ? JSON.parse(raw) : {};
+                if (!parsed || typeof parsed !== 'object') return {};
+                return parsed;
+            } catch (_) {
+                return {};
+            }
+        }
+
+        function writeOfflinePlans(plans) {
+            localStorage.setItem(OFFLINE_COURSE_PLAN_STORAGE_KEY, JSON.stringify(plans));
+        }
+
+        function renderOfflinePlanList() {
+            const plans = readOfflinePlans();
+            const rows = Object.entries(plans)
+                .map(([key, value]) => ({ key, value }))
+                .filter((entry) => entry.value && entry.value.styleKey && entry.value.budgetKey)
+                .sort((a, b) => String(b.value.savedAt || '').localeCompare(String(a.value.savedAt || '')));
+
+            if (!rows.length) {
+                offlinePlanListEl.innerHTML = `<p class="offline-plan-meta">${CURRENT_LANG === 'en' ? 'No saved plan yet.' : '아직 저장된 코스가 없습니다.'}</p>`;
+                return;
+            }
+
+            offlinePlanListEl.innerHTML = rows.slice(0, 8).map(({ key, value }) => {
+                const savedAtText = formatFxUpdatedAt(value.savedAt);
+                return `
+                    <article class="offline-plan-item">
+                        <strong>${escapeHtml(value.title || '-')}</strong>
+                        <p class="offline-plan-meta">${CURRENT_LANG === 'en' ? 'Saved' : '저장일'}: ${escapeHtml(savedAtText)} · ${CURRENT_LANG === 'en' ? 'Budget' : '예산'}: ${escapeHtml(value.budgetLabel || '-')}</p>
+                        <div class="offline-plan-actions">
+                            <button class="offline-plan-btn" type="button" data-action="load" data-plan-key="${escapeHtml(key)}">${CURRENT_LANG === 'en' ? 'Load' : '불러오기'}</button>
+                            <button class="offline-plan-btn" type="button" data-action="delete" data-plan-key="${escapeHtml(key)}">${CURRENT_LANG === 'en' ? 'Delete' : '삭제'}</button>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
         async function createShareCardBlob(snapshot) {
             const canvas = document.createElement('canvas');
             canvas.width = 1080;
@@ -2857,10 +2902,10 @@
                 savedAt: new Date().toISOString()
             };
             try {
-                const raw = localStorage.getItem(OFFLINE_COURSE_PLAN_STORAGE_KEY);
-                const allPlans = raw ? JSON.parse(raw) : {};
+                const allPlans = readOfflinePlans();
                 allPlans[key] = payload;
-                localStorage.setItem(OFFLINE_COURSE_PLAN_STORAGE_KEY, JSON.stringify(allPlans));
+                writeOfflinePlans(allPlans);
+                renderOfflinePlanList();
                 toolsNoteEl.textContent = CURRENT_LANG === 'en'
                     ? `Saved offline on this device (${formatFxUpdatedAt(payload.savedAt)}).`
                     : `이 기기에 오프라인 저장되었습니다. (${formatFxUpdatedAt(payload.savedAt)})`;
@@ -3132,6 +3177,40 @@
 
         saveOfflineBtn.addEventListener('click', saveCurrentPlanOffline);
         shareCardBtn.addEventListener('click', shareCurrentPlanCard);
+        offlinePlanListEl.addEventListener('click', (event) => {
+            const button = event.target.closest('.offline-plan-btn');
+            if (!button) return;
+            const planKey = button.getAttribute('data-plan-key');
+            const action = button.getAttribute('data-action');
+            if (!planKey || !action) return;
+            const plans = readOfflinePlans();
+            const target = plans[planKey];
+            if (!target) {
+                renderOfflinePlanList();
+                return;
+            }
+            if (action === 'delete') {
+                delete plans[planKey];
+                writeOfflinePlans(plans);
+                renderOfflinePlanList();
+                toolsNoteEl.textContent = CURRENT_LANG === 'en' ? 'Saved plan deleted.' : '저장된 코스를 삭제했습니다.';
+                return;
+            }
+            if (action === 'load') {
+                if (target.styleKey) currentStyle = target.styleKey;
+                if (target.budgetKey && BUDGET_PRESETS[target.budgetKey]) currentBudget = target.budgetKey;
+                localStorage.setItem(COURSE_BUDGET_STORAGE_KEY, currentBudget);
+                markActiveStyle(currentStyle);
+                markActiveBudget(currentBudget);
+                const nextUrl = new URL(window.location.href);
+                nextUrl.searchParams.set('style', currentStyle);
+                window.history.replaceState({}, '', nextUrl.toString());
+                drawCourse(currentStyle);
+                toolsNoteEl.textContent = CURRENT_LANG === 'en'
+                    ? `Loaded saved plan (${formatFxUpdatedAt(target.savedAt)}).`
+                    : `저장된 코스를 불러왔습니다. (${formatFxUpdatedAt(target.savedAt)})`;
+            }
+        });
 
         window.addEventListener('fx-rate-updated', () => {
             drawCourse(currentStyle);
@@ -3139,6 +3218,7 @@
 
         markActiveStyle(currentStyle);
         markActiveBudget(currentBudget);
+        renderOfflinePlanList();
         drawCourse(currentStyle);
     }
 
