@@ -148,11 +148,12 @@
 
         return {
             id,
-            rank: index + 1,
             name: seed.name,
             category: seed.category,
             district: seed.district,
             bestTime: seed.bestTime,
+            ratingValue: Number(ratingBase.toFixed(1)),
+            reviewCountValue: reviewBase,
             rating: `${ratingBase.toFixed(1)} / 5`,
             reviewCount: `${reviewBase.toLocaleString()}+`,
             shortDescription,
@@ -161,6 +162,15 @@
             styles: seed.styles,
             reviews
         };
+    });
+
+    // Popularity score: review volume has diminishing returns via sqrt, rating gets strong weight.
+    places.forEach((place) => {
+        place.popularityScore = (place.ratingValue * 120) + Math.sqrt(place.reviewCountValue);
+    });
+    places.sort((a, b) => b.popularityScore - a.popularityScore);
+    places.forEach((place, idx) => {
+        place.rank = idx + 1;
     });
 
     const placeMap = Object.fromEntries(places.map((p) => [p.id, p]));
