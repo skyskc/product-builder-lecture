@@ -655,6 +655,19 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     background: var(--chip);
 }
 
+.saju-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.saju-pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 10px;
+}
+
 .trust-grid article {
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -956,6 +969,10 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     }
 
     .generation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .saju-grid {
         grid-template-columns: 1fr;
     }
 

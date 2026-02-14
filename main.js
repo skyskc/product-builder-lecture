@@ -565,7 +565,7 @@
         if (navLinks[1]) navLinks[1].textContent = 'Courses';
         if (navLinks[2]) navLinks[2].textContent = 'By Generation';
         if (navLinks[3]) navLinks[3].textContent = 'Partner';
-        if (navLinks[4]) navLinks[4].textContent = 'Comments';
+        if (navLinks[4]) navLinks[4].textContent = 'Saju Travel';
 
         const footerLinks = document.querySelectorAll('.footer-inner nav a');
         if (footerLinks[0]) footerLinks[0].textContent = 'About';
@@ -652,11 +652,11 @@
             if (eyebrow) eyebrow.textContent = 'Partnership';
             if (h1) h1.textContent = 'Partner Inquiry';
         }
-        if (page === 'comments') {
+        if (page === 'saju') {
             const eyebrow = document.querySelector('.panel .eyebrow');
             const h1 = document.querySelector('.panel h1');
-            if (eyebrow) eyebrow.textContent = 'Community';
-            if (h1) h1.textContent = 'Travel Comments';
+            if (eyebrow) eyebrow.textContent = 'Saju Travel Guide';
+            if (h1) h1.textContent = 'Saju-Based Travel Recommender';
         }
         if (page === 'generation') {
             const heroTitle = document.getElementById('generation-hero-title');
@@ -720,7 +720,7 @@
         }
         if (generationLink) generationLink.href = withCurrentLang('generation.html');
         if (partnerLink) partnerLink.href = getPlaceLink('partner.html', id);
-        if (commentsLink) commentsLink.href = getPlaceLink('comments.html', id);
+        if (commentsLink) commentsLink.href = withCurrentLang('comments.html');
     }
 
     function markActiveNav() {
@@ -731,7 +731,7 @@
         if (page === 'course') links[1]?.classList.add('active');
         if (page === 'generation') links[2]?.classList.add('active');
         if (page === 'partner') links[3]?.classList.add('active');
-        if (page === 'comments') links[4]?.classList.add('active');
+        if (page === 'saju') links[4]?.classList.add('active');
     }
 
     function applyTheme(theme) {
@@ -1648,25 +1648,173 @@
             : `${place.name} 제휴 관련 문의를 남겨주세요.`;
     }
 
-    function renderCommentsPage() {
-        const place = placeMap[getPlaceIdFromQuery()];
-        if (!place) return;
+    function renderSajuPage() {
+        const form = document.getElementById('saju-form');
+        const pageTitle = document.getElementById('saju-page-title');
+        const pageDesc = document.getElementById('saju-page-desc');
+        const submitBtn = document.getElementById('saju-submit-btn');
+        const resultTitle = document.getElementById('saju-result-title');
+        const resultNote = document.getElementById('saju-result-note');
+        const pillarsEl = document.getElementById('saju-pillars');
+        const summaryEl = document.getElementById('saju-summary');
+        const warningEl = document.getElementById('saju-warning');
+        const recoTitle = document.getElementById('saju-reco-title');
+        const styleChipsEl = document.getElementById('saju-style-chips');
+        const placeListEl = document.getElementById('saju-place-list');
+        const guideTitle = document.getElementById('saju-guide-title');
+        const guide1 = document.getElementById('saju-guide-1');
+        const guide2 = document.getElementById('saju-guide-2');
+        const yearInput = document.getElementById('birth-year');
+        const monthInput = document.getElementById('birth-month');
+        const dayInput = document.getElementById('birth-day');
+        const calendarType = document.getElementById('calendar-type');
 
-        updateTopNavLinks(place.id);
+        if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType) return;
 
-        const selectedName = document.getElementById('selected-place-name');
-        selectedName.textContent = getPlaceName(place);
+        const isEn = CURRENT_LANG === 'en';
+        pageTitle.textContent = isEn ? 'Saju-Based Travel Recommender' : '사주 기반 여행 추천';
+        pageDesc.textContent = isEn
+            ? 'Enter birth date and calendar type to get a lightweight saju profile and matching Seoul courses.'
+            : '생년월일과 양력/음력 구분을 입력하면, 간이 사주 성향과 맞는 서울 코스를 추천해 드립니다.';
+        submitBtn.textContent = isEn ? 'Show Saju & Recommendations' : '사주/추천 보기';
+        resultTitle.textContent = isEn ? 'Saju Result' : '사주 결과';
+        recoTitle.textContent = isEn ? 'Recommended Travel Courses' : '추천 여행 코스';
+        guideTitle.textContent = isEn ? 'Notes' : '안내';
+        guide1.textContent = isEn
+            ? 'This is a lightweight interpretation for travel style exploration and is not professional fortune reading.'
+            : '본 기능은 여행 취향 탐색을 위한 간이 사주 해석입니다. 전문 역학 감정 결과와는 차이가 있을 수 있습니다.';
+        guide2.textContent = isEn
+            ? 'Lunar input uses a simplified conversion model. For exact reading, consult a professional service.'
+            : '음력 입력은 간이 계산 방식으로 해석되며, 정확한 개인 사주 감정을 원하면 전문 서비스를 이용하세요.';
+        if (calendarType.options[0]) calendarType.options[0].textContent = isEn ? 'Solar' : '양력';
+        if (calendarType.options[1]) calendarType.options[1].textContent = isEn ? 'Lunar' : '음력';
+        resultNote.textContent = isEn ? 'Fill the form to generate your result.' : '입력 후 결과가 표시됩니다.';
+        warningEl.textContent = '';
 
-        window.disqus_config = function () {
-            this.page.url = `${window.location.origin}${window.location.pathname}?id=${place.id}`;
-            this.page.identifier = `seoul-explorer-${place.id}`;
+        const STEMS = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+        const BRANCHES = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+        const STEMS_EN = ['Gap', 'Eul', 'Byeong', 'Jeong', 'Mu', 'Gi', 'Gyeong', 'Sin', 'Im', 'Gye'];
+        const BRANCHES_EN = ['Ja', 'Chuk', 'In', 'Myo', 'Jin', 'Sa', 'O', 'Mi', 'Sin', 'Yu', 'Sul', 'Hae'];
+        const ELEMENT_BY_STEM_INDEX = ['wood', 'wood', 'fire', 'fire', 'earth', 'earth', 'metal', 'metal', 'water', 'water'];
+        const ELEMENT_LABEL = {
+            ko: { wood: '목', fire: '화', earth: '토', metal: '금', water: '수' },
+            en: { wood: 'Wood', fire: 'Fire', earth: 'Earth', metal: 'Metal', water: 'Water' }
         };
 
-        const d = document;
-        const s = d.createElement('script');
-        s.src = 'https://product-builder-lecture-2.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', String(+new Date()));
-        (d.head || d.body).appendChild(s);
+        const styleMapByElement = {
+            wood: ['nature', 'local'],
+            fire: ['night', 'shopping'],
+            earth: ['history', 'family'],
+            metal: ['art', 'shopping'],
+            water: ['nature', 'history']
+        };
+
+        const summaryByElement = {
+            ko: {
+                wood: '성장 지향 성향이 강해 새로운 동네 탐색과 산책형 코스의 만족도가 높습니다.',
+                fire: '활동성과 에너지가 강해 야경, 트렌드, 밤 시간대 콘텐츠와 잘 맞습니다.',
+                earth: '안정성과 균형을 중시해 역사/문화 + 편안한 동선을 선호하는 경향이 있습니다.',
+                metal: '완성도와 디테일을 중시해 전시, 아트, 감도 높은 공간 탐방이 잘 맞습니다.',
+                water: '유연하고 몰입형 성향으로 강변/자연/문화가 섞인 코스에서 만족도가 높습니다.'
+            },
+            en: {
+                wood: 'Growth-oriented profile. You may enjoy exploring new neighborhoods and walking routes.',
+                fire: 'Active and energetic profile. Night views, trend spots, and evening plans fit well.',
+                earth: 'Balanced and stable profile. History/culture with comfortable pacing is a good match.',
+                metal: 'Detail-driven profile. Art, exhibitions, and well-curated spaces suit your style.',
+                water: 'Flexible and immersive profile. River, nature, and cultural mixed routes work well.'
+            }
+        };
+
+        const mod = (n, m) => ((n % m) + m) % m;
+        const pillarText = (idx) => {
+            const stemIndex = mod(idx, 10);
+            const branchIndex = mod(idx, 12);
+            if (isEn) return `${STEMS_EN[stemIndex]}${BRANCHES_EN[branchIndex]}`;
+            return `${STEMS[stemIndex]}${BRANCHES[branchIndex]}`;
+        };
+        const stemElement = (idx) => ELEMENT_BY_STEM_INDEX[mod(idx, 10)];
+
+        function calculatePillars(year, month, day, calendar) {
+            const baseDate = new Date(Date.UTC(year, month - 1, day));
+            const isValid = baseDate.getUTCFullYear() === year
+                && baseDate.getUTCMonth() === month - 1
+                && baseDate.getUTCDate() === day;
+            if (!isValid) return null;
+
+            const yearIndex = year - 1984;
+            const monthIndex = yearIndex * 12 + month + (calendar === 'lunar' ? 1 : 0);
+            const dayIndex = calendar === 'solar'
+                ? Math.floor(baseDate.getTime() / 86400000)
+                : (year * 372 + month * 31 + day + 33);
+            const hourIndex = dayIndex * 12 + 6;
+            return { yearIndex, monthIndex, dayIndex, hourIndex };
+        }
+
+        function getTopElements(indices) {
+            const counts = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+            indices.forEach((idx) => {
+                counts[stemElement(idx)] += 1;
+            });
+            return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([element]) => element);
+        }
+
+        function renderRecommendations(primaryElement, secondaryElement) {
+            const styles = [...new Set([...(styleMapByElement[primaryElement] || []), ...(styleMapByElement[secondaryElement] || [])])];
+            styleChipsEl.innerHTML = styles.map((style) => {
+                const href = withCurrentLang(`course.html?style=${encodeURIComponent(style)}`);
+                return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
+            }).join('');
+
+            const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 5);
+            placeListEl.innerHTML = picked.map((place, idx) => {
+                const href = getPlaceLink('place.html', place.id);
+                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span></li>`;
+            }).join('');
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const year = Number(yearInput.value);
+            const month = Number(monthInput.value);
+            const day = Number(dayInput.value);
+            const calendar = calendarType.value === 'lunar' ? 'lunar' : 'solar';
+
+            if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day) || year < 1900 || year > 2100 || month < 1 || month > 12 || day < 1 || day > 31) {
+                resultNote.textContent = isEn ? 'Please enter a valid birth date.' : '유효한 생년월일을 입력해 주세요.';
+                pillarsEl.innerHTML = '';
+                summaryEl.textContent = '';
+                styleChipsEl.innerHTML = '';
+                placeListEl.innerHTML = '';
+                return;
+            }
+
+            const pillars = calculatePillars(year, month, day, calendar);
+            if (!pillars) {
+                resultNote.textContent = isEn ? 'Invalid date. Please check month/day.' : '유효하지 않은 날짜입니다. 월/일을 확인해 주세요.';
+                pillarsEl.innerHTML = '';
+                summaryEl.textContent = '';
+                styleChipsEl.innerHTML = '';
+                placeListEl.innerHTML = '';
+                return;
+            }
+
+            const labels = isEn ? ['Year Pillar', 'Month Pillar', 'Day Pillar', 'Hour Pillar(Noon Base)'] : ['년주', '월주', '일주', '시주(정오 기준)'];
+            const indices = [pillars.yearIndex, pillars.monthIndex, pillars.dayIndex, pillars.hourIndex];
+            pillarsEl.innerHTML = indices.map((idx, i) => `<div class="generation-chip"><strong>${labels[i]}:</strong> ${escapeHtml(pillarText(idx))}</div>`).join('');
+
+            const topElements = getTopElements(indices);
+            const primary = topElements[0];
+            const secondary = topElements[1];
+            const elementLabel = isEn ? ELEMENT_LABEL.en[primary] : ELEMENT_LABEL.ko[primary];
+            resultNote.textContent = isEn ? `Dominant element: ${elementLabel}` : `주요 오행: ${elementLabel}`;
+            summaryEl.textContent = summaryByElement[isEn ? 'en' : 'ko'][primary];
+            warningEl.textContent = calendar === 'lunar'
+                ? (isEn ? 'Lunar date uses simplified conversion for entertainment purposes.' : '음력 입력은 오락용 간이 변환을 사용합니다.')
+                : (isEn ? 'This result is a lightweight, entertainment-oriented interpretation.' : '본 결과는 오락용 간이 해석입니다.');
+
+            renderRecommendations(primary, secondary);
+        });
     }
 
     function init() {
@@ -1681,7 +1829,7 @@
         else if (page === 'course') renderCoursePage();
         else if (page === 'generation') renderGenerationPage();
         else if (page === 'partner') renderPartnerPage();
-        else if (page === 'comments') renderCommentsPage();
+        else if (page === 'saju') renderSajuPage();
     }
 
     if (document.readyState === 'loading') {
