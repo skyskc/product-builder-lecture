@@ -523,6 +523,7 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 .hotel-name {
     color: var(--text);
     font-weight: 700;
+    text-decoration: none;
 }
 
 .hotel-meta {

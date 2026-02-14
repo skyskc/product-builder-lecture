@@ -49,6 +49,118 @@
         '예술/뮤지엄': 'Art/Museum',
         '로컬/시장': 'Local/Market'
     };
+    const PLACE_NAME_EN = {
+        '경복궁': 'Gyeongbokgung Palace',
+        '창덕궁': 'Changdeokgung Palace',
+        '창경궁': 'Changgyeonggung Palace',
+        '덕수궁': 'Deoksugung Palace',
+        '종묘': 'Jongmyo Shrine',
+        '북촌한옥마을': 'Bukchon Hanok Village',
+        '인사동': 'Insadong',
+        '익선동 한옥거리': 'Ikseon-dong Hanok Street',
+        '삼청동길': 'Samcheong-dong Street',
+        '서촌': 'Seochon Village',
+        '광화문광장': 'Gwanghwamun Square',
+        '청계천': 'Cheonggyecheon Stream',
+        'N서울타워': 'N Seoul Tower',
+        '남산공원': 'Namsan Park',
+        '명동거리': 'Myeongdong Street',
+        '동대문디자인플라자(DDP)': 'Dongdaemun Design Plaza (DDP)',
+        '동대문시장': 'Dongdaemun Market',
+        '광장시장': 'Gwangjang Market',
+        '남대문시장': 'Namdaemun Market',
+        '서울로7017': 'Seoullo 7017',
+        '이태원': 'Itaewon',
+        '한남동': 'Hannam-dong',
+        '리움미술관': 'Leeum Museum of Art',
+        '국립중앙박물관': 'National Museum of Korea',
+        '국립한글박물관': 'National Hangeul Museum',
+        '전쟁기념관': 'War Memorial of Korea',
+        '용산아이파크몰': 'Yongsan I\'Park Mall',
+        '노들섬': 'Nodeul Island',
+        '한강진 카페거리': 'Hangangjin Cafe Street',
+        '남산골한옥마을': 'Namsangol Hanok Village',
+        '홍대거리': 'Hongdae Street',
+        '연남동': 'Yeonnam-dong',
+        '합정': 'Hapjeong',
+        '망원시장': 'Mangwon Market',
+        '경의선숲길': 'Gyeongui Line Forest Park',
+        '월드컵공원': 'World Cup Park',
+        '하늘공원': 'Haneul Park',
+        '디지털미디어시티(DMC)': 'Digital Media City (DMC)',
+        '상암문화광장': 'Sangam Culture Plaza',
+        '문화비축기지': 'Oil Tank Culture Park',
+        '성수동 카페거리': 'Seongsu Cafe Street',
+        '서울숲': 'Seoul Forest',
+        '뚝섬한강공원': 'Ttukseom Hangang Park',
+        '어린이대공원': 'Children\'s Grand Park',
+        '아차산': 'Achasan Mountain',
+        '건대 커먼그라운드': 'Konkuk Univ. Common Ground',
+        '광진교 8번가': 'Gwangjin Bridge 8th Avenue',
+        '성수연방': 'Seongsu Yeonbang',
+        '서울숲 갤러리아포레 산책로': 'Seoul Forest Galleria Foret Walkway',
+        '성수동 수제화거리': 'Seongsu Handmade Shoe Street',
+        '코엑스': 'COEX',
+        '별마당도서관': 'Starfield Library',
+        '봉은사': 'Bongeunsa Temple',
+        '가로수길': 'Garosu-gil',
+        '압구정로데오': 'Apgujeong Rodeo Street',
+        '청담동 명품거리': 'Cheongdam Luxury Street',
+        '선릉과정릉': 'Seolleung and Jeongneung Royal Tombs',
+        '양재천': 'Yangjaecheon Stream',
+        '예술의전당': 'Seoul Arts Center',
+        '강남역': 'Gangnam Station',
+        '롯데월드타워 서울스카이': 'Lotte World Tower Seoul Sky',
+        '롯데월드 어드벤처': 'Lotte World Adventure',
+        '석촌호수': 'Seokchon Lake',
+        '올림픽공원': 'Olympic Park',
+        '잠실한강공원': 'Jamsil Hangang Park',
+        '잠실종합운동장': 'Jamsil Sports Complex',
+        '잠실새내 먹자골목': 'Jamsilsaenae Food Street',
+        '문정동 로데오거리': 'Munjeong Rodeo Street',
+        '가든파이브': 'Garden5',
+        '풍납토성': 'Pungnap Earthen Fortress',
+        '반포한강공원': 'Banpo Hangang Park',
+        '세빛섬': 'Sebitseom',
+        '반포대교 달빛무지개분수': 'Banpo Bridge Moonlight Rainbow Fountain',
+        '잠수교': 'Jamsu Bridge',
+        '서래마을': 'Seorae Village',
+        '양재시민의숲': 'Yangjae Citizens\' Forest',
+        '예술의전당 한가람미술관': 'Hangaram Art Museum',
+        '국립국악원': 'National Gugak Center',
+        '고속터미널 지하상가': 'Express Bus Terminal Underground Mall',
+        '한강대교 전망쉼터': 'Hangang Bridge Observatory Rest Area',
+        '여의도한강공원': 'Yeouido Hangang Park',
+        '여의도공원': 'Yeouido Park',
+        '더현대서울': 'The Hyundai Seoul',
+        'IFC몰': 'IFC Mall',
+        '63스퀘어': '63 Square',
+        '여의도 샛강생태공원': 'Yeouido Saetgang Ecological Park',
+        '문래창작촌': 'Mullae Art Village',
+        '타임스퀘어 영등포': 'Times Square Yeongdeungpo',
+        '노량진수산시장': 'Noryangjin Fish Market',
+        '보라매공원': 'Boramae Park',
+        '서울식물원': 'Seoul Botanic Park',
+        '선유도공원': 'Seonyudo Park',
+        '서울시립미술관': 'Seoul Museum of Art',
+        '서울공예박물관': 'Seoul Museum of Craft Art',
+        '국립현대미술관 서울관': 'MMCA Seoul',
+        '서울역사박물관': 'Seoul Museum of History',
+        '서울도서관': 'Seoul Metropolitan Library',
+        '서울광장': 'Seoul Plaza',
+        '세종문화회관': 'Sejong Center for the Performing Arts',
+        '덕수궁 돌담길': 'Deoksugung Stone Wall Road',
+        '정동길': 'Jeongdong-gil',
+        '청와대': 'Cheong Wa Dae (Blue House)',
+        '북악산 한양도성길': 'Bugaksan Hanyangdoseong Trail',
+        '남산 한양도성길': 'Namsan Hanyangdoseong Trail',
+        '낙산공원': 'Naksan Park',
+        '이화벽화마을': 'Ihwa Mural Village',
+        '대학로': 'Daehangno',
+        '혜화': 'Hyehwa',
+        '성균관 명륜당': 'Sungkyunkwan Myeongnyundang Hall',
+        '길상사': 'Gilsangsa Temple'
+    };
 
     function styleLabels() {
         return STYLE_LABELS_BY_LANG[CURRENT_LANG] || STYLE_LABELS_BY_LANG.ko;
@@ -66,6 +178,13 @@
     function getCategoryLabel(category) {
         if (CURRENT_LANG !== 'en') return category;
         return CATEGORY_LABELS_EN[category] || category;
+    }
+
+    function getPlaceName(placeOrName) {
+        const name = typeof placeOrName === 'string' ? placeOrName : placeOrName?.name;
+        if (!name) return '';
+        if (CURRENT_LANG !== 'en') return name;
+        return PLACE_NAME_EN[name] || name;
     }
 
     const PLACE_SEEDS = [
@@ -197,10 +316,11 @@
         const reviewBase = 7800 + index * 920;
         const shortDescription = `${seed.name}은(는) ${seed.category} 여행자에게 특히 추천되는 서울 대표 스팟입니다.`;
         const description = `${seed.name}은(는) ${seed.district}에 위치한 ${seed.category} 명소입니다. 외국인 방문자가 동선에 넣기 쉬운 위치와 콘텐츠를 갖추고 있어, ${STYLE_LABELS_BY_LANG.ko[seed.styles[0]]} 중심 일정에 적합합니다.`;
+        const nameEn = PLACE_NAME_EN[seed.name] || seed.name;
         const districtEn = DISTRICT_LABELS_EN[seed.district] || seed.district;
         const categoryEn = CATEGORY_LABELS_EN[seed.category] || seed.category;
-        const shortDescriptionEn = `${seed.name} is a representative Seoul spot recommended for ${categoryEn.toLowerCase()} travelers.`;
-        const descriptionEn = `${seed.name} is located in ${districtEn} and is a major ${categoryEn.toLowerCase()} destination. It is easy to include in a first-time Seoul itinerary and works well for a ${STYLE_LABELS_BY_LANG.en[seed.styles[0]].toLowerCase()} focused plan.`;
+        const shortDescriptionEn = `${nameEn} is a representative Seoul spot recommended for ${categoryEn.toLowerCase()} travelers.`;
+        const descriptionEn = `${nameEn} is located in ${districtEn} and is a major ${categoryEn.toLowerCase()} destination. It is easy to include in a first-time Seoul itinerary and works well for a ${STYLE_LABELS_BY_LANG.en[seed.styles[0]].toLowerCase()} focused plan.`;
         const reviews = [
             `${seed.name}은(는) 접근성이 좋아 초행 여행자도 방문하기 편하다는 평가가 많습니다.`,
             `${STYLE_LABELS_BY_LANG.ko[seed.styles[0]]} 중심 여행 코스에 넣기 좋고 체류 시간이 유연하다는 의견이 많습니다.`,
@@ -210,6 +330,7 @@
         return {
             id,
             name: seed.name,
+            nameEn,
             category: seed.category,
             district: seed.district,
             bestTime: seed.bestTime,
@@ -441,7 +562,7 @@
         card.innerHTML = `
             <div class="place-card-body">
                 <span class="place-rank">TOP ${place.rank}</span>
-                <h2>${place.name}</h2>
+                <h2>${getPlaceName(place)}</h2>
                 <div class="place-meta">${getCategoryLabel(place.category)} · ${getDistrictLabel(place.district)}</div>
                 <div class="style-badges">${styleBadges}</div>
                 <p class="place-desc">${CURRENT_LANG === 'en' ? place.shortDescriptionEn : place.shortDescription}</p>
@@ -570,8 +691,8 @@
         const reviewList = document.getElementById('review-list');
         const dataSourceEl = document.getElementById('place-data-source');
 
-        document.title = `${place.name} | Seoul Explorer`;
-        nameEl.textContent = place.name;
+        document.title = `${getPlaceName(place)} | Seoul Explorer`;
+        nameEl.textContent = getPlaceName(place);
         categoryEl.textContent = getCategoryLabel(place.category);
         descEl.textContent = CURRENT_LANG === 'en' ? place.descriptionEn : place.description;
         rankEl.textContent = `TOP ${place.rank}`;
@@ -657,6 +778,10 @@
 
         let currentStyle = getStyleFromQuery();
 
+        function getMapSearchUrl(queryText) {
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(queryText)}`;
+        }
+
         function markActiveStyle(styleKey) {
             styleButtons.forEach((btn) => {
                 const active = btn.dataset.style === styleKey;
@@ -697,7 +822,7 @@
                 const box = document.createElement('article');
                 box.className = 'time-slot';
                 const items = grouped[slot].length
-                    ? grouped[slot].map((place) => `<li>${place.name} (${getDistrictLabel(place.district)})</li>`).join('')
+                    ? grouped[slot].map((place) => `<li>${getPlaceName(place)} (${getDistrictLabel(place.district)})</li>`).join('')
                     : `<li>${CURRENT_LANG === 'en' ? 'No spots' : '추천 스팟 없음'}</li>`;
                 const slotLabel = CURRENT_LANG === 'en'
                     ? ({ '오전': 'Morning', '점심': 'Lunch', '오후': 'Afternoon', '저녁': 'Evening' }[slot] || slot)
@@ -715,7 +840,7 @@
                         ? ` · about ${makeWalkingMinutes(place, next, idx)} min walk to next stop`
                         : ` · 다음 스팟까지 도보 약 ${makeWalkingMinutes(place, next, idx)}분`)
                     : '';
-                li.innerHTML = `<span class=\"stop-title\">${idx + 1}. ${place.name}</span> (${getDistrictLabel(place.district)})${walk}`;
+                li.innerHTML = `<span class=\"stop-title\">${idx + 1}. ${getPlaceName(place)}</span> (${getDistrictLabel(place.district)})${walk}`;
                 stopListEl.appendChild(li);
             });
 
@@ -730,11 +855,10 @@
                 const hotels = await fetchTopHotels(hotelQuery);
                 hotels.slice(0, 5).forEach((hotel, idx) => {
                     const li = document.createElement('li');
-                    const mapAnchor = hotel.googleMapsUri
-                        ? ` · <a class=\"text-link\" href=\"${hotel.googleMapsUri}\" target=\"_blank\" rel=\"noopener noreferrer\">지도</a>`
-                        : '';
+                    const mapHref = hotel.googleMapsUri || getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`);
+                    const mapAnchor = ` · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`;
                     li.innerHTML = `
-                        <span class=\"hotel-name\">${idx + 1}. ${hotel.name}</span><br>
+                        <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
                         <span class=\"hotel-meta\">평점 ${hotel.rating || '-'} / 리뷰 ${hotel.userRatingCount?.toLocaleString?.() || '-'} / 평균가격 ${hotel.averagePrice}</span><br>
                         <span class=\"hotel-meta\">${hotel.address || ''}${mapAnchor}</span>
                     `;
@@ -755,10 +879,11 @@
                 }));
                 fallback.forEach((hotel, idx) => {
                     const li = document.createElement('li');
+                    const mapHref = getMapSearchUrl(`${hotel.name} ${filtered[0].district} Seoul`);
                     li.innerHTML = `
-                        <span class=\"hotel-name\">${idx + 1}. ${hotel.name}</span><br>
+                        <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${hotel.name}</a><br>
                         <span class=\"hotel-meta\">평점 ${hotel.rating} / 리뷰 ${hotel.reviewCount} / 평균가격 ${hotel.averagePrice}</span><br>
-                        <span class=\"hotel-meta\">${hotel.address}</span>
+                        <span class=\"hotel-meta\">${hotel.address} · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a></span>
                     `;
                     hotelListEl.appendChild(li);
                 });
@@ -812,10 +937,9 @@
                     const rows = mealData.restaurants.slice(0, 3).map((r, idx) => {
                         const matchedBroadcast = (mealData.broadcastPicks || []).find((pick) => r.name.includes(pick.name) || pick.name.includes(r.name));
                         const broadcastTag = matchedBroadcast ? ` <span class=\"broadcast-chip\">${matchedBroadcast.show}</span>` : '';
-                        const mapLink = r.googleMapsUri
-                            ? ` · <a class=\"text-link\" href=\"${r.googleMapsUri}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`
-                            : '';
-                        return `<li><span class=\"hotel-name\">${idx + 1}. ${r.name}</span>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${r.averagePrice || '-'}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
+                        const mapHref = r.googleMapsUri || getMapSearchUrl(`${r.name} ${district} Seoul`);
+                        const mapLink = ` · <a class=\"text-link\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Map' : '지도'}</a>`;
+                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${r.name}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${r.averagePrice || '-'}</span><br><span class=\"hotel-meta\">${r.address || ''}${mapLink}</span></li>`;
                     }).join('');
 
                     const extraBroadcast = (mealData.broadcastPicks || []).filter((pick) => !mealData.restaurants.some((r) => r.name.includes(pick.name) || pick.name.includes(r.name)));
@@ -865,7 +989,7 @@
         const selectedId = document.getElementById('selected-place-id');
         const message = document.getElementById('message');
 
-        selectedName.textContent = place.name;
+        selectedName.textContent = getPlaceName(place);
         selectedId.value = place.id;
         message.placeholder = CURRENT_LANG === 'en'
             ? `Leave your partnership inquiry for ${place.name}.`
@@ -879,7 +1003,7 @@
         updateTopNavLinks(place.id);
 
         const selectedName = document.getElementById('selected-place-name');
-        selectedName.textContent = place.name;
+        selectedName.textContent = getPlaceName(place);
 
         window.disqus_config = function () {
             this.page.url = `${window.location.origin}${window.location.pathname}?id=${place.id}`;
