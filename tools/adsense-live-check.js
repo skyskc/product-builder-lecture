@@ -32,6 +32,7 @@ function fetchText(url, depth = 0) {
 async function run() {
   const checks = [];
   const home = await fetchText(`${SITE_URL}/`);
+  const terms = await fetchText(`${SITE_URL}/terms.html`);
   const ads = await fetchText(`${SITE_URL}/ads.txt`);
   const adsWellKnown = await fetchText(`${SITE_URL}/.well-known/ads.txt`);
   const robots = await fetchText(`${SITE_URL}/robots.txt`);
@@ -43,9 +44,22 @@ async function run() {
     detail: `status=${home.status}`
   });
   checks.push({
+    name: '/terms.html reachable',
+    ok: terms.status === 200,
+    detail: `status=${terms.status}`
+  });
+  checks.push({
     name: 'AdSense script present in home',
     ok: home.body.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') && home.body.includes(PUB_ID),
     detail: 'home HTML includes script + publisher id'
+  });
+  checks.push({
+    name: 'Home links to policy pages',
+    ok: home.body.includes('href=\"about.html\"')
+      && home.body.includes('href=\"editorial.html\"')
+      && home.body.includes('href=\"terms.html\"')
+      && home.body.includes('href=\"privacy.html\"'),
+    detail: 'about/editorial/terms/privacy links exist'
   });
   checks.push({
     name: '/ads.txt reachable',

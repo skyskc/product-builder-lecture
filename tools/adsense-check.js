@@ -10,10 +10,11 @@ const REQUIRED_PAGES = [
   'comments.html',
   'about.html',
   'editorial.html',
+  'terms.html',
   'privacy.html'
 ];
 
-const REQUIRED_FOOTER_LINKS = ['about.html', 'editorial.html', 'privacy.html'];
+const REQUIRED_FOOTER_LINKS = ['about.html', 'editorial.html', 'terms.html', 'privacy.html'];
 const ADSENSE_SNIPPET = 'pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
 const MIN_VISIBLE_WORDS = 90;
 
@@ -103,16 +104,12 @@ function checkRobots(report) {
 function checkServiceIntegrations(report) {
   const partner = exists('partner.html') ? readText('partner.html') : '';
   const comments = exists('comments.html') ? readText('comments.html') : '';
-  const mainJs = exists('main.js') ? readText('main.js') : '';
 
   if (!partner.includes('formspree.io/f/xpqjdavl')) {
     report.warnings.push('partner.html: Formspree endpoint not found');
   }
-  if (!mainJs.includes('product-builder-lecture-2.disqus.com/embed.js')) {
-    report.warnings.push('main.js: Disqus embed script not found');
-  }
-  if (comments && !testRegex(comments, /id="disqus_thread"/i)) {
-    report.warnings.push('comments.html: #disqus_thread container missing');
+  if (comments && !testRegex(comments, /id="saju-form"/i)) {
+    report.warnings.push('comments.html: saju form container missing');
   }
 }
 

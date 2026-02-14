@@ -1606,7 +1606,8 @@
         if (footerLinks[0]) footerLinks[0].textContent = 'About';
         if (footerLinks[1]) footerLinks[1].textContent = 'Contact';
         if (footerLinks[2]) footerLinks[2].textContent = 'Editorial Policy';
-        if (footerLinks[3]) footerLinks[3].textContent = 'Privacy Policy';
+        if (footerLinks[3]) footerLinks[3].textContent = 'Terms of Use';
+        if (footerLinks[4]) footerLinks[4].textContent = 'Privacy Policy';
 
         const page = document.body.dataset.page;
         if (page === 'home') {
@@ -1709,6 +1710,12 @@
             const h1 = document.querySelector('.panel h1');
             if (eyebrow) eyebrow.textContent = 'Contact';
             if (h1) h1.textContent = 'Inquiry';
+        }
+        if (page === 'terms') {
+            const eyebrow = document.querySelector('.panel .eyebrow');
+            const h1 = document.querySelector('.panel h1');
+            if (eyebrow) eyebrow.textContent = 'Terms';
+            if (h1) h1.textContent = 'Terms of Use';
         }
         if (page === 'saju') {
             const eyebrow = document.querySelector('.panel .eyebrow');
@@ -2372,19 +2379,21 @@
         const eyebrow = document.getElementById('entry-eyebrow');
         const title = document.getElementById('entry-title');
         const desc = document.getElementById('entry-desc');
+        const descExtra = document.getElementById('entry-desc-extra');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
         const generation = document.getElementById('entry-card-generation');
         const kcontent = document.getElementById('entry-card-kcontent');
         const saju = document.getElementById('entry-card-saju');
         const navLinks = document.querySelectorAll('.top-nav a');
-        if (!eyebrow || !title || !desc || !explore || !course || !generation || !kcontent || !saju) return;
+        if (!eyebrow || !title || !desc || !descExtra || !explore || !course || !generation || !kcontent || !saju) return;
 
         const isEn = CURRENT_LANG === 'en';
         if (isEn) {
             eyebrow.textContent = 'Open Travel Plans';
             title.textContent = 'Pick Your Seoul Plan';
             desc.textContent = 'Start with the plan that matches your travel goal. You can switch anytime.';
+            descExtra.textContent = 'Each plan is designed for international visitors with clear route flow, map-ready links, practical budget hints, and transparent operating policies.';
             explore.innerHTML = '<strong>Explore Spots</strong><span>Top places, map links, and filters</span>';
             course.innerHTML = '<strong>Course Planner</strong><span>One-day route with hotels and restaurants</span>';
             generation.innerHTML = '<strong>Generation Plans</strong><span>Recommended pace by age group</span>';
@@ -2399,6 +2408,7 @@
             eyebrow.textContent = '오픈 여행 플랜';
             title.textContent = '서울 여행 플랜을 선택하세요';
             desc.textContent = '여행 목적에 맞는 플랜부터 시작하고 언제든 다른 플랜으로 이동할 수 있습니다.';
+            descExtra.textContent = '각 플랜은 외국인 방문자 기준으로 동선, 지도 링크, 예산 감각, 운영 정책 정보를 함께 제공해 실제 여행 준비에 바로 활용할 수 있도록 구성했습니다.';
             explore.innerHTML = '<strong>여행지 탐색</strong><span>핵심 명소, 지도 링크, 필터 탐색</span>';
             course.innerHTML = '<strong>코스 플래너</strong><span>하루 동선 + 호텔 + 맛집 추천</span>';
             generation.innerHTML = '<strong>세대별 플랜</strong><span>세대별 이동 강도 맞춤 추천</span>';
