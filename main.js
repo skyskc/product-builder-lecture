@@ -1185,6 +1185,8 @@
     const FX_RATE_DEFAULT = 1400;
     const FX_RATE_API_URL = 'https://api.frankfurter.app/latest?from=USD&to=KRW';
     const FX_RATE_REFRESH_MS = 30 * 60 * 1000;
+    const COURSE_BUDGET_STORAGE_KEY = 'seoul-explorer-course-budget';
+    const OFFLINE_COURSE_PLAN_STORAGE_KEY = 'seoul-explorer-offline-course-plan-v1';
     let CURRENT_FX_RATE = FX_RATE_DEFAULT;
     let CURRENT_FX_UPDATED_AT = null;
     const DISTRICT_LABELS_EN = {
@@ -1650,26 +1652,44 @@
             if (journeyTitle) journeyTitle.textContent = 'Quick Move';
             const styleTitle = document.getElementById('course-style-title');
             if (styleTitle) styleTitle.textContent = 'Choose Course Style';
+            const budgetTitle = document.getElementById('budget-mode-title');
+            const budgetDesc = document.getElementById('budget-mode-desc');
+            const insightTitle = document.getElementById('course-insight-title');
+            const saveBtn = document.getElementById('course-save-offline-btn');
+            const shareBtn = document.getElementById('course-share-card-btn');
+            const toolsNote = document.getElementById('course-tools-note');
+            if (budgetTitle) budgetTitle.textContent = 'Travel Budget Mode';
+            if (budgetDesc) budgetDesc.textContent = 'Automatically adjusts price level and transport cost estimate by budget.';
+            if (insightTitle) insightTitle.textContent = 'Time and Cost Summary';
+            if (saveBtn) saveBtn.textContent = 'Save Offline';
+            if (shareBtn) shareBtn.textContent = 'Create Share Card';
+            if (toolsNote) toolsNote.textContent = 'Saved plans are stored in your browser on this device.';
             document.querySelectorAll('.style-tab-btn').forEach((btn) => {
                 const styleKey = btn.dataset.style;
                 if (styleKey) btn.textContent = getStyleLabel(styleKey);
             });
-            const panels = document.querySelectorAll('.panel h2');
-            if (panels[1]) panels[1].textContent = 'Top 5 Hotels (Google Rating)';
-            if (panels[2]) panels[2].textContent = 'District Restaurant Picks (Breakfast/Lunch/Dinner/Drinks)';
-            if (panels[3]) panels[3].textContent = 'How to Use This Course';
+            const budgetTabs = document.querySelectorAll('#course-budget-tabs .budget-tab-btn');
+            if (budgetTabs[0]) budgetTabs[0].textContent = 'Budget';
+            if (budgetTabs[1]) budgetTabs[1].textContent = 'Standard';
+            if (budgetTabs[2]) budgetTabs[2].textContent = 'Premium';
+            const hotelHeading = document.querySelector('#course-section-hotel h2');
+            const foodHeading = document.querySelector('#course-section-food h2');
+            const guideHeading = document.querySelector('#course-section-guide h2');
+            if (hotelHeading) hotelHeading.textContent = 'Top 5 Hotels (Google Rating)';
+            if (foodHeading) foodHeading.textContent = 'District Restaurant Picks (Breakfast/Lunch/Dinner/Drinks)';
+            if (guideHeading) guideHeading.textContent = 'How to Use This Course';
             const routeLink = document.getElementById('course-route-link');
             if (routeLink) routeLink.textContent = 'Open Walking Route in Google Maps';
             const journeyLinks = document.querySelectorAll('.journey-step-link');
             if (journeyLinks[0]) journeyLinks[0].textContent = '1. View Route';
             if (journeyLinks[1]) journeyLinks[1].textContent = '2. Choose Hotel';
             if (journeyLinks[2]) journeyLinks[2].textContent = '3. Choose Restaurants';
-            const guideParagraphs = document.querySelectorAll('.panel p');
-            if (guideParagraphs[guideParagraphs.length - 2]) {
-                guideParagraphs[guideParagraphs.length - 2].textContent = 'This route is optimized for walkable movement with optional short subway transfers. A typical flow is history/culture in the morning, cafe or shopping in the afternoon, and night views or local dining in the evening.';
+            const guideParagraphs = document.querySelectorAll('#course-section-guide p');
+            if (guideParagraphs[0]) {
+                guideParagraphs[0].textContent = 'This route is optimized for walkable movement with optional short subway transfers. A typical flow is history/culture in the morning, cafe or shopping in the afternoon, and night views or local dining in the evening.';
             }
-            if (guideParagraphs[guideParagraphs.length - 1]) {
-                guideParagraphs[guideParagraphs.length - 1].textContent = 'Hotel and restaurant recommendations are prioritized by Google ratings and review counts, with broadcast curation shown as a secondary reference. Check map links for latest opening hours and reservations.';
+            if (guideParagraphs[1]) {
+                guideParagraphs[1].textContent = 'Hotel and restaurant recommendations are prioritized by Google ratings and review counts, with broadcast curation shown as a secondary reference. Check map links for latest opening hours and reservations.';
             }
         }
         if (page === 'place') {
@@ -1861,6 +1881,15 @@
         window.addEventListener('resize', updateStickyVars);
         window.addEventListener('orientationchange', updateStickyVars);
         setTimeout(updateStickyVars, 0);
+    }
+
+    function initServiceWorker() {
+        if (!('serviceWorker' in navigator)) return;
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {
+                // Ignore service worker registration failures.
+            });
+        });
     }
 
     function styleClass(styleKey) {
@@ -2633,7 +2662,13 @@
 
     async function renderCoursePage() {
         const styleTabs = document.getElementById('course-style-tabs');
-        const styleButtons = Array.from(document.querySelectorAll('.style-tab-btn'));
+        const styleButtons = Array.from(document.querySelectorAll('#course-style-tabs .style-tab-btn'));
+        const budgetTabs = document.getElementById('course-budget-tabs');
+        const budgetButtons = Array.from(document.querySelectorAll('#course-budget-tabs .budget-tab-btn'));
+        const insightSummaryEl = document.getElementById('course-insight-summary');
+        const saveOfflineBtn = document.getElementById('course-save-offline-btn');
+        const shareCardBtn = document.getElementById('course-share-card-btn');
+        const toolsNoteEl = document.getElementById('course-tools-note');
         const titleEl = document.getElementById('day-course-title');
         const summaryEl = document.getElementById('day-course-summary');
         const routeLinkEl = document.getElementById('course-route-link');
@@ -2643,9 +2678,22 @@
         const hotelSourceEl = document.getElementById('hotel-source-note');
         const restaurantSourceEl = document.getElementById('restaurant-source-note');
         const restaurantSectionsEl = document.getElementById('restaurant-sections');
-        if (!styleTabs || !styleButtons.length || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
+        if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
+
+        const BUDGET_PRESETS = {
+            budget: { ko: '실속형', en: 'Budget', lodgingFactor: 0.82, foodFactor: 0.86, transitFarePerLeg: 1500, transitMinutesPerLeg: 14 },
+            standard: { ko: '균형형', en: 'Standard', lodgingFactor: 1, foodFactor: 1, transitFarePerLeg: 2100, transitMinutesPerLeg: 12 },
+            premium: { ko: '프리미엄형', en: 'Premium', lodgingFactor: 1.35, foodFactor: 1.45, transitFarePerLeg: 5600, transitMinutesPerLeg: 10 }
+        };
 
         let currentStyle = getStyleFromQuery();
+        let currentBudget = localStorage.getItem(COURSE_BUDGET_STORAGE_KEY) || 'standard';
+        if (!BUDGET_PRESETS[currentBudget]) currentBudget = 'standard';
+        let latestCourseSnapshot = null;
+
+        function getBudgetPreset(budgetKey) {
+            return BUDGET_PRESETS[budgetKey] || BUDGET_PRESETS.standard;
+        }
 
         function getMapSearchUrl(queryText) {
             return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(queryText)}`;
@@ -2661,20 +2709,28 @@
             return { currency: 'KRW', amount: numeric };
         }
 
-        function displayPrice(priceText) {
+        function applyBudgetFactor(price, budgetKey, priceType) {
+            const preset = getBudgetPreset(budgetKey);
+            if (priceType === 'lodging') return { ...price, amount: price.amount * preset.lodgingFactor };
+            if (priceType === 'food') return { ...price, amount: price.amount * preset.foodFactor };
+            return price;
+        }
+
+        function displayPrice(priceText, budgetKey, priceType) {
             const parsed = parsePriceForDisplay(priceText);
             if (!parsed) return '-';
 
+            const adjusted = applyBudgetFactor(parsed, budgetKey, priceType);
             const rate = getCurrentFxRate();
             const isEn = CURRENT_LANG === 'en';
 
-            if (parsed.currency === 'USD') {
-                const usd = parsed.amount;
+            if (adjusted.currency === 'USD') {
+                const usd = adjusted.amount;
                 const krw = Math.round(usd * rate);
                 return `$${formatNumber(usd, 2)} (${isEn ? 'about' : '약'} ₩${formatNumber(krw, 0)})`;
             }
 
-            const krw = Math.round(parsed.amount);
+            const krw = Math.round(adjusted.amount);
             const usd = Math.ceil(krw / rate);
             return `₩${formatNumber(krw, 0)} (${isEn ? 'about' : '약'} $${formatNumber(usd, 0)})`;
         }
@@ -2687,9 +2743,173 @@
             });
         }
 
+        function markActiveBudget(budgetKey) {
+            budgetButtons.forEach((btn) => {
+                const active = btn.dataset.budget === budgetKey;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+        }
+
+        function formatDuration(totalMinutes) {
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            if (CURRENT_LANG === 'en') {
+                if (hours <= 0) return `${minutes} min`;
+                return `${hours}h ${minutes}m`;
+            }
+            if (hours <= 0) return `${minutes}분`;
+            return `${hours}시간 ${minutes}분`;
+        }
+
+        function renderInsightSummary(filtered, totalWalking, budgetKey) {
+            const preset = getBudgetPreset(budgetKey);
+            const legs = Math.max(filtered.length - 1, 1);
+            const transitMinutes = legs * preset.transitMinutesPerLeg;
+            const transitCostKrw = legs * preset.transitFarePerLeg;
+            const visitMinutes = filtered.length * 42;
+            const totalCourseMinutes = totalWalking + transitMinutes + visitMinutes;
+            const transitCostUsd = Math.ceil(transitCostKrw / getCurrentFxRate());
+            const budgetLabel = CURRENT_LANG === 'en' ? preset.en : preset.ko;
+
+            insightSummaryEl.innerHTML = `
+                <p><strong>${CURRENT_LANG === 'en' ? 'Budget mode' : '예산 모드'}</strong>: ${budgetLabel}</p>
+                <p><strong>${CURRENT_LANG === 'en' ? 'Walking + transfer' : '도보 + 환승 예상'}</strong>: ${formatDuration(totalWalking + transitMinutes)}</p>
+                <p><strong>${CURRENT_LANG === 'en' ? 'Estimated total day time' : '예상 총 소요시간'}</strong>: ${formatDuration(totalCourseMinutes)}</p>
+                <p><strong>${CURRENT_LANG === 'en' ? 'Local transit cost' : '교통비 추정'}</strong>: ₩${formatNumber(transitCostKrw, 0)} (${CURRENT_LANG === 'en' ? 'about' : '약'} $${formatNumber(transitCostUsd, 0)})</p>
+            `;
+            return { transitMinutes, transitCostKrw, totalCourseMinutes, budgetLabel };
+        }
+
+        function drawWrappedLines(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+            const words = String(text || '').split(/\s+/);
+            let line = '';
+            let lines = 0;
+            words.forEach((word) => {
+                const candidate = line ? `${line} ${word}` : word;
+                if (ctx.measureText(candidate).width > maxWidth && line) {
+                    ctx.fillText(line, x, y + (lines * lineHeight));
+                    lines += 1;
+                    line = word;
+                } else {
+                    line = candidate;
+                }
+            });
+            if (line && lines < maxLines) {
+                ctx.fillText(line, x, y + (lines * lineHeight));
+                lines += 1;
+            }
+            return y + (lines * lineHeight);
+        }
+
+        async function createShareCardBlob(snapshot) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1080;
+            canvas.height = 1080;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return null;
+
+            const gradient = ctx.createLinearGradient(0, 0, 1080, 1080);
+            gradient.addColorStop(0, '#0f172a');
+            gradient.addColorStop(1, '#1d4ed8');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#e5edff';
+            ctx.font = '700 44px "Noto Sans KR", sans-serif';
+            ctx.fillText('Seoul Voyager', 76, 110);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 58px "Noto Sans KR", sans-serif';
+            drawWrappedLines(ctx, snapshot.title, 76, 210, 920, 72, 3);
+
+            ctx.font = '500 34px "Noto Sans KR", sans-serif';
+            ctx.fillStyle = '#dbe8ff';
+            ctx.fillText(`${CURRENT_LANG === 'en' ? 'Budget' : '예산'}: ${snapshot.budgetLabel}`, 76, 440);
+            ctx.fillText(`${CURRENT_LANG === 'en' ? 'Total Time' : '총 소요'}: ${snapshot.totalDurationLabel}`, 76, 495);
+            ctx.fillText(`${CURRENT_LANG === 'en' ? 'Transit' : '교통비'}: ${snapshot.transitFareLabel}`, 76, 550);
+
+            ctx.fillStyle = '#9cc0ff';
+            ctx.font = '700 30px "Noto Sans KR", sans-serif';
+            ctx.fillText(CURRENT_LANG === 'en' ? 'TOP STOPS' : '주요 스팟', 76, 640);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '500 30px "Noto Sans KR", sans-serif';
+            let lineY = 690;
+            snapshot.stops.slice(0, 5).forEach((name, idx) => {
+                lineY = drawWrappedLines(ctx, `${idx + 1}. ${name}`, 76, lineY, 920, 42, 1) + 6;
+            });
+
+            ctx.fillStyle = '#dbe8ff';
+            ctx.font = '500 24px "Noto Sans KR", sans-serif';
+            ctx.fillText(snapshot.routeUrl, 76, 1010);
+
+            return new Promise((resolve) => {
+                canvas.toBlob((blob) => resolve(blob), 'image/png');
+            });
+        }
+
+        function saveCurrentPlanOffline() {
+            if (!latestCourseSnapshot) return;
+            const key = `${latestCourseSnapshot.styleKey}-${latestCourseSnapshot.budgetKey}-${CURRENT_LANG}`;
+            const payload = {
+                ...latestCourseSnapshot,
+                savedAt: new Date().toISOString()
+            };
+            try {
+                const raw = localStorage.getItem(OFFLINE_COURSE_PLAN_STORAGE_KEY);
+                const allPlans = raw ? JSON.parse(raw) : {};
+                allPlans[key] = payload;
+                localStorage.setItem(OFFLINE_COURSE_PLAN_STORAGE_KEY, JSON.stringify(allPlans));
+                toolsNoteEl.textContent = CURRENT_LANG === 'en'
+                    ? `Saved offline on this device (${formatFxUpdatedAt(payload.savedAt)}).`
+                    : `이 기기에 오프라인 저장되었습니다. (${formatFxUpdatedAt(payload.savedAt)})`;
+            } catch (_) {
+                toolsNoteEl.textContent = CURRENT_LANG === 'en'
+                    ? 'Could not save locally in this browser.'
+                    : '브라우저 로컬 저장에 실패했습니다.';
+            }
+        }
+
+        async function shareCurrentPlanCard() {
+            if (!latestCourseSnapshot) return;
+            toolsNoteEl.textContent = CURRENT_LANG === 'en' ? 'Generating share card...' : '공유 카드를 생성하는 중입니다...';
+            const blob = await createShareCardBlob(latestCourseSnapshot);
+            if (!blob) {
+                toolsNoteEl.textContent = CURRENT_LANG === 'en' ? 'Share card generation failed.' : '공유 카드 생성에 실패했습니다.';
+                return;
+            }
+            const fileName = `seoul-plan-${latestCourseSnapshot.styleKey}-${latestCourseSnapshot.budgetKey}.png`;
+            const file = new File([blob], fileName, { type: 'image/png' });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        title: latestCourseSnapshot.title,
+                        text: CURRENT_LANG === 'en' ? 'My Seoul one-day plan' : '내 서울 1일 여행 플랜',
+                        files: [file]
+                    });
+                    toolsNoteEl.textContent = CURRENT_LANG === 'en' ? 'Share card ready and shared.' : '공유 카드가 생성되어 공유되었습니다.';
+                    return;
+                } catch (_) {
+                    // Fall through to download.
+                }
+            }
+            const objectUrl = URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+            anchor.href = objectUrl;
+            anchor.download = fileName;
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+            URL.revokeObjectURL(objectUrl);
+            toolsNoteEl.textContent = CURRENT_LANG === 'en' ? 'Share card downloaded.' : '공유 카드가 다운로드되었습니다.';
+        }
+
         async function drawCourse(selectedStyle) {
             const filtered = places.filter((place) => place.styles.includes(selectedStyle)).slice(0, 6);
             if (filtered.length < 2) return;
+            const budgetPreset = getBudgetPreset(currentBudget);
+            const budgetLabel = CURRENT_LANG === 'en' ? budgetPreset.en : budgetPreset.ko;
 
             titleEl.textContent = CURRENT_LANG === 'en'
                 ? `${getStyleLabel(selectedStyle)} One-Day Walking Course`
@@ -2698,10 +2918,11 @@
             const totalWalking = filtered.slice(0, -1).reduce((sum, place, idx) => {
                 return sum + makeWalkingMinutes(place, filtered[idx + 1], idx);
             }, 0);
+            const insight = renderInsightSummary(filtered, totalWalking, currentBudget);
 
-            summaryEl.textContent = `총 ${filtered.length}개 스팟, 예상 도보 이동 ${totalWalking}분 기준 추천 코스입니다.`;
+            summaryEl.textContent = `총 ${filtered.length}개 스팟, 예상 도보 이동 ${totalWalking}분 기준 추천 코스입니다. (${budgetLabel})`;
             if (CURRENT_LANG === 'en') {
-                summaryEl.textContent = `${filtered.length} spots with about ${totalWalking} minutes of walking in total.`;
+                summaryEl.textContent = `${filtered.length} spots with about ${totalWalking} minutes of walking in total (${budgetLabel} mode).`;
             }
 
             const grouped = {
@@ -2761,7 +2982,7 @@
                     const mapAnchor = ` <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a>`;
                     li.innerHTML = `
                         <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeHotelName}</a><br>
-                        <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.userRatingCount?.toLocaleString?.() || '-'} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
+                        <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.userRatingCount?.toLocaleString?.() || '-'} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice, currentBudget, 'lodging')}</span><br>
                         <span class=\"hotel-meta\">${safeHotelAddress}${mapAnchor}</span>
                     `;
                     hotelListEl.appendChild(li);
@@ -2769,7 +2990,7 @@
                 hotelSourceEl.textContent = CURRENT_LANG === 'en'
                     ? 'Hotels: Top 5 based on Google Places rating'
                     : '숙소 데이터: Google Places 평점 기준 상위 5개';
-            } catch (error) {
+            } catch (_) {
                 const fallback = filtered.slice(0, 5).map((place, idx) => ({
                     name: CURRENT_LANG === 'en'
                         ? `${getDistrictLabel(place.district)} Recommended Hotel ${idx + 1}`
@@ -2786,7 +3007,7 @@
                     const safeHotelAddress = escapeHtml(hotel.address || '');
                     li.innerHTML = `
                         <a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeHotelName}</a><br>
-                        <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.reviewCount} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice)}</span><br>
+                        <span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${hotel.rating} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${hotel.reviewCount} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(hotel.averagePrice, currentBudget, 'lodging')}</span><br>
                         <span class=\"hotel-meta\">${safeHotelAddress} <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a></span>
                     `;
                     hotelListEl.appendChild(li);
@@ -2851,7 +3072,7 @@
                         const safeRestaurantName = escapeHtml(r.name || '-');
                         const safeRestaurantAddress = escapeHtml(r.address || '');
                         const mapLink = ` <a class=\"inline-map-btn\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${CURRENT_LANG === 'en' ? 'Open Map' : '지도 열기'}</a>`;
-                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeRestaurantName}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(r.averagePrice || '-')}</span><br><span class=\"hotel-meta\">${safeRestaurantAddress}${mapLink}</span></li>`;
+                        return `<li><a class=\"hotel-name\" href=\"${mapHref}\" target=\"_blank\" rel=\"noopener noreferrer\">${idx + 1}. ${safeRestaurantName}</a>${broadcastTag}<br><span class=\"hotel-meta\">${CURRENT_LANG === 'en' ? 'Rating' : '평점'} ${r.rating || '-'} / ${CURRENT_LANG === 'en' ? 'Reviews' : '리뷰'} ${(r.userRatingCount || 0).toLocaleString()} / ${CURRENT_LANG === 'en' ? 'Avg price' : '평균가격'} ${displayPrice(r.averagePrice || '-', currentBudget, 'food')}</span><br><span class=\"hotel-meta\">${safeRestaurantAddress}${mapLink}</span></li>`;
                     }).join('');
 
                     const extraBroadcast = (mealData.broadcastPicks || []).filter((pick) => !mealData.restaurants.some((r) => r.name.includes(pick.name) || pick.name.includes(r.name)));
@@ -2872,6 +3093,17 @@
                 : (CURRENT_LANG === 'en'
                     ? 'Restaurants: Some Google API calls failed, fallback recommendations shown'
                     : '맛집 데이터: 일부 Google API 실패로 기본 추천을 함께 표시 중');
+
+            latestCourseSnapshot = {
+                styleKey: selectedStyle,
+                budgetKey: currentBudget,
+                title: titleEl.textContent || '',
+                budgetLabel: insight.budgetLabel,
+                totalDurationLabel: formatDuration(insight.totalCourseMinutes),
+                transitFareLabel: `₩${formatNumber(insight.transitCostKrw, 0)} (${CURRENT_LANG === 'en' ? 'about' : '약'} $${formatNumber(Math.ceil(insight.transitCostKrw / getCurrentFxRate()), 0)})`,
+                stops: filtered.map((place) => getPlaceName(place)),
+                routeUrl: routeLinkEl.href
+            };
         }
 
         styleTabs.addEventListener('click', (event) => {
@@ -2887,11 +3119,26 @@
             drawCourse(currentStyle);
         });
 
+        budgetTabs.addEventListener('click', (event) => {
+            const button = event.target.closest('.budget-tab-btn');
+            if (!button) return;
+            const nextBudget = button.dataset.budget;
+            if (!nextBudget || nextBudget === currentBudget || !BUDGET_PRESETS[nextBudget]) return;
+            currentBudget = nextBudget;
+            localStorage.setItem(COURSE_BUDGET_STORAGE_KEY, currentBudget);
+            markActiveBudget(currentBudget);
+            drawCourse(currentStyle);
+        });
+
+        saveOfflineBtn.addEventListener('click', saveCurrentPlanOffline);
+        shareCardBtn.addEventListener('click', shareCurrentPlanCard);
+
         window.addEventListener('fx-rate-updated', () => {
             drawCourse(currentStyle);
         });
 
         markActiveStyle(currentStyle);
+        markActiveBudget(currentBudget);
         drawCourse(currentStyle);
     }
 
@@ -3344,6 +3591,7 @@
     function init() {
         initLanguage();
         initFxRateAutoSync();
+        initServiceWorker();
         initThemeToggle();
         markActiveNav();
         initPageTransition();

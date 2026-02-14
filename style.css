@@ -926,6 +926,47 @@ body.dark-mode .kcontent-card-thumb {
     color: var(--muted);
 }
 
+.course-tools-panel {
+    padding: 12px;
+}
+
+.course-tools-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 10px;
+}
+
+.course-tool-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--card);
+}
+
+.course-tool-card h2 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.course-insight-summary {
+    margin-top: 6px;
+    display: grid;
+    gap: 5px;
+}
+
+.course-insight-summary p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.course-tool-actions {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .course-stop-list,
 .hotel-list {
     margin: 12px 0 0;
@@ -1180,6 +1221,10 @@ body.dark-mode .kcontent-card-thumb {
     }
 
     .travel-tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-tools-grid {
         grid-template-columns: 1fr;
     }
 
