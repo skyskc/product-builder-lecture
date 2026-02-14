@@ -977,6 +977,10 @@ body.dark-mode .kcontent-card-thumb {
     gap: 8px;
 }
 
+.offline-plan-search-input {
+    margin: 0 0 8px;
+}
+
 .offline-plan-item {
     border: 1px solid var(--line);
     border-radius: 10px;
@@ -1010,6 +1014,11 @@ body.dark-mode .kcontent-card-thumb {
     font-size: 0.74rem;
     font-weight: 700;
     cursor: pointer;
+}
+
+.offline-plan-btn.pin-active {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 .course-stop-list,

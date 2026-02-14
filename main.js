@@ -1658,6 +1658,7 @@
             const saveBtn = document.getElementById('course-save-offline-btn');
             const shareBtn = document.getElementById('course-share-card-btn');
             const offlinePlanTitle = document.getElementById('offline-plan-title');
+            const offlinePlanSearchInput = document.getElementById('offline-plan-search-input');
             const toolsNote = document.getElementById('course-tools-note');
             if (budgetTitle) budgetTitle.textContent = 'Travel Budget Mode';
             if (budgetDesc) budgetDesc.textContent = 'Automatically adjusts price level and transport cost estimate by budget.';
@@ -1665,6 +1666,7 @@
             if (saveBtn) saveBtn.textContent = 'Save Offline';
             if (shareBtn) shareBtn.textContent = 'Create Share Card';
             if (offlinePlanTitle) offlinePlanTitle.textContent = 'Saved Offline Plans';
+            if (offlinePlanSearchInput) offlinePlanSearchInput.placeholder = 'Search saved plans';
             if (toolsNote) toolsNote.textContent = 'Saved plans are stored in your browser on this device.';
             document.querySelectorAll('.style-tab-btn').forEach((btn) => {
                 const styleKey = btn.dataset.style;
@@ -2670,6 +2672,7 @@
         const insightSummaryEl = document.getElementById('course-insight-summary');
         const saveOfflineBtn = document.getElementById('course-save-offline-btn');
         const shareCardBtn = document.getElementById('course-share-card-btn');
+        const offlinePlanSearchInput = document.getElementById('offline-plan-search-input');
         const offlinePlanListEl = document.getElementById('offline-plan-list');
         const toolsNoteEl = document.getElementById('course-tools-note');
         const titleEl = document.getElementById('day-course-title');
@@ -2681,7 +2684,7 @@
         const hotelSourceEl = document.getElementById('hotel-source-note');
         const restaurantSourceEl = document.getElementById('restaurant-source-note');
         const restaurantSectionsEl = document.getElementById('restaurant-sections');
-        if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !offlinePlanListEl || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
+        if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !offlinePlanSearchInput || !offlinePlanListEl || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
 
         const BUDGET_PRESETS = {
             budget: { ko: '실속형', en: 'Budget', lodgingFactor: 0.82, foodFactor: 0.86, transitFarePerLeg: 1500, transitMinutesPerLeg: 14 },
@@ -2693,6 +2696,7 @@
         let currentBudget = localStorage.getItem(COURSE_BUDGET_STORAGE_KEY) || 'standard';
         if (!BUDGET_PRESETS[currentBudget]) currentBudget = 'standard';
         let latestCourseSnapshot = null;
+        let offlineSearchQuery = '';
 
         function getBudgetPreset(budgetKey) {
             return BUDGET_PRESETS[budgetKey] || BUDGET_PRESETS.standard;
@@ -2825,10 +2829,24 @@
             const rows = Object.entries(plans)
                 .map(([key, value]) => ({ key, value }))
                 .filter((entry) => entry.value && entry.value.styleKey && entry.value.budgetKey)
-                .sort((a, b) => String(b.value.savedAt || '').localeCompare(String(a.value.savedAt || '')));
+                .filter(({ value }) => {
+                    const query = offlineSearchQuery.trim().toLowerCase();
+                    if (!query) return true;
+                    const haystack = [value.title, value.budgetLabel, value.styleKey, value.budgetKey].map((v) => String(v || '').toLowerCase()).join(' ');
+                    return haystack.includes(query);
+                })
+                .sort((a, b) => {
+                    const pinnedA = a.value.pinned ? 1 : 0;
+                    const pinnedB = b.value.pinned ? 1 : 0;
+                    if (pinnedA !== pinnedB) return pinnedB - pinnedA;
+                    return String(b.value.savedAt || '').localeCompare(String(a.value.savedAt || ''));
+                });
 
             if (!rows.length) {
-                offlinePlanListEl.innerHTML = `<p class="offline-plan-meta">${CURRENT_LANG === 'en' ? 'No saved plan yet.' : '아직 저장된 코스가 없습니다.'}</p>`;
+                const hasQuery = offlineSearchQuery.trim().length > 0;
+                offlinePlanListEl.innerHTML = `<p class="offline-plan-meta">${hasQuery
+                    ? (CURRENT_LANG === 'en' ? 'No matching saved plans.' : '조건에 맞는 저장 코스가 없습니다.')
+                    : (CURRENT_LANG === 'en' ? 'No saved plan yet.' : '아직 저장된 코스가 없습니다.')}</p>`;
                 return;
             }
 
@@ -2839,6 +2857,7 @@
                         <strong>${escapeHtml(value.title || '-')}</strong>
                         <p class="offline-plan-meta">${CURRENT_LANG === 'en' ? 'Saved' : '저장일'}: ${escapeHtml(savedAtText)} · ${CURRENT_LANG === 'en' ? 'Budget' : '예산'}: ${escapeHtml(value.budgetLabel || '-')}</p>
                         <div class="offline-plan-actions">
+                            <button class="offline-plan-btn ${value.pinned ? 'pin-active' : ''}" type="button" data-action="pin" data-plan-key="${escapeHtml(key)}">${value.pinned ? (CURRENT_LANG === 'en' ? 'Unpin' : '핀해제') : (CURRENT_LANG === 'en' ? 'Pin' : '핀고정')}</button>
                             <button class="offline-plan-btn" type="button" data-action="load" data-plan-key="${escapeHtml(key)}">${CURRENT_LANG === 'en' ? 'Load' : '불러오기'}</button>
                             <button class="offline-plan-btn" type="button" data-action="delete" data-plan-key="${escapeHtml(key)}">${CURRENT_LANG === 'en' ? 'Delete' : '삭제'}</button>
                         </div>
@@ -2899,10 +2918,13 @@
             const key = `${latestCourseSnapshot.styleKey}-${latestCourseSnapshot.budgetKey}-${CURRENT_LANG}`;
             const payload = {
                 ...latestCourseSnapshot,
+                pinned: false,
                 savedAt: new Date().toISOString()
             };
             try {
                 const allPlans = readOfflinePlans();
+                const existing = allPlans[key];
+                if (existing && existing.pinned) payload.pinned = true;
                 allPlans[key] = payload;
                 writeOfflinePlans(allPlans);
                 renderOfflinePlanList();
@@ -3177,6 +3199,10 @@
 
         saveOfflineBtn.addEventListener('click', saveCurrentPlanOffline);
         shareCardBtn.addEventListener('click', shareCurrentPlanCard);
+        offlinePlanSearchInput.addEventListener('input', () => {
+            offlineSearchQuery = offlinePlanSearchInput.value || '';
+            renderOfflinePlanList();
+        });
         offlinePlanListEl.addEventListener('click', (event) => {
             const button = event.target.closest('.offline-plan-btn');
             if (!button) return;
@@ -3187,6 +3213,16 @@
             const target = plans[planKey];
             if (!target) {
                 renderOfflinePlanList();
+                return;
+            }
+            if (action === 'pin') {
+                target.pinned = !target.pinned;
+                plans[planKey] = target;
+                writeOfflinePlans(plans);
+                renderOfflinePlanList();
+                toolsNoteEl.textContent = target.pinned
+                    ? (CURRENT_LANG === 'en' ? 'Plan pinned to top.' : '해당 코스를 상단 고정했습니다.')
+                    : (CURRENT_LANG === 'en' ? 'Pin removed.' : '상단 고정을 해제했습니다.');
                 return;
             }
             if (action === 'delete') {
