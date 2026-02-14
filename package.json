@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "adsense:check": "node tools/adsense-check.js"
+    "adsense:check": "node tools/adsense-check.js",
+    "adsense:live-check": "node tools/adsense-live-check.js"
   }
 }
