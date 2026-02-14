@@ -859,6 +859,230 @@
                 ko: '로컬 거리 체험과 트렌드 숍 탐색을 짧게 이어가는 루트가 잘 맞습니다.',
                 en: 'Short loops between local street experiences and trend shops suit her best.'
             }
+        },
+        {
+            id: 'psy',
+            work: { ko: 'K-POP 퍼포먼스 아이콘', en: 'K-Pop Performance Icon' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '싸이', en: 'Psy' },
+            portraitPage: 'Psy',
+            styles: ['night', 'local'],
+            mood: {
+                ko: '강한 무대 에너지와 대중 친화성이 큰 페스티벌형 타입',
+                en: 'A festival-driven profile with explosive stage energy and mass appeal.'
+            },
+            reason: {
+                ko: '현장 분위기와 리듬이 중요한 성향이라 야간/로컬 밀집 구간에서 만족도가 높습니다.',
+                en: 'He thrives where live energy and rhythm matter, especially in night and local hubs.'
+            }
+        },
+        {
+            id: 'boa',
+            work: { ko: 'K-POP 레전드 솔로', en: 'K-Pop Legend Solo' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '보아', en: 'BoA' },
+            portraitPage: 'BoA',
+            styles: ['art', 'shopping'],
+            mood: {
+                ko: '완성도 높은 퍼포먼스와 세련된 취향을 중시하는 타입',
+                en: 'A profile centered on polished performance and refined taste.'
+            },
+            reason: {
+                ko: '디자인/트렌드 밀도가 높은 동선에서 캐릭터 감도가 잘 살아납니다.',
+                en: 'Her profile resonates in design-forward and trend-dense routes.'
+            }
+        },
+        {
+            id: 'rain',
+            work: { ko: '월드 스타 솔로', en: 'Global Star Solo' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '비', en: 'Rain' },
+            portraitPage: 'Rain_(entertainer)',
+            styles: ['night', 'shopping'],
+            mood: {
+                ko: '강한 카리스마와 무대 중심 리듬을 선호하는 타입',
+                en: 'A charismatic profile favoring stage-led rhythm and momentum.'
+            },
+            reason: {
+                ko: '야간 무드와 트렌드 이동을 짧고 강하게 연결할 때 효율이 높습니다.',
+                en: 'Short, high-impact transitions between night mood and trend spots work best.'
+            }
+        },
+        {
+            id: 'lee-min-ho',
+            work: { ko: '한류 드라마 스타', en: 'Hallyu Drama Star' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '이민호', en: 'Lee Min-ho' },
+            portraitPage: 'Lee_Min-ho',
+            styles: ['shopping', 'family'],
+            mood: {
+                ko: '클래식한 스타 무드와 안정 동선을 선호하는 타입',
+                en: 'A profile preferring classic star mood and stable movement flow.'
+            },
+            reason: {
+                ko: '과하지 않은 럭셔리/휴식 균형 코스에서 만족도가 높습니다.',
+                en: 'He fits balanced routes with moderate luxury and comfortable pacing.'
+            }
+        },
+        {
+            id: 'kim-soo-hyun',
+            work: { ko: '한류 배우', en: 'Hallyu Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '김수현', en: 'Kim Soo-hyun' },
+            portraitPage: 'Kim_Soo-hyun',
+            styles: ['history', 'art'],
+            mood: {
+                ko: '정교한 감정선과 서사 중심 경험을 선호하는 타입',
+                en: 'A profile that prefers precise emotional tone and narrative-centric experiences.'
+            },
+            reason: {
+                ko: '맥락 있는 역사/전시 구간에서 감정 몰입도가 올라갑니다.',
+                en: 'Context-rich history and exhibition stops enhance immersion for this profile.'
+            }
+        },
+        {
+            id: 'lee-dong-wook',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '이동욱', en: 'Lee Dong-wook' },
+            portraitPage: 'Lee_Dong-wook',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '도시적이고 세련된 야간 무드를 선호하는 타입',
+                en: 'An urban profile drawn to refined night atmosphere.'
+            },
+            reason: {
+                ko: '야경/예술 결합 코스에서 감성 톤이 가장 자연스럽게 이어집니다.',
+                en: 'Night-view and art combined routes best match his atmospheric tone.'
+            }
+        },
+        {
+            id: 'bae-suzy',
+            work: { ko: '가수·배우', en: 'Singer-Actress' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '배수지', en: 'Bae Suzy' },
+            portraitPage: 'Bae_Suzy',
+            styles: ['nature', 'shopping'],
+            mood: {
+                ko: '부드러운 무드와 트렌드 체험의 균형을 선호하는 타입',
+                en: 'A profile balancing soft mood with trend exploration.'
+            },
+            reason: {
+                ko: '산책/카페와 트렌드 지역을 함께 묶을 때 만족이 큽니다.',
+                en: 'Satisfaction increases when walk-cafe flow is paired with trend districts.'
+            }
+        },
+        {
+            id: 'park-bo-gum',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '박보검', en: 'Park Bo-gum' },
+            portraitPage: 'Park_Bo-gum',
+            styles: ['family', 'history'],
+            mood: {
+                ko: '따뜻한 이미지와 안정적 페이스를 선호하는 타입',
+                en: 'A warm profile preferring stable, reassuring pace.'
+            },
+            reason: {
+                ko: '고궁/공원처럼 편안하고 정돈된 동선과 잘 맞습니다.',
+                en: 'He aligns well with calm, structured routes like palaces and parks.'
+            }
+        },
+        {
+            id: 'hyuna',
+            work: { ko: '퍼포먼스 솔로', en: 'Performance Solo' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '현아', en: 'Hyuna' },
+            portraitPage: 'HyunA',
+            styles: ['night', 'shopping'],
+            mood: {
+                ko: '대담한 스타일과 강한 개성을 선호하는 타입',
+                en: 'A profile that prefers bold style and strong individuality.'
+            },
+            reason: {
+                ko: '야간 포인트와 트렌드 쇼핑 구간이 결합된 동선이 가장 잘 맞습니다.',
+                en: 'Routes combining night hotspots and trend shopping fit best.'
+            }
+        },
+        {
+            id: 'wonho',
+            work: { ko: '퍼포먼스 아티스트', en: 'Performance Artist' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '원호', en: 'Wonho' },
+            portraitPage: 'Wonho',
+            styles: ['night', 'family'],
+            mood: {
+                ko: '강한 에너지와 팬 친화성을 모두 갖춘 타입',
+                en: 'A profile combining high energy with fan-friendly warmth.'
+            },
+            reason: {
+                ko: '활동량 있는 야간 코스 뒤 안정 휴식 구간을 붙이면 만족도가 높습니다.',
+                en: 'Best results come from active night routes followed by stable recovery stops.'
+            }
+        },
+        {
+            id: 'taeyang',
+            work: { ko: '빅뱅 (BIGBANG)', en: 'BIGBANG' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '태양', en: 'Taeyang' },
+            portraitPage: 'Taeyang',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '무대 몰입과 감성 표현을 동시에 중시하는 타입',
+                en: 'A profile valuing both stage immersion and emotional expression.'
+            },
+            reason: {
+                ko: '야경과 예술 공간의 대비가 큰 코스에서 체감이 좋습니다.',
+                en: 'High-contrast routes between night views and art spaces feel most fitting.'
+            }
+        },
+        {
+            id: 'gong-hyo-jin',
+            work: { ko: '드라마 배우', en: 'Drama Actress' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '공효진', en: 'Gong Hyo-jin' },
+            portraitPage: 'Gong_Hyo-jin',
+            styles: ['nature', 'local'],
+            mood: {
+                ko: '자연스러운 리듬과 생활 밀착 무드를 선호하는 타입',
+                en: 'A profile favoring natural rhythm and lived-in local mood.'
+            },
+            reason: {
+                ko: '산책형 코스와 로컬 거리 탐색을 함께 두는 구성과 잘 맞습니다.',
+                en: 'She matches itineraries combining walkable routes with local street exploration.'
+            }
+        },
+        {
+            id: 'jun-ji-hyun',
+            work: { ko: '한류 배우', en: 'Hallyu Actress' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '전지현', en: 'Jun Ji-hyun' },
+            portraitPage: 'Jun_Ji-hyun',
+            styles: ['shopping', 'night'],
+            mood: {
+                ko: '세련된 도시 무드와 스타 감도를 선호하는 타입',
+                en: 'A profile preferring polished urban mood and star-level style.'
+            },
+            reason: {
+                ko: '트렌드/야경을 결합한 고밀도 코스에서 만족도가 높습니다.',
+                en: 'High-density routes combining trend districts and night views fit her profile.'
+            }
+        },
+        {
+            id: 'lee-jong-suk',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '이종석', en: 'Lee Jong-suk' },
+            portraitPage: 'Lee_Jong-suk',
+            styles: ['art', 'history'],
+            mood: {
+                ko: '감정 서사와 분위기 중심 경험을 선호하는 타입',
+                en: 'A profile that prefers emotional narrative and atmosphere-driven experiences.'
+            },
+            reason: {
+                ko: '전시/역사 축에서 여유 있게 이동하는 코스가 가장 잘 맞습니다.',
+                en: 'Slower-paced routes built around art and history suit this profile best.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -905,7 +1129,21 @@
         'nayeon': 'assets/kcontent/nayeon.jpg',
         'taemin': 'assets/kcontent/taemin.jpg',
         'seulgi': 'assets/kcontent/seulgi.jpg',
-        'hanni': 'assets/kcontent/hanni.jpg'
+        'hanni': 'assets/kcontent/hanni.jpg',
+        'psy': 'assets/kcontent/psy.jpg',
+        'boa': 'assets/kcontent/boa.png',
+        'rain': 'assets/kcontent/rain.jpg',
+        'lee-min-ho': 'assets/kcontent/lee-min-ho.png',
+        'kim-soo-hyun': 'assets/kcontent/kim-soo-hyun.png',
+        'lee-dong-wook': 'assets/kcontent/lee-dong-wook.jpg',
+        'bae-suzy': 'assets/kcontent/bae-suzy.jpg',
+        'park-bo-gum': 'assets/kcontent/park-bo-gum.png',
+        'hyuna': 'assets/kcontent/hyuna.png',
+        'wonho': 'assets/kcontent/wonho.png',
+        'taeyang': 'assets/kcontent/taeyang.jpg',
+        'gong-hyo-jin': 'assets/kcontent/gong-hyo-jin.png',
+        'jun-ji-hyun': 'assets/kcontent/jun-ji-hyun.png',
+        'lee-jong-suk': 'assets/kcontent/lee-jong-suk.png'
     };
     const KCONTENT_TRAIT_BY_STYLE = {
         ko: {
