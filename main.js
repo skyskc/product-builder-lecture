@@ -154,7 +154,7 @@
             walk: 'low'
         }
     ];
-    const KCONTENT_IMAGE_FALLBACK = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="%23dbe8ff"/><stop offset="1" stop-color="%23c7dcff"/></linearGradient></defs><rect width="420" height="420" rx="30" fill="url(%23g)"/><circle cx="210" cy="165" r="70" fill="%23ffffff" fill-opacity="0.82"/><rect x="90" y="255" width="240" height="100" rx="50" fill="%23ffffff" fill-opacity="0.82"/></svg>';
+    const KCONTENT_IMAGE_FALLBACK = 'assets/kcontent/placeholder.svg';
     const KCONTENT_CHARACTERS = [
         {
             id: 'gi-hun',
