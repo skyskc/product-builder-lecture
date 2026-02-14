@@ -113,7 +113,6 @@
     }
 
     function initPageTransition() {
-        requestAnimationFrame(() => document.body.classList.add('page-ready'));
         document.addEventListener('click', (event) => {
             const anchor = event.target.closest('a[href]');
             if (!anchor) return;
@@ -124,7 +123,6 @@
             if (targetUrl.origin !== window.location.origin) return;
 
             event.preventDefault();
-            document.body.classList.remove('page-ready');
             document.body.classList.add('page-exit');
             setTimeout(() => {
                 window.location.href = targetUrl.href;
@@ -289,5 +287,9 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', init);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
