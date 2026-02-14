@@ -1180,6 +1180,13 @@
         { name: '송리단길 캐주얼 다이닝', district: '송파구', styles: ['nature', 'shopping'], desc: { ko: '석촌호수 인근 감성 식사', en: 'Mood dining near Seokchon Lake' } }
     ];
     let CURRENT_LANG = 'ko';
+    const FX_RATE_STORAGE_KEY = 'seoul-explorer-fx-rate';
+    const FX_RATE_UPDATED_AT_STORAGE_KEY = 'seoul-explorer-fx-rate-updated-at';
+    const FX_RATE_DEFAULT = 1400;
+    const FX_RATE_API_URL = 'https://api.frankfurter.app/latest?from=USD&to=KRW';
+    const FX_RATE_REFRESH_MS = 30 * 60 * 1000;
+    let CURRENT_FX_RATE = FX_RATE_DEFAULT;
+    let CURRENT_FX_UPDATED_AT = null;
     const DISTRICT_LABELS_EN = {
         '종로구': 'Jongno-gu',
         '중구': 'Jung-gu',
@@ -1892,6 +1899,104 @@
         return new Intl.NumberFormat(locale, { maximumFractionDigits: maxFractionDigits }).format(value);
     }
 
+    function getCurrentFxRate() {
+        return CURRENT_FX_RATE;
+    }
+
+    function formatFxUpdatedAt(isoText) {
+        const parsed = new Date(String(isoText || ''));
+        if (Number.isNaN(parsed.getTime())) {
+            return CURRENT_LANG === 'en' ? 'unavailable' : '정보 없음';
+        }
+        const locale = CURRENT_LANG === 'en' ? 'en-US' : 'ko-KR';
+        return new Intl.DateTimeFormat(locale, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        }).format(parsed);
+    }
+
+    function getFxRateNoteText() {
+        const updatedLabel = formatFxUpdatedAt(CURRENT_FX_UPDATED_AT);
+        if (CURRENT_LANG === 'en') {
+            return `Auto-updated from international market reference (USD/KRW). Last update: ${updatedLabel}. Final card/cash amount may differ due to fees.`;
+        }
+        return `국제 환율 기준(USD/KRW)으로 자동 갱신됩니다. 마지막 갱신: ${updatedLabel}. 결제 수수료/시점에 따라 최종 금액은 달라질 수 있습니다.`;
+    }
+
+    function refreshFxRateUi() {
+        const rateInputEl = document.getElementById('fx-rate-input');
+        if (rateInputEl) {
+            rateInputEl.value = formatNumber(CURRENT_FX_RATE, 2);
+            rateInputEl.readOnly = true;
+            rateInputEl.setAttribute('aria-readonly', 'true');
+        }
+        const rateNoteEl = document.getElementById('fx-rate-note');
+        if (rateNoteEl) rateNoteEl.textContent = getFxRateNoteText();
+    }
+
+    function applyFxRate(rateValue, updatedAtText) {
+        const numericRate = Number(rateValue);
+        if (!Number.isFinite(numericRate) || numericRate <= 0) return;
+        const nextRate = Math.round(numericRate * 100) / 100;
+        const nextUpdatedAt = updatedAtText || new Date().toISOString();
+        const changed = Math.abs(nextRate - CURRENT_FX_RATE) > 0.0001 || nextUpdatedAt !== CURRENT_FX_UPDATED_AT;
+
+        CURRENT_FX_RATE = nextRate;
+        CURRENT_FX_UPDATED_AT = nextUpdatedAt;
+        try {
+            localStorage.setItem(FX_RATE_STORAGE_KEY, String(CURRENT_FX_RATE));
+            localStorage.setItem(FX_RATE_UPDATED_AT_STORAGE_KEY, CURRENT_FX_UPDATED_AT);
+        } catch (_) {
+            // Ignore storage failures.
+        }
+        refreshFxRateUi();
+        if (changed) {
+            window.dispatchEvent(new CustomEvent('fx-rate-updated', {
+                detail: { rate: CURRENT_FX_RATE, updatedAt: CURRENT_FX_UPDATED_AT }
+            }));
+        }
+    }
+
+    function loadFxRateFromStorage() {
+        try {
+            const storedRate = Number(localStorage.getItem(FX_RATE_STORAGE_KEY) || '');
+            const storedUpdatedAt = localStorage.getItem(FX_RATE_UPDATED_AT_STORAGE_KEY);
+            if (Number.isFinite(storedRate) && storedRate > 0) {
+                CURRENT_FX_RATE = storedRate;
+            }
+            if (storedUpdatedAt) CURRENT_FX_UPDATED_AT = storedUpdatedAt;
+        } catch (_) {
+            // Ignore storage access failures.
+        }
+    }
+
+    async function fetchLatestFxRate() {
+        try {
+            const response = await fetch(FX_RATE_API_URL, { cache: 'no-store' });
+            if (!response.ok) return false;
+            const data = await response.json();
+            const krwRate = Number(data?.rates?.KRW);
+            if (!Number.isFinite(krwRate) || krwRate <= 0) return false;
+            const updatedAt = data?.date ? `${data.date}T00:00:00Z` : new Date().toISOString();
+            applyFxRate(krwRate, updatedAt);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function initFxRateAutoSync() {
+        loadFxRateFromStorage();
+        refreshFxRateUi();
+        fetchLatestFxRate().finally(refreshFxRateUi);
+        window.setInterval(() => {
+            fetchLatestFxRate().finally(refreshFxRateUi);
+        }, FX_RATE_REFRESH_MS);
+    }
+
     async function copyToClipboard(text) {
         const plain = String(text || '');
         if (!plain) return false;
@@ -1941,11 +2046,13 @@
         krwLabelEl.textContent = isEn ? 'Korean Won (KRW)' : '원화 (KRW)';
         usdLabelEl.textContent = isEn ? 'US Dollar (USD)' : '달러 (USD)';
         rateLabelEl.textContent = isEn ? 'Exchange Rate (1 USD = KRW)' : '환율 (1 USD = KRW)';
-        rateNoteEl.textContent = isEn
-            ? 'Reference-only estimate. Final card/cash amount may differ due to fees.'
-            : '참고용 계산값이며 결제 시점 환율/수수료와 다를 수 있습니다.';
         krwInput.placeholder = isEn ? 'e.g. 50,000' : '예: 50000';
         usdInput.placeholder = isEn ? 'e.g. 36' : '예: 36';
+        rateInput.placeholder = isEn ? 'Auto' : '자동';
+        rateInput.readOnly = true;
+        rateInput.setAttribute('aria-readonly', 'true');
+        rateInput.value = formatNumber(getCurrentFxRate(), 2);
+        rateNoteEl.textContent = getFxRateNoteText();
 
         phraseGridEl.innerHTML = ESSENTIAL_PHRASES.map((phrase) => `
             <article class="phrase-item">
@@ -1975,7 +2082,7 @@
         let syncing = false;
         const syncFromKrw = () => {
             if (syncing) return;
-            const rate = parseNumber(rateInput.value);
+            const rate = getCurrentFxRate();
             const krw = parseNumber(krwInput.value);
             if (!rate || rate <= 0 || krw === null) {
                 usdInput.value = '';
@@ -1987,7 +2094,7 @@
         };
         const syncFromUsd = () => {
             if (syncing) return;
-            const rate = parseNumber(rateInput.value);
+            const rate = getCurrentFxRate();
             const usd = parseNumber(usdInput.value);
             if (!rate || rate <= 0 || usd === null) {
                 krwInput.value = '';
@@ -2005,20 +2112,22 @@
 
         krwInput.oninput = syncFromKrw;
         usdInput.oninput = syncFromUsd;
-        rateInput.oninput = () => {
-            if (document.activeElement === usdInput) syncFromUsd();
-            else syncFromKrw();
-        };
         krwInput.onblur = () => normalizeField(krwInput, 0);
         usdInput.onblur = () => normalizeField(usdInput, 2);
-        rateInput.onblur = () => normalizeField(rateInput, 2);
+        window.addEventListener('fx-rate-updated', () => {
+            rateInput.value = formatNumber(getCurrentFxRate(), 2);
+            if (document.activeElement === usdInput) syncFromUsd();
+            else syncFromKrw();
+            rateNoteEl.textContent = getFxRateNoteText();
+        });
 
         if (!krwInput.value.trim() && !usdInput.value.trim()) {
             krwInput.value = '50000';
         }
         syncFromKrw();
         normalizeField(krwInput, 0);
-        normalizeField(rateInput, 2);
+        rateInput.value = formatNumber(getCurrentFxRate(), 2);
+        rateNoteEl.textContent = getFxRateNoteText();
     }
 
     function createPlaceCard(place) {
@@ -2542,13 +2651,6 @@
             return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(queryText)}`;
         }
 
-        function getFxRateForDisplay() {
-            const rateInputEl = document.getElementById('fx-rate-input');
-            const rate = parseNumber(rateInputEl?.value || '');
-            if (!rate || rate <= 0) return 1400;
-            return rate;
-        }
-
         function parsePriceForDisplay(priceText) {
             if (!priceText) return null;
             const raw = String(priceText).trim();
@@ -2563,7 +2665,7 @@
             const parsed = parsePriceForDisplay(priceText);
             if (!parsed) return '-';
 
-            const rate = getFxRateForDisplay();
+            const rate = getCurrentFxRate();
             const isEn = CURRENT_LANG === 'en';
 
             if (parsed.currency === 'USD') {
@@ -2782,6 +2884,10 @@
             const nextUrl = new URL(window.location.href);
             nextUrl.searchParams.set('style', currentStyle);
             window.history.replaceState({}, '', nextUrl.toString());
+            drawCourse(currentStyle);
+        });
+
+        window.addEventListener('fx-rate-updated', () => {
             drawCourse(currentStyle);
         });
 
@@ -3237,6 +3343,7 @@
 
     function init() {
         initLanguage();
+        initFxRateAutoSync();
         initThemeToggle();
         markActiveNav();
         initPageTransition();
