@@ -2518,6 +2518,15 @@
 
         const budgetPlansByLang = {
             en: {
+                ultraLow: {
+                    title: 'Shoestring Seoul',
+                    summary: 'Free landmarks + market snacks + subway-focused movement.',
+                    styleKey: 'history',
+                    restaurants: [
+                        { name: 'Tongin Market Street Bites', query: 'Tongin Market Street Food Seoul' },
+                        { name: 'Gwangjang Market Bindaetteok', query: 'Gwangjang Market Bindaetteok Seoul' }
+                    ]
+                },
                 low: {
                     title: 'Ultra Saver Seoul',
                     summary: 'Focus on walkable heritage and local markets with low-cost meals.',
@@ -2544,9 +2553,27 @@
                         { name: 'Samcheong Fine Dining', query: 'Samcheong fine dining Seoul' },
                         { name: 'Cheongdam Signature Dining', query: 'Cheongdam signature restaurant Seoul' }
                     ]
+                },
+                luxury: {
+                    title: 'Premium Seoul Flow',
+                    summary: 'Luxury day route with flagship shopping and river-view fine dining.',
+                    styleKey: 'night',
+                    restaurants: [
+                        { name: 'Signiel Fine Dining', query: 'Signiel Seoul fine dining' },
+                        { name: 'Cheongdam Tasting Menu', query: 'Cheongdam tasting menu Seoul' }
+                    ]
                 }
             },
             ko: {
+                ultraLow: {
+                    title: '초초절약 서울 루트',
+                    summary: '무료 명소 + 시장 간식 + 지하철 중심 이동으로 구성된 초저예산 코스',
+                    styleKey: 'history',
+                    restaurants: [
+                        { name: '통인시장 길거리 간식', query: '통인시장 길거리 간식 서울' },
+                        { name: '광장시장 빈대떡', query: '광장시장 빈대떡 서울' }
+                    ]
+                },
                 low: {
                     title: '초절약 서울 루트',
                     summary: '도보 중심으로 고궁/시장/로컬 먹거리를 저비용으로 즐기는 코스',
@@ -2572,6 +2599,15 @@
                     restaurants: [
                         { name: '삼청동 파인다이닝', query: '삼청동 파인다이닝 서울' },
                         { name: '청담 시그니처 다이닝', query: '청담 시그니처 레스토랑 서울' }
+                    ]
+                },
+                luxury: {
+                    title: '럭셔리 서울 나이트',
+                    summary: '플래그십 쇼핑 + 리버뷰 파인다이닝 중심의 하이엔드 코스',
+                    styleKey: 'night',
+                    restaurants: [
+                        { name: '시그니엘 파인다이닝', query: '시그니엘 서울 파인다이닝' },
+                        { name: '청담 테이스팅 코스', query: '청담 테이스팅 코스 서울' }
                     ]
                 }
             }
@@ -2664,10 +2700,18 @@
             budgetValue.textContent = `$${amount}`;
         };
 
+        const getBudgetProfileKey = (amount) => {
+            if (amount < 50) return 'ultraLow';
+            if (amount < 150) return 'low';
+            if (amount < 350) return 'mid';
+            if (amount < 700) return 'high';
+            return 'luxury';
+        };
+
         const runBudgetGame = () => {
             const amount = Number(budgetSlider.value || '150');
             const langKey = isEn ? 'en' : 'ko';
-            const profileKey = amount < 120 ? 'low' : (amount < 420 ? 'mid' : 'high');
+            const profileKey = getBudgetProfileKey(amount);
             const plan = budgetPlansByLang[langKey][profileKey];
             if (!plan) return;
 
@@ -2678,6 +2722,7 @@
             }).join('');
 
             budgetResult.innerHTML = `
+                <p><strong>${isEn ? 'Budget' : '예산'}: $${amount}</strong></p>
                 <p><strong>${escapeHtml(plan.title)}</strong></p>
                 <p>${escapeHtml(plan.summary)}</p>
                 <p><a class="text-link" href="${routeHref}">${isEn ? 'Open recommended course' : '추천 코스 열기'}</a></p>
