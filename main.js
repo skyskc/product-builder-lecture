@@ -2397,6 +2397,13 @@
         const isEn = CURRENT_LANG === 'en';
         const showcaseTitle = document.getElementById('entry-showcase-title');
         const showcaseDesc = document.getElementById('entry-showcase-desc');
+        const showcaseDate = document.getElementById('entry-showcase-date');
+        const showcaseLink1 = document.getElementById('entry-showcase-link-1');
+        const showcaseLink2 = document.getElementById('entry-showcase-link-2');
+        const showcaseLink3 = document.getElementById('entry-showcase-link-3');
+        const showcaseImg1 = document.getElementById('entry-showcase-img-1');
+        const showcaseImg2 = document.getElementById('entry-showcase-img-2');
+        const showcaseImg3 = document.getElementById('entry-showcase-img-3');
         const showcaseCap1 = document.getElementById('entry-showcase-cap-1');
         const showcaseCap2 = document.getElementById('entry-showcase-cap-2');
         const showcaseCap3 = document.getElementById('entry-showcase-cap-3');
@@ -2419,17 +2426,17 @@
         const budgetSliderLabel = document.getElementById('budget-slider-label');
         const budgetSlider = document.getElementById('budget-game-slider');
         const budgetValue = document.getElementById('budget-game-value');
+        const budgetRunBtn = document.getElementById('budget-game-run-btn');
         const budgetResult = document.getElementById('budget-game-result');
+        const budgetEmailInput = document.getElementById('budget-email-input');
+        const budgetEmailBtn = document.getElementById('budget-email-btn');
 
-        if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetResult) return;
+        if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetRunBtn || !budgetResult || !budgetEmailInput || !budgetEmailBtn) return;
 
-        if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Feel Korea Before You Fly' : '비행 전에 먼저 느끼는 한국 무드';
+        if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Today\'s Seoul Picks' : '오늘의 서울 추천 3곳';
         if (showcaseDesc) showcaseDesc.textContent = isEn
-            ? 'A quick visual moodboard from Seoul: palace calm, neon nights, and riverside views.'
-            : '서울의 감성을 먼저 느껴보세요. 고궁의 여유, 네온의 밤, 한강의 바람을 한 화면에 담았습니다.';
-        if (showcaseCap1) showcaseCap1.textContent = isEn ? 'Historic Seoul' : '역사적 서울';
-        if (showcaseCap2) showcaseCap2.textContent = isEn ? 'Neon Night Walk' : '네온 나이트 워크';
-        if (showcaseCap3) showcaseCap3.textContent = isEn ? 'Han River View' : '한강 뷰';
+            ? 'Three places selected for today. Tap any card to open details.'
+            : '오늘 방문하기 좋은 장소 3곳을 골랐습니다. 카드를 누르면 상세 페이지로 이동합니다.';
         if (funEyebrow) funEyebrow.textContent = isEn ? 'Fun Planner Lab' : '재미 플래너 랩';
         if (funTitle) funTitle.textContent = isEn
             ? '3 Quick Ways to Make Your Seoul Plan More Fun'
@@ -2444,10 +2451,13 @@
             : '날씨 모드를 바꾸면 바로 다음 이동 코스를 바꿔서 보여줍니다.';
         if (budgetTitle) budgetTitle.textContent = isEn ? '3) Budget Game' : '3) 예산 게임';
         if (budgetDesc) budgetDesc.textContent = isEn
-            ? 'Move the slider and discover a realistic Seoul day plan for your budget.'
-            : '슬라이더를 움직여 예산에 맞는 현실적인 서울 하루 플랜을 확인하세요.';
+            ? 'Set your daily budget and run to get a route + restaurant bundle.'
+            : '하루 예산을 설정하고 실행하면 예산 맞춤 코스와 식당 추천을 함께 보여줍니다.';
         if (quizRunBtn) quizRunBtn.textContent = isEn ? 'Get My Archetype' : '내 유형 보기';
         if (budgetSliderLabel) budgetSliderLabel.textContent = isEn ? 'Daily budget (USD)' : '하루 예산 (USD)';
+        if (budgetRunBtn) budgetRunBtn.textContent = isEn ? 'Run Budget Plan' : '예산 플랜 실행';
+        if (budgetEmailInput) budgetEmailInput.placeholder = isEn ? 'you@example.com' : 'you@example.com';
+        if (budgetEmailBtn) budgetEmailBtn.textContent = isEn ? 'Send to My Email' : '내 이메일로 받기';
         weatherSunnyBtn.textContent = isEn ? 'Sunny' : '맑음';
         weatherRainyBtn.textContent = isEn ? 'Rainy' : '비';
 
@@ -2464,6 +2474,20 @@
         quizEnergySelect.innerHTML = energyOptions.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join('');
         quizStyleSelect.innerHTML = styleOptions.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join('');
         quizGroupSelect.innerHTML = groupOptions.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join('');
+
+        const todayPickSets = [
+            ['place-001', 'place-021', 'place-058'],
+            ['place-014', 'place-033', 'place-072'],
+            ['place-009', 'place-044', 'place-089'],
+            ['place-005', 'place-026', 'place-067'],
+            ['place-012', 'place-039', 'place-095']
+        ];
+
+        const todayPickFallbackImages = [
+            'https://images.pexels.com/photos/237211/pexels-photo-237211.jpeg?auto=compress&cs=tinysrgb&w=1200',
+            'https://images.pexels.com/photos/261395/pexels-photo-261395.jpeg?auto=compress&cs=tinysrgb&w=1200',
+            'https://images.pexels.com/photos/290595/pexels-photo-290595.jpeg?auto=compress&cs=tinysrgb&w=1200'
+        ];
 
         const weatherRoutesByLang = {
             en: {
@@ -2492,17 +2516,116 @@
             }
         };
 
-        const budgetProfilesByLang = {
+        const budgetPlansByLang = {
             en: {
-                low: 'Saver Route: Palace + local market + transit-heavy plan',
-                mid: 'Balanced Explorer: 1 palace + local market + night viewpoint',
-                high: 'Premium Flow: design cafe + signature dinner + river lounge'
+                low: {
+                    title: 'Ultra Saver Seoul',
+                    summary: 'Focus on walkable heritage and local markets with low-cost meals.',
+                    styleKey: 'history',
+                    restaurants: [
+                        { name: 'Gwangjang Market Kalguksu', query: 'Gwangjang Market Kalguksu Seoul' },
+                        { name: 'Namdaemun Street Food', query: 'Namdaemun Street Food Seoul' }
+                    ]
+                },
+                mid: {
+                    title: 'Balanced Explorer Seoul',
+                    summary: 'One iconic landmark, one local neighborhood, and one evening view spot.',
+                    styleKey: 'local',
+                    restaurants: [
+                        { name: 'Myeongdong Kyoja', query: 'Myeongdong Kyoja Seoul' },
+                        { name: 'Ikseon-dong Hanok Dining', query: 'Ikseon-dong Hanok Restaurant Seoul' }
+                    ]
+                },
+                high: {
+                    title: 'Premium Seoul Flow',
+                    summary: 'Design-forward cafes, curated shopping, and skyline dinner route.',
+                    styleKey: 'shopping',
+                    restaurants: [
+                        { name: 'Samcheong Fine Dining', query: 'Samcheong fine dining Seoul' },
+                        { name: 'Cheongdam Signature Dining', query: 'Cheongdam signature restaurant Seoul' }
+                    ]
+                }
             },
             ko: {
-                low: '절약형 루트: 고궁 + 시장 + 대중교통 중심 동선',
-                mid: '균형형 루트: 고궁 1곳 + 로컬시장 + 야경 포인트',
-                high: '프리미엄 루트: 감도 높은 카페 + 시그니처 디너 + 한강 라운지'
+                low: {
+                    title: '초절약 서울 루트',
+                    summary: '도보 중심으로 고궁/시장/로컬 먹거리를 저비용으로 즐기는 코스',
+                    styleKey: 'history',
+                    restaurants: [
+                        { name: '광장시장 칼국수', query: '광장시장 칼국수 서울' },
+                        { name: '남대문시장 길거리 음식', query: '남대문시장 길거리 음식 서울' }
+                    ]
+                },
+                mid: {
+                    title: '균형형 서울 탐험',
+                    summary: '핵심 랜드마크 1곳 + 로컬 골목 1곳 + 야간 포인트 1곳',
+                    styleKey: 'local',
+                    restaurants: [
+                        { name: '명동교자', query: '명동교자 서울' },
+                        { name: '익선동 한옥 다이닝', query: '익선동 한옥 식당 서울' }
+                    ]
+                },
+                high: {
+                    title: '프리미엄 서울 데이',
+                    summary: '감도 높은 카페/쇼핑/야경 다이닝 중심의 고급 코스',
+                    styleKey: 'shopping',
+                    restaurants: [
+                        { name: '삼청동 파인다이닝', query: '삼청동 파인다이닝 서울' },
+                        { name: '청담 시그니처 다이닝', query: '청담 시그니처 레스토랑 서울' }
+                    ]
+                }
             }
+        };
+
+        let latestBudgetMailBody = '';
+
+        const resolveTodayPicks = () => {
+            const now = new Date();
+            const dayIndex = Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - Date.UTC(now.getFullYear(), 0, 0)) / 86400000);
+            const ids = todayPickSets[dayIndex % todayPickSets.length];
+            return ids.map((id) => placeMap[id]).filter(Boolean).slice(0, 3);
+        };
+
+        const renderTodayPicks = async () => {
+            const picks = resolveTodayPicks();
+            const dateText = new Intl.DateTimeFormat(isEn ? 'en-US' : 'ko-KR', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            }).format(new Date());
+            if (showcaseDate) {
+                showcaseDate.textContent = isEn
+                    ? `Updated daily • ${dateText}`
+                    : `매일 추천 갱신 • ${dateText}`;
+            }
+
+            const cards = [
+                { place: picks[0], link: showcaseLink1, img: showcaseImg1, cap: showcaseCap1, fallback: todayPickFallbackImages[0] },
+                { place: picks[1], link: showcaseLink2, img: showcaseImg2, cap: showcaseCap2, fallback: todayPickFallbackImages[1] },
+                { place: picks[2], link: showcaseLink3, img: showcaseImg3, cap: showcaseCap3, fallback: todayPickFallbackImages[2] }
+            ];
+
+            cards.forEach((card, idx) => {
+                if (!card.place || !card.link || !card.img || !card.cap) return;
+                card.link.href = getPlaceLink('place.html', card.place.id);
+                card.cap.textContent = isEn
+                    ? `${idx + 1}. ${card.place.nameEn || card.place.name}`
+                    : `${idx + 1}. ${card.place.name}`;
+                card.img.src = card.fallback;
+                card.img.alt = isEn
+                    ? `${card.place.nameEn || card.place.name} in Seoul`
+                    : `서울 추천지 ${card.place.name}`;
+            });
+
+            await Promise.all(cards.map(async (card) => {
+                if (!card.place || !card.img) return;
+                try {
+                    const response = await fetch(`/api/place-photo?query=${encodeURIComponent(card.place.mapQuery)}`);
+                    if (!response.ok) return;
+                    const json = await response.json();
+                    if (json?.photoUrl) card.img.src = json.photoUrl;
+                } catch (_) {
+                    // Keep fallback image.
+                }
+            }));
         };
 
         const runQuiz = () => {
@@ -2536,24 +2659,70 @@
             weatherRainyBtn.classList.toggle('active', mode === 'rainy');
         };
 
-        const updateBudgetGame = () => {
-            const amount = Number(budgetSlider.value || '140');
-            const langKey = isEn ? 'en' : 'ko';
-            const profileKey = amount < 110 ? 'low' : (amount < 220 ? 'mid' : 'high');
+        const updateBudgetSliderLabel = () => {
+            const amount = Number(budgetSlider.value || '150');
             budgetValue.textContent = `$${amount}`;
-            budgetResult.textContent = budgetProfilesByLang[langKey][profileKey];
+        };
+
+        const runBudgetGame = () => {
+            const amount = Number(budgetSlider.value || '150');
+            const langKey = isEn ? 'en' : 'ko';
+            const profileKey = amount < 120 ? 'low' : (amount < 420 ? 'mid' : 'high');
+            const plan = budgetPlansByLang[langKey][profileKey];
+            if (!plan) return;
+
+            const routeHref = withCurrentLang(`course.html?style=${encodeURIComponent(plan.styleKey)}`);
+            const restaurants = plan.restaurants.map((row) => {
+                const href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(row.query)}`;
+                return `<li><a class="text-link" href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.name)}</a></li>`;
+            }).join('');
+
+            budgetResult.innerHTML = `
+                <p><strong>${escapeHtml(plan.title)}</strong></p>
+                <p>${escapeHtml(plan.summary)}</p>
+                <p><a class="text-link" href="${routeHref}">${isEn ? 'Open recommended course' : '추천 코스 열기'}</a></p>
+                <p><strong>${isEn ? 'Restaurant picks' : '식당 추천'}</strong></p>
+                <ul class="review-list compact-list">${restaurants}</ul>
+            `;
+
+            latestBudgetMailBody = [
+                isEn ? 'Seoul Budget Plan Result' : '서울 예산 플랜 결과',
+                `${isEn ? 'Budget' : '예산'}: $${amount}`,
+                `${isEn ? 'Plan' : '플랜'}: ${plan.title}`,
+                `${isEn ? 'Summary' : '요약'}: ${plan.summary}`,
+                `${isEn ? 'Course' : '코스'}: ${window.location.origin}/${routeHref}`,
+                `${isEn ? 'Restaurants' : '식당'}: ${plan.restaurants.map((row) => row.name).join(', ')}`
+            ].join('\n');
+        };
+
+        const sendBudgetResultEmail = () => {
+            const email = String(budgetEmailInput.value || '').trim();
+            if (!email || !email.includes('@')) {
+                budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Please enter a valid email first.' : '이메일 주소를 먼저 올바르게 입력해 주세요.'}</p>`;
+                return;
+            }
+            if (!latestBudgetMailBody) {
+                runBudgetGame();
+            }
+            const subject = isEn ? 'My Seoul Budget Plan' : '내 서울 예산 플랜';
+            const mailto = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(latestBudgetMailBody)}`;
+            window.location.href = mailto;
         };
 
         if (!section.dataset.bound) {
             quizRunBtn.addEventListener('click', runQuiz);
             weatherSunnyBtn.addEventListener('click', () => renderWeatherRoutes('sunny'));
             weatherRainyBtn.addEventListener('click', () => renderWeatherRoutes('rainy'));
-            budgetSlider.addEventListener('input', updateBudgetGame);
+            budgetSlider.addEventListener('input', updateBudgetSliderLabel);
+            budgetRunBtn.addEventListener('click', runBudgetGame);
+            budgetEmailBtn.addEventListener('click', sendBudgetResultEmail);
             section.dataset.bound = '1';
         }
 
+        renderTodayPicks();
         renderWeatherRoutes('sunny');
-        updateBudgetGame();
+        updateBudgetSliderLabel();
+        budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Click run to generate your budget-based route and food picks.' : '실행 버튼을 누르면 예산 맞춤 코스와 식당 추천 결과가 표시됩니다.'}</p>`;
     }
 
     function renderEntryPage() {

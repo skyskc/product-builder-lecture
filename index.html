@@ -72,20 +72,27 @@
         </section>
 
         <section class="panel korea-showcase">
-            <h2 id="entry-showcase-title">Feel Korea Before You Fly</h2>
-            <p id="entry-showcase-desc">A quick visual moodboard from Seoul: palace calm, neon nights, and riverside views.</p>
+            <h2 id="entry-showcase-title">Today&apos;s Seoul Picks</h2>
+            <p id="entry-showcase-desc">Three places selected for today. Tap any card to open details.</p>
+            <p id="entry-showcase-date" class="data-source-note"></p>
             <div class="korea-mood-grid">
                 <figure class="korea-mood-card">
-                    <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=1200&q=80" alt="Gyeongbokgung in Seoul">
-                    <figcaption id="entry-showcase-cap-1">Historic Seoul</figcaption>
+                    <a id="entry-showcase-link-1" href="place.html?id=place-001">
+                        <img id="entry-showcase-img-1" src="https://images.pexels.com/photos/237211/pexels-photo-237211.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Seoul recommended place 1">
+                        <figcaption id="entry-showcase-cap-1">Pick 1</figcaption>
+                    </a>
                 </figure>
                 <figure class="korea-mood-card">
-                    <img src="https://images.unsplash.com/photo-1547235001-d703406d3f17?auto=format&fit=crop&w=1200&q=80" alt="Myeongdong night street">
-                    <figcaption id="entry-showcase-cap-2">Neon Night Walk</figcaption>
+                    <a id="entry-showcase-link-2" href="place.html?id=place-021">
+                        <img id="entry-showcase-img-2" src="https://images.pexels.com/photos/261395/pexels-photo-261395.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Seoul recommended place 2">
+                        <figcaption id="entry-showcase-cap-2">Pick 2</figcaption>
+                    </a>
                 </figure>
                 <figure class="korea-mood-card">
-                    <img src="https://images.unsplash.com/photo-1506816561089-5cc37b3aa9b0?auto=format&fit=crop&w=1200&q=80" alt="Han River skyline">
-                    <figcaption id="entry-showcase-cap-3">Han River View</figcaption>
+                    <a id="entry-showcase-link-3" href="place.html?id=place-058">
+                        <img id="entry-showcase-img-3" src="https://images.pexels.com/photos/290595/pexels-photo-290595.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Seoul recommended place 3">
+                        <figcaption id="entry-showcase-cap-3">Pick 3</figcaption>
+                    </a>
                 </figure>
             </div>
         </section>
@@ -130,11 +137,18 @@
 
                 <article class="fun-card">
                     <h3 id="budget-card-title">3) Budget Game</h3>
-                    <p id="budget-card-desc">Move the slider and discover a realistic Seoul day plan for your budget.</p>
+                    <p id="budget-card-desc">Set your daily budget and run to get a route + restaurant bundle.</p>
                     <label id="budget-slider-label" for="budget-game-slider">Daily budget (USD)</label>
-                    <input id="budget-game-slider" type="range" min="40" max="400" value="140">
-                    <p id="budget-game-value" class="budget-game-value">$140</p>
-                    <p id="budget-game-result" class="data-source-note">Balanced Explorer: 1 palace + local market + night viewpoint.</p>
+                    <input id="budget-game-slider" type="range" min="10" max="1000" value="150">
+                    <p id="budget-game-value" class="budget-game-value">$150</p>
+                    <button id="budget-game-run-btn" class="theme-toggle-btn" type="button">Run Budget Plan</button>
+                    <div id="budget-game-result" class="budget-result-box">
+                        <p class="data-source-note">Click run to generate your budget-based route and food picks.</p>
+                    </div>
+                    <div class="budget-email-row">
+                        <input id="budget-email-input" class="search-input" type="email" placeholder="you@example.com">
+                        <button id="budget-email-btn" class="theme-toggle-btn" type="button">Send to My Email</button>
+                    </div>
                 </article>
             </div>
         </section>

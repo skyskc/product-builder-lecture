@@ -1235,6 +1235,11 @@ body.dark-mode .kcontent-card-thumb {
     object-fit: cover;
 }
 
+.korea-mood-card a {
+    display: block;
+    text-decoration: none;
+}
+
 .korea-mood-card figcaption {
     padding: 10px 12px;
     font-weight: 700;
@@ -1292,6 +1297,21 @@ body.dark-mode .kcontent-card-thumb {
     font-size: 1.16rem;
     font-weight: 800;
     color: var(--accent);
+}
+
+.budget-result-box {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--chip);
+}
+
+.budget-email-row {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr auto;
 }
 
 @media (max-width: 1180px) {
@@ -1384,6 +1404,10 @@ body.dark-mode .kcontent-card-thumb {
 
     .korea-mood-grid,
     .fun-feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .budget-email-row {
         grid-template-columns: 1fr;
     }
 
