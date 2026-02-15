@@ -1,5 +1,11 @@
 # Google Search Console Submission Pack
 
+## 0) 소유권 검증 토큰 입력 (필수)
+- `index.html`의 아래 메타 태그 값을 각 콘솔에서 발급받은 실제 토큰으로 교체:
+  - `google-site-verification`
+  - `naver-site-verification`
+- 토큰 반영 후 배포해야 검증이 완료됩니다.
+
 ## 1) Sitemap 제출
 - Search Console 속성: `https://www.skyskc.com`
 - 제출 URL:
@@ -28,3 +34,9 @@
   - 제목/설명 개선
   - 내부링크 강화 (홈/코스에서 상세로 연결)
   - 신규 장소 상세 페이지 재요청
+
+## 4) Naver Search Advisor 제출
+- 웹마스터도구에서 사이트 추가: `https://www.skyskc.com`
+- 소유확인: `index.html` 메타 태그 방식
+- 사이트맵 제출: `https://www.skyskc.com/sitemap.xml`
+- robots 제출: `https://www.skyskc.com/robots.txt`

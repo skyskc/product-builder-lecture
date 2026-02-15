@@ -1,11 +1,34 @@
 {
   "hosting": {
     "public": ".",
+    "redirects": [
+      {
+        "source": "/.well-known/ads.txt",
+        "destination": "/ads.txt",
+        "type": 301
+      }
+    ],
     "ignore": [
       "firebase.json",
-      "**/.*",
       "**/node_modules/**",
-      "firebase-debug.log"
+      "firebase-debug.log",
+      ".firebaserc",
+      ".env",
+      ".env.*",
+      ".firebase/**",
+      ".git/**",
+      ".gitignore",
+      ".vscode/**",
+      ".idx/**",
+      "server.js",
+      "tools/**",
+      "package.json",
+      "README.md",
+      "SEARCH_CONSOLE_SUBMISSION.md",
+      "search-console-priority-urls.txt",
+      "ADSENSE_LIVE_CHECKLIST.md",
+      "**/.*",
+      "**/.*/**"
     ]
   }
 }

@@ -24,6 +24,7 @@ const HOST = '0.0.0.0';
 const PORT = Number(process.env.PORT || 3000);
 const ROOT_DIR = process.cwd();
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
+const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 8000);
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 const MAX_CACHE_ENTRIES = 300;
 
@@ -77,6 +78,7 @@ const MIME_TYPES = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
@@ -84,6 +86,31 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon',
   '.txt': 'text/plain; charset=utf-8'
 };
+
+const PUBLIC_ROOT_FILES = new Set([
+  'index.html',
+  'explore.html',
+  'course.html',
+  'generation.html',
+  'kcontent.html',
+  'kcontent-result.html',
+  'comments.html',
+  'place.html',
+  'about.html',
+  'partner.html',
+  'editorial.html',
+  'terms.html',
+  'privacy.html',
+  'style.css',
+  'main.js',
+  'sw.js',
+  'robots.txt',
+  'sitemap.xml',
+  'ads.txt',
+  'favicon.ico'
+]);
+
+const PUBLIC_ASSET_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.svg', '.webp']);
 
 function getFromCache(cacheMap, cacheKey) {
   const cacheItem = cacheMap.get(cacheKey);
@@ -128,8 +155,23 @@ function sendFile(res, filePath) {
   });
 }
 
+async function fetchWithTimeout(url, options = {}, timeoutMs = FETCH_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      throw new Error(`Upstream request timed out after ${timeoutMs}ms`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function searchGooglePlaceId(queryText, languageCode = 'ko') {
-  const searchResponse = await fetch('https://places.googleapis.com/v1/places:searchText', {
+  const searchResponse = await fetchWithTimeout('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -163,7 +205,7 @@ async function fetchGooglePlaceDetails(queryText, languageCode = 'ko') {
   const googlePlaceId = await searchGooglePlaceId(queryText, languageCode);
 
   const url = `https://places.googleapis.com/v1/places/${googlePlaceId}`;
-  const response = await fetch(url, {
+  const response = await fetchWithTimeout(url, {
     headers: {
       'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
       'X-Goog-FieldMask': 'displayName,formattedAddress,editorialSummary,rating,userRatingCount,reviews,googleMapsUri'
@@ -202,7 +244,7 @@ async function fetchGooglePlacePhotoUrl(queryText) {
   if (cached) return cached;
 
   const googlePlaceId = await searchGooglePlaceId(queryText);
-  const placeResponse = await fetch(`https://places.googleapis.com/v1/places/${googlePlaceId}`, {
+  const placeResponse = await fetchWithTimeout(`https://places.googleapis.com/v1/places/${googlePlaceId}`, {
     headers: {
       'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
       'X-Goog-FieldMask': 'photos'
@@ -220,7 +262,7 @@ async function fetchGooglePlacePhotoUrl(queryText) {
     throw new Error(`No place photo found for query: ${queryText}`);
   }
 
-  const mediaResponse = await fetch(`https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=1280&skipHttpRedirect=true`, {
+  const mediaResponse = await fetchWithTimeout(`https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=1280&skipHttpRedirect=true`, {
     headers: {
       'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY
     }
@@ -247,7 +289,7 @@ async function fetchWikipediaPhotoUrl(queryText) {
 
   for (const lang of languages) {
     const searchUrl = `https://${lang}.wikipedia.org/w/api.php?action=query&list=search&srlimit=1&utf8=1&format=json&srsearch=${encodeURIComponent(normalizedQuery)}`;
-    const searchResponse = await fetch(searchUrl);
+    const searchResponse = await fetchWithTimeout(searchUrl);
     if (!searchResponse.ok) {
       continue;
     }
@@ -259,7 +301,7 @@ async function fetchWikipediaPhotoUrl(queryText) {
     }
 
     const imageUrl = `https://${lang}.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=1280&format=json&titles=${encodeURIComponent(title)}`;
-    const imageResponse = await fetch(imageUrl);
+    const imageResponse = await fetchWithTimeout(imageUrl);
     if (!imageResponse.ok) {
       continue;
     }
@@ -291,7 +333,7 @@ async function fetchTopHotels(queryText) {
   const cached = getFromCache(HOTELS_CACHE, queryText);
   if (cached) return cached;
 
-  const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+  const response = await fetchWithTimeout('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -336,7 +378,7 @@ async function fetchTopRestaurants(district, meal, limit = 3) {
 
   const hint = MEAL_QUERY_HINT[meal] || 'restaurant';
   const textQuery = `${district} Seoul ${hint}`;
-  const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+  const response = await fetchWithTimeout('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -389,6 +431,21 @@ function resolveStaticPath(urlPathname) {
   let relativePath = normalizedPath === '/' ? '/index.html' : normalizedPath;
   if (relativePath.endsWith('/')) {
     relativePath += 'index.html';
+  }
+  const requestPath = relativePath.replace(/^\/+/, '');
+  if (!requestPath) return null;
+  const pathSegments = requestPath.split('/').filter(Boolean);
+  const isWellKnownAdsPath = requestPath === '.well-known/ads.txt';
+  if (!isWellKnownAdsPath && pathSegments.some((segment) => segment.startsWith('.'))) {
+    return null;
+  }
+  if (pathSegments.length === 1) {
+    if (!PUBLIC_ROOT_FILES.has(pathSegments[0])) return null;
+  } else {
+    const [root, subRoot] = pathSegments;
+    const ext = path.extname(pathSegments[pathSegments.length - 1]).toLowerCase();
+    const isPublicAsset = root === 'assets' && subRoot === 'kcontent' && PUBLIC_ASSET_EXTENSIONS.has(ext);
+    if (!isPublicAsset && !isWellKnownAdsPath) return null;
   }
   const resolved = path.resolve(ROOT_DIR, `.${relativePath}`);
   if (resolved !== ROOT_DIR && !resolved.startsWith(`${ROOT_DIR}${path.sep}`)) {
