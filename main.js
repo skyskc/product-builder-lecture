@@ -2624,7 +2624,6 @@
                     : `서울 추천지 ${card.place.name}`;
             });
 
-            if (STATIC_SITE_MODE) return;
             await Promise.all(cards.map(async (card) => {
                 if (!card.place || !card.img) return;
                 try {
