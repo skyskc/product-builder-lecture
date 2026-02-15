@@ -52,3 +52,26 @@ npm start
 4. GitHub Pages 프로젝트 경로 사용 시 주의  
    - `https://username.github.io/repo` 형태면 `ads.txt`가 `/repo/ads.txt`에만 생겨, AdSense가 요구하는 루트(`/ads.txt`)와 다를 수 있습니다.
    - 이 경우 커스텀 도메인 루트(예: `https://product-builder-lecture-4ec.pages.dev/ads.txt`)로 배포하는 방식이 안전합니다.
+
+## 6) Budget 결과 이메일 자동 발송 (Cloudflare Pages Functions + Resend)
+
+홈의 Budget Game 이메일 전송 버튼은 `/api/send-budget-email` Functions API를 호출합니다.
+
+### Cloudflare Pages 환경변수 설정
+
+Pages 프로젝트 설정에서 아래 변수를 추가하세요.
+
+- `RESEND_API_KEY` : Resend에서 발급받은 API 키 (`re_...`)
+- `MAIL_FROM` : 인증된 발신 주소 (예: `noreply@your-domain.com`)
+
+### Resend 준비
+
+1. https://resend.com 가입
+2. API Key 생성
+3. 발신 도메인(또는 발신 이메일) 인증
+
+### 동작 확인
+
+1. 홈에서 Budget Game 실행
+2. 이메일 입력 후 `Send to My Email` 클릭
+3. 성공 시 안내 문구 표시 및 메일 수신

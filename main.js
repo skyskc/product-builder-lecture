@@ -2740,9 +2740,9 @@
             ].join('\n');
         };
 
-        const sendBudgetResultEmail = () => {
+        const sendBudgetResultEmail = async () => {
             const email = String(budgetEmailInput.value || '').trim();
-            if (!email || !email.includes('@')) {
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Please enter a valid email first.' : '이메일 주소를 먼저 올바르게 입력해 주세요.'}</p>`;
                 return;
             }
@@ -2750,8 +2750,35 @@
                 runBudgetGame();
             }
             const subject = isEn ? 'My Seoul Budget Plan' : '내 서울 예산 플랜';
-            const mailto = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(latestBudgetMailBody)}`;
-            window.location.href = mailto;
+            const defaultButtonText = isEn ? 'Send to My Email' : '내 이메일로 받기';
+            budgetEmailBtn.disabled = true;
+            budgetEmailBtn.textContent = isEn ? 'Sending...' : '전송 중...';
+
+            try {
+                const response = await fetch('/api/send-budget-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: email,
+                        subject,
+                        text: latestBudgetMailBody
+                    })
+                });
+                if (!response.ok) {
+                    const json = await response.json().catch(() => ({}));
+                    throw new Error(json.error || `HTTP ${response.status}`);
+                }
+                budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Sent successfully. Check your inbox.' : '전송이 완료되었습니다. 메일함을 확인해 주세요.'}</p>`;
+            } catch (error) {
+                const message = String(error?.message || '');
+                const hint = message.includes('Server email config missing')
+                    ? (isEn ? ' (Admin needs to set RESEND_API_KEY and MAIL_FROM in Pages settings.)' : ' (관리자: Pages 환경변수 RESEND_API_KEY, MAIL_FROM 설정 필요)')
+                    : '';
+                budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Email send failed' : '이메일 전송 실패'}: ${escapeHtml(message)}${escapeHtml(hint)}</p>`;
+            } finally {
+                budgetEmailBtn.disabled = false;
+                budgetEmailBtn.textContent = defaultButtonText;
+            }
         };
 
         if (!section.dataset.bound) {
