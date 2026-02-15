@@ -7,4 +7,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.skyskc.com/sitemap.xml
+Sitemap: https://product-builder-lecture-4ec.pages.dev/sitemap.xml

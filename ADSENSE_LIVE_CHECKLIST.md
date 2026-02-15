@@ -13,7 +13,7 @@ npm run adsense:live-check -- https://도메인
 
 예시:
 ```bash
-npm run adsense:live-check -- https://www.skyskc.com
+npm run adsense:live-check -- https://product-builder-lecture-4ec.pages.dev
 ```
 
 ## 3) 통과 기준

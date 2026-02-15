@@ -7,20 +7,20 @@
 - 토큰 반영 후 배포해야 검증이 완료됩니다.
 
 ## 1) Sitemap 제출
-- Search Console 속성: `https://www.skyskc.com`
+- Search Console 속성: `https://product-builder-lecture-4ec.pages.dev`
 - 제출 URL:
-  - `https://www.skyskc.com/sitemap.xml`
+  - `https://product-builder-lecture-4ec.pages.dev/sitemap.xml`
 
 ## 2) 우선 인덱싱 요청 (URL 검사)
 아래 우선 URL부터 URL 검사 후 `색인 생성 요청`을 진행하세요.
-- 홈: `https://www.skyskc.com/`
-- 영문 홈: `https://www.skyskc.com/?lang=en`
-- 코스: `https://www.skyskc.com/course.html`
-- 영문 코스: `https://www.skyskc.com/course.html?lang=en`
+- 홈: `https://product-builder-lecture-4ec.pages.dev/`
+- 영문 홈: `https://product-builder-lecture-4ec.pages.dev/?lang=en`
+- 코스: `https://product-builder-lecture-4ec.pages.dev/course.html`
+- 영문 코스: `https://product-builder-lecture-4ec.pages.dev/course.html?lang=en`
 - 정책 페이지:
-  - `https://www.skyskc.com/about.html`
-  - `https://www.skyskc.com/editorial.html`
-  - `https://www.skyskc.com/privacy.html`
+  - `https://product-builder-lecture-4ec.pages.dev/about.html`
+  - `https://product-builder-lecture-4ec.pages.dev/editorial.html`
+  - `https://product-builder-lecture-4ec.pages.dev/privacy.html`
 - 상세 페이지 우선 목록: `search-console-priority-urls.txt` 참고
 
 ## 3) 2~7일 모니터링 체크
@@ -36,7 +36,7 @@
   - 신규 장소 상세 페이지 재요청
 
 ## 4) Naver Search Advisor 제출
-- 웹마스터도구에서 사이트 추가: `https://www.skyskc.com`
+- 웹마스터도구에서 사이트 추가: `https://product-builder-lecture-4ec.pages.dev`
 - 소유확인: `index.html` 메타 태그 방식
-- 사이트맵 제출: `https://www.skyskc.com/sitemap.xml`
-- robots 제출: `https://www.skyskc.com/robots.txt`
+- 사이트맵 제출: `https://product-builder-lecture-4ec.pages.dev/sitemap.xml`
+- robots 제출: `https://product-builder-lecture-4ec.pages.dev/robots.txt`
