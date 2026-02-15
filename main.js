@@ -1,4 +1,5 @@
 (function () {
+    const STATIC_SITE_MODE = true;
     const THEME_STORAGE_KEY = 'seoul-explorer-theme';
     const LANG_STORAGE_KEY = 'seoul-explorer-lang';
     const STYLE_LABELS_BY_LANG = {
@@ -2623,6 +2624,7 @@
                     : `서울 추천지 ${card.place.name}`;
             });
 
+            if (STATIC_SITE_MODE) return;
             await Promise.all(cards.map(async (card) => {
                 if (!card.place || !card.img) return;
                 try {
@@ -2914,6 +2916,7 @@
     }
 
     async function fetchLivePlaceDetails(place, lang) {
+        if (STATIC_SITE_MODE) return null;
         const response = await fetch(`/api/place-details?query=${encodeURIComponent(place.mapQuery)}&lang=${encodeURIComponent(lang || 'ko')}`);
         if (!response.ok) throw new Error(`API request failed: ${response.status}`);
         const json = await response.json();
@@ -2921,6 +2924,7 @@
     }
 
     async function fetchTopHotels(queryText) {
+        if (STATIC_SITE_MODE) throw new Error('Static mode enabled');
         const response = await fetch(`/api/hotels-top?query=${encodeURIComponent(queryText)}`);
         if (!response.ok) throw new Error(`Hotels API request failed: ${response.status}`);
         const json = await response.json();
@@ -2928,6 +2932,9 @@
     }
 
     async function fetchTopRestaurantsByMeal(district, meal) {
+        if (STATIC_SITE_MODE) {
+            throw new Error('Static mode enabled');
+        }
         const response = await fetch(`/api/restaurants-top?district=${encodeURIComponent(district)}&meal=${encodeURIComponent(meal)}&limit=3`);
         if (!response.ok) throw new Error(`Restaurants API request failed: ${response.status}`);
         const json = await response.json();
@@ -3040,8 +3047,8 @@
         rankEl.textContent = `TOP ${place.rank}`;
         districtEl.textContent = getDistrictLabel(place.district);
         bestTimeEl.textContent = place.bestTime;
-        ratingEl.textContent = `${place.rating} (기본 데이터)`;
-        reviewCountEl.textContent = `${place.reviewCount} (기본 데이터)`;
+        ratingEl.textContent = `${place.rating} (정적 데이터)`;
+        reviewCountEl.textContent = `${place.reviewCount} (정적 데이터)`;
         styleBadgesEl.innerHTML = place.styles
             .map((style) => `<span class=\"${styleClass(style)}\">${getStyleLabel(style)}</span>`)
             .join('');
@@ -3052,12 +3059,13 @@
         mapExternal.textContent = CURRENT_LANG === 'en' ? 'Open in Google Maps' : 'Google 지도에서 열기';
         renderReviews(reviewList, place.reviews);
         dataSourceEl.textContent = CURRENT_LANG === 'en'
-            ? 'Ratings/Reviews: Showing default data now. Updating to live Google data shortly.'
-            : '리뷰/평점: 기본 데이터 표시 중. 잠시 후 실시간 Google 데이터로 갱신됩니다.';
+            ? 'Ratings/Reviews: Static data mode is active.'
+            : '리뷰/평점: 정적 데이터 모드로 운영 중입니다.';
         updatePlaceStructuredData(place, null);
 
         try {
             const details = await fetchLivePlaceDetails(place, CURRENT_LANG === 'en' ? 'en' : 'ko');
+            if (!details) return;
             if (CURRENT_LANG === 'en' && details?.displayName) nameEl.textContent = details.displayName;
             if (CURRENT_LANG === 'en' && details?.formattedAddress) districtEl.textContent = details.formattedAddress;
             if (CURRENT_LANG === 'en' && details?.editorialSummary) descEl.textContent = details.editorialSummary;

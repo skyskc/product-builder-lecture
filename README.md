@@ -1,8 +1,8 @@
 # Seoul Explorer
 
-서울 여행 추천 사이트 + Google Places 실시간 평점/리뷰 연동 예제입니다.
+서울 여행 추천 사이트 정적 운영 버전입니다.
 
-## 1) 환경변수 설정
+## 1) 환경변수 설정 (선택)
 
 `.env.example`를 참고해 `.env` 파일을 만드세요.
 
@@ -11,8 +11,8 @@ GOOGLE_PLACES_API_KEY=your_server_side_google_places_api_key
 PORT=3000
 ```
 
-- `GOOGLE_PLACES_API_KEY`는 서버 전용 키로 사용하세요.
-- Google Cloud에서 `Places API (New)`를 활성화해야 합니다.
+- 정적 모드만 운영하면 API 키 없이도 페이지는 정상 동작합니다.
+- 실시간 API를 다시 켤 때만 `GOOGLE_PLACES_API_KEY`가 필요합니다.
 
 ## 2) 실행
 
@@ -22,14 +22,11 @@ npm start
 
 브라우저에서 `http://localhost:3000` 접속.
 
-## 3) 실시간 데이터 동작
+## 3) 정적 데이터 동작 (기본)
 
-- 장소 상세 페이지(`place.html?id=...`)에서 `/api/place-details?query=...` 호출
-- 장소 이미지는 `/api/place-photo?query=...`로 Google Places 실제 장소 사진 조회
-- 서버가 Google Places Text Search + Place Details를 호출
-- 평점, 리뷰 수, 리뷰 요약을 실시간 데이터로 갱신
-- 장소 사진은 Google Places Photo API 결과를 우선 사용하고 실패 시 로컬 폴백 이미지 표시
-- 실패 시 페이지 기본 데이터로 자동 폴백
+- 장소 상세 페이지는 코드에 포함된 정적 평점/리뷰/설명 데이터를 사용합니다.
+- 홈 추천 카드 이미지는 프로젝트에 포함된 기본 이미지를 사용합니다.
+- 외부 Places API 호출 없이 동일한 UI 흐름으로 동작합니다.
 
 ## 4) 현재 페이지 구성
 
