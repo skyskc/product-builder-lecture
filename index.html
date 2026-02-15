@@ -71,16 +71,72 @@
             </div>
         </section>
 
-        <section class="panel">
-            <h2>Popular Seoul Links</h2>
-            <ul class="review-list">
-                <li><a class="text-link" href="explore.html">Top Seoul Attractions Map</a></li>
-                <li><a class="text-link" href="course.html">Seoul 1-Day Itinerary Planner</a></li>
-                <li><a class="text-link" href="generation.html">Seoul Courses by Age Group</a></li>
-                <li><a class="text-link" href="kcontent.html">K-Drama and K-Content Travel Picks</a></li>
-                <li><a class="text-link" href="place.html?id=place-001">Gyeongbokgung Detail Guide</a></li>
-                <li><a class="text-link" href="place.html?id=place-021">Myeongdong Detail Guide</a></li>
-            </ul>
+        <section class="panel korea-showcase">
+            <h2 id="entry-showcase-title">Feel Korea Before You Fly</h2>
+            <p id="entry-showcase-desc">A quick visual moodboard from Seoul: palace calm, neon nights, and riverside views.</p>
+            <div class="korea-mood-grid">
+                <figure class="korea-mood-card">
+                    <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=1200&q=80" alt="Gyeongbokgung in Seoul">
+                    <figcaption id="entry-showcase-cap-1">Historic Seoul</figcaption>
+                </figure>
+                <figure class="korea-mood-card">
+                    <img src="https://images.unsplash.com/photo-1547235001-d703406d3f17?auto=format&fit=crop&w=1200&q=80" alt="Myeongdong night street">
+                    <figcaption id="entry-showcase-cap-2">Neon Night Walk</figcaption>
+                </figure>
+                <figure class="korea-mood-card">
+                    <img src="https://images.unsplash.com/photo-1506816561089-5cc37b3aa9b0?auto=format&fit=crop&w=1200&q=80" alt="Han River skyline">
+                    <figcaption id="entry-showcase-cap-3">Han River View</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="panel fun-lab">
+            <p id="entry-fun-eyebrow" class="eyebrow">Fun Planner Lab</p>
+            <h2 id="entry-fun-title">3 Quick Ways to Make Your Seoul Plan More Fun</h2>
+            <div class="fun-feature-grid">
+                <article class="fun-card">
+                    <h3 id="quiz-card-title">1) Seoul Archetype Quiz</h3>
+                    <p id="quiz-card-desc">Answer three quick preferences and get your travel type with a recommended route.</p>
+                    <div class="fun-form-grid">
+                        <select id="quiz-energy-select" class="sort-select">
+                            <option value="low">Relaxed pace</option>
+                            <option value="mid">Balanced pace</option>
+                            <option value="high">High energy</option>
+                        </select>
+                        <select id="quiz-style-select" class="sort-select">
+                            <option value="history">History & culture</option>
+                            <option value="food">Food & local vibe</option>
+                            <option value="night">Night view & trend</option>
+                        </select>
+                        <select id="quiz-group-select" class="sort-select">
+                            <option value="solo">Solo</option>
+                            <option value="pair">Couple/Friends</option>
+                            <option value="family">Family</option>
+                        </select>
+                    </div>
+                    <button id="quiz-run-btn" class="theme-toggle-btn" type="button">Get My Archetype</button>
+                    <p id="quiz-result" class="data-source-note">Try the quiz to see your best-fit Seoul travel profile.</p>
+                </article>
+
+                <article class="fun-card">
+                    <h3 id="weather-card-title">2) Rainy Day vs Sunny Day Switch</h3>
+                    <p id="weather-card-desc">Toggle weather mode and instantly see where to go next.</p>
+                    <div class="weather-toggle-row">
+                        <button id="weather-sunny-btn" class="theme-toggle-btn weather-btn active" type="button" data-weather="sunny">Sunny</button>
+                        <button id="weather-rainy-btn" class="theme-toggle-btn weather-btn" type="button" data-weather="rainy">Rainy</button>
+                    </div>
+                    <ul id="weather-route-list" class="review-list compact-list"></ul>
+                </article>
+
+                <article class="fun-card">
+                    <h3 id="budget-card-title">3) Budget Game</h3>
+                    <p id="budget-card-desc">Move the slider and discover a realistic Seoul day plan for your budget.</p>
+                    <label id="budget-slider-label" for="budget-game-slider">Daily budget (USD)</label>
+                    <input id="budget-game-slider" type="range" min="40" max="400" value="140">
+                    <p id="budget-game-value" class="budget-game-value">$140</p>
+                    <p id="budget-game-result" class="data-source-note">Balanced Explorer: 1 palace + local market + night viewpoint.</p>
+                </article>
+            </div>
         </section>
     </main>
 

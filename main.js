@@ -2390,6 +2390,172 @@
         applyFilter();
     }
 
+    function initEntryFunLab() {
+        const section = document.querySelector('.fun-lab');
+        if (!section) return;
+
+        const isEn = CURRENT_LANG === 'en';
+        const showcaseTitle = document.getElementById('entry-showcase-title');
+        const showcaseDesc = document.getElementById('entry-showcase-desc');
+        const showcaseCap1 = document.getElementById('entry-showcase-cap-1');
+        const showcaseCap2 = document.getElementById('entry-showcase-cap-2');
+        const showcaseCap3 = document.getElementById('entry-showcase-cap-3');
+        const funEyebrow = document.getElementById('entry-fun-eyebrow');
+        const funTitle = document.getElementById('entry-fun-title');
+        const quizTitle = document.getElementById('quiz-card-title');
+        const quizDesc = document.getElementById('quiz-card-desc');
+        const weatherTitle = document.getElementById('weather-card-title');
+        const weatherDesc = document.getElementById('weather-card-desc');
+        const budgetTitle = document.getElementById('budget-card-title');
+        const budgetDesc = document.getElementById('budget-card-desc');
+        const quizRunBtn = document.getElementById('quiz-run-btn');
+        const quizEnergySelect = document.getElementById('quiz-energy-select');
+        const quizStyleSelect = document.getElementById('quiz-style-select');
+        const quizGroupSelect = document.getElementById('quiz-group-select');
+        const quizResult = document.getElementById('quiz-result');
+        const weatherSunnyBtn = document.getElementById('weather-sunny-btn');
+        const weatherRainyBtn = document.getElementById('weather-rainy-btn');
+        const weatherList = document.getElementById('weather-route-list');
+        const budgetSliderLabel = document.getElementById('budget-slider-label');
+        const budgetSlider = document.getElementById('budget-game-slider');
+        const budgetValue = document.getElementById('budget-game-value');
+        const budgetResult = document.getElementById('budget-game-result');
+
+        if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetResult) return;
+
+        if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Feel Korea Before You Fly' : '비행 전에 먼저 느끼는 한국 무드';
+        if (showcaseDesc) showcaseDesc.textContent = isEn
+            ? 'A quick visual moodboard from Seoul: palace calm, neon nights, and riverside views.'
+            : '서울의 감성을 먼저 느껴보세요. 고궁의 여유, 네온의 밤, 한강의 바람을 한 화면에 담았습니다.';
+        if (showcaseCap1) showcaseCap1.textContent = isEn ? 'Historic Seoul' : '역사적 서울';
+        if (showcaseCap2) showcaseCap2.textContent = isEn ? 'Neon Night Walk' : '네온 나이트 워크';
+        if (showcaseCap3) showcaseCap3.textContent = isEn ? 'Han River View' : '한강 뷰';
+        if (funEyebrow) funEyebrow.textContent = isEn ? 'Fun Planner Lab' : '재미 플래너 랩';
+        if (funTitle) funTitle.textContent = isEn
+            ? '3 Quick Ways to Make Your Seoul Plan More Fun'
+            : '서울 여행을 더 재미있게 만드는 3가지 빠른 도구';
+        if (quizTitle) quizTitle.textContent = isEn ? '1) Seoul Archetype Quiz' : '1) 서울 여행자 유형 퀴즈';
+        if (quizDesc) quizDesc.textContent = isEn
+            ? 'Answer three quick preferences and get your travel type with a recommended route.'
+            : '취향 3가지를 고르면 나에게 맞는 여행자 유형과 추천 루트를 보여줍니다.';
+        if (weatherTitle) weatherTitle.textContent = isEn ? '2) Rainy Day vs Sunny Day Switch' : '2) 비 오는 날 vs 맑은 날 스위치';
+        if (weatherDesc) weatherDesc.textContent = isEn
+            ? 'Toggle weather mode and instantly see where to go next.'
+            : '날씨 모드를 바꾸면 바로 다음 이동 코스를 바꿔서 보여줍니다.';
+        if (budgetTitle) budgetTitle.textContent = isEn ? '3) Budget Game' : '3) 예산 게임';
+        if (budgetDesc) budgetDesc.textContent = isEn
+            ? 'Move the slider and discover a realistic Seoul day plan for your budget.'
+            : '슬라이더를 움직여 예산에 맞는 현실적인 서울 하루 플랜을 확인하세요.';
+        if (quizRunBtn) quizRunBtn.textContent = isEn ? 'Get My Archetype' : '내 유형 보기';
+        if (budgetSliderLabel) budgetSliderLabel.textContent = isEn ? 'Daily budget (USD)' : '하루 예산 (USD)';
+        weatherSunnyBtn.textContent = isEn ? 'Sunny' : '맑음';
+        weatherRainyBtn.textContent = isEn ? 'Rainy' : '비';
+
+        const energyOptions = isEn
+            ? [['low', 'Relaxed pace'], ['mid', 'Balanced pace'], ['high', 'High energy']]
+            : [['low', '여유롭게'], ['mid', '균형 있게'], ['high', '에너지 높게']];
+        const styleOptions = isEn
+            ? [['history', 'History & culture'], ['food', 'Food & local vibe'], ['night', 'Night view & trend']]
+            : [['history', '역사/문화'], ['food', '로컬 먹거리'], ['night', '야경/트렌드']];
+        const groupOptions = isEn
+            ? [['solo', 'Solo'], ['pair', 'Couple/Friends'], ['family', 'Family']]
+            : [['solo', '혼자'], ['pair', '연인/친구'], ['family', '가족']];
+
+        quizEnergySelect.innerHTML = energyOptions.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join('');
+        quizStyleSelect.innerHTML = styleOptions.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join('');
+        quizGroupSelect.innerHTML = groupOptions.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join('');
+
+        const weatherRoutesByLang = {
+            en: {
+                sunny: [
+                    { text: 'Gyeongbokgung + Bukchon + Cheonggyecheon Walk', href: withCurrentLang('course.html?style=history') },
+                    { text: 'Han River Sunset + N Seoul Tower Night View', href: withCurrentLang('course.html?style=night') },
+                    { text: 'Seongsu Trend Street + Seoul Forest', href: withCurrentLang('explore.html?style=shopping') }
+                ],
+                rainy: [
+                    { text: 'National Museum + COEX Starfield + Indoor Cafes', href: withCurrentLang('course.html?style=art') },
+                    { text: 'Lotte World Mall + Aquarium + Jamsil Food Lane', href: withCurrentLang('course.html?style=family') },
+                    { text: 'Insadong Tea House + Museum Day Route', href: withCurrentLang('course.html?style=history') }
+                ]
+            },
+            ko: {
+                sunny: [
+                    { text: '경복궁 + 북촌 + 청계천 산책 코스', href: withCurrentLang('course.html?style=history') },
+                    { text: '한강 노을 + 남산타워 야경 코스', href: withCurrentLang('course.html?style=night') },
+                    { text: '성수 트렌드 거리 + 서울숲 코스', href: withCurrentLang('explore.html?style=shopping') }
+                ],
+                rainy: [
+                    { text: '국립중앙박물관 + 코엑스 + 실내 카페 코스', href: withCurrentLang('course.html?style=art') },
+                    { text: '롯데월드몰 + 아쿠아리움 + 잠실 맛집 코스', href: withCurrentLang('course.html?style=family') },
+                    { text: '인사동 찻집 + 전시 중심 코스', href: withCurrentLang('course.html?style=history') }
+                ]
+            }
+        };
+
+        const budgetProfilesByLang = {
+            en: {
+                low: 'Saver Route: Palace + local market + transit-heavy plan',
+                mid: 'Balanced Explorer: 1 palace + local market + night viewpoint',
+                high: 'Premium Flow: design cafe + signature dinner + river lounge'
+            },
+            ko: {
+                low: '절약형 루트: 고궁 + 시장 + 대중교통 중심 동선',
+                mid: '균형형 루트: 고궁 1곳 + 로컬시장 + 야경 포인트',
+                high: '프리미엄 루트: 감도 높은 카페 + 시그니처 디너 + 한강 라운지'
+            }
+        };
+
+        const runQuiz = () => {
+            const energy = quizEnergySelect.value;
+            const style = quizStyleSelect.value;
+            const group = quizGroupSelect.value;
+            let archetype = isEn ? 'Balanced Seoul Walker' : '균형형 서울 워커';
+            let styleKey = 'history';
+
+            if (style === 'night' || energy === 'high') {
+                archetype = isEn ? 'Night Pulse Chaser' : '나이트 펄스 체이서';
+                styleKey = 'night';
+            } else if (style === 'food') {
+                archetype = isEn ? 'Local Food Hunter' : '로컬 푸드 헌터';
+                styleKey = 'local';
+            } else if (group === 'family') {
+                archetype = isEn ? 'Family Comfort Planner' : '패밀리 컴포트 플래너';
+                styleKey = 'family';
+            }
+
+            const routeHref = withCurrentLang(`course.html?style=${encodeURIComponent(styleKey)}`);
+            const routeLabel = isEn ? 'Open matching route' : '맞춤 코스 열기';
+            quizResult.innerHTML = `${escapeHtml(archetype)} · <a class="text-link" href="${routeHref}">${escapeHtml(routeLabel)}</a>`;
+        };
+
+        const renderWeatherRoutes = (mode) => {
+            const langKey = isEn ? 'en' : 'ko';
+            const rows = weatherRoutesByLang[langKey][mode] || [];
+            weatherList.innerHTML = rows.map((row) => `<li><a class="text-link" href="${row.href}">${escapeHtml(row.text)}</a></li>`).join('');
+            weatherSunnyBtn.classList.toggle('active', mode === 'sunny');
+            weatherRainyBtn.classList.toggle('active', mode === 'rainy');
+        };
+
+        const updateBudgetGame = () => {
+            const amount = Number(budgetSlider.value || '140');
+            const langKey = isEn ? 'en' : 'ko';
+            const profileKey = amount < 110 ? 'low' : (amount < 220 ? 'mid' : 'high');
+            budgetValue.textContent = `$${amount}`;
+            budgetResult.textContent = budgetProfilesByLang[langKey][profileKey];
+        };
+
+        if (!section.dataset.bound) {
+            quizRunBtn.addEventListener('click', runQuiz);
+            weatherSunnyBtn.addEventListener('click', () => renderWeatherRoutes('sunny'));
+            weatherRainyBtn.addEventListener('click', () => renderWeatherRoutes('rainy'));
+            budgetSlider.addEventListener('input', updateBudgetGame);
+            section.dataset.bound = '1';
+        }
+
+        renderWeatherRoutes('sunny');
+        updateBudgetGame();
+    }
+
     function renderEntryPage() {
         const eyebrow = document.getElementById('entry-eyebrow');
         const title = document.getElementById('entry-title');
@@ -2435,6 +2601,7 @@
             if (navLinks[3]) navLinks[3].textContent = '콘텐츠 플랜';
             if (navLinks[4]) navLinks[4].textContent = '사주 플랜';
         }
+        initEntryFunLab();
     }
 
     function renderGenerationPage() {
