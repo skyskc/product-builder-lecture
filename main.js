@@ -1859,10 +1859,25 @@
     }
 
     function initPageTransition() {
+        const resetPageExitState = () => {
+            document.body.classList.remove('page-exit');
+        };
+
+        // BFCache/뒤로가기 복원 시 page-exit가 남아 흰 화면이 되는 현상 방지.
+        resetPageExitState();
+        window.addEventListener('pageshow', resetPageExitState);
+        window.addEventListener('popstate', resetPageExitState);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                resetPageExitState();
+            }
+        });
+
         document.addEventListener('click', (event) => {
             const anchor = event.target.closest('a[href]');
             if (!anchor) return;
             if (anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
             const href = anchor.getAttribute('href');
             if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
             const targetUrl = new URL(href, window.location.href);
