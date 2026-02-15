@@ -2516,100 +2516,72 @@
             }
         };
 
-        const budgetPlansByLang = {
+        const budgetStepValues = Array.from({ length: 20 }, (_, idx) => (idx + 1) * 50);
+        const budgetStyleCycle = ['history', 'local', 'night', 'art', 'shopping', 'family'];
+        const budgetRestaurantPool = {
             en: {
-                ultraLow: {
-                    title: 'Shoestring Seoul',
-                    summary: 'Free landmarks + market snacks + subway-focused movement.',
-                    styleKey: 'history',
-                    restaurants: [
-                        { name: 'Tongin Market Street Bites', query: 'Tongin Market Street Food Seoul' },
-                        { name: 'Gwangjang Market Bindaetteok', query: 'Gwangjang Market Bindaetteok Seoul' }
-                    ]
-                },
-                low: {
-                    title: 'Ultra Saver Seoul',
-                    summary: 'Focus on walkable heritage and local markets with low-cost meals.',
-                    styleKey: 'history',
-                    restaurants: [
-                        { name: 'Gwangjang Market Kalguksu', query: 'Gwangjang Market Kalguksu Seoul' },
-                        { name: 'Namdaemun Street Food', query: 'Namdaemun Street Food Seoul' }
-                    ]
-                },
-                mid: {
-                    title: 'Balanced Explorer Seoul',
-                    summary: 'One iconic landmark, one local neighborhood, and one evening view spot.',
-                    styleKey: 'local',
-                    restaurants: [
-                        { name: 'Myeongdong Kyoja', query: 'Myeongdong Kyoja Seoul' },
-                        { name: 'Ikseon-dong Hanok Dining', query: 'Ikseon-dong Hanok Restaurant Seoul' }
-                    ]
-                },
-                high: {
-                    title: 'Premium Seoul Flow',
-                    summary: 'Design-forward cafes, curated shopping, and skyline dinner route.',
-                    styleKey: 'shopping',
-                    restaurants: [
-                        { name: 'Samcheong Fine Dining', query: 'Samcheong fine dining Seoul' },
-                        { name: 'Cheongdam Signature Dining', query: 'Cheongdam signature restaurant Seoul' }
-                    ]
-                },
-                luxury: {
-                    title: 'Premium Seoul Flow',
-                    summary: 'Luxury day route with flagship shopping and river-view fine dining.',
-                    styleKey: 'night',
-                    restaurants: [
-                        { name: 'Signiel Fine Dining', query: 'Signiel Seoul fine dining' },
-                        { name: 'Cheongdam Tasting Menu', query: 'Cheongdam tasting menu Seoul' }
-                    ]
-                }
+                history: [
+                    { name: 'Tongin Market Street Bites', query: 'Tongin Market Street Food Seoul' },
+                    { name: 'Gwangjang Market Kalguksu', query: 'Gwangjang Market Kalguksu Seoul' },
+                    { name: 'Insadong Traditional Tea House', query: 'Insadong Traditional Tea House Seoul' }
+                ],
+                local: [
+                    { name: 'Myeongdong Kyoja', query: 'Myeongdong Kyoja Seoul' },
+                    { name: 'Ikseon-dong Hanok Dining', query: 'Ikseon-dong Hanok Restaurant Seoul' },
+                    { name: 'Mangwon Market Eats', query: 'Mangwon Market food Seoul' }
+                ],
+                night: [
+                    { name: 'Namsan Area Korean BBQ', query: 'Namsan Korean BBQ Seoul' },
+                    { name: 'Euljiro Night Pub', query: 'Euljiro pub Seoul' },
+                    { name: 'Han River Rooftop Bar', query: 'Han River rooftop bar Seoul' }
+                ],
+                art: [
+                    { name: 'Samcheong Brunch Cafe', query: 'Samcheong brunch cafe Seoul' },
+                    { name: 'Seongsu Design Cafe', query: 'Seongsu design cafe Seoul' },
+                    { name: 'MMCA Area Bistro', query: 'MMCA Seoul nearby bistro' }
+                ],
+                shopping: [
+                    { name: 'Garosu-gil Dining Spot', query: 'Garosu-gil dining Seoul' },
+                    { name: 'COEX Modern Korean', query: 'COEX modern korean restaurant Seoul' },
+                    { name: 'Cheongdam Signature Dining', query: 'Cheongdam signature restaurant Seoul' }
+                ],
+                family: [
+                    { name: 'Lotte World Mall Family Dining', query: 'Lotte World Mall family restaurant Seoul' },
+                    { name: 'Jamsil Casual Korean', query: 'Jamsil casual korean restaurant Seoul' },
+                    { name: 'Olympic Park Brunch', query: 'Olympic Park brunch Seoul' }
+                ]
             },
             ko: {
-                ultraLow: {
-                    title: '초초절약 서울 루트',
-                    summary: '무료 명소 + 시장 간식 + 지하철 중심 이동으로 구성된 초저예산 코스',
-                    styleKey: 'history',
-                    restaurants: [
-                        { name: '통인시장 길거리 간식', query: '통인시장 길거리 간식 서울' },
-                        { name: '광장시장 빈대떡', query: '광장시장 빈대떡 서울' }
-                    ]
-                },
-                low: {
-                    title: '초절약 서울 루트',
-                    summary: '도보 중심으로 고궁/시장/로컬 먹거리를 저비용으로 즐기는 코스',
-                    styleKey: 'history',
-                    restaurants: [
-                        { name: '광장시장 칼국수', query: '광장시장 칼국수 서울' },
-                        { name: '남대문시장 길거리 음식', query: '남대문시장 길거리 음식 서울' }
-                    ]
-                },
-                mid: {
-                    title: '균형형 서울 탐험',
-                    summary: '핵심 랜드마크 1곳 + 로컬 골목 1곳 + 야간 포인트 1곳',
-                    styleKey: 'local',
-                    restaurants: [
-                        { name: '명동교자', query: '명동교자 서울' },
-                        { name: '익선동 한옥 다이닝', query: '익선동 한옥 식당 서울' }
-                    ]
-                },
-                high: {
-                    title: '프리미엄 서울 데이',
-                    summary: '감도 높은 카페/쇼핑/야경 다이닝 중심의 고급 코스',
-                    styleKey: 'shopping',
-                    restaurants: [
-                        { name: '삼청동 파인다이닝', query: '삼청동 파인다이닝 서울' },
-                        { name: '청담 시그니처 다이닝', query: '청담 시그니처 레스토랑 서울' }
-                    ]
-                },
-                luxury: {
-                    title: '럭셔리 서울 나이트',
-                    summary: '플래그십 쇼핑 + 리버뷰 파인다이닝 중심의 하이엔드 코스',
-                    styleKey: 'night',
-                    restaurants: [
-                        { name: '시그니엘 파인다이닝', query: '시그니엘 서울 파인다이닝' },
-                        { name: '청담 테이스팅 코스', query: '청담 테이스팅 코스 서울' }
-                    ]
-                }
+                history: [
+                    { name: '통인시장 길거리 간식', query: '통인시장 길거리 간식 서울' },
+                    { name: '광장시장 칼국수', query: '광장시장 칼국수 서울' },
+                    { name: '인사동 전통찻집', query: '인사동 전통찻집 서울' }
+                ],
+                local: [
+                    { name: '명동교자', query: '명동교자 서울' },
+                    { name: '익선동 한옥 다이닝', query: '익선동 한옥 식당 서울' },
+                    { name: '망원시장 먹거리', query: '망원시장 먹거리 서울' }
+                ],
+                night: [
+                    { name: '남산 인근 고깃집', query: '남산 인근 고깃집 서울' },
+                    { name: '을지로 야간 펍', query: '을지로 펍 서울' },
+                    { name: '한강 루프탑 바', query: '한강 루프탑 바 서울' }
+                ],
+                art: [
+                    { name: '삼청동 브런치 카페', query: '삼청동 브런치 카페 서울' },
+                    { name: '성수 디자인 카페', query: '성수 디자인 카페 서울' },
+                    { name: '국현미 인근 비스트로', query: '국현미 서울 인근 비스트로' }
+                ],
+                shopping: [
+                    { name: '가로수길 다이닝', query: '가로수길 다이닝 서울' },
+                    { name: '코엑스 모던 한식', query: '코엑스 모던 한식 서울' },
+                    { name: '청담 시그니처 다이닝', query: '청담 시그니처 레스토랑 서울' }
+                ],
+                family: [
+                    { name: '롯데월드몰 패밀리 다이닝', query: '롯데월드몰 패밀리 식당 서울' },
+                    { name: '잠실 캐주얼 한식', query: '잠실 캐주얼 한식 서울' },
+                    { name: '올림픽공원 브런치', query: '올림픽공원 브런치 서울' }
+                ]
             }
         };
 
@@ -2700,19 +2672,47 @@
             budgetValue.textContent = `$${amount}`;
         };
 
-        const getBudgetProfileKey = (amount) => {
-            if (amount < 50) return 'ultraLow';
-            if (amount < 150) return 'low';
-            if (amount < 350) return 'mid';
-            if (amount < 700) return 'high';
-            return 'luxury';
+        const getBudgetBandValue = (amount) => {
+            const normalized = Math.max(10, Math.min(1000, amount));
+            if (normalized <= 50) return 50;
+            return Math.min(1000, Math.ceil(normalized / 50) * 50);
+        };
+
+        const buildBudgetPlan = (amount, langKey) => {
+            const bandValue = getBudgetBandValue(amount);
+            const bandIndex = Math.max(0, budgetStepValues.indexOf(bandValue));
+            const styleKey = budgetStyleCycle[bandIndex % budgetStyleCycle.length];
+            const restaurantsPool = budgetRestaurantPool[langKey]?.[styleKey] || [];
+            const r1 = restaurantsPool[bandIndex % Math.max(restaurantsPool.length, 1)] || restaurantsPool[0];
+            const r2 = restaurantsPool[(bandIndex + 1) % Math.max(restaurantsPool.length, 1)] || restaurantsPool[1] || restaurantsPool[0];
+
+            const tierLabel = (bandValue <= 150)
+                ? (langKey === 'en' ? 'Saver' : '절약형')
+                : (bandValue <= 400)
+                    ? (langKey === 'en' ? 'Balanced' : '균형형')
+                    : (bandValue <= 700)
+                        ? (langKey === 'en' ? 'Premium' : '프리미엄')
+                        : (langKey === 'en' ? 'Luxury' : '럭셔리');
+            const title = langKey === 'en'
+                ? `$${bandValue} ${tierLabel} Seoul Plan`
+                : `$${bandValue} ${tierLabel} 서울 플랜`;
+            const summary = langKey === 'en'
+                ? `Budget band $${bandValue}. Route focus: ${getStyleLabel(styleKey)} with realistic movement and meal stops.`
+                : `예산 구간 $${bandValue}. ${getStyleLabel(styleKey)} 중심 동선과 식사 스팟을 결합한 현실형 코스입니다.`;
+
+            return {
+                bandValue,
+                title,
+                summary,
+                styleKey,
+                restaurants: [r1, r2].filter(Boolean)
+            };
         };
 
         const runBudgetGame = () => {
             const amount = Number(budgetSlider.value || '150');
             const langKey = isEn ? 'en' : 'ko';
-            const profileKey = getBudgetProfileKey(amount);
-            const plan = budgetPlansByLang[langKey][profileKey];
+            const plan = buildBudgetPlan(amount, langKey);
             if (!plan) return;
 
             const routeHref = withCurrentLang(`course.html?style=${encodeURIComponent(plan.styleKey)}`);
@@ -2722,7 +2722,7 @@
             }).join('');
 
             budgetResult.innerHTML = `
-                <p><strong>${isEn ? 'Budget' : '예산'}: $${amount}</strong></p>
+                <p><strong>${isEn ? 'Input' : '입력값'}: $${amount} · ${isEn ? 'Band' : '적용 구간'}: $${plan.bandValue}</strong></p>
                 <p><strong>${escapeHtml(plan.title)}</strong></p>
                 <p>${escapeHtml(plan.summary)}</p>
                 <p><a class="text-link" href="${routeHref}">${isEn ? 'Open recommended course' : '추천 코스 열기'}</a></p>
