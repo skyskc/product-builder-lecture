@@ -2428,10 +2428,11 @@
         const budgetValue = document.getElementById('budget-game-value');
         const budgetRunBtn = document.getElementById('budget-game-run-btn');
         const budgetResult = document.getElementById('budget-game-result');
-        const budgetEmailInput = document.getElementById('budget-email-input');
-        const budgetEmailBtn = document.getElementById('budget-email-btn');
+        const budgetSaveBtn = document.getElementById('budget-save-btn');
+        const budgetSavedList = document.getElementById('budget-saved-list');
+        const BUDGET_SAVE_KEY = 'seoul-entry-budget-result-saves-v1';
 
-        if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetRunBtn || !budgetResult || !budgetEmailInput || !budgetEmailBtn) return;
+        if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetRunBtn || !budgetResult || !budgetSaveBtn || !budgetSavedList) return;
 
         if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Today\'s Seoul Picks' : '오늘의 서울 추천 3곳';
         if (showcaseDesc) showcaseDesc.textContent = isEn
@@ -2456,8 +2457,7 @@
         if (quizRunBtn) quizRunBtn.textContent = isEn ? 'Get My Archetype' : '내 유형 보기';
         if (budgetSliderLabel) budgetSliderLabel.textContent = isEn ? 'Daily budget (USD)' : '하루 예산 (USD)';
         if (budgetRunBtn) budgetRunBtn.textContent = isEn ? 'Run Budget Plan' : '예산 플랜 실행';
-        if (budgetEmailInput) budgetEmailInput.placeholder = isEn ? 'you@example.com' : 'you@example.com';
-        if (budgetEmailBtn) budgetEmailBtn.textContent = isEn ? 'Send to My Email' : '내 이메일로 받기';
+        if (budgetSaveBtn) budgetSaveBtn.textContent = isEn ? 'Save Result' : '결과 저장';
         weatherSunnyBtn.textContent = isEn ? 'Sunny' : '맑음';
         weatherRainyBtn.textContent = isEn ? 'Rainy' : '비';
 
@@ -2585,7 +2585,7 @@
             }
         };
 
-        let latestBudgetMailBody = '';
+        let latestBudgetSnapshot = null;
 
         const resolveTodayPicks = () => {
             const now = new Date();
@@ -2730,55 +2730,65 @@
                 <ul class="review-list compact-list">${restaurants}</ul>
             `;
 
-            latestBudgetMailBody = [
-                isEn ? 'Seoul Budget Plan Result' : '서울 예산 플랜 결과',
-                `${isEn ? 'Budget' : '예산'}: $${amount}`,
-                `${isEn ? 'Plan' : '플랜'}: ${plan.title}`,
-                `${isEn ? 'Summary' : '요약'}: ${plan.summary}`,
-                `${isEn ? 'Course' : '코스'}: ${window.location.origin}/${routeHref}`,
-                `${isEn ? 'Restaurants' : '식당'}: ${plan.restaurants.map((row) => row.name).join(', ')}`
-            ].join('\n');
+            latestBudgetSnapshot = {
+                amount,
+                bandValue: plan.bandValue,
+                title: plan.title,
+                summary: plan.summary,
+                routeHref,
+                restaurants: plan.restaurants.map((row) => row.name),
+                savedAt: new Date().toISOString()
+            };
         };
 
-        const sendBudgetResultEmail = async () => {
-            const email = String(budgetEmailInput.value || '').trim();
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Please enter a valid email first.' : '이메일 주소를 먼저 올바르게 입력해 주세요.'}</p>`;
+        const readBudgetSaves = () => {
+            try {
+                const raw = localStorage.getItem(BUDGET_SAVE_KEY);
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (_) {
+                return [];
+            }
+        };
+
+        const writeBudgetSaves = (items) => {
+            try {
+                localStorage.setItem(BUDGET_SAVE_KEY, JSON.stringify(items.slice(0, 10)));
+            } catch (_) {
+                // ignore
+            }
+        };
+
+        const renderBudgetSaves = () => {
+            const items = readBudgetSaves();
+            if (!items.length) {
+                budgetSavedList.innerHTML = `<p class="data-source-note">${isEn ? 'No saved results yet.' : '아직 저장된 결과가 없습니다.'}</p>`;
                 return;
             }
-            if (!latestBudgetMailBody) {
-                runBudgetGame();
-            }
-            const subject = isEn ? 'My Seoul Budget Plan' : '내 서울 예산 플랜';
-            const defaultButtonText = isEn ? 'Send to My Email' : '내 이메일로 받기';
-            budgetEmailBtn.disabled = true;
-            budgetEmailBtn.textContent = isEn ? 'Sending...' : '전송 중...';
+            budgetSavedList.innerHTML = items.map((item) => {
+                const when = formatFxUpdatedAt(item.savedAt);
+                const restaurants = Array.isArray(item.restaurants) ? item.restaurants.join(', ') : '';
+                return `
+                    <article class="offline-plan-card">
+                        <strong>${escapeHtml(item.title || '-')}</strong>
+                        <p class="offline-plan-meta">${isEn ? 'Saved' : '저장일'}: ${escapeHtml(when)} · ${isEn ? 'Budget' : '예산'}: $${escapeHtml(item.amount)}</p>
+                        <p class="offline-plan-meta">${escapeHtml(item.summary || '')}</p>
+                        <p class="offline-plan-meta">${isEn ? 'Restaurants' : '식당'}: ${escapeHtml(restaurants)}</p>
+                        <a class="text-link" href="${escapeHtml(item.routeHref || withCurrentLang('course.html'))}">${isEn ? 'Open route' : '코스 열기'}</a>
+                    </article>
+                `;
+            }).join('');
+        };
 
-            try {
-                const response = await fetch('/api/send-budget-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        to: email,
-                        subject,
-                        text: latestBudgetMailBody
-                    })
-                });
-                if (!response.ok) {
-                    const json = await response.json().catch(() => ({}));
-                    throw new Error(json.error || `HTTP ${response.status}`);
-                }
-                budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Sent successfully. Check your inbox.' : '전송이 완료되었습니다. 메일함을 확인해 주세요.'}</p>`;
-            } catch (error) {
-                const message = String(error?.message || '');
-                const hint = message.includes('Server email config missing')
-                    ? (isEn ? ' (Admin needs to set RESEND_API_KEY and MAIL_FROM in Pages settings.)' : ' (관리자: Pages 환경변수 RESEND_API_KEY, MAIL_FROM 설정 필요)')
-                    : '';
-                budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Email send failed' : '이메일 전송 실패'}: ${escapeHtml(message)}${escapeHtml(hint)}</p>`;
-            } finally {
-                budgetEmailBtn.disabled = false;
-                budgetEmailBtn.textContent = defaultButtonText;
-            }
+        const saveBudgetResult = () => {
+            if (!latestBudgetSnapshot) runBudgetGame();
+            if (!latestBudgetSnapshot) return;
+            const items = readBudgetSaves();
+            items.unshift({ ...latestBudgetSnapshot, savedAt: new Date().toISOString() });
+            writeBudgetSaves(items);
+            renderBudgetSaves();
+            budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Saved. You can review it below.' : '결과가 저장되었습니다. 아래 목록에서 확인할 수 있습니다.'}</p>`;
         };
 
         if (!section.dataset.bound) {
@@ -2787,13 +2797,14 @@
             weatherRainyBtn.addEventListener('click', () => renderWeatherRoutes('rainy'));
             budgetSlider.addEventListener('input', updateBudgetSliderLabel);
             budgetRunBtn.addEventListener('click', runBudgetGame);
-            budgetEmailBtn.addEventListener('click', sendBudgetResultEmail);
+            budgetSaveBtn.addEventListener('click', saveBudgetResult);
             section.dataset.bound = '1';
         }
 
         renderTodayPicks();
         renderWeatherRoutes('sunny');
         updateBudgetSliderLabel();
+        renderBudgetSaves();
         budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Click run to generate your budget-based route and food picks.' : '실행 버튼을 누르면 예산 맞춤 코스와 식당 추천 결과가 표시됩니다.'}</p>`;
     }
 

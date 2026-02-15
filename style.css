@@ -1307,13 +1307,6 @@ body.dark-mode .kcontent-card-thumb {
     background: var(--chip);
 }
 
-.budget-email-row {
-    margin-top: 10px;
-    display: grid;
-    gap: 8px;
-    grid-template-columns: 1fr auto;
-}
-
 @media (max-width: 1180px) {
     .place-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1404,10 +1397,6 @@ body.dark-mode .kcontent-card-thumb {
 
     .korea-mood-grid,
     .fun-feature-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .budget-email-row {
         grid-template-columns: 1fr;
     }
 
