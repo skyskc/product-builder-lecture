@@ -773,6 +773,90 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     letter-spacing: 0.01em;
 }
 
+.ui-chip.tone-spot {
+    background: #fff5e8;
+    border-color: #ffd8a8;
+    color: #9a4b00;
+}
+
+.ui-chip.tone-route {
+    background: #eaf2ff;
+    border-color: #bcd3ff;
+    color: #1d4ed8;
+}
+
+.ui-chip.tone-map {
+    background: #ecfff5;
+    border-color: #b6f0d2;
+    color: #047857;
+}
+
+.ui-chip.tone-type {
+    background: #f3edff;
+    border-color: #d9c8ff;
+    color: #6d28d9;
+}
+
+.ui-chip.tone-weather {
+    background: #eaf9ff;
+    border-color: #bae6fd;
+    color: #0369a1;
+}
+
+.ui-chip.tone-budget {
+    background: #fff7ed;
+    border-color: #fed7aa;
+    color: #c2410c;
+}
+
+.ui-chip.tone-food {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #be123c;
+}
+
+body.dark-mode .ui-chip.tone-spot {
+    background: #3a2a15;
+    border-color: #7a5522;
+    color: #ffd8a8;
+}
+
+body.dark-mode .ui-chip.tone-route {
+    background: #1b2d52;
+    border-color: #34599f;
+    color: #c9dcff;
+}
+
+body.dark-mode .ui-chip.tone-map {
+    background: #163126;
+    border-color: #2a6b4f;
+    color: #b4f1d6;
+}
+
+body.dark-mode .ui-chip.tone-type {
+    background: #2c1f4b;
+    border-color: #5f3da6;
+    color: #dfceff;
+}
+
+body.dark-mode .ui-chip.tone-weather {
+    background: #173248;
+    border-color: #2f6d93;
+    color: #bfe8ff;
+}
+
+body.dark-mode .ui-chip.tone-budget {
+    background: #3b2818;
+    border-color: #8b552a;
+    color: #ffd6b0;
+}
+
+body.dark-mode .ui-chip.tone-food {
+    background: #3d1d2a;
+    border-color: #8b3456;
+    color: #ffc9d8;
+}
+
 .entry-first-overlay {
     position: fixed;
     inset: 0;
