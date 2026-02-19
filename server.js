@@ -209,7 +209,7 @@ async function fetchGooglePlaceDetails(queryText, languageCode = 'ko') {
   const response = await fetchWithTimeout(url, {
     headers: {
       'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
-      'X-Goog-FieldMask': 'displayName,formattedAddress,editorialSummary,rating,userRatingCount,reviews,googleMapsUri'
+      'X-Goog-FieldMask': 'displayName,formattedAddress,editorialSummary,rating,userRatingCount,reviews,googleMapsUri,location'
     }
   });
 
@@ -227,6 +227,12 @@ async function fetchGooglePlaceDetails(queryText, languageCode = 'ko') {
     rating: data.rating || null,
     userRatingCount: data.userRatingCount || null,
     googleMapsUri: data.googleMapsUri || '',
+    location: data.location
+      ? {
+          latitude: Number(data.location.latitude),
+          longitude: Number(data.location.longitude)
+        }
+      : null,
     reviews: Array.isArray(data.reviews)
       ? data.reviews.slice(0, 3).map((review) => ({
           author: review.authorAttribution?.displayName || 'Google User',

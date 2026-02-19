@@ -1404,6 +1404,26 @@
         '노원구': 'Nowon-gu',
         '관악구': 'Gwanak-gu'
     };
+    const DISTRICT_GEO_COORDS = {
+        '종로구': { lat: 37.5735, lng: 126.9790 },
+        '중구': { lat: 37.5638, lng: 126.9976 },
+        '용산구': { lat: 37.5325, lng: 126.9900 },
+        '마포구': { lat: 37.5663, lng: 126.9015 },
+        '성동구': { lat: 37.5633, lng: 127.0367 },
+        '광진구': { lat: 37.5384, lng: 127.0822 },
+        '강동구': { lat: 37.5301, lng: 127.1238 },
+        '강남구': { lat: 37.5172, lng: 127.0473 },
+        '서초구': { lat: 37.4836, lng: 127.0326 },
+        '송파구': { lat: 37.5145, lng: 127.1060 },
+        '영등포구': { lat: 37.5264, lng: 126.8962 },
+        '동작구': { lat: 37.5124, lng: 126.9393 },
+        '강서구': { lat: 37.5509, lng: 126.8495 },
+        '성북구': { lat: 37.5894, lng: 127.0167 },
+        '동대문구': { lat: 37.5744, lng: 127.0396 },
+        '강북구': { lat: 37.6396, lng: 127.0257 },
+        '노원구': { lat: 37.6542, lng: 127.0568 },
+        '관악구': { lat: 37.4782, lng: 126.9515 }
+    };
     const CATEGORY_LABELS_EN = {
         '역사/문화': 'History/Culture',
         '쇼핑/트렌드': 'Shopping/Trends',
@@ -1737,6 +1757,7 @@
             nameEn,
             category: seed.category,
             district: seed.district,
+            geo: DISTRICT_GEO_COORDS[seed.district] || null,
             bestTime: seed.bestTime,
             ratingValue: Number(ratingBase.toFixed(1)),
             reviewCountValue: reviewBase,
@@ -1850,6 +1871,36 @@
                 if (!tagKey) return;
                 btn.textContent = TAG_LABELS_BY_LANG.en[tagKey] || btn.textContent;
             });
+            const geoPanelTitle = document.getElementById('geo-panel-title');
+            const geoPanelDesc = document.getElementById('geo-panel-desc');
+            const geoCoreTitle = document.getElementById('geo-core-title');
+            const geoCoreDesc = document.getElementById('geo-core-desc');
+            const geoTrendTitle = document.getElementById('geo-trend-title');
+            const geoTrendDesc = document.getElementById('geo-trend-desc');
+            const geoFamilyTitle = document.getElementById('geo-family-title');
+            const geoFamilyDesc = document.getElementById('geo-family-desc');
+            const faqPanelTitle = document.getElementById('faq-panel-title');
+            const faqQ1 = document.getElementById('faq-q1');
+            const faqA1 = document.getElementById('faq-a1');
+            const faqQ2 = document.getElementById('faq-q2');
+            const faqA2 = document.getElementById('faq-a2');
+            const faqQ3 = document.getElementById('faq-q3');
+            const faqA3 = document.getElementById('faq-a3');
+            if (geoPanelTitle) geoPanelTitle.textContent = 'Seoul Area Coverage';
+            if (geoPanelDesc) geoPanelDesc.textContent = 'We prioritize high-demand visitor zones and provide direct map-ready movement links.';
+            if (geoCoreTitle) geoCoreTitle.textContent = 'Core City Zone';
+            if (geoCoreDesc) geoCoreDesc.textContent = 'Fast start around Jongno, Jung, and Yongsan for history/culture and night routes.';
+            if (geoTrendTitle) geoTrendTitle.textContent = 'Trend Zone';
+            if (geoTrendDesc) geoTrendDesc.textContent = 'Explore shopping, cafes, and K-content hubs in Mapo, Seongdong, and Gangnam.';
+            if (geoFamilyTitle) geoFamilyTitle.textContent = 'Family & Nature Zone';
+            if (geoFamilyDesc) geoFamilyDesc.textContent = 'Parks, Han River, and theme-friendly spots across Songpa, Seocho, and Yeongdeungpo.';
+            if (faqPanelTitle) faqPanelTitle.textContent = 'Frequently Asked Questions';
+            if (faqQ1) faqQ1.textContent = 'Where should first-time Seoul visitors start?';
+            if (faqA1) faqA1.textContent = 'Choose a style in Explore first, then connect your top 3 spots to the course page for the most stable itinerary.';
+            if (faqQ2) faqQ2.textContent = 'How often do map and rating data change?';
+            if (faqA2) faqA2.textContent = 'Map and rating data can change with external providers, so check the detail-page map link again before visiting.';
+            if (faqQ3) faqQ3.textContent = 'Can I use this site fully in English?';
+            if (faqA3) faqA3.textContent = 'Use the top language toggle to switch major UI and guidance copy, and links will sync to the lang=en state.';
         }
         if (page === 'course') {
             const hero = document.querySelector('.hero');
@@ -3700,6 +3751,8 @@
         const addressText = details?.formattedAddress || `${getDistrictLabel(place.district)}, Seoul, South Korea`;
         const ratingValue = details?.rating || place.ratingValue || 0;
         const reviewCount = details?.userRatingCount || place.reviewCountValue || 0;
+        const lat = Number(details?.location?.latitude ?? place.geo?.lat ?? 37.5665);
+        const lng = Number(details?.location?.longitude ?? place.geo?.lng ?? 126.9780);
 
         const breadcrumbData = {
             '@context': 'https://schema.org',
@@ -3733,6 +3786,11 @@
                 addressRegion: 'Seoul',
                 addressCountry: 'KR',
                 streetAddress: addressText
+            },
+            geo: {
+                '@type': 'GeoCoordinates',
+                latitude: lat,
+                longitude: lng
             },
             aggregateRating: {
                 '@type': 'AggregateRating',

@@ -36,7 +36,17 @@
             "@type": "Organization",
             "name": "GoSeoul",
             "url": "https://product-builder-lecture-4ec.pages.dev/",
-            "logo": "https://product-builder-lecture-4ec.pages.dev/assets/brand/goseoul-logo.svg"
+            "logo": "https://product-builder-lecture-4ec.pages.dev/assets/brand/goseoul-logo.svg",
+            "areaServed": {
+              "@type": "City",
+              "name": "Seoul"
+            },
+            "knowsAbout": [
+              "Seoul travel planning",
+              "Korea itinerary",
+              "Seoul attractions",
+              "Local transport routes"
+            ]
           }
         ]
       }
@@ -44,6 +54,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001204090329044" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="assets/home/gyeongbokgung.jpg" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/brand/goseoul-favicon.svg">
@@ -110,7 +121,7 @@
                 <div class="korea-mood-grid">
                     <figure class="korea-mood-card">
                         <a id="entry-showcase-link-1" href="place.html?id=place-001">
-                            <img id="entry-showcase-img-1" src="assets/home/gyeongbokgung.jpg" alt="Gyeongbokgung">
+                            <img id="entry-showcase-img-1" src="assets/home/gyeongbokgung.jpg" alt="Gyeongbokgung" fetchpriority="high" decoding="async">
                             <figcaption id="entry-showcase-cap-1">추천 1</figcaption>
                         </a>
                     </figure>
@@ -251,6 +262,6 @@
         </div>
     </footer>
 
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </body>
 </html>

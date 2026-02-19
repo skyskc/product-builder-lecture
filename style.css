@@ -556,6 +556,11 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     margin-top: 18px;
 }
 
+.panel:not(.sticky-panel) {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 560px;
+}
+
 .panel.sticky-panel {
     background: var(--sticky-glass);
     backdrop-filter: blur(8px) saturate(125%);
@@ -654,6 +659,25 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     display: grid;
     gap: 12px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.geo-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.geo-card,
+.faq-item {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--card);
+}
+
+.faq-list {
+    display: grid;
+    gap: 12px;
 }
 
 .generation-grid {
@@ -1796,6 +1820,10 @@ body.dark-mode .entry-primary-cta {
         grid-template-columns: 1fr;
     }
 
+    .geo-grid {
+        grid-template-columns: 1fr;
+    }
+
     .generation-grid {
         grid-template-columns: 1fr;
     }
@@ -1834,6 +1862,15 @@ body.dark-mode .entry-primary-cta {
         width: calc(100% - 16px);
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
