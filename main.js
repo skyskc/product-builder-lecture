@@ -4,6 +4,7 @@
     const LANG_STORAGE_KEY = 'seoul-explorer-lang';
     const ENTRY_CTA_VARIANT_KEY = 'seoul-entry-cta-variant-v1';
     const ENTRY_OVERLAY_LAST_SEEN_KEY = 'seoul-entry-first-overlay-last-seen-v1';
+    const ENTRY_OVERLAY_COPY_VARIANT_KEY = 'seoul-entry-overlay-copy-variant-v1';
     const STYLE_LABELS_BY_LANG = {
         ko: {
             all: '전체',
@@ -1605,6 +1606,14 @@
         return assigned;
     }
 
+    function getEntryOverlayCopyVariant() {
+        const saved = localStorage.getItem(ENTRY_OVERLAY_COPY_VARIANT_KEY);
+        if (saved === 'A' || saved === 'B') return saved;
+        const assigned = Math.random() < 0.5 ? 'A' : 'B';
+        localStorage.setItem(ENTRY_OVERLAY_COPY_VARIANT_KEY, assigned);
+        return assigned;
+    }
+
     function applyEnglishCopy() {
         const navLinks = document.querySelectorAll('.top-nav a');
         if (navLinks[0]) navLinks[0].textContent = 'Explore';
@@ -2907,6 +2916,7 @@
 
         const isEn = CURRENT_LANG === 'en';
         const ctaVariant = getEntryCtaVariant();
+        const overlayCopyVariant = getEntryOverlayCopyVariant();
         const sparkScenarios = isEn
             ? [
                 { mood: 'Royal Heritage Sprint', note: 'Palace + Bukchon + tea alley', href: withCurrentLang('course.html?style=history') },
@@ -2919,38 +2929,72 @@
                 { mood: '트렌드 로컬 루트', note: '성수 + 쇼핑 + 카페 동선', href: withCurrentLang('explore.html?style=shopping') }
             ];
         const overlayScenarios = isEn
-            ? [
-                {
-                    eyebrow: 'First Visit Pick',
-                    title: 'Royal Core Route',
-                    desc: 'Gyeongbokgung, Bukchon, and Ikseon-dong in one smooth loop.',
-                    cta: 'Open Royal Route',
-                    href: withCurrentLang('course.html?style=history')
-                },
-                {
-                    eyebrow: 'First Visit Pick',
-                    title: 'Sunset Night Route',
-                    desc: 'Han River sunset, N Seoul Tower, and local night food.',
-                    cta: 'Open Night Route',
-                    href: withCurrentLang('course.html?style=night')
-                }
-            ]
-            : [
-                {
-                    eyebrow: '첫 방문 추천',
-                    title: '왕도 서울 핵심 루트',
-                    desc: '경복궁, 북촌, 익선동을 한 번에 도는 안정적인 첫 코스입니다.',
-                    cta: '핵심 루트 열기',
-                    href: withCurrentLang('course.html?style=history')
-                },
-                {
-                    eyebrow: '첫 방문 추천',
-                    title: '노을 야경 몰입 루트',
-                    desc: '한강 노을, 남산 야경, 로컬 야식으로 마무리하는 밤 코스입니다.',
-                    cta: '야경 루트 열기',
-                    href: withCurrentLang('course.html?style=night')
-                }
-            ];
+            ? (overlayCopyVariant === 'A'
+                ? [
+                    {
+                        eyebrow: 'First Visit Pick',
+                        title: 'Royal Core Route',
+                        desc: 'Gyeongbokgung, Bukchon, and Ikseon-dong in one smooth loop.',
+                        cta: 'Open Royal Route',
+                        href: withCurrentLang('course.html?style=history')
+                    },
+                    {
+                        eyebrow: 'First Visit Pick',
+                        title: 'Sunset Night Route',
+                        desc: 'Han River sunset, N Seoul Tower, and local night food.',
+                        cta: 'Open Night Route',
+                        href: withCurrentLang('course.html?style=night')
+                    }
+                ]
+                : [
+                    {
+                        eyebrow: 'Recommended Now',
+                        title: 'Start Here for Zero Friction',
+                        desc: 'A curated first-time route with easy flow and high hit-rate spots.',
+                        cta: 'Start Easy Route',
+                        href: withCurrentLang('course.html?style=history')
+                    },
+                    {
+                        eyebrow: 'Recommended Now',
+                        title: 'Night Energy, Low Thinking',
+                        desc: 'Open one route and follow a sunset-to-night sequence instantly.',
+                        cta: 'Start Night Route',
+                        href: withCurrentLang('course.html?style=night')
+                    }
+                ])
+            : (overlayCopyVariant === 'A'
+                ? [
+                    {
+                        eyebrow: '첫 방문 추천',
+                        title: '왕도 서울 핵심 루트',
+                        desc: '경복궁, 북촌, 익선동을 한 번에 도는 안정적인 첫 코스입니다.',
+                        cta: '핵심 루트 열기',
+                        href: withCurrentLang('course.html?style=history')
+                    },
+                    {
+                        eyebrow: '첫 방문 추천',
+                        title: '노을 야경 몰입 루트',
+                        desc: '한강 노을, 남산 야경, 로컬 야식으로 마무리하는 밤 코스입니다.',
+                        cta: '야경 루트 열기',
+                        href: withCurrentLang('course.html?style=night')
+                    }
+                ]
+                : [
+                    {
+                        eyebrow: '지금 바로 추천',
+                        title: '생각 없이 시작하는 서울 루트',
+                        desc: '초행자 기준으로 이동이 편한 동선만 골라 바로 시작할 수 있습니다.',
+                        cta: '쉬운 루트 시작',
+                        href: withCurrentLang('course.html?style=history')
+                    },
+                    {
+                        eyebrow: '지금 바로 추천',
+                        title: '밤 감성 바로 타는 루트',
+                        desc: '노을부터 야경까지 한 번에 이어지는 코스로 바로 이동합니다.',
+                        cta: '야경 루트 시작',
+                        href: withCurrentLang('course.html?style=night')
+                    }
+                ]);
 
         const runSparkPick = () => {
             const picked = sparkScenarios[Math.floor(Math.random() * sparkScenarios.length)];
@@ -2977,7 +3021,8 @@
             if (typeof window.gtag === 'function' && reason) {
                 window.gtag('event', 'entry_first_overlay_close', {
                     lang: CURRENT_LANG,
-                    reason
+                    reason,
+                    variant: overlayCopyVariant
                 });
             }
         };
@@ -2993,12 +3038,14 @@
             firstOverlayDesc.textContent = picked.desc;
             firstOverlayCta.textContent = picked.cta;
             firstOverlayCta.setAttribute('href', picked.href);
+            firstOverlayCta.dataset.variant = overlayCopyVariant;
             firstOverlay.classList.add('is-open');
             firstOverlay.setAttribute('aria-hidden', 'false');
             if (typeof window.gtag === 'function') {
                 window.gtag('event', 'entry_first_overlay_open', {
                     lang: CURRENT_LANG,
-                    route: picked.title
+                    route: picked.title,
+                    variant: overlayCopyVariant
                 });
             }
         };
@@ -3065,7 +3112,8 @@
                     localStorage.setItem(ENTRY_OVERLAY_LAST_SEEN_KEY, todayKey);
                     if (typeof window.gtag === 'function') {
                         window.gtag('event', 'entry_first_overlay_cta_click', {
-                            lang: CURRENT_LANG
+                            lang: CURRENT_LANG,
+                            variant: firstOverlayCta.dataset.variant || overlayCopyVariant
                         });
                     }
                 });
