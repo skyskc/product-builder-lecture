@@ -1056,9 +1056,17 @@ body.dark-mode .ui-chip.tone-food {
     font-size: 0.78rem;
     font-weight: 800;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     cursor: pointer;
     white-space: nowrap;
     transition: border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.kcontent-chip-icon {
+    font-size: 0.9rem;
+    line-height: 1;
 }
 
 .kcontent-chip-btn:hover {

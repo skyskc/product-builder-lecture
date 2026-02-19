@@ -4939,6 +4939,17 @@
         const sortOptions = isEn
             ? [['popular', 'Most Popular'], ['name', 'Name'], ['style', 'Most Informative']]
             : [['popular', '인기순'], ['name', '이름순'], ['style', '정보풍부순']];
+        const filterIcons = {
+            all: '🌐',
+            idol: '🎤',
+            actor: '🎬',
+            celebrity: '⭐'
+        };
+        const sortIcons = {
+            popular: '🔥',
+            name: '🔤',
+            style: '🧠'
+        };
 
         const getCategoryKey = (entry) => {
             const typeText = `${entry.type?.en || ''}`.toLowerCase();
@@ -4964,10 +4975,10 @@
 
         const renderChipButtons = () => {
             filterGroup.innerHTML = filterOptions.map(([value, label]) => `
-                <button class="kcontent-chip-btn${selectedFilter === value ? ' is-active' : ''}" type="button" data-filter="${value}" aria-pressed="${selectedFilter === value ? 'true' : 'false'}">${escapeHtml(label)}</button>
+                <button class="kcontent-chip-btn${selectedFilter === value ? ' is-active' : ''}" type="button" data-filter="${value}" aria-pressed="${selectedFilter === value ? 'true' : 'false'}"><span class="kcontent-chip-icon" aria-hidden="true">${filterIcons[value] || '•'}</span><span>${escapeHtml(label)}</span></button>
             `).join('');
             sortGroup.innerHTML = sortOptions.map(([value, label]) => `
-                <button class="kcontent-chip-btn${selectedSort === value ? ' is-active' : ''}" type="button" data-sort="${value}" aria-pressed="${selectedSort === value ? 'true' : 'false'}">${escapeHtml(label)}</button>
+                <button class="kcontent-chip-btn${selectedSort === value ? ' is-active' : ''}" type="button" data-sort="${value}" aria-pressed="${selectedSort === value ? 'true' : 'false'}"><span class="kcontent-chip-icon" aria-hidden="true">${sortIcons[value] || '•'}</span><span>${escapeHtml(label)}</span></button>
             `).join('');
         };
 
