@@ -56,22 +56,41 @@
     </header>
 
     <main class="container">
-        <section class="panel open-landing">
-            <p id="entry-eyebrow" class="eyebrow">Seoul Voyage</p>
-            <h1 id="entry-title">서울 여행, 10초 안에 시작</h1>
-            <p id="entry-desc">원하는 방식 하나만 고르면 바로 코스 추천을 시작할 수 있습니다.</p>
-            <p id="entry-desc-extra">핵심 명소, 동선, 지도 링크만 빠르게 보여줍니다.</p>
-            <div class="entry-spark-box">
-                <p id="entry-spark-title" class="eyebrow entry-spark-title">입장 무드 체크</p>
-                <button id="entry-spark-btn" class="theme-toggle-btn entry-spark-btn" type="button">오늘의 서울 무드 뽑기</button>
-                <div id="entry-spark-result" class="entry-spark-result">
-                    <p class="data-source-note">버튼을 누르면 지금 바로 시작할 여행 무드를 추천합니다.</p>
+        <div class="entry-first-screen">
+            <section class="panel open-landing">
+                <p id="entry-eyebrow" class="eyebrow">Seoul Voyage</p>
+                <h1 id="entry-title">서울 여행, 10초 안에 시작</h1>
+                <p id="entry-desc">원하는 방식 하나만 고르면 바로 코스 추천을 시작할 수 있습니다.</p>
+                <p id="entry-desc-extra">핵심 명소, 동선, 지도 링크만 빠르게 보여줍니다.</p>
+                <div class="entry-spark-box">
+                    <p id="entry-spark-title" class="eyebrow entry-spark-title">입장 무드 체크</p>
+                    <button id="entry-spark-btn" class="theme-toggle-btn entry-spark-btn" type="button">오늘의 서울 무드 뽑기</button>
+                    <div id="entry-spark-result" class="entry-spark-result">
+                        <p class="data-source-note">버튼을 누르면 지금 바로 시작할 여행 무드를 추천합니다.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="entry-primary-cta-wrap">
-                <a id="entry-primary-cta" class="entry-primary-cta" href="course.html">지금 코스 추천 받기</a>
-                <p id="entry-primary-note" class="data-source-note">가장 빠른 시작: 1일 코스를 먼저 만든 뒤, 명소를 채워가세요.</p>
-            </div>
+                <div class="entry-primary-cta-wrap">
+                    <a id="entry-primary-cta" class="entry-primary-cta" href="course.html">지금 코스 추천 받기</a>
+                    <p id="entry-primary-note" class="data-source-note">가장 빠른 시작: 1일 코스를 먼저 만든 뒤, 명소를 채워가세요.</p>
+                </div>
+            </section>
+
+            <section class="panel korea-showcase">
+                <h2 id="entry-showcase-title">Today&apos;s Featured Pick</h2>
+                <p id="entry-showcase-desc">Start here first.</p>
+                <p id="entry-showcase-date" class="data-source-note"></p>
+                <div class="korea-mood-grid">
+                    <figure class="korea-mood-card">
+                        <a id="entry-showcase-link-1" href="place.html?id=place-001">
+                            <img id="entry-showcase-img-1" src="assets/home/gyeongbokgung.jpg" alt="경복궁">
+                            <figcaption id="entry-showcase-cap-1">Pick 1</figcaption>
+                        </a>
+                    </figure>
+                </div>
+            </section>
+        </div>
+
+        <section class="panel open-secondary">
             <p id="entry-secondary-title" class="eyebrow entry-secondary-title">또는 원하는 방식으로 시작</p>
             <div class="open-plan-grid">
                 <a class="open-plan-card" id="entry-card-explore" href="explore.html">
@@ -86,32 +105,6 @@
                     <strong>재미 플래너 체험하기</strong>
                     <span>퀴즈 + 예산 + 날씨</span>
                 </a>
-            </div>
-        </section>
-
-        <section class="panel korea-showcase">
-            <h2 id="entry-showcase-title">Today&apos;s Seoul Picks</h2>
-            <p id="entry-showcase-desc">Three places selected for today. Tap any card to open details.</p>
-            <p id="entry-showcase-date" class="data-source-note"></p>
-            <div class="korea-mood-grid">
-                <figure class="korea-mood-card">
-                    <a id="entry-showcase-link-1" href="place.html?id=place-001">
-                        <img id="entry-showcase-img-1" src="assets/home/gyeongbokgung.jpg" alt="경복궁">
-                        <figcaption id="entry-showcase-cap-1">Pick 1</figcaption>
-                    </a>
-                </figure>
-                <figure class="korea-mood-card">
-                    <a id="entry-showcase-link-2" href="place.html?id=place-021">
-                        <img id="entry-showcase-img-2" src="assets/home/itaewon.jpg" alt="이태원">
-                        <figcaption id="entry-showcase-cap-2">Pick 2</figcaption>
-                    </a>
-                </figure>
-                <figure class="korea-mood-card">
-                    <a id="entry-showcase-link-3" href="place.html?id=place-058">
-                        <img id="entry-showcase-img-3" src="assets/home/yangjaecheon.jpg" alt="양재천">
-                        <figcaption id="entry-showcase-cap-3">Pick 3</figcaption>
-                    </a>
-                </figure>
             </div>
         </section>
 

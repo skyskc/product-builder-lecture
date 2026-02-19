@@ -704,6 +704,17 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     border: 1px solid rgba(29, 78, 216, 0.12);
 }
 
+.entry-first-screen {
+    min-height: calc(100vh - 96px);
+    display: grid;
+    align-content: start;
+    gap: 10px;
+}
+
+.open-secondary {
+    background: var(--card);
+}
+
 .open-plan-grid {
     margin-top: 14px;
     display: grid;
@@ -825,7 +836,7 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
 }
 
 .entry-secondary-title {
-    margin-top: 16px;
+    margin-top: 0;
     margin-bottom: 4px;
 }
 
@@ -1361,6 +1372,14 @@ body.dark-mode .entry-primary-cta {
     object-fit: cover;
 }
 
+.korea-showcase .korea-mood-grid {
+    grid-template-columns: 1fr;
+}
+
+.korea-showcase .korea-mood-card img {
+    height: 160px;
+}
+
 .korea-mood-card a {
     display: block;
     text-decoration: none;
@@ -1595,6 +1614,10 @@ body.dark-mode .entry-primary-cta {
 
     .open-plan-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .entry-first-screen {
+        min-height: auto;
     }
 
     .korea-mood-grid,

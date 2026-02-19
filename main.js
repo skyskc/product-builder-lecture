@@ -2459,10 +2459,10 @@
 
         if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetRunBtn || !budgetResult || !budgetSaveBtn || !budgetSavedList) return;
 
-        if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Today\'s Seoul Picks' : '오늘의 서울 추천 3곳';
+        if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Today\'s Featured Pick' : '오늘의 대표 추천';
         if (showcaseDesc) showcaseDesc.textContent = isEn
-            ? '3 picks for today.'
-            : '오늘의 추천 3곳입니다.';
+            ? 'Start here first.'
+            : '오늘은 이곳부터 시작해 보세요.';
         if (funEyebrow) funEyebrow.textContent = isEn ? 'Fun Planner Lab' : '재미 플래너 랩';
         if (funTitle) funTitle.textContent = isEn
             ? 'Quick Interactive Tools'
