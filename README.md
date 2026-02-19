@@ -71,3 +71,5 @@ npm run seo:recrawl-check
 - `seo:recrawl-check`: 주요 URL의 canonical/hreflang/OG/Twitter/JSON-LD/robots/sitemap 상태 점검
 
 Cloudflare Pages 반영이 늦거나 실패할 때는 `CLOUDFLARE_PAGES_DEBUG.md`를 확인하세요.
+
+SEO 재크롤링 이후 24~48시간 운영 모니터링은 `SEO_MONITORING_PLAYBOOK_24_48H_2026-02-19.md`를 사용하세요.
