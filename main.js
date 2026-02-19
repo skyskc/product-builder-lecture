@@ -4894,45 +4894,12 @@
     }
 
     function renderKContentPage() {
-        const ensureKcontentControls = () => {
-            let filterGroup = document.getElementById('kcontent-filter-options');
-            let sortGroup = document.getElementById('kcontent-sort-options');
-            let filterLabelEl = document.getElementById('kcontent-filter-label');
-            let sortLabelEl = document.getElementById('kcontent-sort-label');
-            if (filterGroup && sortGroup && filterLabelEl && sortLabelEl) {
-                return { filterGroup, sortGroup, filterLabelEl, sortLabelEl };
-            }
-            const descEl = document.getElementById('kcontent-desc');
-            if (!descEl) return null;
-            const controls = document.createElement('div');
-            controls.className = 'kcontent-controls';
-            controls.innerHTML = `
-                <div class="kcontent-control-item">
-                    <label id="kcontent-filter-label">인물 유형</label>
-                    <div id="kcontent-filter-options" class="kcontent-chip-group" role="group" aria-label="인물 유형"></div>
-                </div>
-                <div class="kcontent-control-item">
-                    <label id="kcontent-sort-label">정렬</label>
-                    <div id="kcontent-sort-options" class="kcontent-chip-group" role="group" aria-label="정렬"></div>
-                </div>
-            `;
-            descEl.insertAdjacentElement('afterend', controls);
-            filterGroup = document.getElementById('kcontent-filter-options');
-            sortGroup = document.getElementById('kcontent-sort-options');
-            filterLabelEl = document.getElementById('kcontent-filter-label');
-            sortLabelEl = document.getElementById('kcontent-sort-label');
-            if (!filterGroup || !sortGroup || !filterLabelEl || !sortLabelEl) return null;
-            return { filterGroup, sortGroup, filterLabelEl, sortLabelEl };
-        };
-
         const titleEl = document.getElementById('kcontent-title');
         const descEl = document.getElementById('kcontent-desc');
         const selectedNoteEl = document.getElementById('kcontent-selected-note');
         const gridEl = document.getElementById('kcontent-character-grid');
         const eyebrowEl = document.querySelector('body[data-page="kcontent"] .panel .eyebrow');
-        const controls = ensureKcontentControls();
-        if (!titleEl || !descEl || !selectedNoteEl || !gridEl || !controls) return;
-        const { filterLabelEl, sortLabelEl, filterGroup, sortGroup } = controls;
+        if (!titleEl || !descEl || !selectedNoteEl || !gridEl) return;
 
         const isEn = CURRENT_LANG === 'en';
         if (eyebrowEl) eyebrowEl.textContent = isEn ? 'Screen Picks' : '스크린픽 추천';
@@ -4941,35 +4908,17 @@
             ? 'Choose globally popular Korean content characters by photo and open a full recommendation screen.'
             : '해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 결과 화면에서 상세 추천을 확인하세요.';
         gridEl.setAttribute('aria-label', isEn ? 'Character selection' : '캐릭터 선택');
-        filterLabelEl.textContent = isEn ? 'Profile Type' : '인물 유형';
-        sortLabelEl.textContent = isEn ? 'Sort' : '정렬';
-        const filterOptions = isEn
-            ? [['all', 'All'], ['idol', 'Idol'], ['actor', 'Actor'], ['celebrity', 'Celebrity']]
-            : [['all', '전체'], ['idol', '아이돌'], ['actor', '배우'], ['celebrity', '연예인']];
-        const sortOptions = isEn
-            ? [['popular', 'Most Popular'], ['name', 'Name'], ['style', 'Most Informative']]
-            : [['popular', '인기순'], ['name', '이름순'], ['style', '정보풍부순']];
-        const filterIcons = {
-            all: '🌐',
-            idol: '🎤',
-            actor: '🎬',
-            celebrity: '⭐'
-        };
-        const sortIcons = {
-            popular: '🔥',
-            name: '🔤',
-            style: '🧠'
-        };
         const normalizePersonText = (text) => String(text || '')
             .toLowerCase()
             .replace(/[^a-z0-9가-힣]/g, '');
+        const NON_PERSON_PORTRAIT_KEYS = new Set(['kpopdemonhunters']);
         const getPersonKey = (entry) => {
+            const portrait = normalizePersonText(entry.portraitPage);
+            if (portrait && !NON_PERSON_PORTRAIT_KEYS.has(portrait)) return `portrait:${portrait}`;
             const nameEn = normalizePersonText(entry.character?.en);
             const nameKo = normalizePersonText(entry.character?.ko);
-            const portrait = normalizePersonText(entry.portraitPage);
             if (nameEn) return `name-en:${nameEn}`;
             if (nameKo) return `name-ko:${nameKo}`;
-            if (portrait) return `portrait:${portrait}`;
             return `id:${entry.id}`;
         };
         const dedupeByPerson = (rows) => {
@@ -4999,56 +4948,21 @@
             return base + styleBonus + actorBonus;
         };
 
-        const FILTER_KEY = 'kcontent-filter';
-        const SORT_KEY = 'kcontent-sort';
-        const savedFilter = localStorage.getItem(FILTER_KEY);
-        const savedSort = localStorage.getItem(SORT_KEY);
-        let selectedFilter = ['all', 'idol', 'actor', 'celebrity'].includes(savedFilter || '') ? savedFilter : 'all';
-        let selectedSort = ['popular', 'name', 'style'].includes(savedSort || '') ? savedSort : 'popular';
-
-        const renderChipButtons = () => {
-            filterGroup.innerHTML = filterOptions.map(([value, label]) => `
-                <button class="kcontent-chip-btn${selectedFilter === value ? ' is-active' : ''}" type="button" data-filter="${value}" aria-pressed="${selectedFilter === value ? 'true' : 'false'}"><span class="kcontent-chip-icon" aria-hidden="true">${filterIcons[value] || '•'}</span><span>${escapeHtml(label)}</span></button>
-            `).join('');
-            sortGroup.innerHTML = sortOptions.map(([value, label]) => `
-                <button class="kcontent-chip-btn${selectedSort === value ? ' is-active' : ''}" type="button" data-sort="${value}" aria-pressed="${selectedSort === value ? 'true' : 'false'}"><span class="kcontent-chip-icon" aria-hidden="true">${sortIcons[value] || '•'}</span><span>${escapeHtml(label)}</span></button>
-            `).join('');
-        };
-
         const renderCharacterGrid = () => {
             let rows = [...KCONTENT_CHARACTERS];
-            if (selectedFilter !== 'all') {
-                rows = rows.filter((entry) => getCategoryKey(entry) === selectedFilter);
-            }
-            if (selectedSort === 'name') {
-                rows.sort((a, b) => {
-                    const nameA = isEn ? (a.character.en || a.character.ko) : (a.character.ko || a.character.en);
-                    const nameB = isEn ? (b.character.en || b.character.ko) : (b.character.ko || b.character.en);
-                    return nameA.localeCompare(nameB, isEn ? 'en' : 'ko');
-                });
-            } else if (selectedSort === 'style') {
-                rows.sort((a, b) => {
-                    const diff = (b.styles?.length || 0) - (a.styles?.length || 0);
-                    if (diff !== 0) return diff;
-                    return getTrendScore(b, 0) - getTrendScore(a, 0);
-                });
-            } else {
-                rows.sort((a, b) => getTrendScore(b, 0) - getTrendScore(a, 0));
-            }
+            rows.sort((a, b) => getTrendScore(b, 0) - getTrendScore(a, 0));
             rows = dedupeByPerson(rows);
             const uniqueTotal = dedupeByPerson([...KCONTENT_CHARACTERS]).length;
 
             selectedNoteEl.textContent = isEn
-                ? `Tap a character card to open full recommendations. ${rows.length} shown / ${uniqueTotal} unique profiles.`
-                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 현재 ${rows.length}개 표시 / 전체 ${uniqueTotal}개(중복 제거) 프로필.`;
+                ? `Tap a character card to open full recommendations. ${rows.length} unique profiles shown.`
+                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 중복 제거된 ${rows.length}개 프로필만 표시됩니다.`;
 
             gridEl.innerHTML = rows.map((entry) => {
                 const charName = isEn ? entry.character.en : entry.character.ko;
                 const workName = isEn ? entry.work.en : entry.work.ko;
                 const score = getTrendScore(entry, 0);
-                const badge = selectedSort === 'popular'
-                    ? (isEn ? `Trend ${score}` : `인기지수 ${score}`)
-                    : (isEn ? `${entry.styles.length} style tags` : `스타일 ${entry.styles.length}개`);
+                const badge = isEn ? `Trend ${score}` : `인기지수 ${score}`;
                 return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt=""></span><span class="kcontent-card-meta"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span><span class="kcontent-card-badge">${escapeHtml(badge)}</span></span></button>`;
             }).join('');
 
@@ -5077,30 +4991,6 @@
                 };
             });
         };
-
-        renderChipButtons();
-        if (!filterGroup.dataset.bound) {
-            filterGroup.addEventListener('click', (event) => {
-                const btn = event.target.closest('button[data-filter]');
-                if (!btn) return;
-                selectedFilter = btn.dataset.filter || 'all';
-                localStorage.setItem(FILTER_KEY, selectedFilter);
-                renderChipButtons();
-                renderCharacterGrid();
-            });
-            filterGroup.dataset.bound = '1';
-        }
-        if (!sortGroup.dataset.bound) {
-            sortGroup.addEventListener('click', (event) => {
-                const btn = event.target.closest('button[data-sort]');
-                if (!btn) return;
-                selectedSort = btn.dataset.sort || 'popular';
-                localStorage.setItem(SORT_KEY, selectedSort);
-                renderChipButtons();
-                renderCharacterGrid();
-            });
-            sortGroup.dataset.bound = '1';
-        }
         renderCharacterGrid();
     }
 
