@@ -106,6 +106,7 @@ const PUBLIC_ROOT_FILES = new Set([
   'sw.js',
   'robots.txt',
   'sitemap.xml',
+  'rss.xml',
   'ads.txt',
   'favicon.ico'
 ]);
@@ -432,7 +433,15 @@ function resolveStaticPath(urlPathname) {
   if (relativePath.endsWith('/')) {
     relativePath += 'index.html';
   }
-  const requestPath = relativePath.replace(/^\/+/, '');
+  let requestPath = relativePath.replace(/^\/+/, '');
+  // Support extensionless routes such as /kcontent -> /kcontent.html in local dev.
+  if (requestPath && !requestPath.includes('.') && requestPath !== 'index') {
+    const htmlAlias = `${requestPath}.html`;
+    if (PUBLIC_ROOT_FILES.has(htmlAlias)) {
+      requestPath = htmlAlias;
+      relativePath = `/${htmlAlias}`;
+    }
+  }
   if (!requestPath) return null;
   const pathSegments = requestPath.split('/').filter(Boolean);
   const isWellKnownAdsPath = requestPath === '.well-known/ads.txt';
