@@ -1323,7 +1323,18 @@
         'taeyang': 'assets/kcontent/taeyang.jpg',
         'gong-hyo-jin': 'assets/kcontent/gong-hyo-jin.png',
         'jun-ji-hyun': 'assets/kcontent/jun-ji-hyun.png',
-        'lee-jong-suk': 'assets/kcontent/lee-jong-suk.png'
+        'lee-jong-suk': 'assets/kcontent/lee-jong-suk.png',
+        'song-hye-kyo': 'assets/kcontent/song-hye-kyo.jpg',
+        'song-kang': 'assets/kcontent/song-kang.png',
+        'kim-yoo-jung': 'assets/kcontent/kim-yoo-jung.png',
+        'kim-seon-ho': 'assets/kcontent/kim-seon-ho.png',
+        'han-so-hee': 'assets/kcontent/han-so-hee.jpg',
+        'rowoon': 'assets/kcontent/rowoon.png',
+        'kwon-eun-bi': 'assets/kcontent/kwon-eun-bi.jpg',
+        'ahn-yu-jin': 'assets/kcontent/ahn-yu-jin.png',
+        'winter-aespa': 'assets/kcontent/winter-aespa.jpg',
+        'doyoung-nct': 'assets/kcontent/doyoung-nct.jpg',
+        'ji-chang-wook': 'assets/kcontent/ji-chang-wook.png'
     };
     const KCONTENT_TRAIT_BY_STYLE = {
         ko: {

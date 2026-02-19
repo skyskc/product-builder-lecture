@@ -1009,6 +1009,7 @@ body.dark-mode .ui-chip.tone-food {
 
 
 .kcontent-card {
+    position: relative;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: var(--card);
@@ -1064,7 +1065,22 @@ body.dark-mode .entry-primary-cta {
     display: grid;
     gap: 2px;
     padding: 10px 11px 12px;
-    background: var(--card);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(6, 16, 36, 0) 0%, rgba(6, 16, 36, 0.78) 28%, rgba(6, 16, 36, 0.94) 100%);
+    color: #f8fbff;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+    pointer-events: none;
+}
+
+.kcontent-card:hover .kcontent-card-meta,
+.kcontent-card:focus-visible .kcontent-card-meta {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .kcontent-card-title {
@@ -1092,13 +1108,31 @@ body.dark-mode .entry-primary-cta {
     padding: 3px 8px;
     font-size: 0.68rem;
     font-weight: 700;
-    color: var(--muted);
-    background: var(--chip);
+    color: #e8f0ff;
+    background: rgba(14, 24, 48, 0.56);
+    border-color: rgba(231, 241, 255, 0.35);
 }
 
 .kcontent-card:hover .kcontent-card-thumb img,
 .kcontent-card:focus-visible .kcontent-card-thumb img {
     transform: scale(1.04);
+}
+
+@media (hover: none), (pointer: coarse) {
+    .kcontent-card-meta {
+        position: static;
+        background: var(--card);
+        color: var(--text);
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .kcontent-card-badge {
+        color: var(--muted);
+        background: var(--chip);
+        border-color: var(--line);
+    }
 }
 
 .saju-grid {
