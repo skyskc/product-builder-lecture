@@ -1758,11 +1758,17 @@
             const eyebrow = document.getElementById('entry-eyebrow');
             const title = document.getElementById('entry-title');
             const desc = document.getElementById('entry-desc');
+            const cta = document.getElementById('entry-primary-cta');
+            const ctaNote = document.getElementById('entry-primary-note');
+            const secondaryTitle = document.getElementById('entry-secondary-title');
             const explore = document.getElementById('entry-card-explore');
             const course = document.getElementById('entry-card-course');
             if (eyebrow) eyebrow.textContent = 'Seoul Voyage';
             if (title) title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             if (desc) desc.textContent = 'Pick one path and get map-ready recommendations right away.';
+            if (cta) cta.textContent = 'Get My Seoul Route Now';
+            if (ctaNote) ctaNote.textContent = 'Fastest start: build a one-day route first, then expand with spot details.';
+            if (secondaryTitle) secondaryTitle.textContent = 'Or start with another path';
             if (explore) explore.innerHTML = '<strong>Explore Top Spots</strong><span>See must-visit places with map-ready links</span>';
             if (course) course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route, hotel, and food picks in one flow</span>';
         }
@@ -2814,10 +2820,13 @@
         const title = document.getElementById('entry-title');
         const desc = document.getElementById('entry-desc');
         const descExtra = document.getElementById('entry-desc-extra');
+        const cta = document.getElementById('entry-primary-cta');
+        const ctaNote = document.getElementById('entry-primary-note');
+        const secondaryTitle = document.getElementById('entry-secondary-title');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
         const navLinks = document.querySelectorAll('.top-nav a');
-        if (!eyebrow || !title || !desc || !descExtra || !explore || !course) return;
+        if (!eyebrow || !title || !desc || !descExtra || !cta || !ctaNote || !secondaryTitle || !explore || !course) return;
 
         const isEn = CURRENT_LANG === 'en';
         if (isEn) {
@@ -2825,6 +2834,9 @@
             title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             desc.textContent = 'Pick one path and get map-ready recommendations right away.';
             descExtra.textContent = 'Simple by design: top spots, smart routes, and practical links for first-time visitors.';
+            cta.textContent = 'Get My Seoul Route Now';
+            ctaNote.textContent = 'Fastest start: build a one-day route first, then expand with spot details.';
+            secondaryTitle.textContent = 'Or start with another path';
             explore.innerHTML = '<strong>Explore Top Spots</strong><span>See must-visit places with map-ready links</span>';
             course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route, hotel, and food picks in one flow</span>';
             if (navLinks[0]) navLinks[0].textContent = 'Explore';
@@ -2835,6 +2847,9 @@
             title.textContent = '서울 여행, 10초 안에 시작';
             desc.textContent = '원하는 방식 하나만 고르면 바로 추천 코스를 확인할 수 있습니다.';
             descExtra.textContent = '초행자도 바로 이해할 수 있도록 명소, 동선, 지도 링크를 단순하게 정리했습니다.';
+            cta.textContent = '지금 코스 추천 받기';
+            ctaNote.textContent = '가장 빠른 시작: 1일 코스를 먼저 만든 뒤, 명소를 채워가세요.';
+            secondaryTitle.textContent = '또는 원하는 방식으로 시작';
             explore.innerHTML = '<strong>핵심 명소 둘러보기</strong><span>서울 인기 장소를 지도 링크와 함께 확인</span>';
             course.innerHTML = '<strong>1일 코스 바로 만들기</strong><span>스타일별 동선 + 호텔 + 식당 추천</span>';
             if (navLinks[0]) navLinks[0].textContent = '여행지 탐색';
