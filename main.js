@@ -3,6 +3,7 @@
     const THEME_STORAGE_KEY = 'seoul-explorer-theme';
     const LANG_STORAGE_KEY = 'seoul-explorer-lang';
     const ENTRY_CTA_VARIANT_KEY = 'seoul-entry-cta-variant-v1';
+    const ENTRY_OVERLAY_LAST_SEEN_KEY = 'seoul-entry-first-overlay-last-seen-v1';
     const STYLE_LABELS_BY_LANG = {
         ko: {
             all: '전체',
@@ -2892,6 +2893,13 @@
         const sparkTitle = document.getElementById('entry-spark-title');
         const sparkBtn = document.getElementById('entry-spark-btn');
         const sparkResult = document.getElementById('entry-spark-result');
+        const firstOverlay = document.getElementById('entry-first-overlay');
+        const firstOverlayBackdrop = firstOverlay?.querySelector('[data-overlay-close="1"]');
+        const firstOverlayClose = document.getElementById('entry-first-overlay-close');
+        const firstOverlayEyebrow = document.getElementById('entry-first-overlay-eyebrow');
+        const firstOverlayTitle = document.getElementById('entry-first-overlay-title');
+        const firstOverlayDesc = document.getElementById('entry-first-overlay-desc');
+        const firstOverlayCta = document.getElementById('entry-first-overlay-cta');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
         const navLinks = document.querySelectorAll('.top-nav a');
@@ -2910,6 +2918,39 @@
                 { mood: '노을 야경 루트', note: '한강 + 전망 포인트 + 야식', href: withCurrentLang('course.html?style=night') },
                 { mood: '트렌드 로컬 루트', note: '성수 + 쇼핑 + 카페 동선', href: withCurrentLang('explore.html?style=shopping') }
             ];
+        const overlayScenarios = isEn
+            ? [
+                {
+                    eyebrow: 'First Visit Pick',
+                    title: 'Royal Core Route',
+                    desc: 'Gyeongbokgung, Bukchon, and Ikseon-dong in one smooth loop.',
+                    cta: 'Open Royal Route',
+                    href: withCurrentLang('course.html?style=history')
+                },
+                {
+                    eyebrow: 'First Visit Pick',
+                    title: 'Sunset Night Route',
+                    desc: 'Han River sunset, N Seoul Tower, and local night food.',
+                    cta: 'Open Night Route',
+                    href: withCurrentLang('course.html?style=night')
+                }
+            ]
+            : [
+                {
+                    eyebrow: '첫 방문 추천',
+                    title: '왕도 서울 핵심 루트',
+                    desc: '경복궁, 북촌, 익선동을 한 번에 도는 안정적인 첫 코스입니다.',
+                    cta: '핵심 루트 열기',
+                    href: withCurrentLang('course.html?style=history')
+                },
+                {
+                    eyebrow: '첫 방문 추천',
+                    title: '노을 야경 몰입 루트',
+                    desc: '한강 노을, 남산 야경, 로컬 야식으로 마무리하는 밤 코스입니다.',
+                    cta: '야경 루트 열기',
+                    href: withCurrentLang('course.html?style=night')
+                }
+            ];
 
         const runSparkPick = () => {
             const picked = sparkScenarios[Math.floor(Math.random() * sparkScenarios.length)];
@@ -2923,6 +2964,41 @@
                 window.gtag('event', 'entry_spark_pick_click', {
                     lang: CURRENT_LANG,
                     mood: picked.mood
+                });
+            }
+        };
+
+        const closeFirstOverlay = (reason) => {
+            if (!firstOverlay) return;
+            firstOverlay.classList.remove('is-open');
+            firstOverlay.setAttribute('aria-hidden', 'true');
+            const todayKey = new Date().toISOString().slice(0, 10);
+            localStorage.setItem(ENTRY_OVERLAY_LAST_SEEN_KEY, todayKey);
+            if (typeof window.gtag === 'function' && reason) {
+                window.gtag('event', 'entry_first_overlay_close', {
+                    lang: CURRENT_LANG,
+                    reason
+                });
+            }
+        };
+
+        const openFirstOverlay = () => {
+            if (!firstOverlay || !firstOverlayEyebrow || !firstOverlayTitle || !firstOverlayDesc || !firstOverlayCta) return;
+            const todayKey = new Date().toISOString().slice(0, 10);
+            if (localStorage.getItem(ENTRY_OVERLAY_LAST_SEEN_KEY) === todayKey) return;
+            const picked = overlayScenarios[Math.floor(Math.random() * overlayScenarios.length)];
+            if (!picked) return;
+            firstOverlayEyebrow.textContent = picked.eyebrow;
+            firstOverlayTitle.textContent = picked.title;
+            firstOverlayDesc.textContent = picked.desc;
+            firstOverlayCta.textContent = picked.cta;
+            firstOverlayCta.setAttribute('href', picked.href);
+            firstOverlay.classList.add('is-open');
+            firstOverlay.setAttribute('aria-hidden', 'false');
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'entry_first_overlay_open', {
+                    lang: CURRENT_LANG,
+                    route: picked.title
                 });
             }
         };
@@ -2979,6 +3055,29 @@
         if (!sparkBtn.dataset.bound) {
             sparkBtn.addEventListener('click', runSparkPick);
             sparkBtn.dataset.bound = '1';
+        }
+        if (firstOverlay && !firstOverlay.dataset.bound) {
+            if (firstOverlayClose) firstOverlayClose.addEventListener('click', () => closeFirstOverlay('close_button'));
+            if (firstOverlayBackdrop) firstOverlayBackdrop.addEventListener('click', () => closeFirstOverlay('backdrop'));
+            if (firstOverlayCta) {
+                firstOverlayCta.addEventListener('click', () => {
+                    const todayKey = new Date().toISOString().slice(0, 10);
+                    localStorage.setItem(ENTRY_OVERLAY_LAST_SEEN_KEY, todayKey);
+                    if (typeof window.gtag === 'function') {
+                        window.gtag('event', 'entry_first_overlay_cta_click', {
+                            lang: CURRENT_LANG
+                        });
+                    }
+                });
+            }
+            firstOverlay.dataset.bound = '1';
+        }
+        if (firstOverlay) {
+            if (firstOverlay.dataset.timerId) {
+                clearTimeout(Number(firstOverlay.dataset.timerId));
+            }
+            const timerId = setTimeout(openFirstOverlay, 3000);
+            firstOverlay.dataset.timerId = String(timerId);
         }
         initEntryFunLab();
     }
