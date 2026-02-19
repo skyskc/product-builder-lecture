@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node server.js",
     "adsense:check": "node tools/adsense-check.js",
-    "adsense:live-check": "node tools/adsense-live-check.js"
+    "adsense:live-check": "node tools/adsense-live-check.js",
+    "deploy:live-check": "node tools/deploy-live-check.js",
+    "seo:recrawl-check": "node tools/seo-recrawl-check.js"
   }
 }

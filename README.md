@@ -59,3 +59,15 @@ npm start
 1. 홈에서 Budget Game 실행
 2. `Save Result` 클릭
 3. 카드 하단 저장 목록에서 저장된 결과 확인
+
+## 7) 배포/SEO 자동 점검
+
+```bash
+npm run deploy:live-check
+npm run seo:recrawl-check
+```
+
+- `deploy:live-check`: 라이브 사이트가 최신 배포(스크립트 defer, GEO/FAQ 섹션, 구조화데이터)까지 반영됐는지 확인
+- `seo:recrawl-check`: 주요 URL의 canonical/hreflang/OG/Twitter/JSON-LD/robots/sitemap 상태 점검
+
+Cloudflare Pages 반영이 늦거나 실패할 때는 `CLOUDFLARE_PAGES_DEBUG.md`를 확인하세요.
