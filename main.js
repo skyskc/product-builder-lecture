@@ -2485,10 +2485,15 @@
         ];
 
         const todayPickFallbackImages = [
-            'https://images.pexels.com/photos/237211/pexels-photo-237211.jpeg?auto=compress&cs=tinysrgb&w=1200',
-            'https://images.pexels.com/photos/261395/pexels-photo-261395.jpeg?auto=compress&cs=tinysrgb&w=1200',
-            'https://images.pexels.com/photos/290595/pexels-photo-290595.jpeg?auto=compress&cs=tinysrgb&w=1200'
+            'assets/home/gyeongbokgung.jpg',
+            'assets/home/itaewon.jpg',
+            'assets/home/yangjaecheon.jpg'
         ];
+        const todayPickFixedImageByPlaceId = {
+            'place-001': 'assets/home/gyeongbokgung.jpg',
+            'place-021': 'assets/home/itaewon.jpg',
+            'place-058': 'assets/home/yangjaecheon.jpg'
+        };
 
         const weatherRoutesByLang = {
             en: {
@@ -2618,7 +2623,7 @@
                 card.cap.textContent = isEn
                     ? `${idx + 1}. ${card.place.nameEn || card.place.name}`
                     : `${idx + 1}. ${card.place.name}`;
-                card.img.src = card.fallback;
+                card.img.src = todayPickFixedImageByPlaceId[card.place.id] || card.fallback;
                 card.img.alt = isEn
                     ? `${card.place.nameEn || card.place.name} in Seoul`
                     : `서울 추천지 ${card.place.name}`;
@@ -2626,6 +2631,7 @@
 
             await Promise.all(cards.map(async (card) => {
                 if (!card.place || !card.img) return;
+                if (todayPickFixedImageByPlaceId[card.place.id]) return;
                 try {
                     const response = await fetch(`/api/place-photo?query=${encodeURIComponent(card.place.mapQuery)}`);
                     if (!response.ok) return;
