@@ -2889,18 +2889,52 @@
         const cta = document.getElementById('entry-primary-cta');
         const ctaNote = document.getElementById('entry-primary-note');
         const secondaryTitle = document.getElementById('entry-secondary-title');
+        const sparkTitle = document.getElementById('entry-spark-title');
+        const sparkBtn = document.getElementById('entry-spark-btn');
+        const sparkResult = document.getElementById('entry-spark-result');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
         const navLinks = document.querySelectorAll('.top-nav a');
-        if (!eyebrow || !title || !desc || !descExtra || !cta || !ctaNote || !secondaryTitle || !explore || !course) return;
+        if (!eyebrow || !title || !desc || !descExtra || !cta || !ctaNote || !secondaryTitle || !sparkTitle || !sparkBtn || !sparkResult || !explore || !course) return;
 
         const isEn = CURRENT_LANG === 'en';
         const ctaVariant = getEntryCtaVariant();
+        const sparkScenarios = isEn
+            ? [
+                { mood: 'Royal Heritage Sprint', note: 'Palace + Bukchon + tea alley', href: withCurrentLang('course.html?style=history') },
+                { mood: 'Sunset Pulse Route', note: 'Han river + night view + late bites', href: withCurrentLang('course.html?style=night') },
+                { mood: 'Trendy Local Wave', note: 'Seongsu + shopping + cafe chain', href: withCurrentLang('explore.html?style=shopping') }
+            ]
+            : [
+                { mood: '궁궐 감성 러시', note: '궁궐 + 북촌 + 찻집 골목', href: withCurrentLang('course.html?style=history') },
+                { mood: '노을 야경 루트', note: '한강 + 전망 포인트 + 야식', href: withCurrentLang('course.html?style=night') },
+                { mood: '트렌드 로컬 루트', note: '성수 + 쇼핑 + 카페 동선', href: withCurrentLang('explore.html?style=shopping') }
+            ];
+
+        const runSparkPick = () => {
+            const picked = sparkScenarios[Math.floor(Math.random() * sparkScenarios.length)];
+            if (!picked) return;
+            sparkResult.innerHTML = `
+                <p><strong>${escapeHtml(picked.mood)}</strong></p>
+                <p class="data-source-note">${escapeHtml(picked.note)}</p>
+                <a class="text-link" href="${escapeHtml(picked.href)}">${isEn ? 'Open this route' : '이 루트 바로 열기'}</a>
+            `;
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'entry_spark_pick_click', {
+                    lang: CURRENT_LANG,
+                    mood: picked.mood
+                });
+            }
+        };
+
         if (isEn) {
             eyebrow.textContent = 'Seoul Voyage';
             title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             desc.textContent = 'Pick one path and get map-ready recommendations right away.';
             descExtra.textContent = 'Simple by design: top spots, smart routes, and practical links for first-time visitors.';
+            sparkTitle.textContent = 'Entrance Mood Check';
+            sparkBtn.textContent = 'Draw Today\'s Seoul Mood';
+            sparkResult.innerHTML = '<p class="data-source-note">Press once to get a quick travel mood and instant route.</p>';
             cta.textContent = ctaVariant === 'A' ? 'Get My Seoul Route Now' : 'Start 1-Day Seoul Plan';
             ctaNote.textContent = ctaVariant === 'A'
                 ? 'Fastest start: build a one-day route first, then expand with spot details.'
@@ -2916,6 +2950,9 @@
             title.textContent = '서울 여행, 10초 안에 시작';
             desc.textContent = '원하는 방식 하나만 고르면 바로 추천 코스를 확인할 수 있습니다.';
             descExtra.textContent = '초행자도 바로 이해할 수 있도록 명소, 동선, 지도 링크를 단순하게 정리했습니다.';
+            sparkTitle.textContent = '입장 무드 체크';
+            sparkBtn.textContent = '오늘의 서울 무드 뽑기';
+            sparkResult.innerHTML = '<p class="data-source-note">한 번 누르면 바로 시작할 여행 무드와 루트를 추천합니다.</p>';
             cta.textContent = ctaVariant === 'A' ? '지금 코스 추천 받기' : '내 일정 바로 만들기';
             ctaNote.textContent = ctaVariant === 'A'
                 ? '가장 빠른 시작: 1일 코스를 먼저 만든 뒤, 명소를 채워가세요.'
@@ -2938,6 +2975,10 @@
                 }
             });
             cta.dataset.bound = '1';
+        }
+        if (!sparkBtn.dataset.bound) {
+            sparkBtn.addEventListener('click', runSparkPick);
+            sparkBtn.dataset.bound = '1';
         }
         initEntryFunLab();
     }

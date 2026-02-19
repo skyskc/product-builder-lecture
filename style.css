@@ -714,6 +714,31 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     margin-top: 12px;
 }
 
+.entry-spark-box {
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px;
+    background: linear-gradient(145deg, rgba(29, 78, 216, 0.08), rgba(15, 23, 42, 0.02));
+}
+
+.entry-spark-title {
+    margin-bottom: 8px;
+}
+
+.entry-spark-btn {
+    width: 100%;
+    font-weight: 800;
+}
+
+.entry-spark-result {
+    margin-top: 8px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    padding: 10px;
+    background: var(--card);
+}
+
 .entry-primary-cta {
     display: inline-flex;
     align-items: center;
