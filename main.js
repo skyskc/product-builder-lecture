@@ -1345,6 +1345,11 @@
             local: 'Local Texture'
         }
     };
+    const KCONTENT_TREND_RANK = [
+        'jungkook', 'jennie', 'jisoo', 'wonyoung', 'karina', 'hanni', 'v-bts', 'jimin', 'rm', 'suga',
+        'cha-eun-woo', 'iu', 'g-dragon', 'taeyeon', 'song-kang', 'han-so-hee', 'kim-soo-hyun', 'lee-min-ho', 'jun-ji-hyun', 'park-bo-gum',
+        'song-hye-kyo', 'ji-chang-wook', 'kim-yoo-jung', 'kim-seon-ho', 'ahn-yu-jin', 'winter-aespa', 'doyoung-nct', 'kwon-eun-bi'
+    ];
     const KCONTENT_FOOD_SPOTS = [
         { name: '광장시장 빈대떡 골목', district: '종로구', styles: ['local', 'night'], desc: { ko: '현장감 있는 로컬 에너지', en: 'High-energy local street food vibe' } },
         { name: '익선동 한옥 다이닝', district: '종로구', styles: ['art', 'history'], desc: { ko: '한옥 감성과 현대 플레이팅 조합', en: 'Hanok ambiance with modern plating' } },
@@ -4779,7 +4784,7 @@
                 ];
             const relatedCharacters = KCONTENT_CHARACTERS
                 .filter((entry) => entry.id !== character.id && entry.styles.some((style) => styles.includes(style)))
-                .slice(0, 6);
+                .slice(0, 10);
             const relatedTitle = isEn ? 'Similar Celebrity Profiles' : '비슷한 연예인 프로필';
             const relatedHtml = relatedCharacters.length
                 ? `
@@ -4797,7 +4802,7 @@
             analysisEl.innerHTML = `${paragraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('')}${relatedHtml}`;
         }
 
-        const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 12);
+        const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 16);
         listEl.innerHTML = picked.map((place, idx) => {
             const href = getPlaceLink('place.html', place.id);
             const matched = place.styles.filter((style) => styles.includes(style)).slice(0, 2).map((style) => getStyleLabel(style)).join(isEn ? ' + ' : ' + ');
@@ -4810,7 +4815,7 @@
         if (foodListEl) {
             const foodPicks = KCONTENT_FOOD_SPOTS
                 .filter((food) => styles.some((style) => food.styles.includes(style)))
-                .slice(0, 10);
+                .slice(0, 14);
             foodListEl.innerHTML = foodPicks.map((food, idx) => {
                 const why = isEn ? food.desc.en : food.desc.ko;
                 return `<li><strong>${idx + 1}. ${escapeHtml(food.name)}</strong> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(food.district))})</span><p class="saju-reason">${escapeHtml(why)}</p></li>`;
@@ -4823,46 +4828,114 @@
         const descEl = document.getElementById('kcontent-desc');
         const selectedNoteEl = document.getElementById('kcontent-selected-note');
         const gridEl = document.getElementById('kcontent-character-grid');
-        if (!titleEl || !descEl || !selectedNoteEl || !gridEl) return;
+        const filterLabelEl = document.getElementById('kcontent-filter-label');
+        const sortLabelEl = document.getElementById('kcontent-sort-label');
+        const filterSelect = document.getElementById('kcontent-type-filter');
+        const sortSelect = document.getElementById('kcontent-sort-select');
+        if (!titleEl || !descEl || !selectedNoteEl || !gridEl || !filterLabelEl || !sortLabelEl || !filterSelect || !sortSelect) return;
 
         const isEn = CURRENT_LANG === 'en';
         titleEl.textContent = isEn ? 'K-Content Character Travel Recommender' : '한국 콘텐츠 캐릭터 기반 여행 추천';
         descEl.textContent = isEn
             ? 'Choose globally popular Korean content characters by photo and open a full recommendation screen.'
             : '해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 결과 화면에서 상세 추천을 확인하세요.';
-        selectedNoteEl.textContent = isEn
-            ? `Tap a character card to open full recommendations. ${KCONTENT_CHARACTERS.length} profiles are available.`
-            : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 현재 ${KCONTENT_CHARACTERS.length}개 프로필을 제공합니다.`;
         gridEl.setAttribute('aria-label', isEn ? 'Character selection' : '캐릭터 선택');
+        filterLabelEl.textContent = isEn ? 'Profile Type' : '인물 유형';
+        sortLabelEl.textContent = isEn ? 'Sort' : '정렬';
+        filterSelect.innerHTML = isEn
+            ? '<option value="all">All</option><option value="idol">Idol</option><option value="actor">Actor</option><option value="celebrity">Celebrity</option>'
+            : '<option value="all">전체</option><option value="idol">아이돌</option><option value="actor">배우</option><option value="celebrity">연예인</option>';
+        sortSelect.innerHTML = isEn
+            ? '<option value="popular">Most Popular</option><option value="name">Name</option><option value="style">Most Informative</option>'
+            : '<option value="popular">인기순</option><option value="name">이름순</option><option value="style">정보풍부순</option>';
 
-        gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
-            const charName = isEn ? entry.character.en : entry.character.ko;
-            const workName = isEn ? entry.work.en : entry.work.ko;
-            return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt=""><span class="kcontent-card-overlay"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span></span></span></button>`;
-        }).join('');
+        const getCategoryKey = (entry) => {
+            const typeText = `${entry.type?.en || ''}`.toLowerCase();
+            if (typeText.includes('idol')) return 'idol';
+            if (typeText.includes('actor') || typeText.includes('actress')) return 'actor';
+            return 'celebrity';
+        };
+        const trendIndexById = Object.fromEntries(KCONTENT_TREND_RANK.map((id, idx) => [id, idx]));
+        const getTrendScore = (entry, idx) => {
+            const rankIdx = trendIndexById[entry.id];
+            const base = typeof rankIdx === 'number' ? (1000 - rankIdx * 10) : (400 - idx);
+            const styleBonus = Array.isArray(entry.styles) ? entry.styles.length * 8 : 0;
+            const actorBonus = getCategoryKey(entry) === 'actor' ? 5 : 0;
+            return base + styleBonus + actorBonus;
+        };
 
-        const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
-        cards.forEach((card) => {
-            card.addEventListener('click', () => {
-                const charId = card.dataset.id;
-                window.location.href = withCurrentLang(`kcontent-result.html?char=${encodeURIComponent(charId)}`);
+        const renderCharacterGrid = () => {
+            const selectedFilter = filterSelect.value || 'all';
+            const selectedSort = sortSelect.value || 'popular';
+            let rows = [...KCONTENT_CHARACTERS];
+            if (selectedFilter !== 'all') {
+                rows = rows.filter((entry) => getCategoryKey(entry) === selectedFilter);
+            }
+            if (selectedSort === 'name') {
+                rows.sort((a, b) => {
+                    const nameA = isEn ? (a.character.en || a.character.ko) : (a.character.ko || a.character.en);
+                    const nameB = isEn ? (b.character.en || b.character.ko) : (b.character.ko || b.character.en);
+                    return nameA.localeCompare(nameB, isEn ? 'en' : 'ko');
+                });
+            } else if (selectedSort === 'style') {
+                rows.sort((a, b) => {
+                    const diff = (b.styles?.length || 0) - (a.styles?.length || 0);
+                    if (diff !== 0) return diff;
+                    return getTrendScore(b, 0) - getTrendScore(a, 0);
+                });
+            } else {
+                rows.sort((a, b) => getTrendScore(b, 0) - getTrendScore(a, 0));
+            }
+
+            selectedNoteEl.textContent = isEn
+                ? `Tap a character card to open full recommendations. ${rows.length} shown / ${KCONTENT_CHARACTERS.length} total profiles.`
+                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 현재 ${rows.length}개 표시 / 전체 ${KCONTENT_CHARACTERS.length}개 프로필.`;
+
+            gridEl.innerHTML = rows.map((entry) => {
+                const charName = isEn ? entry.character.en : entry.character.ko;
+                const workName = isEn ? entry.work.en : entry.work.ko;
+                const score = getTrendScore(entry, 0);
+                const badge = selectedSort === 'popular'
+                    ? (isEn ? `Trend ${score}` : `인기지수 ${score}`)
+                    : (isEn ? `${entry.styles.length} style tags` : `스타일 ${entry.styles.length}개`);
+                return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt=""><span class="kcontent-card-overlay"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span><span class="kcontent-card-work">${escapeHtml(badge)}</span></span></span></button>`;
+            }).join('');
+
+            const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
+            cards.forEach((card) => {
+                card.addEventListener('click', () => {
+                    const charId = card.dataset.id;
+                    window.location.href = withCurrentLang(`kcontent-result.html?char=${encodeURIComponent(charId)}`);
+                });
             });
-        });
 
-        cards.forEach((card) => {
-            const entry = getKContentCharacterById(card.dataset.id);
-            const imgEl = card.querySelector('img');
-            if (!entry || !imgEl) return;
-            const src = getKContentLocalImagePath(entry.id);
-            imgEl.src = src;
-            imgEl.loading = 'lazy';
-            imgEl.decoding = 'async';
-            imgEl.alt = '';
-            imgEl.onerror = () => {
-                imgEl.src = KCONTENT_IMAGE_FALLBACK;
+            cards.forEach((card) => {
+                const entry = getKContentCharacterById(card.dataset.id);
+                const imgEl = card.querySelector('img');
+                if (!entry || !imgEl) return;
+                const src = getKContentLocalImagePath(entry.id);
+                imgEl.src = src;
+                imgEl.loading = 'lazy';
+                imgEl.decoding = 'async';
                 imgEl.alt = '';
-            };
-        });
+                imgEl.onerror = () => {
+                    imgEl.src = KCONTENT_IMAGE_FALLBACK;
+                    imgEl.alt = '';
+                };
+            });
+        };
+
+        filterSelect.value = 'all';
+        sortSelect.value = 'popular';
+        if (!filterSelect.dataset.bound) {
+            filterSelect.addEventListener('change', renderCharacterGrid);
+            filterSelect.dataset.bound = '1';
+        }
+        if (!sortSelect.dataset.bound) {
+            sortSelect.addEventListener('change', renderCharacterGrid);
+            sortSelect.dataset.bound = '1';
+        }
+        renderCharacterGrid();
     }
 
     function renderKContentResultPage() {

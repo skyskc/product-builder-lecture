@@ -55,6 +55,25 @@
             <h1 id="kcontent-title">한국 콘텐츠 캐릭터 기반 여행 추천</h1>
             <p id="kcontent-desc">해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 캐릭터 무드에 맞는 서울 동선을 추천받으세요.</p>
             <p id="kcontent-selected-note" class="data-source-note">캐릭터 카드를 누르면 결과 화면으로 넘어가 상세 추천이 표시됩니다.</p>
+            <div class="kcontent-controls">
+                <div class="kcontent-control-item">
+                    <label id="kcontent-filter-label" for="kcontent-type-filter">인물 유형</label>
+                    <select id="kcontent-type-filter" class="kcontent-control-select">
+                        <option value="all">전체</option>
+                        <option value="idol">아이돌</option>
+                        <option value="actor">배우</option>
+                        <option value="celebrity">연예인</option>
+                    </select>
+                </div>
+                <div class="kcontent-control-item">
+                    <label id="kcontent-sort-label" for="kcontent-sort-select">정렬</label>
+                    <select id="kcontent-sort-select" class="kcontent-control-select">
+                        <option value="popular">인기순</option>
+                        <option value="name">이름순</option>
+                        <option value="style">정보풍부순</option>
+                    </select>
+                </div>
+            </div>
             <div id="kcontent-character-grid" class="kcontent-character-grid" role="listbox" aria-label="캐릭터 선택"></div>
         </section>
     </main>
