@@ -4998,7 +4998,7 @@
                 const badge = selectedSort === 'popular'
                     ? (isEn ? `Trend ${score}` : `인기지수 ${score}`)
                     : (isEn ? `${entry.styles.length} style tags` : `스타일 ${entry.styles.length}개`);
-                return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt=""><span class="kcontent-card-overlay"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span><span class="kcontent-card-work">${escapeHtml(badge)}</span></span></span></button>`;
+                return `<button class="kcontent-card" type="button" data-id="${entry.id}" role="option" aria-selected="false" aria-label="${escapeHtml(charName)} - ${escapeHtml(workName)}"><span class="kcontent-card-thumb"><img src="${KCONTENT_IMAGE_FALLBACK}" alt=""></span><span class="kcontent-card-meta"><span class="kcontent-card-title">${escapeHtml(charName)}</span><span class="kcontent-card-work">${escapeHtml(workName)}</span><span class="kcontent-card-badge">${escapeHtml(badge)}</span></span></button>`;
             }).join('');
 
             const cards = Array.from(gridEl.querySelectorAll('.kcontent-card'));
