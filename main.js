@@ -2932,6 +2932,7 @@
         const featuredLink = document.getElementById('entry-showcase-link-1');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
+        const funCard = document.getElementById('entry-card-fun');
         const navLinks = document.querySelectorAll('.top-nav a');
         if (!eyebrow || !title || !desc || !descExtra || !cta || !ctaNote || !secondaryTitle || !sparkTitle || !sparkBtn || !sparkResult || !explore || !course) return;
         const setChipTexts = (selector, labels) => {
@@ -3088,6 +3089,9 @@
             setChipTexts('#budget-card-body .fun-mini-ui .ui-chip', ['Budget', 'Route', 'Food']);
             sparkTitle.textContent = 'Entrance Mood Check';
             sparkBtn.textContent = 'Draw Today\'s Seoul Mood';
+            sparkBtn.setAttribute('aria-label', 'Draw today\'s Seoul mood');
+            const langBtn = document.getElementById('lang-toggle-btn');
+            if (langBtn) langBtn.setAttribute('aria-label', 'Switch language');
             sparkResult.innerHTML = '<p class="data-source-note">Press once to get a quick travel mood and instant route.</p>';
             cta.textContent = ctaVariant === 'A' ? 'Get My Seoul Route Now' : 'Start 1-Day Seoul Plan';
             ctaNote.textContent = ctaVariant === 'A'
@@ -3096,9 +3100,11 @@
             secondaryTitle.textContent = 'Or start with another path';
             explore.innerHTML = '<strong>Explore Top Spots</strong><span>Spots + maps</span>';
             course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route + food + hotel</span>';
+            if (funCard) funCard.innerHTML = '<strong>Try Fun Planner</strong><span>Quiz + budget + weather</span>';
             if (navLinks[0]) navLinks[0].textContent = 'Explore';
             if (navLinks[1]) navLinks[1].textContent = 'Planner';
             if (navLinks[2]) navLinks[2].textContent = 'Fun Lab';
+            if (firstOverlayClose) firstOverlayClose.setAttribute('aria-label', 'Close');
         } else {
             eyebrow.textContent = '서울 보야지';
             title.textContent = '서울 여행, 10초 안에 시작';
@@ -3110,6 +3116,9 @@
             setChipTexts('#budget-card-body .fun-mini-ui .ui-chip', ['예산', '루트', '식당']);
             sparkTitle.textContent = '입장 무드 체크';
             sparkBtn.textContent = '오늘의 서울 무드 뽑기';
+            sparkBtn.setAttribute('aria-label', '오늘의 서울 무드 뽑기');
+            const langBtn = document.getElementById('lang-toggle-btn');
+            if (langBtn) langBtn.setAttribute('aria-label', '언어 전환');
             sparkResult.innerHTML = '<p class="data-source-note">한 번 누르면 바로 시작할 여행 무드와 루트를 추천합니다.</p>';
             cta.textContent = ctaVariant === 'A' ? '지금 코스 추천 받기' : '내 일정 바로 만들기';
             ctaNote.textContent = ctaVariant === 'A'
@@ -3118,9 +3127,11 @@
             secondaryTitle.textContent = '또는 원하는 방식으로 시작';
             explore.innerHTML = '<strong>핵심 명소 둘러보기</strong><span>명소 + 지도</span>';
             course.innerHTML = '<strong>1일 코스 바로 만들기</strong><span>동선 + 식당 + 호텔</span>';
+            if (funCard) funCard.innerHTML = '<strong>재미 플래너 체험하기</strong><span>퀴즈 + 예산 + 날씨</span>';
             if (navLinks[0]) navLinks[0].textContent = '여행지 탐색';
             if (navLinks[1]) navLinks[1].textContent = '코스 플래너';
             if (navLinks[2]) navLinks[2].textContent = '재미 플래너';
+            if (firstOverlayClose) firstOverlayClose.setAttribute('aria-label', '닫기');
         }
         cta.dataset.variant = ctaVariant;
         if (!cta.dataset.bound) {
