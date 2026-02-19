@@ -2934,6 +2934,12 @@
         const course = document.getElementById('entry-card-course');
         const navLinks = document.querySelectorAll('.top-nav a');
         if (!eyebrow || !title || !desc || !descExtra || !cta || !ctaNote || !secondaryTitle || !sparkTitle || !sparkBtn || !sparkResult || !explore || !course) return;
+        const setChipTexts = (selector, labels) => {
+            const chips = document.querySelectorAll(selector);
+            chips.forEach((chip, idx) => {
+                if (labels[idx]) chip.textContent = labels[idx];
+            });
+        };
 
         const isEn = CURRENT_LANG === 'en';
         const ctaVariant = getEntryCtaVariant();
@@ -3076,6 +3082,10 @@
             title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             desc.textContent = 'Pick one path and start now.';
             descExtra.textContent = 'Only essentials.';
+            setChipTexts('.entry-quick-ui .ui-chip', ['Top Pick', 'Route', 'Map']);
+            setChipTexts('#quiz-card-body .fun-mini-ui .ui-chip', ['3 Picks', 'Type', 'Route']);
+            setChipTexts('#weather-card-body .fun-mini-ui .ui-chip', ['Sunny', 'Rainy', 'Switch']);
+            setChipTexts('#budget-card-body .fun-mini-ui .ui-chip', ['Budget', 'Route', 'Food']);
             sparkTitle.textContent = 'Entrance Mood Check';
             sparkBtn.textContent = 'Draw Today\'s Seoul Mood';
             sparkResult.innerHTML = '<p class="data-source-note">Press once to get a quick travel mood and instant route.</p>';
@@ -3094,6 +3104,10 @@
             title.textContent = '서울 여행, 10초 안에 시작';
             desc.textContent = '원하는 방식 하나만 고르면 바로 시작됩니다.';
             descExtra.textContent = '핵심만 빠르게.';
+            setChipTexts('.entry-quick-ui .ui-chip', ['대표 추천', '동선', '지도']);
+            setChipTexts('#quiz-card-body .fun-mini-ui .ui-chip', ['3선택', '유형', '루트']);
+            setChipTexts('#weather-card-body .fun-mini-ui .ui-chip', ['맑음', '비', '전환']);
+            setChipTexts('#budget-card-body .fun-mini-ui .ui-chip', ['예산', '루트', '식당']);
             sparkTitle.textContent = '입장 무드 체크';
             sparkBtn.textContent = '오늘의 서울 무드 뽑기';
             sparkResult.innerHTML = '<p class="data-source-note">한 번 누르면 바로 시작할 여행 무드와 루트를 추천합니다.</p>';
