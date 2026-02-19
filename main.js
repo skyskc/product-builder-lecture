@@ -1788,14 +1788,16 @@
         const params = new URLSearchParams(window.location.search);
         const langQuery = params.get('lang');
         if (langQuery === 'en' || langQuery === 'ko') return langQuery;
-        return 'ko';
+        const langStored = localStorage.getItem(LANG_STORAGE_KEY);
+        if (langStored === 'en' || langStored === 'ko') return langStored;
+        return 'en';
     }
 
     function withCurrentLang(urlText) {
         const url = new URL(urlText, window.location.href);
         if (url.origin !== window.location.origin) return url.toString();
-        if (CURRENT_LANG === 'en') {
-            url.searchParams.set('lang', 'en');
+        if (CURRENT_LANG === 'ko') {
+            url.searchParams.set('lang', 'ko');
         } else {
             url.searchParams.delete('lang');
         }
@@ -1900,7 +1902,7 @@
             if (faqQ2) faqQ2.textContent = 'How often do map and rating data change?';
             if (faqA2) faqA2.textContent = 'Map and rating data can change with external providers, so check the detail-page map link again before visiting.';
             if (faqQ3) faqQ3.textContent = 'Can I use this site fully in English?';
-            if (faqA3) faqA3.textContent = 'Use the top language toggle to switch major UI and guidance copy, and links will sync to the lang=en state.';
+            if (faqA3) faqA3.textContent = 'Use the top language toggle to switch Korean UI when needed, and links will sync to the lang=ko state.';
         }
         if (page === 'course') {
             const hero = document.querySelector('.hero');
@@ -2208,7 +2210,7 @@
             const nextLang = CURRENT_LANG === 'en' ? 'ko' : 'en';
             localStorage.setItem(LANG_STORAGE_KEY, nextLang);
             const nextUrl = new URL(window.location.href);
-            if (nextLang === 'en') nextUrl.searchParams.set('lang', 'en');
+            if (nextLang === 'ko') nextUrl.searchParams.set('lang', 'ko');
             else nextUrl.searchParams.delete('lang');
             window.location.href = nextUrl.toString();
         });
@@ -3732,14 +3734,14 @@
     }
 
     function updatePlaceStructuredData(place, details) {
-        const langParam = CURRENT_LANG === 'en' ? '&lang=en' : '';
+        const langParam = CURRENT_LANG === 'ko' ? '&lang=ko' : '';
         const canonicalUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}${langParam}`;
         const canonicalEl = document.getElementById('canonical-link');
         const altKoEl = document.getElementById('alternate-ko-link');
         const altEnEl = document.getElementById('alternate-en-link');
         if (canonicalEl) canonicalEl.href = canonicalUrl;
-        if (altKoEl) altKoEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}`;
-        if (altEnEl) altEnEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}&lang=en`;
+        if (altKoEl) altKoEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}&lang=ko`;
+        if (altEnEl) altEnEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}`;
 
         const breadcrumbScript = document.getElementById('ld-breadcrumb');
         const attractionScript = document.getElementById('ld-attraction');

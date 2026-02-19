@@ -14,9 +14,9 @@
 ## 2) 우선 인덱싱 요청 (URL 검사)
 아래 우선 URL부터 URL 검사 후 `색인 생성 요청`을 진행하세요.
 - 홈: `https://product-builder-lecture-4ec.pages.dev/`
-- 영문 홈: `https://product-builder-lecture-4ec.pages.dev/?lang=en`
+- 한글 홈: `https://product-builder-lecture-4ec.pages.dev/?lang=ko`
 - 코스: `https://product-builder-lecture-4ec.pages.dev/course.html`
-- 영문 코스: `https://product-builder-lecture-4ec.pages.dev/course.html?lang=en`
+- 한글 코스: `https://product-builder-lecture-4ec.pages.dev/course.html?lang=ko`
 - 정책 페이지:
   - `https://product-builder-lecture-4ec.pages.dev/about.html`
   - `https://product-builder-lecture-4ec.pages.dev/editorial.html`
