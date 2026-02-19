@@ -61,7 +61,12 @@
                 <p id="entry-eyebrow" class="eyebrow">Seoul Voyage</p>
                 <h1 id="entry-title">서울 여행, 10초 안에 시작</h1>
                 <p id="entry-desc">원하는 방식 하나만 고르면 바로 코스 추천을 시작할 수 있습니다.</p>
-                <p id="entry-desc-extra">핵심 명소, 동선, 지도 링크만 빠르게 보여줍니다.</p>
+                <div class="entry-quick-ui">
+                    <span class="ui-chip">Top Pick</span>
+                    <span class="ui-chip">Route</span>
+                    <span class="ui-chip">Map</span>
+                </div>
+                <p id="entry-desc-extra">핵심 정보만 빠르게.</p>
                 <div class="entry-spark-box">
                     <p id="entry-spark-title" class="eyebrow entry-spark-title">입장 무드 체크</p>
                     <button id="entry-spark-btn" class="theme-toggle-btn entry-spark-btn" type="button">오늘의 서울 무드 뽑기</button>
@@ -118,7 +123,12 @@
                         <span class="fun-card-chevron">+</span>
                     </button>
                     <div id="quiz-card-body" class="fun-card-body">
-                        <p id="quiz-card-desc">Answer three quick preferences and get your travel type with a recommended route.</p>
+                        <div class="fun-mini-ui">
+                            <span class="ui-chip">3 Picks</span>
+                            <span class="ui-chip">Type</span>
+                            <span class="ui-chip">Route</span>
+                        </div>
+                        <p id="quiz-card-desc" class="fun-card-desc">Answer three quick preferences and get your travel type with a recommended route.</p>
                         <div class="fun-form-grid">
                             <select id="quiz-energy-select" class="sort-select">
                                 <option value="low">Relaxed pace</option>
@@ -147,7 +157,12 @@
                         <span class="fun-card-chevron">+</span>
                     </button>
                     <div id="weather-card-body" class="fun-card-body is-collapsed">
-                        <p id="weather-card-desc">Toggle weather mode and instantly see where to go next.</p>
+                        <div class="fun-mini-ui">
+                            <span class="ui-chip">Sunny</span>
+                            <span class="ui-chip">Rainy</span>
+                            <span class="ui-chip">Switch</span>
+                        </div>
+                        <p id="weather-card-desc" class="fun-card-desc">Toggle weather mode and instantly see where to go next.</p>
                         <div class="weather-toggle-row">
                             <button id="weather-sunny-btn" class="theme-toggle-btn weather-btn active" type="button" data-weather="sunny">Sunny</button>
                             <button id="weather-rainy-btn" class="theme-toggle-btn weather-btn" type="button" data-weather="rainy">Rainy</button>
@@ -162,7 +177,12 @@
                         <span class="fun-card-chevron">+</span>
                     </button>
                     <div id="budget-card-body" class="fun-card-body is-collapsed">
-                        <p id="budget-card-desc">Set your daily budget and run to get a route + restaurant bundle.</p>
+                        <div class="fun-mini-ui">
+                            <span class="ui-chip">Budget</span>
+                            <span class="ui-chip">Route</span>
+                            <span class="ui-chip">Food</span>
+                        </div>
+                        <p id="budget-card-desc" class="fun-card-desc">Set your daily budget and run to get a route + restaurant bundle.</p>
                         <label id="budget-slider-label" for="budget-game-slider">Daily budget (USD)</label>
                         <input id="budget-game-slider" type="range" min="10" max="1000" value="150">
                         <p id="budget-game-value" class="budget-game-value">$150</p>

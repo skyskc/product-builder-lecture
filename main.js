@@ -2469,16 +2469,16 @@
             : '빠른 인터랙티브 도구';
         if (quizTitle) quizTitle.textContent = isEn ? '1) Seoul Archetype Quiz' : '1) 서울 여행자 유형 퀴즈';
         if (quizDesc) quizDesc.textContent = isEn
-            ? '3 answers, 1 travel type.'
-            : '3가지 선택으로 유형을 찾습니다.';
+            ? '3 picks, 1 type.'
+            : '3가지 선택, 1개 유형.';
         if (weatherTitle) weatherTitle.textContent = isEn ? '2) Rainy Day vs Sunny Day Switch' : '2) 비 오는 날 vs 맑은 날 스위치';
         if (weatherDesc) weatherDesc.textContent = isEn
-            ? 'One toggle, new route.'
-            : '토글 한 번으로 루트 변경.';
+            ? 'Toggle to swap route.'
+            : '토글로 루트 전환.';
         if (budgetTitle) budgetTitle.textContent = isEn ? '3) Budget Game' : '3) 예산 게임';
         if (budgetDesc) budgetDesc.textContent = isEn
-            ? 'Set budget, get instant bundle.'
-            : '예산 설정 후 즉시 추천.';
+            ? 'Set budget, get bundle.'
+            : '예산 설정, 즉시 추천.';
         if (quizRunBtn) quizRunBtn.textContent = isEn ? 'Get My Archetype' : '내 유형 보기';
         if (budgetSliderLabel) budgetSliderLabel.textContent = isEn ? 'Daily budget (USD)' : '하루 예산 (USD)';
         if (budgetRunBtn) budgetRunBtn.textContent = isEn ? 'Run Budget Plan' : '예산 플랜 실행';
@@ -3075,7 +3075,7 @@
             eyebrow.textContent = 'Seoul Voyage';
             title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             desc.textContent = 'Pick one path and start now.';
-            descExtra.textContent = 'Top spots, routes, and maps only.';
+            descExtra.textContent = 'Only essentials.';
             sparkTitle.textContent = 'Entrance Mood Check';
             sparkBtn.textContent = 'Draw Today\'s Seoul Mood';
             sparkResult.innerHTML = '<p class="data-source-note">Press once to get a quick travel mood and instant route.</p>';
@@ -3093,7 +3093,7 @@
             eyebrow.textContent = '서울 보야지';
             title.textContent = '서울 여행, 10초 안에 시작';
             desc.textContent = '원하는 방식 하나만 고르면 바로 시작됩니다.';
-            descExtra.textContent = '명소, 동선, 지도만 빠르게 제공합니다.';
+            descExtra.textContent = '핵심만 빠르게.';
             sparkTitle.textContent = '입장 무드 체크';
             sparkBtn.textContent = '오늘의 서울 무드 뽑기';
             sparkResult.innerHTML = '<p class="data-source-note">한 번 누르면 바로 시작할 여행 무드와 루트를 추천합니다.</p>';
