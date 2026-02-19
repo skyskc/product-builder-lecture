@@ -1548,6 +1548,15 @@ body.dark-mode .entry-primary-cta {
     gap: 12px;
 }
 
+.fun-lab-toggle-btn {
+    margin: 4px 0 10px;
+    width: 100%;
+}
+
+.fun-lab.is-collapsed #entry-fun-lab-content {
+    display: none;
+}
+
 .fun-card {
     border: 1px solid var(--line);
     border-radius: 14px;

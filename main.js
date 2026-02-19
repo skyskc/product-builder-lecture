@@ -2829,6 +2829,7 @@
         const showcaseCap1 = document.getElementById('entry-showcase-cap-1');
         const funEyebrow = document.getElementById('entry-fun-eyebrow');
         const funTitle = document.getElementById('entry-fun-title');
+        const funToggleBtn = document.getElementById('entry-fun-toggle-btn');
         const quizTitle = document.getElementById('quiz-card-title');
         const quizDesc = document.getElementById('quiz-card-desc');
         const weatherTitle = document.getElementById('weather-card-title');
@@ -2864,6 +2865,15 @@
         if (funTitle) funTitle.textContent = isEn
             ? 'Quick Interactive Tools'
             : '빠른 인터랙티브 도구';
+        const updateFunToggleLabel = () => {
+            if (!funToggleBtn) return;
+            const isCollapsed = section.classList.contains('is-collapsed');
+            funToggleBtn.textContent = isEn
+                ? (isCollapsed ? 'Show Fun Tools' : 'Hide Fun Tools')
+                : (isCollapsed ? '재미 도구 펼치기' : '재미 도구 접기');
+            funToggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        };
+        updateFunToggleLabel();
         if (quizTitle) quizTitle.textContent = isEn ? '1) Seoul Archetype Quiz' : '1) 서울 여행자 유형 퀴즈';
         if (quizDesc) quizDesc.textContent = isEn
             ? '3 picks, 1 type.'
@@ -3305,6 +3315,12 @@
             budgetRunBtn.addEventListener('click', runBudgetGame);
             budgetSaveBtn.addEventListener('click', saveBudgetResult);
             if (luckyPickBtn) luckyPickBtn.addEventListener('click', runLuckyPick);
+            if (funToggleBtn) {
+                funToggleBtn.addEventListener('click', () => {
+                    section.classList.toggle('is-collapsed');
+                    updateFunToggleLabel();
+                });
+            }
             section.dataset.bound = '1';
         }
         initFunCardAccordion();

@@ -155,9 +155,13 @@
             </div>
         </section>
 
-        <section id="entry-fun-lab" class="panel fun-lab">
+        <section id="entry-fun-lab" class="panel fun-lab is-collapsed">
             <p id="entry-fun-eyebrow" class="eyebrow">Fun Planner Lab</p>
             <h2 id="entry-fun-title">Quick Interactive Tools</h2>
+            <button id="entry-fun-toggle-btn" class="theme-toggle-btn fun-lab-toggle-btn" type="button" aria-expanded="false" aria-controls="entry-fun-lab-content">
+                Show Fun Tools
+            </button>
+            <div id="entry-fun-lab-content">
             <div class="fun-feature-grid">
                 <article class="fun-card">
                     <button class="fun-card-toggle" type="button" data-target="quiz-card-body" aria-expanded="true">
@@ -242,6 +246,7 @@
                 <div id="entry-lucky-pick-result" class="fun-lucky-result">
                     <p class="data-source-note">현재 취향 기준으로 랜덤 코스 3개를 추천합니다.</p>
                 </div>
+            </div>
             </div>
         </section>
     </main>
