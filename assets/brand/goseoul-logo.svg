@@ -1,12 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="GoSeoul logo">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320" viewBox="0 0 960 320" role="img" aria-label="GoSeoul logo">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1d4ed8"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#ffffff"/>
     </linearGradient>
   </defs>
-  <rect x="32" y="32" width="448" height="448" rx="120" fill="url(#bg)"/>
-  <circle cx="256" cy="256" r="150" fill="none" stroke="#ffffff" stroke-width="18" opacity="0.94"/>
-  <path d="M322 256h-66" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
-  <text x="152" y="278" fill="#ffffff" font-family="Cinzel, 'Noto Sans KR', sans-serif" font-size="120" font-weight="700" letter-spacing="3">GS</text>
+
+  <rect x="24" y="24" width="272" height="272" rx="78" fill="url(#bg)"/>
+  <rect x="24" y="24" width="272" height="272" rx="78" fill="none" stroke="#334155" stroke-width="2"/>
+  <circle cx="160" cy="160" r="78" fill="none" stroke="url(#ring)" stroke-width="14" opacity="0.95"/>
+  <path d="M205 160h-34" stroke="#7dd3fc" stroke-width="10" stroke-linecap="round"/>
+  <path d="M160 114a46 46 0 1 0 33 14" fill="none" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+  <path d="M198 106l20 6-6 20" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="338" y="165" fill="url(#word)" font-family="Cinzel, 'Noto Sans KR', sans-serif" font-size="98" font-weight="700" letter-spacing="1">GoSeoul</text>
+  <text x="340" y="215" fill="#94a3b8" font-family="'Noto Sans KR', sans-serif" font-size="28" font-weight="600" letter-spacing="2">TRAVEL INTELLIGENCE</text>
 </svg>
