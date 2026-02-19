@@ -1263,6 +1263,246 @@
                 ko: '로컬 거리와 야간 포인트를 연속 배치한 코스가 잘 맞습니다.',
                 en: 'Back-to-back local streets and night hotspots fit this profile well.'
             }
+        },
+        {
+            id: 'park-shin-hye',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '박신혜', en: 'Park Shin-hye' },
+            portraitPage: 'Park_Shin-hye',
+            styles: ['history', 'family'],
+            mood: {
+                ko: '안정적이고 따뜻한 리듬을 선호하는 타입',
+                en: 'A profile preferring stable and warm travel rhythm.'
+            },
+            reason: {
+                ko: '고궁과 산책형 코스를 중심으로 이동하면 만족도가 높습니다.',
+                en: 'Palace and walk-focused routes tend to work best.'
+            }
+        },
+        {
+            id: 'kim-go-eun',
+            work: { ko: '드라마·영화', en: 'Drama & Film' },
+            type: { ko: '배우', en: 'Actor' },
+            character: { ko: '김고은', en: 'Kim Go-eun' },
+            portraitPage: 'Kim_Go-eun',
+            styles: ['art', 'local'],
+            mood: {
+                ko: '섬세한 감정선과 로컬 결을 동시에 보는 타입',
+                en: 'A profile balancing subtle emotion and local texture.'
+            },
+            reason: {
+                ko: '전시 공간과 골목형 로컬 스팟을 결합하면 몰입이 깊어집니다.',
+                en: 'Combining gallery spaces with local alleys deepens immersion.'
+            }
+        },
+        {
+            id: 'shin-min-a',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '신민아', en: 'Shin Min-a' },
+            portraitPage: 'Shin_Min-a',
+            styles: ['nature', 'shopping'],
+            mood: {
+                ko: '편안한 회복감과 세련된 트렌드를 함께 추구하는 타입',
+                en: 'A profile combining restorative comfort with refined trends.'
+            },
+            reason: {
+                ko: '공원·강변 동선 뒤 트렌드 구역으로 이어지는 구성이 효율적입니다.',
+                en: 'A nature-first route followed by trend districts is effective.'
+            }
+        },
+        {
+            id: 'kim-ji-won',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '김지원', en: 'Kim Ji-won' },
+            portraitPage: 'Kim_Ji-won',
+            styles: ['shopping', 'night'],
+            mood: {
+                ko: '도시형 세련미와 야간 무드를 선호하는 타입',
+                en: 'A profile favoring urban polish and night mood.'
+            },
+            reason: {
+                ko: '야간 뷰포인트와 쇼핑 축을 묶은 코스가 잘 맞습니다.',
+                en: 'Routes mixing night viewpoints with shopping hubs fit well.'
+            }
+        },
+        {
+            id: 'byeon-woo-seok',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '변우석', en: 'Byeon Woo-seok' },
+            portraitPage: 'Byeon_Woo-seok',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '감성적인 야간 톤과 시각적 연출을 중시하는 타입',
+                en: 'A profile focused on emotional night tone and visual staging.'
+            },
+            reason: {
+                ko: '야경과 전시형 스팟을 결합한 코스에서 강점이 드러납니다.',
+                en: 'Strength appears on routes linking night scenes and art spots.'
+            }
+        },
+        {
+            id: 'kim-hye-yoon',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '김혜윤', en: 'Kim Hye-yoon' },
+            portraitPage: 'Kim_Hye-yoon',
+            styles: ['history', 'nature'],
+            mood: {
+                ko: '밝은 톤의 스토리성과 산책형 이동을 선호하는 타입',
+                en: 'A profile preferring bright storytelling and walkable flow.'
+            },
+            reason: {
+                ko: '고궁권과 강변 산책 구간을 함께 넣으면 체감이 좋습니다.',
+                en: 'Palace zones plus riverside walks create strong balance.'
+            }
+        },
+        {
+            id: 'ahn-hyo-seop',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '안효섭', en: 'Ahn Hyo-seop' },
+            portraitPage: 'Ahn_Hyo-seop',
+            styles: ['shopping', 'art'],
+            mood: {
+                ko: '현대적 감각과 깔끔한 동선을 선호하는 타입',
+                en: 'A profile favoring modern taste and clean movement flow.'
+            },
+            reason: {
+                ko: '전시/디자인 스팟 중심 코스와 트렌드 구역 연결이 적합합니다.',
+                en: 'Design-forward routes linked to trend zones fit naturally.'
+            }
+        },
+        {
+            id: 'lee-jae-wook',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '이재욱', en: 'Lee Jae-wook' },
+            portraitPage: 'Lee_Jae-wook',
+            styles: ['history', 'night'],
+            mood: {
+                ko: '서사 중심 이동과 강한 야간 포인트를 선호하는 타입',
+                en: 'A profile preferring narrative routes and bold night points.'
+            },
+            reason: {
+                ko: '역사 구간과 야경 구간의 대비가 큰 동선이 잘 맞습니다.',
+                en: 'High-contrast routes between history and night work well.'
+            }
+        },
+        {
+            id: 'go-min-si',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '고민시', en: 'Go Min-si' },
+            portraitPage: 'Go_Min-si',
+            styles: ['local', 'night'],
+            mood: {
+                ko: '로컬 밀도와 야간 리듬을 함께 체험하는 타입',
+                en: 'A profile exploring local density with night rhythm.'
+            },
+            reason: {
+                ko: '로컬 골목-야간 포인트가 이어지는 코스에서 만족도가 높습니다.',
+                en: 'Local alley to night-spot continuity raises satisfaction.'
+            }
+        },
+        {
+            id: 'rose-blackpink',
+            work: { ko: 'BLACKPINK', en: 'BLACKPINK' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '로제', en: 'Rosé' },
+            portraitPage: 'Rosé_(singer)',
+            styles: ['shopping', 'art'],
+            mood: {
+                ko: '세련된 스타일 감도와 아트 무드를 선호하는 타입',
+                en: 'A profile with polished style sense and art mood.'
+            },
+            reason: {
+                ko: '쇼핑 허브와 전시형 공간을 묶은 코스가 높은 적합도를 보입니다.',
+                en: 'Routes linking shopping hubs and art spaces fit strongly.'
+            }
+        },
+        {
+            id: 'lisa-blackpink',
+            work: { ko: 'BLACKPINK', en: 'BLACKPINK' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '리사', en: 'Lisa' },
+            portraitPage: 'Lisa_(rapper)',
+            styles: ['night', 'shopping'],
+            mood: {
+                ko: '고에너지 리듬과 트렌드 소비가 빠른 타입',
+                en: 'A high-energy profile with fast trend adoption.'
+            },
+            reason: {
+                ko: '야간 핫스팟과 트렌드 거리 중심의 고속 동선이 잘 맞습니다.',
+                en: 'Fast-paced routes around night hotspots and trend streets fit best.'
+            }
+        },
+        {
+            id: 'jin-bts',
+            work: { ko: 'BTS', en: 'BTS' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '진', en: 'Jin' },
+            portraitPage: 'Jin_(singer)',
+            styles: ['family', 'history'],
+            mood: {
+                ko: '안정적인 페이스와 클래식한 코스를 선호하는 타입',
+                en: 'A profile preferring stable pace and classic routes.'
+            },
+            reason: {
+                ko: '역사 스팟과 편안한 식음·휴식 동선을 함께 배치하는 구성이 적합합니다.',
+                en: 'A balanced flow of history spots and comfort stops works well.'
+            }
+        },
+        {
+            id: 'sana-twice',
+            work: { ko: 'TWICE', en: 'TWICE' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '사나', en: 'Sana' },
+            portraitPage: 'Sana_(singer)',
+            styles: ['shopping', 'nature'],
+            mood: {
+                ko: '밝은 무드와 산책형 휴식을 함께 추구하는 타입',
+                en: 'A profile blending bright mood with walkable recovery.'
+            },
+            reason: {
+                ko: '트렌드 쇼핑 동선 사이에 공원형 휴식 포인트를 넣는 구성이 좋습니다.',
+                en: 'Adding park-like recovery points between shopping segments works well.'
+            }
+        },
+        {
+            id: 'hyunjin-skz',
+            work: { ko: 'Stray Kids', en: 'Stray Kids' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '현진', en: 'Hyunjin' },
+            portraitPage: 'Hyunjin_(singer)',
+            styles: ['art', 'night'],
+            mood: {
+                ko: '비주얼 아트 감도와 야간 몰입감을 동시에 중시하는 타입',
+                en: 'A profile emphasizing visual-art sensitivity and night immersion.'
+            },
+            reason: {
+                ko: '전시형 공간 후 야간 무드 포인트로 이어지는 흐름이 가장 적합합니다.',
+                en: 'Art-space first, then night-mood points is the best sequence.'
+            }
+        },
+        {
+            id: 'kai-exo',
+            work: { ko: 'EXO', en: 'EXO' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '카이', en: 'Kai' },
+            portraitPage: 'Kai_(singer,_born_1994)',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '퍼포먼스형 에너지와 스타일 연출을 선호하는 타입',
+                en: 'A profile preferring performance-driven energy and style staging.'
+            },
+            reason: {
+                ko: '야간 포인트와 디자인 스팟이 결합된 코스에서 몰입이 높습니다.',
+                en: 'Immersion peaks on routes combining night highlights and design spots.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -1359,7 +1599,9 @@
     const KCONTENT_TREND_RANK = [
         'jungkook', 'jennie', 'jisoo', 'wonyoung', 'karina', 'hanni', 'v-bts', 'jimin', 'rm', 'suga',
         'cha-eun-woo', 'iu', 'g-dragon', 'taeyeon', 'song-kang', 'han-so-hee', 'kim-soo-hyun', 'lee-min-ho', 'jun-ji-hyun', 'park-bo-gum',
-        'song-hye-kyo', 'ji-chang-wook', 'kim-yoo-jung', 'kim-seon-ho', 'ahn-yu-jin', 'winter-aespa', 'doyoung-nct', 'kwon-eun-bi'
+        'song-hye-kyo', 'ji-chang-wook', 'kim-yoo-jung', 'kim-seon-ho', 'ahn-yu-jin', 'winter-aespa', 'doyoung-nct', 'kwon-eun-bi',
+        'rose-blackpink', 'lisa-blackpink', 'jin-bts', 'sana-twice', 'hyunjin-skz', 'kai-exo',
+        'park-shin-hye', 'kim-go-eun', 'kim-ji-won', 'byeon-woo-seok', 'kim-hye-yoon', 'ahn-hyo-seop', 'lee-jae-wook', 'go-min-si', 'shin-min-a'
     ];
     const KCONTENT_FOOD_SPOTS = [
         { name: '광장시장 빈대떡 골목', district: '종로구', styles: ['local', 'night'], desc: { ko: '현장감 있는 로컬 에너지', en: 'High-energy local street food vibe' } },
@@ -4843,7 +5085,32 @@
 
     function getKContentLocalImagePath(characterId) {
         const path = KCONTENT_LOCAL_IMAGE_MAP[characterId];
-        return path ? withCurrentLang(path) : KCONTENT_IMAGE_FALLBACK;
+        return path ? withCurrentLang(path) : null;
+    }
+
+    const KCONTENT_WIKI_IMAGE_CACHE = new Map();
+    async function getKContentWikiImagePath(entry) {
+        if (!entry?.portraitPage) return null;
+        const cacheKey = String(entry.portraitPage);
+        if (KCONTENT_WIKI_IMAGE_CACHE.has(cacheKey)) {
+            return KCONTENT_WIKI_IMAGE_CACHE.get(cacheKey);
+        }
+        try {
+            const endpoint = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=720&titles=${encodeURIComponent(cacheKey)}&origin=*`;
+            const response = await fetch(endpoint, { method: 'GET' });
+            if (!response.ok) {
+                KCONTENT_WIKI_IMAGE_CACHE.set(cacheKey, null);
+                return null;
+            }
+            const json = await response.json();
+            const pages = json?.query?.pages ? Object.values(json.query.pages) : [];
+            const thumb = pages.find((page) => page?.thumbnail?.source)?.thumbnail?.source || null;
+            KCONTENT_WIKI_IMAGE_CACHE.set(cacheKey, thumb);
+            return thumb;
+        } catch (_) {
+            KCONTENT_WIKI_IMAGE_CACHE.set(cacheKey, null);
+            return null;
+        }
     }
 
     function renderKContentResultByCharacter(character, opts = {}) {
@@ -5007,14 +5274,22 @@
                 const src = getKContentLocalImagePath(entry.id);
                 const altName = isEn ? entry.character.en : entry.character.ko;
                 const altWork = isEn ? entry.work.en : entry.work.ko;
-                imgEl.src = src;
                 imgEl.loading = 'lazy';
                 imgEl.decoding = 'async';
                 imgEl.alt = `${altName} - ${altWork}`;
+                imgEl.src = src || KCONTENT_IMAGE_FALLBACK;
                 imgEl.onerror = () => {
                     imgEl.src = KCONTENT_IMAGE_FALLBACK;
                     imgEl.alt = altName;
                 };
+                if (!src) {
+                    void getKContentWikiImagePath(entry).then((wikiThumb) => {
+                        if (!wikiThumb) return;
+                        imgEl.src = wikiThumb;
+                    }).catch(() => {
+                        // Keep fallback image.
+                    });
+                }
             });
         };
         renderCharacterGrid();
