@@ -1338,6 +1338,42 @@ body.dark-mode .entry-primary-cta {
     color: var(--accent);
 }
 
+.fun-lucky-wrap {
+    margin-top: 14px;
+    border: 1px dashed var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    background: linear-gradient(145deg, rgba(29, 78, 216, 0.08), rgba(15, 23, 42, 0.03));
+}
+
+.fun-lucky-btn {
+    width: 100%;
+    font-weight: 800;
+}
+
+.fun-lucky-result {
+    margin-top: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: var(--card);
+}
+
+.fun-lucky-result.is-reveal {
+    animation: luckyReveal 0.3s ease-out;
+}
+
+@keyframes luckyReveal {
+    from {
+        transform: translateY(4px);
+        opacity: 0.25;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 .budget-result-box {
     margin-top: 10px;
     padding: 10px;

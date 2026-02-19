@@ -2443,6 +2443,8 @@
         const budgetResult = document.getElementById('budget-game-result');
         const budgetSaveBtn = document.getElementById('budget-save-btn');
         const budgetSavedList = document.getElementById('budget-saved-list');
+        const luckyPickBtn = document.getElementById('entry-lucky-pick-btn');
+        const luckyPickResult = document.getElementById('entry-lucky-pick-result');
         const BUDGET_SAVE_KEY = 'seoul-entry-budget-result-saves-v1';
 
         if (!quizRunBtn || !quizEnergySelect || !quizStyleSelect || !quizGroupSelect || !quizResult || !weatherSunnyBtn || !weatherRainyBtn || !weatherList || !budgetSliderLabel || !budgetSlider || !budgetValue || !budgetRunBtn || !budgetResult || !budgetSaveBtn || !budgetSavedList) return;
@@ -2471,6 +2473,12 @@
         if (budgetSliderLabel) budgetSliderLabel.textContent = isEn ? 'Daily budget (USD)' : '하루 예산 (USD)';
         if (budgetRunBtn) budgetRunBtn.textContent = isEn ? 'Run Budget Plan' : '예산 플랜 실행';
         if (budgetSaveBtn) budgetSaveBtn.textContent = isEn ? 'Save Result' : '결과 저장';
+        if (luckyPickBtn) luckyPickBtn.textContent = isEn ? 'Draw Today\'s Lucky Route' : '오늘의 랜덤 럭키 코스 뽑기';
+        if (luckyPickResult) {
+            luckyPickResult.innerHTML = `<p class="data-source-note">${isEn
+                ? 'Click to get three random route ideas based on your current preferences.'
+                : '버튼을 누르면 현재 취향 기준으로 랜덤 코스 3개를 추천합니다.'}</p>`;
+        }
         weatherSunnyBtn.textContent = isEn ? 'Sunny' : '맑음';
         weatherRainyBtn.textContent = isEn ? 'Rainy' : '비';
 
@@ -2678,6 +2686,51 @@
             quizResult.innerHTML = `${escapeHtml(archetype)} · <a class="text-link" href="${routeHref}">${escapeHtml(routeLabel)}</a>`;
         };
 
+        const pickRandomUnique = (rows, count) => {
+            const pool = [...rows];
+            const picked = [];
+            while (pool.length > 0 && picked.length < count) {
+                const idx = Math.floor(Math.random() * pool.length);
+                picked.push(pool[idx]);
+                pool.splice(idx, 1);
+            }
+            return picked;
+        };
+
+        const runLuckyPick = () => {
+            if (!luckyPickResult) return;
+            const styleFromQuiz = quizStyleSelect.value === 'food' ? 'local' : quizStyleSelect.value;
+            const byStyle = places.filter((row) => Array.isArray(row.styles) && row.styles.includes(styleFromQuiz));
+            const sourcePool = byStyle.length >= 3 ? byStyle : places;
+            const picks = pickRandomUnique(sourcePool, 3);
+            if (!picks.length) return;
+
+            const luckyTitle = isEn ? 'Lucky picks for this moment' : '지금 이 순간, 럭키 추천 코스';
+            const luckyHint = isEn ? 'Press again to shuffle.' : '다시 누르면 새로운 조합으로 바뀝니다.';
+            const listHtml = picks.map((row, idx) => {
+                const href = getPlaceLink('place.html', row.id);
+                const label = isEn ? (row.nameEn || row.name) : row.name;
+                return `<li>${idx + 1}. <a class="text-link" href="${href}">${escapeHtml(label)}</a></li>`;
+            }).join('');
+
+            luckyPickResult.classList.remove('is-reveal');
+            // Re-trigger reveal animation on repeated clicks.
+            void luckyPickResult.offsetWidth;
+            luckyPickResult.classList.add('is-reveal');
+            luckyPickResult.innerHTML = `
+                <p><strong>${escapeHtml(luckyTitle)}</strong></p>
+                <ul class="review-list compact-list">${listHtml}</ul>
+                <p class="data-source-note">${escapeHtml(luckyHint)}</p>
+            `;
+
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'entry_lucky_pick_click', {
+                    lang: CURRENT_LANG,
+                    style_seed: styleFromQuiz
+                });
+            }
+        };
+
         const renderWeatherRoutes = (mode) => {
             const langKey = isEn ? 'en' : 'ko';
             const rows = weatherRoutesByLang[langKey][mode] || [];
@@ -2817,6 +2870,7 @@
             budgetSlider.addEventListener('input', updateBudgetSliderLabel);
             budgetRunBtn.addEventListener('click', runBudgetGame);
             budgetSaveBtn.addEventListener('click', saveBudgetResult);
+            if (luckyPickBtn) luckyPickBtn.addEventListener('click', runLuckyPick);
             section.dataset.bound = '1';
         }
 
