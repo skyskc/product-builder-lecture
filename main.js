@@ -2929,6 +2929,7 @@
         const firstOverlayTitle = document.getElementById('entry-first-overlay-title');
         const firstOverlayDesc = document.getElementById('entry-first-overlay-desc');
         const firstOverlayCta = document.getElementById('entry-first-overlay-cta');
+        const featuredLink = document.getElementById('entry-showcase-link-1');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
         const navLinks = document.querySelectorAll('.top-nav a');
@@ -3122,6 +3123,65 @@
         if (!sparkBtn.dataset.bound) {
             sparkBtn.addEventListener('click', runSparkPick);
             sparkBtn.dataset.bound = '1';
+        }
+        if (featuredLink && !featuredLink.dataset.boundTransition) {
+            featuredLink.addEventListener('click', (event) => {
+                const href = featuredLink.getAttribute('href');
+                if (!href) return;
+                if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                event.preventDefault();
+                event.stopPropagation();
+
+                const card = featuredLink.closest('.korea-mood-card');
+                const img = featuredLink.querySelector('img');
+                if (!card || !img) {
+                    window.location.href = href;
+                    return;
+                }
+
+                const start = card.getBoundingClientRect();
+                const targetWidth = Math.min(window.innerWidth * 0.92, 960);
+                const targetHeight = Math.min(window.innerHeight * 0.74, 640);
+                const endLeft = (window.innerWidth - targetWidth) / 2;
+                const endTop = (window.innerHeight - targetHeight) / 2;
+
+                const curtain = document.createElement('div');
+                curtain.className = 'featured-transition-curtain';
+                curtain.style.opacity = '0';
+
+                const ghost = document.createElement('div');
+                ghost.className = 'featured-transition-ghost';
+                ghost.style.left = `${start.left}px`;
+                ghost.style.top = `${start.top}px`;
+                ghost.style.width = `${start.width}px`;
+                ghost.style.height = `${start.height}px`;
+                ghost.style.backgroundImage = `url("${img.currentSrc || img.src}")`;
+
+                document.body.appendChild(curtain);
+                document.body.appendChild(ghost);
+
+                requestAnimationFrame(() => {
+                    curtain.style.transition = 'opacity 360ms ease';
+                    ghost.style.transition = 'left 380ms cubic-bezier(0.22,1,0.36,1), top 380ms cubic-bezier(0.22,1,0.36,1), width 380ms cubic-bezier(0.22,1,0.36,1), height 380ms cubic-bezier(0.22,1,0.36,1), border-radius 380ms ease';
+                    curtain.style.opacity = '1';
+                    ghost.style.left = `${endLeft}px`;
+                    ghost.style.top = `${endTop}px`;
+                    ghost.style.width = `${targetWidth}px`;
+                    ghost.style.height = `${targetHeight}px`;
+                    ghost.style.borderRadius = '20px';
+                });
+
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'entry_featured_pick_transition_click', {
+                        lang: CURRENT_LANG
+                    });
+                }
+
+                window.setTimeout(() => {
+                    window.location.href = href;
+                }, 360);
+            }, true);
+            featuredLink.dataset.boundTransition = '1';
         }
         if (firstOverlay && !firstOverlay.dataset.bound) {
             if (firstOverlayClose) firstOverlayClose.addEventListener('click', () => closeFirstOverlay('close_button'));

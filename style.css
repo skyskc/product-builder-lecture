@@ -1391,6 +1391,25 @@ body.dark-mode .entry-primary-cta {
     font-size: 0.9rem;
 }
 
+.featured-transition-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(2, 8, 23, 0.06);
+    pointer-events: none;
+}
+
+.featured-transition-ghost {
+    position: fixed;
+    z-index: 91;
+    border-radius: 14px;
+    box-shadow: 0 22px 50px rgba(2, 8, 23, 0.28);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+}
+
 .fun-feature-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
