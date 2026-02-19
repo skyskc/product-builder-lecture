@@ -1576,8 +1576,6 @@
         const params = new URLSearchParams(window.location.search);
         const langQuery = params.get('lang');
         if (langQuery === 'en' || langQuery === 'ko') return langQuery;
-        const saved = localStorage.getItem(LANG_STORAGE_KEY);
-        if (saved === 'en' || saved === 'ko') return saved;
         return 'ko';
     }
 
