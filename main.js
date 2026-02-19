@@ -2825,14 +2825,8 @@
         const showcaseDesc = document.getElementById('entry-showcase-desc');
         const showcaseDate = document.getElementById('entry-showcase-date');
         const showcaseLink1 = document.getElementById('entry-showcase-link-1');
-        const showcaseLink2 = document.getElementById('entry-showcase-link-2');
-        const showcaseLink3 = document.getElementById('entry-showcase-link-3');
         const showcaseImg1 = document.getElementById('entry-showcase-img-1');
-        const showcaseImg2 = document.getElementById('entry-showcase-img-2');
-        const showcaseImg3 = document.getElementById('entry-showcase-img-3');
         const showcaseCap1 = document.getElementById('entry-showcase-cap-1');
-        const showcaseCap2 = document.getElementById('entry-showcase-cap-2');
-        const showcaseCap3 = document.getElementById('entry-showcase-cap-3');
         const funEyebrow = document.getElementById('entry-fun-eyebrow');
         const funTitle = document.getElementById('entry-fun-title');
         const quizTitle = document.getElementById('quiz-card-title');
@@ -3030,7 +3024,7 @@
             const now = new Date();
             const dayIndex = Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - Date.UTC(now.getFullYear(), 0, 0)) / 86400000);
             const ids = todayPickSets[dayIndex % todayPickSets.length];
-            return ids.map((id) => placeMap[id]).filter(Boolean).slice(0, 3);
+            return ids.map((id) => placeMap[id]).filter(Boolean).slice(0, 1);
         };
 
         const renderTodayPicks = async () => {
@@ -3045,9 +3039,7 @@
             }
 
             const cards = [
-                { place: picks[0], link: showcaseLink1, img: showcaseImg1, cap: showcaseCap1, fallback: todayPickFallbackImages[0] },
-                { place: picks[1], link: showcaseLink2, img: showcaseImg2, cap: showcaseCap2, fallback: todayPickFallbackImages[1] },
-                { place: picks[2], link: showcaseLink3, img: showcaseImg3, cap: showcaseCap3, fallback: todayPickFallbackImages[2] }
+                { place: picks[0], link: showcaseLink1, img: showcaseImg1, cap: showcaseCap1, fallback: todayPickFallbackImages[0] }
             ];
 
             cards.forEach((card, idx) => {
@@ -4933,18 +4925,13 @@
             return uniqueRows;
         };
 
-        const getCategoryKey = (entry) => {
-            const typeText = `${entry.type?.en || ''}`.toLowerCase();
-            if (typeText.includes('idol')) return 'idol';
-            if (typeText.includes('actor') || typeText.includes('actress')) return 'actor';
-            return 'celebrity';
-        };
         const trendIndexById = Object.fromEntries(KCONTENT_TREND_RANK.map((id, idx) => [id, idx]));
         const getTrendScore = (entry, idx) => {
             const rankIdx = trendIndexById[entry.id];
             const base = typeof rankIdx === 'number' ? (1000 - rankIdx * 10) : (400 - idx);
             const styleBonus = Array.isArray(entry.styles) ? entry.styles.length * 8 : 0;
-            const actorBonus = getCategoryKey(entry) === 'actor' ? 5 : 0;
+            const typeText = `${entry.type?.en || ''}`.toLowerCase();
+            const actorBonus = (typeText.includes('actor') || typeText.includes('actress')) ? 5 : 0;
             return base + styleBonus + actorBonus;
         };
 
