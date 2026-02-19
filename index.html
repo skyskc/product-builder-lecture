@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seoul Explorer | Seoul Travel Guide, Itinerary Planner & Top Attractions</title>
-    <meta name="description" content="Plan your Seoul trip with top attractions, one-day itinerary planner, generation-based courses, K-content picks, and map-ready travel routes for international visitors.">
+    <title>Seoul Voyage | Seoul Travel Planner & Top Attractions</title>
+    <meta name="description" content="Seoul Voyage helps you plan Seoul fast with top attractions, one-day routes, and fun planning tools for international visitors.">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <meta name="google-site-verification" content="bFx-vws_uuYtAeCiq9cYwh2B4h4BRdXeSgR34gQLrpk">
     <meta name="naver-site-verification" content="029eec5d4c98f549674a7b6af3aa3adb0e1b1a80">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Seoul Explorer | Start Your Korea Plan">
-    <meta property="og:description" content="Select Explore, Course Planner, Generations, Screen Picks, or Saju.">
+    <meta property="og:title" content="Seoul Voyage | Start Your Seoul Plan">
+    <meta property="og:description" content="Pick Explore, Planner, or Fun Lab and build your Seoul trip in minutes.">
     <meta property="og:url" content="https://product-builder-lecture-4ec.pages.dev/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Seoul Explorer">
-    <meta name="twitter:description" content="Open one of five Seoul travel plans.">
+    <meta name="twitter:title" content="Seoul Voyage">
+    <meta name="twitter:description" content="Plan your Seoul trip in minutes with clear routes and fun tools.">
     <link rel="canonical" href="https://product-builder-lecture-4ec.pages.dev/">
     <link rel="alternate" hreflang="ko" href="https://product-builder-lecture-4ec.pages.dev/">
     <link rel="alternate" hreflang="en" href="https://product-builder-lecture-4ec.pages.dev/?lang=en">
@@ -27,14 +27,12 @@
 </head>
 <body data-page="entry">
     <header class="site-header">
-        <a class="logo" href="index.html"><span class="logo-mark">SV</span><span class="logo-text"><span class="logo-seoul">Seoul</span><span class="logo-voyager">Voyager</span></span></a>
+        <a class="logo" href="index.html"><span class="logo-mark">SV</span><span class="logo-text"><span class="logo-seoul">Seoul</span><span class="logo-voyager">Voyage</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
                 <a href="explore.html">Explore</a>
                 <a id="course-link" href="course.html">Planner</a>
-                <a id="generation-link" href="generation.html">Generations</a>
-                <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
-                <a id="comments-link" href="comments.html">Saju</a>
+                <a href="#entry-fun-lab">Fun Lab</a>
             </nav>
             <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
             <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
@@ -43,30 +41,22 @@
 
     <main class="container">
         <section class="panel open-landing">
-            <p id="entry-eyebrow" class="eyebrow">Open Travel Plans</p>
-            <h1 id="entry-title">Pick Your Seoul Plan</h1>
-            <p id="entry-desc">Start with the plan that matches your travel goal. You can switch anytime.</p>
-            <p id="entry-desc-extra">Each plan is designed for international visitors with clear route flow, map-ready links, practical budget hints, and policy pages for transparent operation.</p>
+            <p id="entry-eyebrow" class="eyebrow">Seoul Voyage</p>
+            <h1 id="entry-title">서울 여행, 10초 안에 시작</h1>
+            <p id="entry-desc">원하는 방식 하나만 고르면 바로 코스 추천을 시작할 수 있습니다.</p>
+            <p id="entry-desc-extra">초행자도 바로 이해할 수 있게 명소, 동선, 지도 링크를 단순하게 제공합니다.</p>
             <div class="open-plan-grid">
                 <a class="open-plan-card" id="entry-card-explore" href="explore.html">
-                    <strong>Explore Spots</strong>
-                    <span>Top places, map links, and filters</span>
+                    <strong>핵심 명소 둘러보기</strong>
+                    <span>서울 인기 장소를 지도 링크와 함께 확인</span>
                 </a>
                 <a class="open-plan-card" id="entry-card-course" href="course.html">
-                    <strong>Course Planner</strong>
-                    <span>One-day route with hotels and restaurants</span>
+                    <strong>1일 코스 바로 만들기</strong>
+                    <span>스타일별 동선 + 호텔 + 식당 추천</span>
                 </a>
-                <a class="open-plan-card" id="entry-card-generation" href="generation.html">
-                    <strong>Generation Plans</strong>
-                    <span>Recommended pace by age group</span>
-                </a>
-                <a class="open-plan-card" id="entry-card-kcontent" href="kcontent.html">
-                    <strong>Screen Picks</strong>
-                    <span>Characters, idols, actors, and matching routes</span>
-                </a>
-                <a class="open-plan-card" id="entry-card-saju" href="comments.html">
-                    <strong>Saju Plan</strong>
-                    <span>Saju analysis and travel suggestions</span>
+                <a class="open-plan-card" href="#entry-fun-lab">
+                    <strong>재미 플래너 체험하기</strong>
+                    <span>퀴즈/날씨/예산으로 맞춤 루트 빠르게 확인</span>
                 </a>
             </div>
         </section>
@@ -97,7 +87,7 @@
             </div>
         </section>
 
-        <section class="panel fun-lab">
+        <section id="entry-fun-lab" class="panel fun-lab">
             <p id="entry-fun-eyebrow" class="eyebrow">Fun Planner Lab</p>
             <h2 id="entry-fun-title">3 Quick Ways to Make Your Seoul Plan More Fun</h2>
             <div class="fun-feature-grid">
@@ -154,7 +144,7 @@
 
     <footer class="site-footer">
         <div class="footer-inner">
-            <span>© 2026 Seoul Explorer</span>
+            <span>© 2026 Seoul Voyage</span>
             <nav aria-label="Footer">
                 <a href="about.html">사이트 소개</a>
                 <a href="partner.html">문의</a>

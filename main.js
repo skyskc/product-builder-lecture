@@ -1760,17 +1760,11 @@
             const desc = document.getElementById('entry-desc');
             const explore = document.getElementById('entry-card-explore');
             const course = document.getElementById('entry-card-course');
-            const generation = document.getElementById('entry-card-generation');
-            const kcontent = document.getElementById('entry-card-kcontent');
-            const saju = document.getElementById('entry-card-saju');
-            if (eyebrow) eyebrow.textContent = 'Open Travel Plans';
-            if (title) title.textContent = 'Pick Your Seoul Plan';
-            if (desc) desc.textContent = 'Start with the plan that matches your travel goal. You can switch anytime.';
-            if (explore) explore.innerHTML = '<strong>Explore Spots</strong><span>Top places, map links, and filters</span>';
-            if (course) course.innerHTML = '<strong>Course Planner</strong><span>One-day route with hotels and restaurants</span>';
-            if (generation) generation.innerHTML = '<strong>Generation Plans</strong><span>Recommended pace by age group</span>';
-            if (kcontent) kcontent.innerHTML = '<strong>Screen Picks</strong><span>Characters, idols, actors, and matching routes</span>';
-            if (saju) saju.innerHTML = '<strong>Saju Plan</strong><span>Saju analysis and travel suggestions</span>';
+            if (eyebrow) eyebrow.textContent = 'Seoul Voyage';
+            if (title) title.textContent = 'Start Your Seoul Plan in 10 Seconds';
+            if (desc) desc.textContent = 'Pick one path and get map-ready recommendations right away.';
+            if (explore) explore.innerHTML = '<strong>Explore Top Spots</strong><span>See must-visit places with map-ready links</span>';
+            if (course) course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route, hotel, and food picks in one flow</span>';
         }
     }
 
@@ -2822,43 +2816,30 @@
         const descExtra = document.getElementById('entry-desc-extra');
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
-        const generation = document.getElementById('entry-card-generation');
-        const kcontent = document.getElementById('entry-card-kcontent');
-        const saju = document.getElementById('entry-card-saju');
         const navLinks = document.querySelectorAll('.top-nav a');
-        if (!eyebrow || !title || !desc || !descExtra || !explore || !course || !generation || !kcontent || !saju) return;
+        if (!eyebrow || !title || !desc || !descExtra || !explore || !course) return;
 
         const isEn = CURRENT_LANG === 'en';
         if (isEn) {
-            eyebrow.textContent = 'Open Travel Plans';
-            title.textContent = 'Pick Your Seoul Plan';
-            desc.textContent = 'Start with the plan that matches your travel goal. You can switch anytime.';
-            descExtra.textContent = 'Each plan is designed for international visitors with clear route flow, map-ready links, practical budget hints, and transparent operating policies.';
-            explore.innerHTML = '<strong>Explore Spots</strong><span>Top places, map links, and filters</span>';
-            course.innerHTML = '<strong>Course Planner</strong><span>One-day route with hotels and restaurants</span>';
-            generation.innerHTML = '<strong>Generation Plans</strong><span>Recommended pace by age group</span>';
-            kcontent.innerHTML = '<strong>Screen Picks</strong><span>Characters, idols, actors, and matching routes</span>';
-            saju.innerHTML = '<strong>Saju Plan</strong><span>Saju analysis and travel suggestions</span>';
+            eyebrow.textContent = 'Seoul Voyage';
+            title.textContent = 'Start Your Seoul Plan in 10 Seconds';
+            desc.textContent = 'Pick one path and get map-ready recommendations right away.';
+            descExtra.textContent = 'Simple by design: top spots, smart routes, and practical links for first-time visitors.';
+            explore.innerHTML = '<strong>Explore Top Spots</strong><span>See must-visit places with map-ready links</span>';
+            course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route, hotel, and food picks in one flow</span>';
             if (navLinks[0]) navLinks[0].textContent = 'Explore';
             if (navLinks[1]) navLinks[1].textContent = 'Planner';
-            if (navLinks[2]) navLinks[2].textContent = 'Generations';
-            if (navLinks[3]) navLinks[3].textContent = 'Screen Picks';
-            if (navLinks[4]) navLinks[4].textContent = 'Saju';
+            if (navLinks[2]) navLinks[2].textContent = 'Fun Lab';
         } else {
-            eyebrow.textContent = '오픈 여행 플랜';
-            title.textContent = '서울 여행 플랜을 선택하세요';
-            desc.textContent = '여행 목적에 맞는 플랜부터 시작하고 언제든 다른 플랜으로 이동할 수 있습니다.';
-            descExtra.textContent = '각 플랜은 외국인 방문자 기준으로 동선, 지도 링크, 예산 감각, 운영 정책 정보를 함께 제공해 실제 여행 준비에 바로 활용할 수 있도록 구성했습니다.';
-            explore.innerHTML = '<strong>여행지 탐색</strong><span>핵심 명소, 지도 링크, 필터 탐색</span>';
-            course.innerHTML = '<strong>코스 플래너</strong><span>하루 동선 + 호텔 + 맛집 추천</span>';
-            generation.innerHTML = '<strong>세대별 플랜</strong><span>세대별 이동 강도 맞춤 추천</span>';
-            kcontent.innerHTML = '<strong>콘텐츠 플랜</strong><span>캐릭터, 아이돌, 배우 기반 추천</span>';
-            saju.innerHTML = '<strong>사주 플랜</strong><span>사주 해석 기반 여행 제안</span>';
+            eyebrow.textContent = '서울 보야지';
+            title.textContent = '서울 여행, 10초 안에 시작';
+            desc.textContent = '원하는 방식 하나만 고르면 바로 추천 코스를 확인할 수 있습니다.';
+            descExtra.textContent = '초행자도 바로 이해할 수 있도록 명소, 동선, 지도 링크를 단순하게 정리했습니다.';
+            explore.innerHTML = '<strong>핵심 명소 둘러보기</strong><span>서울 인기 장소를 지도 링크와 함께 확인</span>';
+            course.innerHTML = '<strong>1일 코스 바로 만들기</strong><span>스타일별 동선 + 호텔 + 식당 추천</span>';
             if (navLinks[0]) navLinks[0].textContent = '여행지 탐색';
             if (navLinks[1]) navLinks[1].textContent = '코스 플래너';
-            if (navLinks[2]) navLinks[2].textContent = '세대별 플랜';
-            if (navLinks[3]) navLinks[3].textContent = '콘텐츠 플랜';
-            if (navLinks[4]) navLinks[4].textContent = '사주 플랜';
+            if (navLinks[2]) navLinks[2].textContent = '재미 플래너';
         }
         initEntryFunLab();
     }
@@ -2986,7 +2967,7 @@
                 {
                     '@type': 'ListItem',
                     position: 1,
-                    name: 'Seoul Explorer',
+                    name: 'Seoul Voyage',
                     item: `${window.location.origin}/`
                 },
                 {
@@ -3045,7 +3026,7 @@
         const reviewList = document.getElementById('review-list');
         const dataSourceEl = document.getElementById('place-data-source');
 
-        document.title = `${getPlaceName(place)} | Seoul Explorer`;
+        document.title = `${getPlaceName(place)} | Seoul Voyage`;
         nameEl.textContent = getPlaceName(place);
         categoryEl.textContent = getCategoryLabel(place.category);
         descEl.textContent = CURRENT_LANG === 'en' ? place.descriptionEn : place.description;
@@ -3338,7 +3319,7 @@
 
             ctx.fillStyle = '#e5edff';
             ctx.font = '700 44px "Noto Sans KR", sans-serif';
-            ctx.fillText('Seoul Voyager', 76, 110);
+            ctx.fillText('Seoul Voyage', 76, 110);
 
             ctx.fillStyle = '#ffffff';
             ctx.font = '700 58px "Noto Sans KR", sans-serif';
