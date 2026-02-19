@@ -4205,16 +4205,28 @@
             }
             const fileName = `seoul-plan-${latestCourseSnapshot.styleKey}-${latestCourseSnapshot.budgetKey}.png`;
             const file = new File([blob], fileName, { type: 'image/png' });
+            const shareTitle = latestCourseSnapshot.title;
+            const shareText = CURRENT_LANG === 'en' ? 'My Seoul one-day plan' : '내 서울 1일 여행 플랜';
+            const shareUrl = window.location.href;
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
                     await navigator.share({
-                        title: latestCourseSnapshot.title,
-                        text: CURRENT_LANG === 'en' ? 'My Seoul one-day plan' : '내 서울 1일 여행 플랜',
+                        title: shareTitle,
+                        text: shareText,
+                        url: shareUrl,
                         files: [file]
                     });
                     toolsNoteEl.textContent = CURRENT_LANG === 'en' ? 'Share card ready and shared.' : '공유 카드가 생성되어 공유되었습니다.';
                     return;
-                } catch (_) {
+                } catch (error) {
+                    const message = String(error?.message || error || '').toLowerCase();
+                    if (message.includes('flair')) {
+                        const redditSubmitUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareTitle)}`;
+                        toolsNoteEl.innerHTML = CURRENT_LANG === 'en'
+                            ? `Reddit requires post flair in some communities. <a class="text-link" href="${redditSubmitUrl}" target="_blank" rel="noopener noreferrer">Open Reddit share</a> and choose a flair there.`
+                            : `일부 Reddit 커뮤니티는 포스트 플레어가 필수입니다. <a class="text-link" href="${redditSubmitUrl}" target="_blank" rel="noopener noreferrer">Reddit 공유 열기</a>에서 플레어를 선택해 주세요.`;
+                        return;
+                    }
                     // Fall through to download.
                 }
             }
