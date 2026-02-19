@@ -4960,7 +4960,18 @@
             name: '🔤',
             style: '🧠'
         };
-        const getPersonKey = (entry) => `${entry.portraitPage || entry.character?.en || entry.character?.ko || entry.id}`.toLowerCase();
+        const normalizePersonText = (text) => String(text || '')
+            .toLowerCase()
+            .replace(/[^a-z0-9가-힣]/g, '');
+        const getPersonKey = (entry) => {
+            const nameEn = normalizePersonText(entry.character?.en);
+            const nameKo = normalizePersonText(entry.character?.ko);
+            const portrait = normalizePersonText(entry.portraitPage);
+            if (nameEn) return `name-en:${nameEn}`;
+            if (nameKo) return `name-ko:${nameKo}`;
+            if (portrait) return `portrait:${portrait}`;
+            return `id:${entry.id}`;
+        };
         const dedupeByPerson = (rows) => {
             const seen = new Set();
             const uniqueRows = [];
