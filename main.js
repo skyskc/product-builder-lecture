@@ -4914,13 +4914,15 @@
                 const imgEl = card.querySelector('img');
                 if (!entry || !imgEl) return;
                 const src = getKContentLocalImagePath(entry.id);
+                const altName = isEn ? entry.character.en : entry.character.ko;
+                const altWork = isEn ? entry.work.en : entry.work.ko;
                 imgEl.src = src;
                 imgEl.loading = 'lazy';
                 imgEl.decoding = 'async';
-                imgEl.alt = '';
+                imgEl.alt = `${altName} - ${altWork}`;
                 imgEl.onerror = () => {
                     imgEl.src = KCONTENT_IMAGE_FALLBACK;
-                    imgEl.alt = '';
+                    imgEl.alt = altName;
                 };
             });
         };
