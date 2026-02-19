@@ -60,7 +60,7 @@
             <p id="entry-eyebrow" class="eyebrow">Seoul Voyage</p>
             <h1 id="entry-title">서울 여행, 10초 안에 시작</h1>
             <p id="entry-desc">원하는 방식 하나만 고르면 바로 코스 추천을 시작할 수 있습니다.</p>
-            <p id="entry-desc-extra">초행자도 바로 이해할 수 있게 명소, 동선, 지도 링크를 단순하게 제공합니다.</p>
+            <p id="entry-desc-extra">핵심 명소, 동선, 지도 링크만 빠르게 보여줍니다.</p>
             <div class="entry-spark-box">
                 <p id="entry-spark-title" class="eyebrow entry-spark-title">입장 무드 체크</p>
                 <button id="entry-spark-btn" class="theme-toggle-btn entry-spark-btn" type="button">오늘의 서울 무드 뽑기</button>
@@ -76,15 +76,15 @@
             <div class="open-plan-grid">
                 <a class="open-plan-card" id="entry-card-explore" href="explore.html">
                     <strong>핵심 명소 둘러보기</strong>
-                    <span>서울 인기 장소를 지도 링크와 함께 확인</span>
+                    <span>명소 + 지도</span>
                 </a>
                 <a class="open-plan-card" id="entry-card-course" href="course.html">
                     <strong>1일 코스 바로 만들기</strong>
-                    <span>스타일별 동선 + 호텔 + 식당 추천</span>
+                    <span>동선 + 식당 + 호텔</span>
                 </a>
                 <a class="open-plan-card" href="#entry-fun-lab">
                     <strong>재미 플래너 체험하기</strong>
-                    <span>퀴즈/날씨/예산으로 맞춤 루트 빠르게 확인</span>
+                    <span>퀴즈 + 예산 + 날씨</span>
                 </a>
             </div>
         </section>
@@ -120,51 +120,66 @@
             <h2 id="entry-fun-title">3 Quick Ways to Make Your Seoul Plan More Fun</h2>
             <div class="fun-feature-grid">
                 <article class="fun-card">
-                    <h3 id="quiz-card-title">1) Seoul Archetype Quiz</h3>
-                    <p id="quiz-card-desc">Answer three quick preferences and get your travel type with a recommended route.</p>
-                    <div class="fun-form-grid">
-                        <select id="quiz-energy-select" class="sort-select">
-                            <option value="low">Relaxed pace</option>
-                            <option value="mid">Balanced pace</option>
-                            <option value="high">High energy</option>
-                        </select>
-                        <select id="quiz-style-select" class="sort-select">
-                            <option value="history">History & culture</option>
-                            <option value="food">Food & local vibe</option>
-                            <option value="night">Night view & trend</option>
-                        </select>
-                        <select id="quiz-group-select" class="sort-select">
-                            <option value="solo">Solo</option>
-                            <option value="pair">Couple/Friends</option>
-                            <option value="family">Family</option>
-                        </select>
+                    <button class="fun-card-toggle" type="button" data-target="quiz-card-body" aria-expanded="true">
+                        <span id="quiz-card-title">1) Seoul Archetype Quiz</span>
+                        <span class="fun-card-chevron">+</span>
+                    </button>
+                    <div id="quiz-card-body" class="fun-card-body">
+                        <p id="quiz-card-desc">Answer three quick preferences and get your travel type with a recommended route.</p>
+                        <div class="fun-form-grid">
+                            <select id="quiz-energy-select" class="sort-select">
+                                <option value="low">Relaxed pace</option>
+                                <option value="mid">Balanced pace</option>
+                                <option value="high">High energy</option>
+                            </select>
+                            <select id="quiz-style-select" class="sort-select">
+                                <option value="history">History & culture</option>
+                                <option value="food">Food & local vibe</option>
+                                <option value="night">Night view & trend</option>
+                            </select>
+                            <select id="quiz-group-select" class="sort-select">
+                                <option value="solo">Solo</option>
+                                <option value="pair">Couple/Friends</option>
+                                <option value="family">Family</option>
+                            </select>
+                        </div>
+                        <button id="quiz-run-btn" class="theme-toggle-btn" type="button">Get My Archetype</button>
+                        <p id="quiz-result" class="data-source-note">Try the quiz to see your best-fit Seoul travel profile.</p>
                     </div>
-                    <button id="quiz-run-btn" class="theme-toggle-btn" type="button">Get My Archetype</button>
-                    <p id="quiz-result" class="data-source-note">Try the quiz to see your best-fit Seoul travel profile.</p>
                 </article>
 
                 <article class="fun-card">
-                    <h3 id="weather-card-title">2) Rainy Day vs Sunny Day Switch</h3>
-                    <p id="weather-card-desc">Toggle weather mode and instantly see where to go next.</p>
-                    <div class="weather-toggle-row">
-                        <button id="weather-sunny-btn" class="theme-toggle-btn weather-btn active" type="button" data-weather="sunny">Sunny</button>
-                        <button id="weather-rainy-btn" class="theme-toggle-btn weather-btn" type="button" data-weather="rainy">Rainy</button>
+                    <button class="fun-card-toggle" type="button" data-target="weather-card-body" aria-expanded="false">
+                        <span id="weather-card-title">2) Rainy Day vs Sunny Day Switch</span>
+                        <span class="fun-card-chevron">+</span>
+                    </button>
+                    <div id="weather-card-body" class="fun-card-body is-collapsed">
+                        <p id="weather-card-desc">Toggle weather mode and instantly see where to go next.</p>
+                        <div class="weather-toggle-row">
+                            <button id="weather-sunny-btn" class="theme-toggle-btn weather-btn active" type="button" data-weather="sunny">Sunny</button>
+                            <button id="weather-rainy-btn" class="theme-toggle-btn weather-btn" type="button" data-weather="rainy">Rainy</button>
+                        </div>
+                        <ul id="weather-route-list" class="review-list compact-list"></ul>
                     </div>
-                    <ul id="weather-route-list" class="review-list compact-list"></ul>
                 </article>
 
                 <article class="fun-card">
-                    <h3 id="budget-card-title">3) Budget Game</h3>
-                    <p id="budget-card-desc">Set your daily budget and run to get a route + restaurant bundle.</p>
-                    <label id="budget-slider-label" for="budget-game-slider">Daily budget (USD)</label>
-                    <input id="budget-game-slider" type="range" min="10" max="1000" value="150">
-                    <p id="budget-game-value" class="budget-game-value">$150</p>
-                    <button id="budget-game-run-btn" class="theme-toggle-btn" type="button">Run Budget Plan</button>
-                    <div id="budget-game-result" class="budget-result-box">
-                        <p class="data-source-note">Click run to generate your budget-based route and food picks.</p>
+                    <button class="fun-card-toggle" type="button" data-target="budget-card-body" aria-expanded="false">
+                        <span id="budget-card-title">3) Budget Game</span>
+                        <span class="fun-card-chevron">+</span>
+                    </button>
+                    <div id="budget-card-body" class="fun-card-body is-collapsed">
+                        <p id="budget-card-desc">Set your daily budget and run to get a route + restaurant bundle.</p>
+                        <label id="budget-slider-label" for="budget-game-slider">Daily budget (USD)</label>
+                        <input id="budget-game-slider" type="range" min="10" max="1000" value="150">
+                        <p id="budget-game-value" class="budget-game-value">$150</p>
+                        <button id="budget-game-run-btn" class="theme-toggle-btn" type="button">Run Budget Plan</button>
+                        <div id="budget-game-result" class="budget-result-box">
+                            <p class="data-source-note">Click run to generate your budget-based route and food picks.</p>
+                        </div>
+                        <button id="budget-save-btn" class="theme-toggle-btn" type="button">Save Result</button>
+                        <div id="budget-saved-list" class="budget-save-list"></div>
                     </div>
-                    <button id="budget-save-btn" class="theme-toggle-btn" type="button">Save Result</button>
-                    <div id="budget-saved-list" class="budget-save-list"></div>
                 </article>
             </div>
             <div class="fun-lucky-wrap">

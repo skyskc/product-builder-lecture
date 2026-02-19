@@ -2461,24 +2461,24 @@
 
         if (showcaseTitle) showcaseTitle.textContent = isEn ? 'Today\'s Seoul Picks' : '오늘의 서울 추천 3곳';
         if (showcaseDesc) showcaseDesc.textContent = isEn
-            ? 'Three places selected for today. Tap any card to open details.'
-            : '오늘 방문하기 좋은 장소 3곳을 골랐습니다. 카드를 누르면 상세 페이지로 이동합니다.';
+            ? '3 picks for today.'
+            : '오늘의 추천 3곳입니다.';
         if (funEyebrow) funEyebrow.textContent = isEn ? 'Fun Planner Lab' : '재미 플래너 랩';
         if (funTitle) funTitle.textContent = isEn
-            ? '3 Quick Ways to Make Your Seoul Plan More Fun'
-            : '서울 여행을 더 재미있게 만드는 3가지 빠른 도구';
+            ? 'Quick Interactive Tools'
+            : '빠른 인터랙티브 도구';
         if (quizTitle) quizTitle.textContent = isEn ? '1) Seoul Archetype Quiz' : '1) 서울 여행자 유형 퀴즈';
         if (quizDesc) quizDesc.textContent = isEn
-            ? 'Answer three quick preferences and get your travel type with a recommended route.'
-            : '취향 3가지를 고르면 나에게 맞는 여행자 유형과 추천 루트를 보여줍니다.';
+            ? '3 answers, 1 travel type.'
+            : '3가지 선택으로 유형을 찾습니다.';
         if (weatherTitle) weatherTitle.textContent = isEn ? '2) Rainy Day vs Sunny Day Switch' : '2) 비 오는 날 vs 맑은 날 스위치';
         if (weatherDesc) weatherDesc.textContent = isEn
-            ? 'Toggle weather mode and instantly see where to go next.'
-            : '날씨 모드를 바꾸면 바로 다음 이동 코스를 바꿔서 보여줍니다.';
+            ? 'One toggle, new route.'
+            : '토글 한 번으로 루트 변경.';
         if (budgetTitle) budgetTitle.textContent = isEn ? '3) Budget Game' : '3) 예산 게임';
         if (budgetDesc) budgetDesc.textContent = isEn
-            ? 'Set your daily budget and run to get a route + restaurant bundle.'
-            : '하루 예산을 설정하고 실행하면 예산 맞춤 코스와 식당 추천을 함께 보여줍니다.';
+            ? 'Set budget, get instant bundle.'
+            : '예산 설정 후 즉시 추천.';
         if (quizRunBtn) quizRunBtn.textContent = isEn ? 'Get My Archetype' : '내 유형 보기';
         if (budgetSliderLabel) budgetSliderLabel.textContent = isEn ? 'Daily budget (USD)' : '하루 예산 (USD)';
         if (budgetRunBtn) budgetRunBtn.textContent = isEn ? 'Run Budget Plan' : '예산 플랜 실행';
@@ -2873,6 +2873,25 @@
             budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Saved. You can review it below.' : '결과가 저장되었습니다. 아래 목록에서 확인할 수 있습니다.'}</p>`;
         };
 
+        const initFunCardAccordion = () => {
+            const toggles = section.querySelectorAll('.fun-card-toggle');
+            toggles.forEach((toggle, idx) => {
+                const targetId = toggle.getAttribute('data-target');
+                const body = targetId ? document.getElementById(targetId) : null;
+                if (!body) return;
+                const shouldOpen = idx === 0;
+                toggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+                body.classList.toggle('is-collapsed', !shouldOpen);
+                if (toggle.dataset.bound) return;
+                toggle.addEventListener('click', () => {
+                    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                    toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                    body.classList.toggle('is-collapsed', expanded);
+                });
+                toggle.dataset.bound = '1';
+            });
+        };
+
         if (!section.dataset.bound) {
             quizRunBtn.addEventListener('click', runQuiz);
             weatherSunnyBtn.addEventListener('click', () => renderWeatherRoutes('sunny'));
@@ -2883,6 +2902,7 @@
             if (luckyPickBtn) luckyPickBtn.addEventListener('click', runLuckyPick);
             section.dataset.bound = '1';
         }
+        initFunCardAccordion();
 
         renderTodayPicks();
         renderWeatherRoutes('sunny');
@@ -3053,8 +3073,8 @@
         if (isEn) {
             eyebrow.textContent = 'Seoul Voyage';
             title.textContent = 'Start Your Seoul Plan in 10 Seconds';
-            desc.textContent = 'Pick one path and get map-ready recommendations right away.';
-            descExtra.textContent = 'Simple by design: top spots, smart routes, and practical links for first-time visitors.';
+            desc.textContent = 'Pick one path and start now.';
+            descExtra.textContent = 'Top spots, routes, and maps only.';
             sparkTitle.textContent = 'Entrance Mood Check';
             sparkBtn.textContent = 'Draw Today\'s Seoul Mood';
             sparkResult.innerHTML = '<p class="data-source-note">Press once to get a quick travel mood and instant route.</p>';
@@ -3063,16 +3083,16 @@
                 ? 'Fastest start: build a one-day route first, then expand with spot details.'
                 : 'One tap is enough to generate your route, hotel, and food flow.';
             secondaryTitle.textContent = 'Or start with another path';
-            explore.innerHTML = '<strong>Explore Top Spots</strong><span>See must-visit places with map-ready links</span>';
-            course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route, hotel, and food picks in one flow</span>';
+            explore.innerHTML = '<strong>Explore Top Spots</strong><span>Spots + maps</span>';
+            course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route + food + hotel</span>';
             if (navLinks[0]) navLinks[0].textContent = 'Explore';
             if (navLinks[1]) navLinks[1].textContent = 'Planner';
             if (navLinks[2]) navLinks[2].textContent = 'Fun Lab';
         } else {
             eyebrow.textContent = '서울 보야지';
             title.textContent = '서울 여행, 10초 안에 시작';
-            desc.textContent = '원하는 방식 하나만 고르면 바로 추천 코스를 확인할 수 있습니다.';
-            descExtra.textContent = '초행자도 바로 이해할 수 있도록 명소, 동선, 지도 링크를 단순하게 정리했습니다.';
+            desc.textContent = '원하는 방식 하나만 고르면 바로 시작됩니다.';
+            descExtra.textContent = '명소, 동선, 지도만 빠르게 제공합니다.';
             sparkTitle.textContent = '입장 무드 체크';
             sparkBtn.textContent = '오늘의 서울 무드 뽑기';
             sparkResult.innerHTML = '<p class="data-source-note">한 번 누르면 바로 시작할 여행 무드와 루트를 추천합니다.</p>';
@@ -3081,8 +3101,8 @@
                 ? '가장 빠른 시작: 1일 코스를 먼저 만든 뒤, 명소를 채워가세요.'
                 : '한 번의 클릭으로 동선, 호텔, 식당 추천을 바로 받아보세요.';
             secondaryTitle.textContent = '또는 원하는 방식으로 시작';
-            explore.innerHTML = '<strong>핵심 명소 둘러보기</strong><span>서울 인기 장소를 지도 링크와 함께 확인</span>';
-            course.innerHTML = '<strong>1일 코스 바로 만들기</strong><span>스타일별 동선 + 호텔 + 식당 추천</span>';
+            explore.innerHTML = '<strong>핵심 명소 둘러보기</strong><span>명소 + 지도</span>';
+            course.innerHTML = '<strong>1일 코스 바로 만들기</strong><span>동선 + 식당 + 호텔</span>';
             if (navLinks[0]) navLinks[0].textContent = '여행지 탐색';
             if (navLinks[1]) navLinks[1].textContent = '코스 플래너';
             if (navLinks[2]) navLinks[2].textContent = '재미 플래너';
