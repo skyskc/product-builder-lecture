@@ -1,7 +1,7 @@
 const https = require('https');
 const http = require('http');
 
-const SITE_URL = (process.argv[2] || process.env.SITE_URL || 'https://product-builder-lecture-4ec.pages.dev').replace(/\/+$/, '');
+const SITE_URL = (process.argv[2] || process.env.SITE_URL || 'https://goseoul.space').replace(/\/+$/, '');
 
 function fetchText(url, depth = 0) {
   return new Promise((resolve, reject) => {

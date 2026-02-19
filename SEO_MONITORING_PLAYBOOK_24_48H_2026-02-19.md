@@ -1,15 +1,15 @@
 # GoSeoul SEO Monitoring Playbook (24h / 48h)
 
 Date: 2026-02-19  
-Site: https://product-builder-lecture-4ec.pages.dev
+Site: https://goseoul.space
 
 ## 0) Start Baseline (T+0)
 
 Run:
 
 ```bash
-npm run deploy:live-check -- https://product-builder-lecture-4ec.pages.dev
-npm run seo:recrawl-check -- https://product-builder-lecture-4ec.pages.dev
+npm run deploy:live-check -- https://goseoul.space
+npm run seo:recrawl-check -- https://goseoul.space
 ```
 
 - 기록: `deploy:live-check` 결과 `10/10`
@@ -18,16 +18,16 @@ npm run seo:recrawl-check -- https://product-builder-lecture-4ec.pages.dev
 
 ## 1) Priority URL Set
 
-- `https://product-builder-lecture-4ec.pages.dev/`
-- `https://product-builder-lecture-4ec.pages.dev/explore`
-- `https://product-builder-lecture-4ec.pages.dev/course`
-- `https://product-builder-lecture-4ec.pages.dev/place?id=place-001`
-- `https://product-builder-lecture-4ec.pages.dev/kcontent`
-- `https://product-builder-lecture-4ec.pages.dev/generation`
-- `https://product-builder-lecture-4ec.pages.dev/about`
-- `https://product-builder-lecture-4ec.pages.dev/editorial`
-- `https://product-builder-lecture-4ec.pages.dev/terms`
-- `https://product-builder-lecture-4ec.pages.dev/privacy`
+- `https://goseoul.space/`
+- `https://goseoul.space/explore`
+- `https://goseoul.space/course`
+- `https://goseoul.space/place?id=place-001`
+- `https://goseoul.space/kcontent`
+- `https://goseoul.space/generation`
+- `https://goseoul.space/about`
+- `https://goseoul.space/editorial`
+- `https://goseoul.space/terms`
+- `https://goseoul.space/privacy`
 
 ## 2) Monitoring Log Template
 

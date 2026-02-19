@@ -4,7 +4,7 @@
 
 현재 상태 요약:
 - GitHub `main` 최신 커밋은 반영됨
-- 라이브 `https://product-builder-lecture-4ec.pages.dev`는 최신 마크업 일부가 미반영
+- 라이브 `https://goseoul.space`는 최신 마크업 일부가 미반영
 - 즉, 코드 푸시는 성공했지만 Pages 배포가 뒤처졌거나 설정 불일치 가능성이 높음
 
 ## 1) 먼저 로컬에서 상태 확인

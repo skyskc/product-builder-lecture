@@ -10,5 +10,6 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://product-builder-lecture-4ec.pages.dev/sitemap.xml
-Sitemap: https://product-builder-lecture-4ec.pages.dev/rss.xml
+Host: goseoul.space
+Sitemap: https://goseoul.space/sitemap.xml
+Sitemap: https://goseoul.space/rss.xml

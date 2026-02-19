@@ -48,7 +48,7 @@ npm start
    - 파일 반영 후 AdSense 크롤러 갱신까지 보통 24~72시간 소요될 수 있습니다.
 4. GitHub Pages 프로젝트 경로 사용 시 주의  
    - `https://username.github.io/repo` 형태면 `ads.txt`가 `/repo/ads.txt`에만 생겨, AdSense가 요구하는 루트(`/ads.txt`)와 다를 수 있습니다.
-   - 이 경우 커스텀 도메인 루트(예: `https://product-builder-lecture-4ec.pages.dev/ads.txt`)로 배포하는 방식이 안전합니다.
+   - 이 경우 커스텀 도메인 루트(예: `https://goseoul.space/ads.txt`)로 배포하는 방식이 안전합니다.
 
 ## 6) Budget 결과 저장
 

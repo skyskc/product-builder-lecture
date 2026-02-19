@@ -2,39 +2,39 @@
 <rss version="2.0">
   <channel>
     <title>GoSeoul Updates</title>
-    <link>https://product-builder-lecture-4ec.pages.dev/</link>
+    <link>https://goseoul.space/</link>
     <description>Latest updates from GoSeoul: Seoul travel guides, routes, and celebrity-inspired recommendations.</description>
     <language>ko-KR</language>
     <lastBuildDate>Thu, 19 Feb 2026 07:00:00 GMT</lastBuildDate>
 
     <item>
       <title>GoSeoul Home</title>
-      <link>https://product-builder-lecture-4ec.pages.dev/</link>
-      <guid>https://product-builder-lecture-4ec.pages.dev/</guid>
+      <link>https://goseoul.space/</link>
+      <guid>https://goseoul.space/</guid>
       <pubDate>Thu, 19 Feb 2026 07:00:00 GMT</pubDate>
       <description>Start your Seoul plan with Explore, Planner, and Fun Lab.</description>
     </item>
 
     <item>
       <title>Top Seoul Attractions</title>
-      <link>https://product-builder-lecture-4ec.pages.dev/explore</link>
-      <guid>https://product-builder-lecture-4ec.pages.dev/explore</guid>
+      <link>https://goseoul.space/explore</link>
+      <guid>https://goseoul.space/explore</guid>
       <pubDate>Thu, 19 Feb 2026 07:00:00 GMT</pubDate>
       <description>Explore district-based top attractions and map-ready travel spots.</description>
     </item>
 
     <item>
       <title>Seoul 1-Day Planner</title>
-      <link>https://product-builder-lecture-4ec.pages.dev/course</link>
-      <guid>https://product-builder-lecture-4ec.pages.dev/course</guid>
+      <link>https://goseoul.space/course</link>
+      <guid>https://goseoul.space/course</guid>
       <pubDate>Thu, 19 Feb 2026 07:00:00 GMT</pubDate>
       <description>Build one-day Seoul routes with food and hotel recommendations.</description>
     </item>
 
     <item>
       <title>K-Content Celebrity Recommendations</title>
-      <link>https://product-builder-lecture-4ec.pages.dev/kcontent</link>
-      <guid>https://product-builder-lecture-4ec.pages.dev/kcontent</guid>
+      <link>https://goseoul.space/kcontent</link>
+      <guid>https://goseoul.space/kcontent</guid>
       <pubDate>Thu, 19 Feb 2026 07:00:00 GMT</pubDate>
       <description>Find celebrity-inspired Seoul routes with expanded recommendation data.</description>
     </item>

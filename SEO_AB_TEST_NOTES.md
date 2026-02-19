@@ -1,6 +1,6 @@
 # SEO Meta A/B Test Notes
 
-Target domain: `https://product-builder-lecture-4ec.pages.dev`
+Target domain: `https://goseoul.space`
 
 ## Home (`index.html`)
 - A (Applied)

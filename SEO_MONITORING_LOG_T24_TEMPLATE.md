@@ -2,7 +2,7 @@
 
 Date (KST): ____________________
 Operator: ____________________
-Site: https://product-builder-lecture-4ec.pages.dev
+Site: https://goseoul.space
 Baseline commit: b751628
 
 ## 1) Technical Re-check
@@ -10,8 +10,8 @@ Baseline commit: b751628
 Run:
 
 ```bash
-npm run deploy:live-check -- https://product-builder-lecture-4ec.pages.dev
-npm run seo:recrawl-check -- https://product-builder-lecture-4ec.pages.dev
+npm run deploy:live-check -- https://goseoul.space
+npm run seo:recrawl-check -- https://goseoul.space
 ```
 
 - `deploy:live-check` result: ____________________
