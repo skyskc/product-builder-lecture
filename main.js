@@ -1578,7 +1578,7 @@
         if (langQuery === 'en' || langQuery === 'ko') return langQuery;
         const saved = localStorage.getItem(LANG_STORAGE_KEY);
         if (saved === 'en' || saved === 'ko') return saved;
-        return 'en';
+        return 'ko';
     }
 
     function withCurrentLang(urlText) {
@@ -1747,9 +1747,9 @@
             const h1 = document.querySelector('.panel h1');
             if (eyebrow) eyebrow.textContent = 'Contact';
             if (h1) h1.textContent = 'Inquiry';
-            document.title = 'Seoul Voyage | Contact';
+            document.title = 'GoSeoul | Contact';
             const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) metaDesc.setAttribute('content', 'Contact page for Seoul Voyage. Submit partnership proposals and general inquiries via Formspree.');
+            if (metaDesc) metaDesc.setAttribute('content', 'Contact page for GoSeoul. Submit partnership proposals and general inquiries via Formspree.');
             const section = document.querySelector('.container.narrow .panel');
             if (section) {
                 const p = section.querySelector('p');
@@ -1773,7 +1773,7 @@
             const guidePanel = document.querySelectorAll('.container.narrow .panel')[1];
             const guideParagraphs = guidePanel ? guidePanel.querySelectorAll('p') : [];
             if (guideParagraphs[0]) {
-                guideParagraphs[0].textContent = 'Seoul Voyage reviews requests based on user value, information reliability, and operational fit.';
+                guideParagraphs[0].textContent = 'GoSeoul reviews requests based on user value, information reliability, and operational fit.';
             }
             if (guideParagraphs[1]) {
                 guideParagraphs[1].textContent = 'Specific goals and expected outcomes help us review faster than generic ad-only requests. Submitted details are used only for inquiry response.';
@@ -1784,14 +1784,14 @@
             const h1 = document.querySelector('.panel h1');
             if (eyebrow) eyebrow.textContent = 'Terms';
             if (h1) h1.textContent = 'Terms of Use';
-            document.title = 'Seoul Voyage | Terms of Use';
+            document.title = 'GoSeoul | Terms of Use';
             const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) metaDesc.setAttribute('content', 'Terms of Use for Seoul Voyage, including service scope, user responsibilities, content use rules, disclaimers, and contact process.');
+            if (metaDesc) metaDesc.setAttribute('content', 'Terms of Use for GoSeoul, including service scope, user responsibilities, content use rules, disclaimers, and contact process.');
             const section = document.querySelector('.container.narrow .panel');
             if (section) {
                 const paragraphs = section.querySelectorAll('p');
                 const headings = section.querySelectorAll('h2');
-                if (paragraphs[0]) paragraphs[0].textContent = 'Seoul Voyage is an informational guide service for planning and exploring Seoul travel. Please review the terms below before using the service.';
+                if (paragraphs[0]) paragraphs[0].textContent = 'GoSeoul is an informational guide service for planning and exploring Seoul travel. Please review the terms below before using the service.';
                 if (headings[0]) headings[0].textContent = '1. Service Scope';
                 if (paragraphs[1]) paragraphs[1].textContent = 'The service provides place information, course recommendations, price estimates, and content-based suggestions. Displayed details are references and may change by third-party services or on-site conditions.';
                 if (headings[1]) headings[1].textContent = '2. User Responsibility';
@@ -1811,9 +1811,9 @@
             const h1 = document.querySelector('.panel h1');
             if (eyebrow) eyebrow.textContent = 'Privacy';
             if (h1) h1.textContent = 'Privacy Policy';
-            document.title = 'Seoul Voyage | Privacy Policy';
+            document.title = 'GoSeoul | Privacy Policy';
             const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) metaDesc.setAttribute('content', 'Learn what data Seoul Voyage handles, which external services are connected, and how user requests and data retention are managed.');
+            if (metaDesc) metaDesc.setAttribute('content', 'Learn what data GoSeoul handles, which external services are connected, and how user requests and data retention are managed.');
             const section = document.querySelector('.container.narrow .panel');
             if (section) {
                 const paragraphs = section.querySelectorAll('p');
@@ -1839,15 +1839,15 @@
             const h1 = document.querySelector('.panel h1');
             if (eyebrow) eyebrow.textContent = 'About';
             if (h1) h1.textContent = 'About This Site';
-            document.title = 'Seoul Voyage | About';
+            document.title = 'GoSeoul | About';
             const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) metaDesc.setAttribute('content', 'Official guide to Seoul Voyage mission, content scope, data sources, and update principles.');
+            if (metaDesc) metaDesc.setAttribute('content', 'Official guide to GoSeoul mission, content scope, data sources, and update principles.');
             const section = document.querySelector('.container.narrow .panel');
             if (section) {
                 const paragraphs = section.querySelectorAll('p');
                 const heading = section.querySelector('h2');
                 const li = section.querySelectorAll('ul.review-list li');
-                if (paragraphs[0]) paragraphs[0].textContent = 'Seoul Voyage is an information-first website for international visitors, designed to make Seoul easier to understand and navigate with practical place data, route suggestions, and map links.';
+                if (paragraphs[0]) paragraphs[0].textContent = 'GoSeoul is an information-first website for international visitors, designed to make Seoul easier to understand and navigate with practical place data, route suggestions, and map links.';
                 if (heading) heading.textContent = 'What We Provide';
                 if (li[0]) li[0].textContent = 'Ranked Seoul highlights with style-based exploration';
                 if (li[1]) li[1].textContent = 'Walk-focused one-day course suggestions';
@@ -1864,9 +1864,9 @@
             if (eyebrow) eyebrow.textContent = 'Editorial Policy';
             if (h1) h1.textContent = 'Editorial Standards';
             if (h2) h2.textContent = 'Food Recommendation Criteria';
-            document.title = 'Seoul Voyage | Editorial Policy';
+            document.title = 'GoSeoul | Editorial Policy';
             const metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) metaDesc.setAttribute('content', 'How Seoul Voyage writes travel content, manages data sources, and separates ads from editorial information.');
+            if (metaDesc) metaDesc.setAttribute('content', 'How GoSeoul writes travel content, manages data sources, and separates ads from editorial information.');
             const section = document.querySelector('.container.narrow .panel');
             if (section) {
                 const lists = section.querySelectorAll('ul.review-list');
@@ -1931,7 +1931,7 @@
             const explore = document.getElementById('entry-card-explore');
             const course = document.getElementById('entry-card-course');
             const ctaVariant = getEntryCtaVariant();
-            if (eyebrow) eyebrow.textContent = 'Seoul Voyage';
+            if (eyebrow) eyebrow.textContent = 'GoSeoul';
             if (title) title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             if (desc) desc.textContent = 'Pick one path and get map-ready recommendations right away.';
             if (cta) cta.textContent = ctaVariant === 'A' ? 'Get My Seoul Route Now' : 'Start 1-Day Seoul Plan';
@@ -3240,7 +3240,7 @@
         };
 
         if (isEn) {
-            eyebrow.textContent = 'Seoul Voyage';
+            eyebrow.textContent = 'GoSeoul';
             title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             desc.textContent = 'Pick one path and start now.';
             descExtra.textContent = 'Only essentials.';
@@ -3267,7 +3267,7 @@
             if (navLinks[2]) navLinks[2].textContent = 'Fun Lab';
             if (firstOverlayClose) firstOverlayClose.setAttribute('aria-label', 'Close');
         } else {
-            eyebrow.textContent = '서울 보야지';
+            eyebrow.textContent = 'GoSeoul';
             title.textContent = '서울 여행, 10초 안에 시작';
             desc.textContent = '원하는 방식 하나만 고르면 바로 시작됩니다.';
             descExtra.textContent = '핵심만 빠르게.';
@@ -3519,7 +3519,7 @@
                 {
                     '@type': 'ListItem',
                     position: 1,
-                    name: 'Seoul Voyage',
+                    name: 'GoSeoul',
                     item: `${window.location.origin}/`
                 },
                 {
@@ -3578,7 +3578,7 @@
         const reviewList = document.getElementById('review-list');
         const dataSourceEl = document.getElementById('place-data-source');
 
-        document.title = `${getPlaceName(place)} | Seoul Voyage`;
+        document.title = `${getPlaceName(place)} | GoSeoul`;
         nameEl.textContent = getPlaceName(place);
         categoryEl.textContent = getCategoryLabel(place.category);
         descEl.textContent = CURRENT_LANG === 'en' ? place.descriptionEn : place.description;
@@ -3871,7 +3871,7 @@
 
             ctx.fillStyle = '#e5edff';
             ctx.font = '700 44px "Noto Sans KR", sans-serif';
-            ctx.fillText('Seoul Voyage', 76, 110);
+            ctx.fillText('GoSeoul', 76, 110);
 
             ctx.fillStyle = '#ffffff';
             ctx.font = '700 58px "Noto Sans KR", sans-serif';

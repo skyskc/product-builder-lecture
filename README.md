@@ -1,4 +1,4 @@
-# Seoul Voyage
+# GoSeoul
 
 서울 여행 추천 사이트 정적 운영 버전입니다.
 

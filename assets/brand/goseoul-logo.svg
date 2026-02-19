@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="GoSeoul logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect x="32" y="32" width="448" height="448" rx="120" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#ffffff" stroke-width="18" opacity="0.94"/>
+  <path d="M322 256h-66" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
+  <text x="152" y="278" fill="#ffffff" font-family="Cinzel, 'Noto Sans KR', sans-serif" font-size="120" font-weight="700" letter-spacing="3">GS</text>
+</svg>
