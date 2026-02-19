@@ -1788,8 +1788,6 @@
         const params = new URLSearchParams(window.location.search);
         const langQuery = params.get('lang');
         if (langQuery === 'en' || langQuery === 'ko') return langQuery;
-        const langStored = localStorage.getItem(LANG_STORAGE_KEY);
-        if (langStored === 'en' || langStored === 'ko') return langStored;
         return 'en';
     }
 
@@ -2167,6 +2165,11 @@
             const eyebrow = document.getElementById('entry-eyebrow');
             const title = document.getElementById('entry-title');
             const desc = document.getElementById('entry-desc');
+            const showcaseTitle = document.getElementById('entry-showcase-title');
+            const showcaseDesc = document.getElementById('entry-showcase-desc');
+            const sparkTitle = document.getElementById('entry-spark-title');
+            const sparkBtn = document.getElementById('entry-spark-btn');
+            const quickChips = document.querySelectorAll('.entry-quick-ui .ui-chip');
             const cta = document.getElementById('entry-primary-cta');
             const ctaNote = document.getElementById('entry-primary-note');
             const secondaryTitle = document.getElementById('entry-secondary-title');
@@ -2176,6 +2179,13 @@
             if (eyebrow) eyebrow.textContent = 'GoSeoul';
             if (title) title.textContent = 'Start Your Seoul Plan in 10 Seconds';
             if (desc) desc.textContent = 'Pick one path and get map-ready recommendations right away.';
+            if (showcaseTitle) showcaseTitle.textContent = 'Today\'s Featured Pick';
+            if (showcaseDesc) showcaseDesc.textContent = 'Start here first.';
+            if (sparkTitle) sparkTitle.textContent = 'Entrance Mood Check';
+            if (sparkBtn) sparkBtn.textContent = 'Draw Today\'s Seoul Mood';
+            if (quickChips[0]) quickChips[0].textContent = 'Top Pick';
+            if (quickChips[1]) quickChips[1].textContent = 'Route';
+            if (quickChips[2]) quickChips[2].textContent = 'Map';
             if (cta) cta.textContent = ctaVariant === 'A' ? 'Get My Seoul Route Now' : 'Start 1-Day Seoul Plan';
             if (ctaNote) ctaNote.textContent = ctaVariant === 'A'
                 ? 'Fastest start: build a one-day route first, then expand with spot details.'
@@ -4950,6 +4960,18 @@
             name: '🔤',
             style: '🧠'
         };
+        const getPersonKey = (entry) => `${entry.portraitPage || entry.character?.en || entry.character?.ko || entry.id}`.toLowerCase();
+        const dedupeByPerson = (rows) => {
+            const seen = new Set();
+            const uniqueRows = [];
+            rows.forEach((entry) => {
+                const key = getPersonKey(entry);
+                if (seen.has(key)) return;
+                seen.add(key);
+                uniqueRows.push(entry);
+            });
+            return uniqueRows;
+        };
 
         const getCategoryKey = (entry) => {
             const typeText = `${entry.type?.en || ''}`.toLowerCase();
@@ -5002,10 +5024,12 @@
             } else {
                 rows.sort((a, b) => getTrendScore(b, 0) - getTrendScore(a, 0));
             }
+            rows = dedupeByPerson(rows);
+            const uniqueTotal = dedupeByPerson([...KCONTENT_CHARACTERS]).length;
 
             selectedNoteEl.textContent = isEn
-                ? `Tap a character card to open full recommendations. ${rows.length} shown / ${KCONTENT_CHARACTERS.length} total profiles.`
-                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 현재 ${rows.length}개 표시 / 전체 ${KCONTENT_CHARACTERS.length}개 프로필.`;
+                ? `Tap a character card to open full recommendations. ${rows.length} shown / ${uniqueTotal} unique profiles.`
+                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 현재 ${rows.length}개 표시 / 전체 ${uniqueTotal}개(중복 제거) 프로필.`;
 
             gridEl.innerHTML = rows.map((entry) => {
                 const charName = isEn ? entry.character.en : entry.character.ko;
