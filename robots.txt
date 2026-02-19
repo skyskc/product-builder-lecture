@@ -4,7 +4,11 @@ Allow: /
 User-agent: AdsBot-Google
 Allow: /
 
+User-agent: Yeti
+Allow: /
+
 User-agent: *
 Allow: /
 
 Sitemap: https://product-builder-lecture-4ec.pages.dev/sitemap.xml
+Sitemap: https://product-builder-lecture-4ec.pages.dev/rss.xml
