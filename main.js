@@ -1087,6 +1087,182 @@
                 ko: '전시/역사 축에서 여유 있게 이동하는 코스가 가장 잘 맞습니다.',
                 en: 'Slower-paced routes built around art and history suit this profile best.'
             }
+        },
+        {
+            id: 'song-hye-kyo',
+            work: { ko: '한류 배우', en: 'Hallyu Actress' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '송혜교', en: 'Song Hye-kyo' },
+            portraitPage: 'Song_Hye-kyo',
+            styles: ['art', 'nature'],
+            mood: {
+                ko: '절제된 감성과 고급스러운 무드를 선호하는 타입',
+                en: 'A profile preferring restrained emotion and premium atmosphere.'
+            },
+            reason: {
+                ko: '조용한 산책과 전시 중심 코스를 섞으면 만족도가 높습니다.',
+                en: 'Satisfaction rises when quiet walks are paired with gallery-led stops.'
+            }
+        },
+        {
+            id: 'song-kang',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '송강', en: 'Song Kang' },
+            portraitPage: 'Song_Kang',
+            styles: ['night', 'shopping'],
+            mood: {
+                ko: '도시적 무드와 트렌드 포인트를 빠르게 소비하는 타입',
+                en: 'An urban profile that quickly consumes trend-driven night points.'
+            },
+            reason: {
+                ko: '야간 감성과 트렌드 지역을 짧게 순환하는 루프가 잘 맞습니다.',
+                en: 'Short loops between trend districts and night mood stops fit best.'
+            }
+        },
+        {
+            id: 'kim-yoo-jung',
+            work: { ko: '드라마 배우', en: 'Drama Actress' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '김유정', en: 'Kim Yoo-jung' },
+            portraitPage: 'Kim_Yoo-jung',
+            styles: ['history', 'family'],
+            mood: {
+                ko: '밝고 안정적인 동선을 선호하는 클래식형 타입',
+                en: 'A classic profile preferring bright and stable movement flow.'
+            },
+            reason: {
+                ko: '고궁과 공원 중심의 편안한 코스에서 체감이 좋습니다.',
+                en: 'Comfort-focused routes around palaces and parks feel most natural.'
+            }
+        },
+        {
+            id: 'kim-seon-ho',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '김선호', en: 'Kim Seon-ho' },
+            portraitPage: 'Kim_Seon-ho',
+            styles: ['local', 'nature'],
+            mood: {
+                ko: '친근한 로컬 무드와 느긋한 리듬을 선호하는 타입',
+                en: 'A profile favoring friendly local mood and relaxed pacing.'
+            },
+            reason: {
+                ko: '로컬 거리와 산책형 코스를 이어갈 때 만족도가 높습니다.',
+                en: 'Combining local streets with gentle walking routes works very well.'
+            }
+        },
+        {
+            id: 'han-so-hee',
+            work: { ko: '드라마 배우', en: 'Drama Actress' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '한소희', en: 'Han So-hee' },
+            portraitPage: 'Han_So-hee',
+            styles: ['night', 'art'],
+            mood: {
+                ko: '강렬한 분위기와 시각적 임팩트를 선호하는 타입',
+                en: 'A profile drawn to intense atmosphere and visual impact.'
+            },
+            reason: {
+                ko: '야경과 전시를 결합한 대비 코스에서 몰입도가 올라갑니다.',
+                en: 'Immersion improves on high-contrast routes combining night views and art.'
+            }
+        },
+        {
+            id: 'rowoon',
+            work: { ko: '배우·아이돌', en: 'Actor-Idol' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '로운', en: 'Rowoon' },
+            portraitPage: 'Rowoon',
+            styles: ['history', 'shopping'],
+            mood: {
+                ko: '클래식 서사와 트렌드 체험의 균형을 선호하는 타입',
+                en: 'A profile balancing classic narrative with trend exploration.'
+            },
+            reason: {
+                ko: '역사 구간 후 트렌드 지역으로 전환하는 동선이 잘 맞습니다.',
+                en: 'Routes that shift from history zones to trend areas suit him well.'
+            }
+        },
+        {
+            id: 'kwon-eun-bi',
+            work: { ko: '솔로 아티스트', en: 'Solo Artist' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '권은비', en: 'Kwon Eun-bi' },
+            portraitPage: 'Kwon_Eun-bi',
+            styles: ['night', 'shopping'],
+            mood: {
+                ko: '무대형 에너지와 스타일 소비가 빠른 타입',
+                en: 'A profile with stage-driven energy and fast style consumption.'
+            },
+            reason: {
+                ko: '야간 포인트와 쇼핑 루프를 결합하면 만족도가 높습니다.',
+                en: 'Combining night highlights with shopping loops is highly effective.'
+            }
+        },
+        {
+            id: 'ahn-yu-jin',
+            work: { ko: '아이브 (IVE)', en: 'IVE' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '안유진', en: 'An Yu-jin' },
+            portraitPage: 'An_Yu-jin',
+            styles: ['shopping', 'family'],
+            mood: {
+                ko: '활발한 이동과 안정적인 쉼을 함께 가져가는 타입',
+                en: 'A profile balancing active movement with stable recovery stops.'
+            },
+            reason: {
+                ko: '트렌드 지역과 휴식형 거점을 번갈아 배치하면 효율적입니다.',
+                en: 'Alternating trend districts with rest-friendly anchors works best.'
+            }
+        },
+        {
+            id: 'winter-aespa',
+            work: { ko: '에스파 (aespa)', en: 'aespa' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '윈터', en: 'Winter' },
+            portraitPage: 'Winter_(singer)',
+            styles: ['art', 'shopping'],
+            mood: {
+                ko: '선명한 콘셉트와 미래지향 감도를 선호하는 타입',
+                en: 'A profile preferring sharp concepts and futuristic sensibility.'
+            },
+            reason: {
+                ko: '전시형 공간과 트렌드 샵을 연결한 코스에서 체감이 좋습니다.',
+                en: 'She resonates with routes linking exhibition-style spaces and trend shops.'
+            }
+        },
+        {
+            id: 'doyoung-nct',
+            work: { ko: 'NCT', en: 'NCT' },
+            type: { ko: '아이돌 멤버', en: 'Idol Member' },
+            character: { ko: '도영', en: 'Doyoung' },
+            portraitPage: 'Doyoung_(singer)',
+            styles: ['art', 'night'],
+            mood: {
+                ko: '감성 보컬 톤과 도시 야간 무드를 선호하는 타입',
+                en: 'A profile leaning toward emotive tone and urban night mood.'
+            },
+            reason: {
+                ko: '야간 산책과 전시 구간을 함께 배치할 때 만족도가 높습니다.',
+                en: 'Satisfaction increases when night walks are paired with art stops.'
+            }
+        },
+        {
+            id: 'ji-chang-wook',
+            work: { ko: '드라마 배우', en: 'Drama Actor' },
+            type: { ko: '연예인', en: 'Celebrity' },
+            character: { ko: '지창욱', en: 'Ji Chang-wook' },
+            portraitPage: 'Ji_Chang-wook',
+            styles: ['night', 'local'],
+            mood: {
+                ko: '현장감 있는 도시 리듬과 액션형 동선을 선호하는 타입',
+                en: 'A profile favoring live urban rhythm and action-paced movement.'
+            },
+            reason: {
+                ko: '로컬 거리와 야간 포인트를 연속 배치한 코스가 잘 맞습니다.',
+                en: 'Back-to-back local streets and night hotspots fit this profile well.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -1181,7 +1357,17 @@
         { name: '압구정 브런치 라운지', district: '강남구', styles: ['shopping', 'art'], desc: { ko: '스타일 중심 브런치 동선', en: 'Style-driven brunch itinerary stop' } },
         { name: '서촌 전통주 바', district: '종로구', styles: ['history', 'night'], desc: { ko: '역사 거리와 어울리는 전통주 페어링', en: 'Traditional drink pairing in historic streets' } },
         { name: '여의도 한강 야식 포인트', district: '영등포구', styles: ['night', 'family'], desc: { ko: '강변 산책 후 가벼운 야식', en: 'Light late bite after riverside walk' } },
-        { name: '송리단길 캐주얼 다이닝', district: '송파구', styles: ['nature', 'shopping'], desc: { ko: '석촌호수 인근 감성 식사', en: 'Mood dining near Seokchon Lake' } }
+        { name: '송리단길 캐주얼 다이닝', district: '송파구', styles: ['nature', 'shopping'], desc: { ko: '석촌호수 인근 감성 식사', en: 'Mood dining near Seokchon Lake' } },
+        { name: '을지로 포차 루프', district: '중구', styles: ['night', 'local'], desc: { ko: '레트로 골목과 야간 활기가 강한 코스', en: 'Retro alleys with strong late-night energy' } },
+        { name: '서래마을 브런치 스트리트', district: '서초구', styles: ['nature', 'art'], desc: { ko: '여유로운 오전 동선에 어울리는 브런치', en: 'Brunch street suited for relaxed morning pace' } },
+        { name: '성북동 한정식 라인', district: '성북구', styles: ['history', 'family'], desc: { ko: '정갈한 분위기의 전통식 추천', en: 'Traditional dining in a calm and refined setting' } },
+        { name: '문래 창작촌 펍 라인', district: '영등포구', styles: ['art', 'night'], desc: { ko: '아트 무드와 야간 분위기를 동시에', en: 'Art-forward mood blended with nightlife' } },
+        { name: '익선동 디저트 한옥길', district: '종로구', styles: ['history', 'art'], desc: { ko: '고즈넉한 한옥과 디저트 포인트 결합', en: 'Quiet hanok texture paired with dessert spots' } },
+        { name: '성수 베이커리 투어', district: '성동구', styles: ['shopping', 'local'], desc: { ko: '트렌디한 공간에서 즐기는 로컬 베이커리', en: 'Local bakery trail inside trend-setting neighborhoods' } },
+        { name: '신사 가로수길 비스트로', district: '강남구', styles: ['shopping', 'night'], desc: { ko: '쇼핑 후 이어지는 저녁 다이닝 루트', en: 'Evening bistro flow after trend shopping' } },
+        { name: '청담 시그니처 다이닝', district: '강남구', styles: ['shopping', 'art'], desc: { ko: '고감도 인테리어와 프리미엄 코스', en: 'Premium course with high-design interiors' } },
+        { name: '노량진 수산 야식', district: '동작구', styles: ['local', 'night'], desc: { ko: '현장감 강한 로컬 해산물 체험', en: 'Lively local seafood experience after dark' } },
+        { name: '혜화 소극장 골목 식당', district: '종로구', styles: ['art', 'local'], desc: { ko: '공연 전후 즐기기 좋은 로컬 식당', en: 'Local dining ideal before or after theater shows' } }
     ];
     let CURRENT_LANG = 'ko';
     const FX_RATE_STORAGE_KEY = 'seoul-explorer-fx-rate';
@@ -4568,18 +4754,18 @@
         const charName = isEn ? character.character.en : character.character.ko;
         const mood = isEn ? character.mood.en : character.mood.ko;
         const reason = isEn ? character.reason.en : character.reason.ko;
-        summaryEl.textContent = isEn
-            ? `${charName} (${workName}, ${typeName}) interpretation: ${mood} Reasoning: ${reason}`
-            : `${charName} (${workName}, ${typeName}) 해석: ${mood}. 해석 근거: ${reason}`;
-
         const styles = [...new Set(character.styles)];
+        const styleText = styles.map((style) => getStyleLabel(style)).join(isEn ? ', ' : ', ');
+        summaryEl.innerHTML = isEn
+            ? `<strong>${escapeHtml(charName)} (${escapeHtml(workName)}, ${escapeHtml(typeName)})</strong><br>${escapeHtml(mood)}<br><span class="data-source-note">Mood basis: ${escapeHtml(reason)} · Route axis: ${escapeHtml(styleText)}</span>`
+            : `<strong>${escapeHtml(charName)} (${escapeHtml(workName)}, ${escapeHtml(typeName)})</strong><br>${escapeHtml(mood)}<br><span class="data-source-note">해석 근거: ${escapeHtml(reason)} · 추천 축: ${escapeHtml(styleText)}</span>`;
+
         const traitLabels = styles.map((style) => KCONTENT_TRAIT_BY_STYLE[isEn ? 'en' : 'ko'][style] || getStyleLabel(style));
         chipsEl.innerHTML = traitLabels.map((tag) => {
             return `<span class="generation-chip">${escapeHtml(tag)}</span>`;
         }).join('');
 
         if (analysisEl) {
-            const styleText = styles.map((style) => getStyleLabel(style)).join(isEn ? ', ' : ', ');
             const paragraphs = isEn
                 ? [
                     `${charName} is interpreted as a traveler profile that values ${styleText}. This route is designed to maintain the same emotional tempo found in the character's narrative arc.`,
@@ -4591,10 +4777,27 @@
                     `첫 구간은 체크리스트형 관광보다 장소의 분위기와 결을 먼저 체감하도록 구성했습니다. 선택된 지역은 장면 연출감과 실제 이동 편의가 동시에 확보되는 지점을 우선 반영했습니다.`,
                     `마지막 구간은 감정 피로를 줄이기 위해 대비를 넣었습니다. 몰입도가 높은 스팟 뒤에 안정적인 산책/로컬 구간을 붙여, 하루 전체가 끊기지 않는 '캐릭터 중심 여행 서사'로 이어지도록 맞췄습니다.`
                 ];
-            analysisEl.innerHTML = paragraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('');
+            const relatedCharacters = KCONTENT_CHARACTERS
+                .filter((entry) => entry.id !== character.id && entry.styles.some((style) => styles.includes(style)))
+                .slice(0, 6);
+            const relatedTitle = isEn ? 'Similar Celebrity Profiles' : '비슷한 연예인 프로필';
+            const relatedHtml = relatedCharacters.length
+                ? `
+                    <p><strong>${escapeHtml(relatedTitle)}</strong></p>
+                    <ul class="review-list compact-list">
+                        ${relatedCharacters.map((entry) => {
+                            const relatedName = isEn ? entry.character.en : entry.character.ko;
+                            const relatedWork = isEn ? entry.work.en : entry.work.ko;
+                            const href = withCurrentLang(`kcontent-result.html?char=${encodeURIComponent(entry.id)}`);
+                            return `<li><a class="text-link" href="${href}">${escapeHtml(relatedName)}</a> <span class="hotel-meta">(${escapeHtml(relatedWork)})</span></li>`;
+                        }).join('')}
+                    </ul>
+                `
+                : '';
+            analysisEl.innerHTML = `${paragraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('')}${relatedHtml}`;
         }
 
-        const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 8);
+        const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 12);
         listEl.innerHTML = picked.map((place, idx) => {
             const href = getPlaceLink('place.html', place.id);
             const matched = place.styles.filter((style) => styles.includes(style)).slice(0, 2).map((style) => getStyleLabel(style)).join(isEn ? ' + ' : ' + ');
@@ -4607,7 +4810,7 @@
         if (foodListEl) {
             const foodPicks = KCONTENT_FOOD_SPOTS
                 .filter((food) => styles.some((style) => food.styles.includes(style)))
-                .slice(0, 6);
+                .slice(0, 10);
             foodListEl.innerHTML = foodPicks.map((food, idx) => {
                 const why = isEn ? food.desc.en : food.desc.ko;
                 return `<li><strong>${idx + 1}. ${escapeHtml(food.name)}</strong> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(food.district))})</span><p class="saju-reason">${escapeHtml(why)}</p></li>`;
@@ -4628,8 +4831,8 @@
             ? 'Choose globally popular Korean content characters by photo and open a full recommendation screen.'
             : '해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 결과 화면에서 상세 추천을 확인하세요.';
         selectedNoteEl.textContent = isEn
-            ? 'Tap a character card to move to the full recommendation page.'
-            : '캐릭터 카드를 누르면 화면이 넘어가며 추천 결과가 표시됩니다.';
+            ? `Tap a character card to open full recommendations. ${KCONTENT_CHARACTERS.length} profiles are available.`
+            : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 현재 ${KCONTENT_CHARACTERS.length}개 프로필을 제공합니다.`;
         gridEl.setAttribute('aria-label', isEn ? 'Character selection' : '캐릭터 선택');
 
         gridEl.innerHTML = KCONTENT_CHARACTERS.map((entry) => {
