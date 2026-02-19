@@ -986,9 +986,11 @@ body.dark-mode .ui-chip.tone-food {
 .kcontent-controls {
     margin-top: 10px;
     margin-bottom: 8px;
-    display: grid;
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
     gap: 10px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: none;
     padding: 10px;
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -996,8 +998,11 @@ body.dark-mode .ui-chip.tone-food {
 }
 
 .kcontent-control-item {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 6px;
+    flex: 1 1 220px;
+    min-width: 220px;
 }
 
 .kcontent-control-item label {
@@ -1814,7 +1819,6 @@ body.dark-mode .entry-primary-cta {
     }
 
     .kcontent-controls {
-        grid-template-columns: 1fr;
         gap: 8px;
     }
 
@@ -1847,5 +1851,10 @@ body.dark-mode .entry-primary-cta {
         white-space: nowrap;
         font-size: 0.82rem;
         padding: 6px 10px;
+    }
+
+    .kcontent-control-item {
+        min-width: 0;
+        flex: 1 1 100%;
     }
 }

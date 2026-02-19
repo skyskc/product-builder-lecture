@@ -4824,17 +4824,57 @@
     }
 
     function renderKContentPage() {
+        const ensureKcontentControls = () => {
+            let filterSelect = document.getElementById('kcontent-type-filter');
+            let sortSelect = document.getElementById('kcontent-sort-select');
+            let filterLabelEl = document.getElementById('kcontent-filter-label');
+            let sortLabelEl = document.getElementById('kcontent-sort-label');
+            if (filterSelect && sortSelect && filterLabelEl && sortLabelEl) {
+                return { filterSelect, sortSelect, filterLabelEl, sortLabelEl };
+            }
+            const descEl = document.getElementById('kcontent-desc');
+            if (!descEl) return null;
+            const controls = document.createElement('div');
+            controls.className = 'kcontent-controls';
+            controls.innerHTML = `
+                <div class="kcontent-control-item">
+                    <label id="kcontent-filter-label" for="kcontent-type-filter">인물 유형</label>
+                    <select id="kcontent-type-filter" class="kcontent-control-select">
+                        <option value="all">전체</option>
+                        <option value="idol">아이돌</option>
+                        <option value="actor">배우</option>
+                        <option value="celebrity">연예인</option>
+                    </select>
+                </div>
+                <div class="kcontent-control-item">
+                    <label id="kcontent-sort-label" for="kcontent-sort-select">정렬</label>
+                    <select id="kcontent-sort-select" class="kcontent-control-select">
+                        <option value="popular">인기순</option>
+                        <option value="name">이름순</option>
+                        <option value="style">정보풍부순</option>
+                    </select>
+                </div>
+            `;
+            descEl.insertAdjacentElement('afterend', controls);
+            filterSelect = document.getElementById('kcontent-type-filter');
+            sortSelect = document.getElementById('kcontent-sort-select');
+            filterLabelEl = document.getElementById('kcontent-filter-label');
+            sortLabelEl = document.getElementById('kcontent-sort-label');
+            if (!filterSelect || !sortSelect || !filterLabelEl || !sortLabelEl) return null;
+            return { filterSelect, sortSelect, filterLabelEl, sortLabelEl };
+        };
+
         const titleEl = document.getElementById('kcontent-title');
         const descEl = document.getElementById('kcontent-desc');
         const selectedNoteEl = document.getElementById('kcontent-selected-note');
         const gridEl = document.getElementById('kcontent-character-grid');
-        const filterLabelEl = document.getElementById('kcontent-filter-label');
-        const sortLabelEl = document.getElementById('kcontent-sort-label');
-        const filterSelect = document.getElementById('kcontent-type-filter');
-        const sortSelect = document.getElementById('kcontent-sort-select');
-        if (!titleEl || !descEl || !selectedNoteEl || !gridEl || !filterLabelEl || !sortLabelEl || !filterSelect || !sortSelect) return;
+        const eyebrowEl = document.querySelector('body[data-page="kcontent"] .panel .eyebrow');
+        const controls = ensureKcontentControls();
+        if (!titleEl || !descEl || !selectedNoteEl || !gridEl || !controls) return;
+        const { filterLabelEl, sortLabelEl, filterSelect, sortSelect } = controls;
 
         const isEn = CURRENT_LANG === 'en';
+        if (eyebrowEl) eyebrowEl.textContent = isEn ? 'Screen Picks' : '스크린픽 추천';
         titleEl.textContent = isEn ? 'K-Content Character Travel Recommender' : '한국 콘텐츠 캐릭터 기반 여행 추천';
         descEl.textContent = isEn
             ? 'Choose globally popular Korean content characters by photo and open a full recommendation screen.'
@@ -4927,14 +4967,24 @@
             });
         };
 
-        filterSelect.value = 'all';
-        sortSelect.value = 'popular';
+        const FILTER_KEY = 'kcontent-filter';
+        const SORT_KEY = 'kcontent-sort';
+        const savedFilter = localStorage.getItem(FILTER_KEY);
+        const savedSort = localStorage.getItem(SORT_KEY);
+        filterSelect.value = ['all', 'idol', 'actor', 'celebrity'].includes(savedFilter || '') ? savedFilter : 'all';
+        sortSelect.value = ['popular', 'name', 'style'].includes(savedSort || '') ? savedSort : 'popular';
         if (!filterSelect.dataset.bound) {
-            filterSelect.addEventListener('change', renderCharacterGrid);
+            filterSelect.addEventListener('change', () => {
+                localStorage.setItem(FILTER_KEY, filterSelect.value);
+                renderCharacterGrid();
+            });
             filterSelect.dataset.bound = '1';
         }
         if (!sortSelect.dataset.bound) {
-            sortSelect.addEventListener('change', renderCharacterGrid);
+            sortSelect.addEventListener('change', () => {
+                localStorage.setItem(SORT_KEY, sortSelect.value);
+                renderCharacterGrid();
+            });
             sortSelect.dataset.bound = '1';
         }
         renderCharacterGrid();
