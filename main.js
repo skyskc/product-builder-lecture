@@ -1503,6 +1503,134 @@
                 ko: '야간 포인트와 디자인 스팟이 결합된 코스에서 몰입이 높습니다.',
                 en: 'Immersion peaks on routes combining night highlights and design spots.'
             }
+        },
+        {
+            id: 'bong-joon-ho',
+            work: { ko: '기생충', en: 'Parasite' },
+            type: { ko: '영화감독', en: 'Film Director' },
+            character: { ko: '봉준호', en: 'Bong Joon-ho' },
+            portraitPage: 'Bong_Joon-ho',
+            styles: ['local', 'art'],
+            mood: {
+                ko: '현실 밀도와 구조적 시선을 함께 보는 타입',
+                en: 'A profile reading both social texture and structural perspective.'
+            },
+            reason: {
+                ko: '로컬 골목과 전시 공간을 교차하면 해석 밀도가 높아집니다.',
+                en: 'Alternating local alleys with art spaces increases narrative depth.'
+            }
+        },
+        {
+            id: 'park-chan-wook',
+            work: { ko: '헤어질 결심', en: 'Decision to Leave' },
+            type: { ko: '영화감독', en: 'Film Director' },
+            character: { ko: '박찬욱', en: 'Park Chan-wook' },
+            portraitPage: 'Park_Chan-wook',
+            styles: ['art', 'night'],
+            mood: {
+                ko: '강한 미장센과 긴장감 있는 도시 리듬을 선호하는 타입',
+                en: 'A profile preferring strong mise-en-scene and tense urban rhythm.'
+            },
+            reason: {
+                ko: '야간 뷰와 전시 구간을 묶는 구성이 가장 적합합니다.',
+                en: 'Routes linking night views and gallery stops are highly compatible.'
+            }
+        },
+        {
+            id: 'youn-yuh-jung',
+            work: { ko: '미나리', en: 'Minari' },
+            type: { ko: '배우', en: 'Actor' },
+            character: { ko: '윤여정', en: 'Youn Yuh-jung' },
+            portraitPage: 'Youn_Yuh-jung',
+            styles: ['history', 'family'],
+            mood: {
+                ko: '생활 밀도와 여유 있는 관찰 리듬을 중시하는 타입',
+                en: 'A profile valuing lived texture and relaxed observational pace.'
+            },
+            reason: {
+                ko: '고궁권과 정적인 휴식 포인트 중심 이동이 잘 맞습니다.',
+                en: 'Palace areas plus calm rest points fit this profile best.'
+            }
+        },
+        {
+            id: 'lee-young-ae',
+            work: { ko: '대장금', en: 'Jewel in the Palace' },
+            type: { ko: '배우', en: 'Actor' },
+            character: { ko: '이영애', en: 'Lee Young-ae' },
+            portraitPage: 'Lee_Young-ae',
+            styles: ['history', 'art'],
+            mood: {
+                ko: '전통 미감과 정제된 동선을 선호하는 타입',
+                en: 'A profile favoring traditional aesthetics and refined routes.'
+            },
+            reason: {
+                ko: '역사 유산과 전시형 공간을 잇는 코스에서 만족도가 높습니다.',
+                en: 'Satisfaction is high on routes connecting heritage and gallery spaces.'
+            }
+        },
+        {
+            id: 'cho-yong-pil',
+            work: { ko: '가왕 조용필', en: 'Legendary Vocalist' },
+            type: { ko: '가수', en: 'Singer' },
+            character: { ko: '조용필', en: 'Cho Yong-pil' },
+            portraitPage: 'Cho_Yong-pil',
+            styles: ['family', 'night'],
+            mood: {
+                ko: '세대 공감형 리듬과 안정적인 이동을 선호하는 타입',
+                en: 'A profile preferring cross-generation rhythm and stable movement.'
+            },
+            reason: {
+                ko: '가족 동선과 야간 명소를 적절히 섞으면 체감이 좋습니다.',
+                en: 'Balanced family routes with selected night spots work effectively.'
+            }
+        },
+        {
+            id: 'nam-june-paik',
+            work: { ko: '비디오 아트', en: 'Video Art' },
+            type: { ko: '예술가', en: 'Artist' },
+            character: { ko: '백남준', en: 'Nam June Paik' },
+            portraitPage: 'Nam_June_Paik',
+            styles: ['art', 'history'],
+            mood: {
+                ko: '실험성과 시대 감각을 동시에 추구하는 타입',
+                en: 'A profile pursuing experimentation and historical context together.'
+            },
+            reason: {
+                ko: '미술관/전시 중심 코스와 역사 구간의 결합이 적합합니다.',
+                en: 'A museum-heavy route paired with historical zones fits strongly.'
+            }
+        },
+        {
+            id: 'han-kang',
+            work: { ko: '채식주의자', en: 'The Vegetarian' },
+            type: { ko: '작가', en: 'Writer' },
+            character: { ko: '한강', en: 'Han Kang' },
+            portraitPage: 'Han_Kang',
+            styles: ['nature', 'art'],
+            mood: {
+                ko: '고요한 관찰과 감정 밀도의 균형을 중시하는 타입',
+                en: 'A profile balancing quiet observation with emotional density.'
+            },
+            reason: {
+                ko: '강변 산책과 전시 공간을 이어주는 서정형 동선이 잘 맞습니다.',
+                en: 'Poetic routes linking riverside walks and art spaces work best.'
+            }
+        },
+        {
+            id: 'hwang-dong-hyuk',
+            work: { ko: '오징어 게임', en: 'Squid Game' },
+            type: { ko: '감독', en: 'Director' },
+            character: { ko: '황동혁', en: 'Hwang Dong-hyuk' },
+            portraitPage: 'Hwang_Dong-hyuk',
+            styles: ['local', 'night'],
+            mood: {
+                ko: '도시의 현실감과 극적 대비를 함께 읽는 타입',
+                en: 'A profile reading urban realism and dramatic contrast together.'
+            },
+            reason: {
+                ko: '로컬 밀도 높은 구간과 야간 전환 포인트를 섞는 구성이 적합합니다.',
+                en: 'Dense local zones with night transitions fit this profile well.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -1601,7 +1729,8 @@
         'cha-eun-woo', 'iu', 'g-dragon', 'taeyeon', 'song-kang', 'han-so-hee', 'kim-soo-hyun', 'lee-min-ho', 'jun-ji-hyun', 'park-bo-gum',
         'song-hye-kyo', 'ji-chang-wook', 'kim-yoo-jung', 'kim-seon-ho', 'ahn-yu-jin', 'winter-aespa', 'doyoung-nct', 'kwon-eun-bi',
         'rose-blackpink', 'lisa-blackpink', 'jin-bts', 'sana-twice', 'hyunjin-skz', 'kai-exo',
-        'park-shin-hye', 'kim-go-eun', 'kim-ji-won', 'byeon-woo-seok', 'kim-hye-yoon', 'ahn-hyo-seop', 'lee-jae-wook', 'go-min-si', 'shin-min-a'
+        'park-shin-hye', 'kim-go-eun', 'kim-ji-won', 'byeon-woo-seok', 'kim-hye-yoon', 'ahn-hyo-seop', 'lee-jae-wook', 'go-min-si', 'shin-min-a',
+        'bong-joon-ho', 'park-chan-wook', 'youn-yuh-jung', 'lee-young-ae', 'cho-yong-pil', 'nam-june-paik', 'han-kang', 'hwang-dong-hyuk'
     ];
     const KCONTENT_FOOD_SPOTS = [
         { name: '광장시장 빈대떡 골목', district: '종로구', styles: ['local', 'night'], desc: { ko: '현장감 있는 로컬 에너지', en: 'High-energy local street food vibe' } },
@@ -5240,16 +5369,23 @@
             const actorBonus = (typeText.includes('actor') || typeText.includes('actress')) ? 5 : 0;
             return base + styleBonus + actorBonus;
         };
+        const shuffleRows = (rows) => {
+            const shuffled = [...rows];
+            for (let i = shuffled.length - 1; i > 0; i -= 1) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        };
 
         const renderCharacterGrid = () => {
-            let rows = [...KCONTENT_CHARACTERS];
-            rows.sort((a, b) => getTrendScore(b, 0) - getTrendScore(a, 0));
-            rows = dedupeByPerson(rows);
+            let rows = dedupeByPerson([...KCONTENT_CHARACTERS]);
+            rows = shuffleRows(rows);
             const uniqueTotal = dedupeByPerson([...KCONTENT_CHARACTERS]).length;
 
             selectedNoteEl.textContent = isEn
-                ? `Tap a character card to open full recommendations. ${rows.length} unique profiles shown.`
-                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 중복 제거된 ${rows.length}개 프로필만 표시됩니다.`;
+                ? `Tap a character card to open full recommendations. ${rows.length} unique profiles shown in random order.`
+                : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 중복 제거된 ${rows.length}개 프로필을 랜덤 순서로 표시합니다.`;
 
             gridEl.innerHTML = rows.map((entry) => {
                 const charName = isEn ? entry.character.en : entry.character.ko;
