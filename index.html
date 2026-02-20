@@ -29,6 +29,21 @@
     <link rel="alternate" hreflang="ko" href="https://goseoul.space/?lang=ko">
     <link rel="alternate" hreflang="en" href="https://goseoul.space/">
     <link rel="alternate" hreflang="x-default" href="https://goseoul.space/">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ff5833",
+              "background-dark": "#0a0d14",
+              "card-dark": "#161b26"
+            }
+          }
+        }
+      }
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -76,7 +91,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="image" href="assets/home/gyeongbokgung.jpg" fetchpriority="high">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/brand/goseoul-favicon.svg">
     <!-- Google tag (gtag.js) -->
@@ -104,8 +119,8 @@
     </script>
 
 </head>
-<body data-page="entry">
-    <header class="site-header">
+<body data-page="entry" class="min-h-screen bg-background-light">
+    <header class="site-header shadow-lg shadow-slate-900/5">
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
@@ -118,9 +133,9 @@
         </div>
     </header>
 
-    <main class="container">
+    <main class="container relative">
         <div class="entry-first-screen">
-            <section class="panel open-landing">
+            <section class="panel open-landing backdrop-blur-[2px]">
                 <p id="entry-eyebrow" class="eyebrow">GoSeoul</p>
                 <h1 id="entry-title">Start Your Seoul Plan in 10 Seconds</h1>
                 <p id="entry-desc">Pick one path and start now.</p>
@@ -144,7 +159,7 @@
                 </div>
             </section>
 
-            <section class="panel korea-showcase">
+            <section class="panel korea-showcase border border-white/20">
                 <h2 id="entry-showcase-title">Today's Featured Pick</h2>
                 <p id="entry-showcase-desc">Start here first.</p>
                 <p id="entry-showcase-date" class="data-source-note"></p>

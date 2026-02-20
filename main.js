@@ -2732,13 +2732,40 @@
     function initThemeToggle() {
         const btn = document.getElementById('theme-toggle-btn');
         const saved = localStorage.getItem(THEME_STORAGE_KEY);
-        applyTheme(saved === 'dark' || saved === 'light' ? saved : 'light');
+        applyTheme(saved === 'dark' || saved === 'light' ? saved : 'dark');
         if (!btn) return;
         btn.addEventListener('click', () => {
             const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
             applyTheme(next);
             localStorage.setItem(THEME_STORAGE_KEY, next);
         });
+    }
+
+    function initGlobalMobileDock() {
+        if (document.querySelector('.mobile-bottom-dock')) return;
+        const page = document.body.dataset.page;
+        const labels = CURRENT_LANG === 'en'
+            ? { explore: 'Explore', planner: 'Planner', labs: 'Labs', profile: 'Contact' }
+            : { explore: '탐색', planner: '플래너', labs: '랩', profile: '문의' };
+
+        const links = [
+            { key: 'explore', href: withCurrentLang('explore.html'), pages: ['home', 'place', 'entry'] },
+            { key: 'planner', href: withCurrentLang('course.html'), pages: ['course'] },
+            { key: 'labs', href: withCurrentLang('kcontent.html'), pages: ['kcontent', 'kcontent-result', 'generation', 'saju'] },
+            { key: 'profile', href: withCurrentLang('partner.html'), pages: ['partner', 'about'] }
+        ];
+
+        const dock = document.createElement('div');
+        dock.className = 'mobile-bottom-dock';
+        dock.innerHTML = `
+            <nav class="mobile-bottom-dock-inner" aria-label="Mobile">
+                ${links.map((item) => {
+                    const active = item.pages.includes(page) ? 'active' : '';
+                    return `<a class="${active}" href="${item.href}"><span>${labels[item.key]}</span></a>`;
+                }).join('')}
+            </nav>
+        `;
+        document.body.appendChild(dock);
     }
 
     function initPageTransition() {
@@ -5543,6 +5570,7 @@
         initServiceWorker();
         initThemeToggle();
         markActiveNav();
+        initGlobalMobileDock();
         initPageTransition();
         initStickyOffsets();
         const page = document.body.dataset.page;

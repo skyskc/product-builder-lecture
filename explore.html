@@ -21,10 +21,25 @@
     <link rel="alternate" hreflang="ko" href="https://goseoul.space/explore?lang=ko">
     <link rel="alternate" hreflang="en" href="https://goseoul.space/explore">
     <link rel="alternate" hreflang="x-default" href="https://goseoul.space/explore">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ff5833",
+              "background-dark": "#0a0d14",
+              "card-dark": "#161b26"
+            }
+          }
+        }
+      }
+    </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001204090329044" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/brand/goseoul-favicon.svg">
     <!-- Google tag (gtag.js) -->
@@ -52,8 +67,8 @@
     </script>
 
 </head>
-<body data-page="home">
-    <header class="site-header">
+<body data-page="home" class="min-h-screen bg-background-light">
+    <header class="site-header shadow-lg shadow-slate-900/5">
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
@@ -68,8 +83,8 @@
         </div>
     </header>
 
-    <main class="container">
-        <section class="hero">
+    <main class="container relative">
+        <section class="hero rounded-3xl border border-white/10 bg-card-dark/5 p-5 md:p-7">
             <p class="eyebrow">For International Visitors</p>
             <h1>서울에서 꼭 가봐야 할 인기 명소</h1>
             <p>서울을 처음 방문하는 여행자를 위해 많이 방문하는 장소를 엄선했습니다. 장소 상세 페이지에서 Google 지도, 평점, 리뷰 요약까지 바로 확인할 수 있습니다.</p>
@@ -118,7 +133,7 @@
             </div>
         </section>
 
-        <section>
+        <section class="mt-4">
             <div id="place-grid" class="place-grid"></div>
         </section>
 
