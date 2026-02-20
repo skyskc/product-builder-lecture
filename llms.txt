@@ -1,0 +1,20 @@
+GoSeoul
+Official URL: https://goseoul.space/
+Primary language: English, Korean
+
+Summary:
+GoSeoul is a Seoul travel planning site for international visitors. It provides attraction discovery, one-day route builders, K-content-inspired picks, and place detail pages with map-ready travel context.
+
+Key pages:
+- Home: https://goseoul.space/
+- Explore: https://goseoul.space/explore
+- Course planner: https://goseoul.space/course
+- K-content planner: https://goseoul.space/kcontent
+- Place detail template: https://goseoul.space/place?id=place-001
+- Editorial policy: https://goseoul.space/editorial
+
+Crawling notes:
+- Public pages are intended for indexing.
+- Canonical, hreflang, Open Graph, and schema.org metadata are provided.
+- Sitemap: https://goseoul.space/sitemap.xml
+- RSS: https://goseoul.space/rss.xml

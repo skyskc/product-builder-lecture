@@ -108,6 +108,7 @@ const PUBLIC_ROOT_FILES = new Set([
   'sitemap.xml',
   'rss.xml',
   'ads.txt',
+  'llms.txt',
   'favicon.ico'
 ]);
 

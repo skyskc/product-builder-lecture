@@ -1631,6 +1631,54 @@
                 ko: '로컬 밀도 높은 구간과 야간 전환 포인트를 섞는 구성이 적합합니다.',
                 en: 'Dense local zones with night transitions fit this profile well.'
             }
+        },
+        {
+            id: 'lee-jung-jae',
+            work: { ko: '오징어 게임', en: 'Squid Game' },
+            type: { ko: '배우', en: 'Actor' },
+            character: { ko: '이정재', en: 'Lee Jung-jae' },
+            portraitPage: 'Lee_Jung-jae',
+            styles: ['night', 'local'],
+            mood: {
+                ko: '도시 긴장감과 강한 몰입 리듬을 선호하는 타입',
+                en: 'A profile favoring urban tension and high-immersion pacing.'
+            },
+            reason: {
+                ko: '야간 뷰포인트와 로컬 골목을 연계한 코스가 특히 잘 맞습니다.',
+                en: 'Routes linking night viewpoints and dense local streets fit especially well.'
+            }
+        },
+        {
+            id: 'gong-yoo',
+            work: { ko: '도깨비', en: 'Guardian: The Lonely and Great God' },
+            type: { ko: '배우', en: 'Actor' },
+            character: { ko: '공유', en: 'Gong Yoo' },
+            portraitPage: 'Gong_Yoo',
+            styles: ['history', 'art'],
+            mood: {
+                ko: '정제된 서사와 감성적인 공간 연출을 선호하는 타입',
+                en: 'A profile preferring refined narrative and emotional spatial staging.'
+            },
+            reason: {
+                ko: '고궁/전시를 잇는 서정형 코스에서 만족도가 높습니다.',
+                en: 'Poetic routes connecting palace and gallery zones deliver high satisfaction.'
+            }
+        },
+        {
+            id: 'park-seo-joon',
+            work: { ko: '이태원 클라쓰', en: 'Itaewon Class' },
+            type: { ko: '배우', en: 'Actor' },
+            character: { ko: '박서준', en: 'Park Seo-joon' },
+            portraitPage: 'Park_Seo-joon',
+            styles: ['shopping', 'night'],
+            mood: {
+                ko: '트렌드 중심 동선과 에너지 있는 야간 리듬을 선호하는 타입',
+                en: 'A profile preferring trend-led routes and energetic nightlife rhythm.'
+            },
+            reason: {
+                ko: '트렌드 상권과 야간 핫스팟을 묶은 코스가 잘 맞습니다.',
+                en: 'Routes combining trend districts with nightlife hotspots fit strongly.'
+            }
         }
     ];
     const KCONTENT_LOCAL_IMAGE_MAP = {
@@ -1702,7 +1750,33 @@
         'ahn-yu-jin': 'assets/kcontent/ahn-yu-jin.png',
         'winter-aespa': 'assets/kcontent/winter-aespa.jpg',
         'doyoung-nct': 'assets/kcontent/doyoung-nct.jpg',
-        'ji-chang-wook': 'assets/kcontent/ji-chang-wook.png'
+        'ji-chang-wook': 'assets/kcontent/ji-chang-wook.png',
+        'park-shin-hye': 'assets/kcontent/park-shin-hye.jpg',
+        'kim-go-eun': 'assets/kcontent/kim-go-eun.jpg',
+        'shin-min-a': 'assets/kcontent/shin-min-a.jpg',
+        'kim-ji-won': 'assets/kcontent/kim-ji-won.jpg',
+        'byeon-woo-seok': 'assets/kcontent/byeon-woo-seok.jpg',
+        'kim-hye-yoon': 'assets/kcontent/kim-hye-yoon.jpg',
+        'ahn-hyo-seop': 'assets/kcontent/ahn-hyo-seop.jpg',
+        'lee-jae-wook': 'assets/kcontent/lee-jae-wook.jpg',
+        'go-min-si': 'assets/kcontent/go-min-si.jpg',
+        'rose-blackpink': 'assets/kcontent/rose-blackpink.jpg',
+        'lisa-blackpink': 'assets/kcontent/lisa-blackpink.jpg',
+        'jin-bts': 'assets/kcontent/jin-bts.jpg',
+        'sana-twice': 'assets/kcontent/sana-twice.jpg',
+        'hyunjin-skz': 'assets/kcontent/hyunjin-skz.jpg',
+        'kai-exo': 'assets/kcontent/kai-exo.jpg',
+        'bong-joon-ho': 'assets/kcontent/bong-joon-ho.jpg',
+        'park-chan-wook': 'assets/kcontent/park-chan-wook.jpg',
+        'youn-yuh-jung': 'assets/kcontent/youn-yuh-jung.jpg',
+        'lee-young-ae': 'assets/kcontent/lee-young-ae.jpg',
+        'cho-yong-pil': 'assets/kcontent/cho-yong-pil.jpg',
+        'nam-june-paik': 'assets/kcontent/nam-june-paik.jpg',
+        'han-kang': 'assets/kcontent/han-kang.jpg',
+        'hwang-dong-hyuk': 'assets/kcontent/hwang-dong-hyuk.jpg',
+        'lee-jung-jae': 'assets/kcontent/lee-jung-jae.jpg',
+        'gong-yoo': 'assets/kcontent/gong-yoo.jpg',
+        'park-seo-joon': 'assets/kcontent/park-seo-joon.jpg'
     };
     const KCONTENT_TRAIT_BY_STYLE = {
         ko: {
@@ -1728,6 +1802,7 @@
         'jungkook', 'jennie', 'jisoo', 'wonyoung', 'karina', 'hanni', 'v-bts', 'jimin', 'rm', 'suga',
         'cha-eun-woo', 'iu', 'g-dragon', 'taeyeon', 'song-kang', 'han-so-hee', 'kim-soo-hyun', 'lee-min-ho', 'jun-ji-hyun', 'park-bo-gum',
         'song-hye-kyo', 'ji-chang-wook', 'kim-yoo-jung', 'kim-seon-ho', 'ahn-yu-jin', 'winter-aespa', 'doyoung-nct', 'kwon-eun-bi',
+        'lee-jung-jae', 'gong-yoo', 'park-seo-joon',
         'rose-blackpink', 'lisa-blackpink', 'jin-bts', 'sana-twice', 'hyunjin-skz', 'kai-exo',
         'park-shin-hye', 'kim-go-eun', 'kim-ji-won', 'byeon-woo-seok', 'kim-hye-yoon', 'ahn-hyo-seop', 'lee-jae-wook', 'go-min-si', 'shin-min-a',
         'bong-joon-ho', 'park-chan-wook', 'youn-yuh-jung', 'lee-young-ae', 'cho-yong-pil', 'nam-june-paik', 'han-kang', 'hwang-dong-hyuk'

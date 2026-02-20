@@ -7,9 +7,23 @@ Allow: /
 User-agent: Yeti
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: *
 Allow: /
 
 Host: goseoul.space
 Sitemap: https://goseoul.space/sitemap.xml
 Sitemap: https://goseoul.space/rss.xml
+# LLM guidance
+# https://goseoul.space/llms.txt
