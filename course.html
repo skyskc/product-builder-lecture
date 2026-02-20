@@ -83,16 +83,16 @@
 <body data-page="course" class="min-h-screen bg-background-light">
     <header class="site-header shadow-lg shadow-slate-900/5">
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
-        <div class="header-controls">
-            <nav class="top-nav" aria-label="Primary">
-                <a href="explore.html">여행지 탐색</a>
-                <a id="course-link" href="course.html">코스 플래너</a>
-                <a id="generation-link" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" href="comments.html">사주 플랜</a>
+        <div class="header-controls flex items-center gap-2">
+            <nav class="top-nav flex items-center gap-1" aria-label="Primary">
+                <a class="px-3 py-2" href="explore.html">여행지 탐색</a>
+                <a id="course-link" class="px-3 py-2" href="course.html">코스 플래너</a>
+                <a id="generation-link" class="px-3 py-2" href="generation.html">세대별 플랜</a>
+                <a id="kcontent-link" class="px-3 py-2" href="kcontent.html">콘텐츠 플랜</a>
+                <a id="comments-link" class="px-3 py-2" href="comments.html">사주 플랜</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="언어 전환">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="다크 모드 전환">Dark</button>
         </div>
     </header>
 
@@ -103,55 +103,55 @@
             <p>걷기 이동을 기준으로 짧은 동선의 하루 코스를 제안합니다. 같은 스타일에서 숙소도 함께 추천합니다.</p>
         </section>
 
-        <section class="panel journey-nav sticky-panel sticky-primary" aria-label="코스 빠른 이동">
+        <section class="panel journey-nav sticky-panel sticky-primary p-4 rounded-2xl" aria-label="코스 빠른 이동">
             <div class="inline-control-row">
                 <p id="journey-nav-title" class="inline-control-title">빠른 이동</p>
-                <div class="journey-steps">
-                    <a class="journey-step-link" href="#course-section-route">1. 코스 확인</a>
-                    <a class="journey-step-link" href="#course-section-hotel">2. 숙소 선택</a>
-                    <a class="journey-step-link" href="#course-section-food">3. 맛집 선택</a>
+                <div class="journey-steps flex gap-2">
+                    <a class="journey-step-link px-3 py-2" href="#course-section-route">1. 코스 확인</a>
+                    <a class="journey-step-link px-3 py-2" href="#course-section-hotel">2. 숙소 선택</a>
+                    <a class="journey-step-link px-3 py-2" href="#course-section-food">3. 맛집 선택</a>
                 </div>
             </div>
         </section>
 
-        <section class="panel style-tab-panel sticky-panel sticky-secondary" aria-label="코스 스타일 필터">
+        <section class="panel style-tab-panel sticky-panel sticky-secondary p-4 rounded-2xl" aria-label="코스 스타일 필터">
             <div class="inline-control-row">
                 <p id="course-style-title" class="inline-control-title">코스 스타일 선택</p>
-                <div id="course-style-tabs" class="style-tab-row" role="tablist" aria-label="코스 스타일">
-                    <button class="style-tab-btn" data-style="history" role="tab" type="button">역사/문화</button>
-                    <button class="style-tab-btn" data-style="shopping" role="tab" type="button">쇼핑/트렌드</button>
-                    <button class="style-tab-btn" data-style="night" role="tab" type="button">야경/전망</button>
-                    <button class="style-tab-btn" data-style="nature" role="tab" type="button">자연/산책</button>
-                    <button class="style-tab-btn" data-style="family" role="tab" type="button">가족/테마</button>
-                    <button class="style-tab-btn" data-style="art" role="tab" type="button">예술/뮤지엄</button>
-                    <button class="style-tab-btn" data-style="local" role="tab" type="button">로컬/시장</button>
+                <div id="course-style-tabs" class="style-tab-row flex gap-2" role="tablist" aria-label="코스 스타일">
+                    <button class="style-tab-btn px-3 py-2" data-style="history" role="tab" type="button">역사/문화</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="shopping" role="tab" type="button">쇼핑/트렌드</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="night" role="tab" type="button">야경/전망</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="nature" role="tab" type="button">자연/산책</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="family" role="tab" type="button">가족/테마</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="art" role="tab" type="button">예술/뮤지엄</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="local" role="tab" type="button">로컬/시장</button>
                 </div>
             </div>
         </section>
 
-        <section class="panel course-tools-panel">
-            <div class="course-tools-grid">
-                <article class="course-tool-card">
+        <section class="panel course-tools-panel p-5 md:p-6 rounded-3xl">
+            <div class="course-tools-grid grid gap-4 lg:grid-cols-2">
+                <article class="course-tool-card p-4 rounded-2xl border border-white/10 bg-white/5">
                     <h2 id="budget-mode-title">여행 예산 모드</h2>
                     <p id="budget-mode-desc" class="data-source-note">예산 수준에 맞춰 가격대와 이동비 추정치를 자동 조정합니다.</p>
-                    <div id="course-budget-tabs" class="style-tab-row" role="tablist" aria-label="예산 모드">
-                        <button class="style-tab-btn budget-tab-btn active" data-budget="budget" role="tab" type="button" aria-selected="true">Budget</button>
-                        <button class="style-tab-btn budget-tab-btn" data-budget="standard" role="tab" type="button" aria-selected="false">Standard</button>
-                        <button class="style-tab-btn budget-tab-btn" data-budget="premium" role="tab" type="button" aria-selected="false">Premium</button>
+                    <div id="course-budget-tabs" class="style-tab-row flex gap-2" role="tablist" aria-label="예산 모드">
+                        <button class="style-tab-btn budget-tab-btn active px-3 py-2" data-budget="budget" role="tab" type="button" aria-selected="true">Budget</button>
+                        <button class="style-tab-btn budget-tab-btn px-3 py-2" data-budget="standard" role="tab" type="button" aria-selected="false">Standard</button>
+                        <button class="style-tab-btn budget-tab-btn px-3 py-2" data-budget="premium" role="tab" type="button" aria-selected="false">Premium</button>
                     </div>
                 </article>
 
-                <article class="course-tool-card">
+                <article class="course-tool-card p-4 rounded-2xl border border-white/10 bg-white/5">
                     <h2 id="course-insight-title">이동/비용 요약</h2>
                     <div id="course-insight-summary" class="course-insight-summary">
                         <p>-</p>
                     </div>
-                    <div class="course-tool-actions">
-                        <button id="course-save-offline-btn" class="theme-toggle-btn" type="button">오프라인 저장</button>
-                        <button id="course-share-card-btn" class="theme-toggle-btn" type="button">공유 카드 생성</button>
+                    <div class="course-tool-actions flex flex-wrap gap-2">
+                        <button id="course-save-offline-btn" class="theme-toggle-btn min-h-10 px-3" type="button">오프라인 저장</button>
+                        <button id="course-share-card-btn" class="theme-toggle-btn min-h-10 px-3" type="button">공유 카드 생성</button>
                     </div>
                     <h3 id="offline-plan-title" class="offline-plan-title">저장된 오프라인 코스</h3>
-                    <input id="offline-plan-search-input" class="search-input offline-plan-search-input" type="text" placeholder="저장 코스 검색">
+                    <input id="offline-plan-search-input" class="search-input offline-plan-search-input min-h-10 px-3" type="text" placeholder="저장 코스 검색">
                     <div id="offline-plan-list" class="offline-plan-list"></div>
                     <p id="course-tools-note" class="data-source-note">저장된 코스는 기기 브라우저에 보관됩니다.</p>
                 </article>
