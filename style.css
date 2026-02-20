@@ -190,44 +190,16 @@ a {
 }
 
 .hero h1,
-.panel h1,
-.detail-content h1 {
+.panel h1 {
     margin: 0;
     font-size: clamp(1.5rem, 2.2vw, 2rem);
     letter-spacing: -0.03em;
 }
 
 .hero p,
-.detail-content p,
 .panel p {
     color: var(--muted);
     line-height: 1.66;
-}
-
-.filter-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--card);
-    box-shadow: var(--shadow);
-    padding: 12px;
-    margin-bottom: 18px;
-}
-
-.filter-bar label {
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-.filter-bar select {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 8px 10px;
-    font: inherit;
-    color: var(--text);
-    background: var(--card);
 }
 
 .style-tab-panel {
@@ -511,40 +483,6 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     color: var(--muted);
     text-decoration: none;
     margin-bottom: 14px;
-}
-
-.detail-card {
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--card);
-    box-shadow: var(--shadow);
-}
-
-.detail-content {
-    padding: 18px;
-}
-
-.meta-grid {
-    margin-top: 12px;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.meta-item {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 10px;
-}
-
-.meta-item span {
-    display: block;
-    color: var(--muted);
-    font-size: 0.8rem;
-}
-
-.meta-item strong {
-    font-size: 0.98rem;
 }
 
 .panel {
@@ -1677,13 +1615,6 @@ body.dark-mode .entry-primary-cta {
     color: var(--accent);
 }
 
-.budget-result-box {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 10px 12px;
-    background: var(--card);
-}
-
 .fun-lucky-wrap {
     margin-top: 14px;
     border: 1px dashed var(--line);
@@ -1777,16 +1708,8 @@ body.dark-mode .entry-primary-cta {
         margin-top: 14px;
     }
 
-    .meta-grid {
-        grid-template-columns: 1fr;
-    }
-
     .map-frame {
         height: 280px;
-    }
-
-    .filter-bar {
-        flex-wrap: wrap;
     }
 
     .sticky-panel {
@@ -1994,7 +1917,6 @@ body {
 }
 
 .panel,
-.detail-card,
 .place-card,
 .tool-card,
 .geo-card,
