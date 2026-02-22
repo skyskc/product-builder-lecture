@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="혜화 social card">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#831843"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.15" r="0.8">
+      <stop offset="0%" stop-color="#f472b6" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f472b6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <circle cx="1090" cy="110" r="160" fill="#f472b6" fill-opacity="0.12"/>
+  <circle cx="170" cy="560" r="180" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="52" y="52" width="1096" height="526" rx="28" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.12"/>
+  <text x="86" y="122" fill="#ffffff" fill-opacity="0.85" font-family="Noto Sans KR, Arial, sans-serif" font-size="28" font-weight="700">GoSeoul · Place Detail</text>
+  <text x="86" y="176" fill="#f472b6" font-family="Space Grotesk, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2">TREND</text>
+  <text x="86" y="270" fill="#ffffff" font-family="Noto Sans KR, Arial, sans-serif" font-size="72" font-weight="800">혜화</text>
+  <text x="86" y="430" fill="#dbeafe" font-family="Noto Sans KR, Arial, sans-serif" font-size="34" font-weight="600">종로구 · 쇼핑/트렌드</text>
+  <text x="86" y="490" fill="#cbd5e1" font-family="Space Grotesk, Arial, sans-serif" font-size="24">Seoul travel route · map-ready · itinerary support</text>
+  <text x="86" y="548" fill="#ffffff" fill-opacity="0.78" font-family="Space Grotesk, Arial, sans-serif" font-size="22">https://goseoul.space/place?id=place-108</text>
+  <text x="1060" y="548" text-anchor="end" fill="#ffffff" fill-opacity="0.8" font-family="Space Grotesk, Arial, sans-serif" font-size="22">PLACE-108</text>
+</svg>
