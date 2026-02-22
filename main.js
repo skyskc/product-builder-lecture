@@ -4368,6 +4368,8 @@
         const styleBadgesEl = document.getElementById('place-style-badges');
         const mapEl = document.getElementById('place-map');
         const mapExternal = document.getElementById('map-external-link');
+        const shareCopyBtn = document.getElementById('place-share-copy-btn');
+        const shareCopyStatusEl = document.getElementById('place-share-copy-status');
         const reviewList = document.getElementById('review-list');
         const dataSourceEl = document.getElementById('place-data-source');
 
@@ -4385,9 +4387,38 @@
             .join('');
 
         const mapQuery = encodeURIComponent(place.mapQuery);
+        const sharePageUrl = `${window.location.origin}/share/places/${encodeURIComponent(place.id)}`;
         mapEl.src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
         mapExternal.href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         mapExternal.textContent = CURRENT_LANG === 'en' ? 'Open in Google Maps' : 'Google 지도에서 열기';
+        if (shareCopyBtn) {
+            shareCopyBtn.textContent = CURRENT_LANG === 'en' ? 'Copy Share Link' : '공유 링크 복사';
+            shareCopyBtn.onclick = async () => {
+                try {
+                    const copied = await copyToClipboard(sharePageUrl);
+                    if (shareCopyStatusEl) {
+                        shareCopyStatusEl.textContent = copied
+                            ? (CURRENT_LANG === 'en'
+                                ? 'Share link copied. Paste this URL in social apps for a custom preview card.'
+                                : '공유 링크가 복사되었습니다. 소셜 앱에 이 URL을 붙여넣으면 전용 미리보기 카드가 표시됩니다.')
+                            : (CURRENT_LANG === 'en'
+                                ? 'Copy failed. Please copy the share URL manually.'
+                                : '복사에 실패했습니다. 공유 URL을 직접 복사해 주세요.');
+                    }
+                } catch (_) {
+                    if (shareCopyStatusEl) {
+                        shareCopyStatusEl.textContent = CURRENT_LANG === 'en'
+                            ? 'Copy failed. Please copy the share URL manually.'
+                            : '복사에 실패했습니다. 공유 URL을 직접 복사해 주세요.';
+                    }
+                }
+            };
+        }
+        if (shareCopyStatusEl) {
+            shareCopyStatusEl.textContent = CURRENT_LANG === 'en'
+                ? `Share URL: ${sharePageUrl}`
+                : `공유 URL: ${sharePageUrl}`;
+        }
         renderReviews(reviewList, place.reviews);
         dataSourceEl.textContent = CURRENT_LANG === 'en'
             ? 'Ratings/Reviews: Static data mode is active.'
