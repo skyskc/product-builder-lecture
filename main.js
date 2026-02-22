@@ -4259,7 +4259,23 @@
         const lng = Number(details?.location?.longitude ?? place.geo?.lng ?? 126.9780);
         const categoryLabel = getCategoryLabel(place.category);
         const districtLabel = getDistrictLabel(place.district);
-        const shareImageUrl = `${window.location.origin}/assets/home/gyeongbokgung.jpg`;
+        const seoImagePathByPlaceId = {
+            'place-001': 'assets/home/gyeongbokgung.jpg',
+            'place-021': 'assets/home/itaewon.jpg',
+            'place-058': 'assets/home/yangjaecheon.jpg'
+        };
+        const primaryStyle = Array.isArray(place.styles) ? place.styles[0] : '';
+        let shareImagePath = seoImagePathByPlaceId[place.id];
+        if (!shareImagePath) {
+            if (['night', 'shopping', 'local'].includes(primaryStyle)) {
+                shareImagePath = 'assets/home/itaewon.jpg';
+            } else if (['nature', 'family'].includes(primaryStyle)) {
+                shareImagePath = 'assets/home/yangjaecheon.jpg';
+            } else {
+                shareImagePath = 'assets/home/gyeongbokgung.jpg';
+            }
+        }
+        const shareImageUrl = `${window.location.origin}/${shareImagePath}`;
         const metaDescription = CURRENT_LANG === 'en'
             ? `${placeName} in ${districtLabel}, Seoul. Check map link, ratings, review highlights, and best time to visit for a smoother Seoul itinerary.`
             : `${placeName}(${districtLabel}, 서울) 상세 정보입니다. 지도 링크, 평점, 리뷰 요약, 추천 방문 시간까지 확인해 더 좋은 서울 여행 동선을 계획하세요.`;
