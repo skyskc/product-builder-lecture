@@ -7,7 +7,14 @@
     <title>GoSeoul | Seoul 1-Day Itinerary Planner with Hotels & Food</title>
     <meta name="description" content="Plan a Seoul one-day itinerary by travel style with route timeline, hotel picks, local food recommendations, and Google map-ready navigation.">
     <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="geo.region" content="KR-11">
+    <meta name="geo.placename" content="Seoul">
+    <meta name="geo.position" content="37.5665;126.9780">
+    <meta name="ICBM" content="37.5665, 126.9780">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GoSeoul">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="ko_KR">
     <meta property="og:title" content="GoSeoul | Seoul 1-Day Itinerary Planner">
     <meta property="og:description" content="Build a one-day Seoul route with travel style, food and hotel recommendations.">
     <meta property="og:url" content="https://goseoul.space/course">
@@ -209,6 +216,58 @@
         </div>
     </footer>
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "GoSeoul",
+                    "item": "https://goseoul.space/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Seoul 1-Day Itinerary Planner",
+                    "item": "https://goseoul.space/course"
+                }
+            ]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Can I build a Seoul 1-day route for first-time visitors?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. The planner is designed for first-time visitors and groups route stops by travel style, then adds hotel and food options with map-ready links."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Are hotel and restaurant recommendations live or static?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Recommendations can use live Google Places data when available, but the site may run in static mode and show fallback data. Always verify opening hours and availability before visiting."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I use the planner in Korean?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Use the language toggle at the top to switch UI text and preserve page links in the Korean language mode."
+                    }
+                }
+            ]
+        }
+    </script>
     <script src="main.js" defer></script>
 </body>
 </html>

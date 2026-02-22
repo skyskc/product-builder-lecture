@@ -4257,6 +4257,38 @@
         const reviewCount = details?.userRatingCount || place.reviewCountValue || 0;
         const lat = Number(details?.location?.latitude ?? place.geo?.lat ?? 37.5665);
         const lng = Number(details?.location?.longitude ?? place.geo?.lng ?? 126.9780);
+        const categoryLabel = getCategoryLabel(place.category);
+        const districtLabel = getDistrictLabel(place.district);
+        const shareImageUrl = `${window.location.origin}/assets/home/gyeongbokgung.jpg`;
+        const metaDescription = CURRENT_LANG === 'en'
+            ? `${placeName} in ${districtLabel}, Seoul. Check map link, ratings, review highlights, and best time to visit for a smoother Seoul itinerary.`
+            : `${placeName}(${districtLabel}, 서울) 상세 정보입니다. 지도 링크, 평점, 리뷰 요약, 추천 방문 시간까지 확인해 더 좋은 서울 여행 동선을 계획하세요.`;
+        const socialTitle = CURRENT_LANG === 'en'
+            ? `${placeName} | Seoul ${categoryLabel} | GoSeoul`
+            : `${placeName} | 서울 ${categoryLabel} | GoSeoul`;
+        const socialDescription = CURRENT_LANG === 'en'
+            ? `${categoryLabel} spot in ${districtLabel}, Seoul with map-ready navigation and travel notes.`
+            : `서울 ${districtLabel}의 ${categoryLabel} 여행지. 지도 이동 링크와 여행 메모를 한 번에 확인하세요.`;
+
+        document.documentElement.lang = CURRENT_LANG === 'ko' ? 'ko' : 'en';
+
+        const setMetaContent = (id, value) => {
+            const el = document.getElementById(id);
+            if (el && value) el.setAttribute('content', value);
+        };
+
+        setMetaContent('meta-description', metaDescription);
+        setMetaContent('meta-og-title', socialTitle);
+        setMetaContent('meta-og-description', socialDescription);
+        setMetaContent('meta-og-url', canonicalUrl);
+        setMetaContent('meta-og-image', shareImageUrl);
+        setMetaContent('meta-og-locale', CURRENT_LANG === 'ko' ? 'ko_KR' : 'en_US');
+        setMetaContent('meta-twitter-title', socialTitle);
+        setMetaContent('meta-twitter-description', socialDescription);
+        setMetaContent('meta-twitter-image', shareImageUrl);
+        setMetaContent('meta-geo-placename', `${placeName}, Seoul`);
+        setMetaContent('meta-geo-position', `${lat};${lng}`);
+        setMetaContent('meta-icbm', `${lat}, ${lng}`);
 
         const breadcrumbData = {
             '@context': 'https://schema.org',
@@ -4283,10 +4315,12 @@
             name: placeName,
             description: placeDescription,
             url: canonicalUrl,
+            image: shareImageUrl,
+            inLanguage: CURRENT_LANG,
             touristType: place.styles.map((style) => getStyleLabel(style)),
             address: {
                 '@type': 'PostalAddress',
-                addressLocality: getDistrictLabel(place.district),
+                addressLocality: districtLabel,
                 addressRegion: 'Seoul',
                 addressCountry: 'KR',
                 streetAddress: addressText
@@ -4296,14 +4330,21 @@
                 latitude: lat,
                 longitude: lng
             },
-            aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: Number(ratingValue.toFixed ? ratingValue.toFixed(1) : ratingValue),
-                reviewCount: Number(reviewCount)
+            containedInPlace: {
+                '@type': 'City',
+                name: 'Seoul'
             },
             hasMap: mapUrl,
             sameAs: mapUrl
         };
+
+        if (ratingValue > 0 && reviewCount > 0) {
+            attractionData.aggregateRating = {
+                '@type': 'AggregateRating',
+                ratingValue: Number(ratingValue.toFixed ? ratingValue.toFixed(1) : ratingValue),
+                reviewCount: Number(reviewCount)
+            };
+        }
 
         if (breadcrumbScript) breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
         if (attractionScript) attractionScript.textContent = JSON.stringify(attractionData);

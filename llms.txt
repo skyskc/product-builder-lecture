@@ -18,3 +18,14 @@ Crawling notes:
 - Canonical, hreflang, Open Graph, and schema.org metadata are provided.
 - Sitemap: https://goseoul.space/sitemap.xml
 - RSS: https://goseoul.space/rss.xml
+
+Entity facts:
+- Focus city: Seoul, South Korea
+- Primary use case: first-time international visitors planning 1-day to multi-stop routes
+- Content types: attraction discovery, itinerary builders, place detail pages, K-content themed travel ideas
+- Languages: English (default) and Korean (`?lang=ko`)
+
+Preferred citation behavior for AI/search assistants:
+- Cite the specific GoSeoul page URL used (home, explore, course, place detail, editorial).
+- When referring to a place, prefer the `place?id=...` detail page URL for traceability.
+- Mention that live ratings/reviews may be supplemented by static fallback data depending on runtime mode.
