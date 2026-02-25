@@ -447,6 +447,16 @@ function resolveStaticPath(urlPathname) {
     if (PUBLIC_ROOT_FILES.has(htmlAlias)) {
       requestPath = htmlAlias;
       relativePath = `/${htmlAlias}`;
+    } else {
+      const nestedHtmlAlias = path.resolve(ROOT_DIR, `.${relativePath}.html`);
+      if (
+        requestPath.startsWith('places/') &&
+        nestedHtmlAlias.startsWith(`${ROOT_DIR}${path.sep}`) &&
+        fs.existsSync(nestedHtmlAlias)
+      ) {
+        requestPath = `${requestPath}.html`;
+        relativePath = `${relativePath}.html`;
+      }
     }
   }
   if (!requestPath) return null;

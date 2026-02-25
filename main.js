@@ -2692,7 +2692,7 @@
 
     function getPlaceLink(page, id) {
         if ((page === 'place.html' || page === 'place') && id) {
-            return withCurrentLang(`/places/${encodeURIComponent(id)}.html`);
+            return withCurrentLang(`/places/${encodeURIComponent(id)}`);
         }
         return withCurrentLang(`${page}?id=${encodeURIComponent(id)}`);
     }

@@ -131,7 +131,7 @@ function slugId(index) {
 }
 
 function placeUrl(id) {
-  return `https://goseoul.space/places/${id}.html`;
+  return `https://goseoul.space/places/${id}`;
 }
 
 function shareImageUrl(id) {
@@ -259,10 +259,10 @@ function renderPlacePage(seed, index, seeds) {
   const title = `${seed.name} 여행 가이드 | ${seed.district} ${seed.category} | GoSeoul`;
   const description = `${seed.name}(${seed.district}) 방문 전 확인할 추천 시간, 동선 연결 팁, 혼잡/예산 체크포인트를 정리한 GoSeoul 편집 가이드 페이지입니다.`;
   const relatedDistrictLinks = related.sameDistrict
-    .map((p) => `<li><a href="/places/${p.id}.html">${esc(p.name)}</a> <span>${esc(p.category)}</span></li>`)
+    .map((p) => `<li><a href="/places/${p.id}">${esc(p.name)}</a> <span>${esc(p.category)}</span></li>`)
     .join("");
   const relatedStyleLinks = related.sameStyle
-    .map((p) => `<li><a href="/places/${p.id}.html">${esc(p.name)}</a> <span>${esc(p.district)}</span></li>`)
+    .map((p) => `<li><a href="/places/${p.id}">${esc(p.name)}</a> <span>${esc(p.district)}</span></li>`)
     .join("");
   const manualKo = Array.isArray(override?.koManual) ? override.koManual : [];
   const manualEn = Array.isArray(override?.enManual) ? override.enManual : [];
@@ -501,7 +501,11 @@ function updateSitemap() {
   );
   xml = xml.replace(
     /<loc>https:\/\/goseoul\.space\/place\?id=(place-\d{3})<\/loc>/g,
-    "<loc>https://goseoul.space/places/$1.html</loc>"
+    "<loc>https://goseoul.space/places/$1</loc>"
+  );
+  xml = xml.replace(
+    /<loc>https:\/\/goseoul\.space\/places\/(place-\d{3})\.html<\/loc>/g,
+    "<loc>https://goseoul.space/places/$1</loc>"
   );
   fs.writeFileSync(SITEMAP_PATH, xml);
 }
@@ -519,7 +523,15 @@ function updatePriorityUrls() {
     if (/^https:\/\/goseoul\.space\/place\?id=place-\d{3}(&lang=ko)?$/.test(line)) {
       if (line.includes("&lang=ko")) continue;
       const m = line.match(/place\?id=(place-\d{3})$/);
-      const replaced = `https://goseoul.space/places/${m[1]}.html`;
+      const replaced = `https://goseoul.space/places/${m[1]}`;
+      if (!seen.has(replaced)) {
+        seen.add(replaced);
+        next.push(replaced);
+      }
+      continue;
+    }
+    if (/^https:\/\/goseoul\.space\/places\/place-\d{3}\.html$/.test(line)) {
+      const replaced = line.replace(/\.html$/, "");
       if (!seen.has(replaced)) {
         seen.add(replaced);
         next.push(replaced);

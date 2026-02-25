@@ -5,9 +5,9 @@ https://goseoul.space/generation
 https://goseoul.space/kcontent
 https://goseoul.space/kcontent-result
 https://goseoul.space/comments
-https://goseoul.space/places/place-001.html
-https://goseoul.space/places/place-014.html
-https://goseoul.space/places/place-058.html
+https://goseoul.space/places/place-001
+https://goseoul.space/places/place-014
+https://goseoul.space/places/place-058
 https://goseoul.space/kcontent-result?char=lee-jung-jae
 https://goseoul.space/kcontent-result?char=gong-yoo
 https://goseoul.space/kcontent-result?char=park-seo-joon
