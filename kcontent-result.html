@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-1001204090329044">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoSeoul | 콘텐츠 플랜 결과</title>
-    <meta name="description" content="선택한 한국 콘텐츠 캐릭터 무드에 맞춘 서울 여행지 추천 결과를 확인하세요.">
+    <title>GoSeoul | K-Content Recommendation Result</title>
+    <meta name="description" content="Open a character-based Seoul recommendation result with route strategy, place picks, and food suggestions.">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <meta property="og:type" content="article">
     <meta property="og:title" content="GoSeoul | K-Content Recommendation Result">
@@ -70,40 +70,129 @@
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
-                <a href="explore.html">여행지 탐색</a>
-                <a id="course-link" href="course.html">코스 플래너</a>
-                <a id="generation-link" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" href="comments.html">사주 플랜</a>
+                <a href="explore.html">Explore</a>
+                <a id="course-link" href="course.html">Planner</a>
+                <a id="generation-link" href="generation.html">Generations</a>
+                <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
+                <a id="comments-link" href="comments.html">Saju</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle language">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
 
     <main class="container narrow">
         <section class="panel">
-            <a id="kcontent-back-link" class="back-link" href="kcontent.html">← 캐릭터 다시 선택</a>
+            <a id="kcontent-back-link" class="back-link" href="kcontent.html">← Choose Another Character</a>
             <p class="eyebrow">Screen-Inspired Plan</p>
-            <h1 id="kcontent-result-page-title">캐릭터 기반 서울 추천 결과</h1>
-            <p id="kcontent-result-page-desc">선택한 캐릭터의 성향을 바탕으로, 분위기와 동선이 맞는 여행지를 추천합니다.</p>
-            <p id="kcontent-result-summary" class="data-source-note">캐릭터를 불러오는 중입니다.</p>
+            <h1 id="kcontent-result-page-title">Character-Based Seoul Recommendation</h1>
+            <p id="kcontent-result-page-desc">A long-form interpretation and route recommendation based on your selected character mood.</p>
+            <p id="kcontent-result-summary" class="data-source-note">Loading selected character profile...</p>
             <div id="kcontent-style-chips" class="generation-meta"></div>
         </section>
 
         <section class="panel">
-            <h2 id="kcontent-why-title">해석과 이동 전략</h2>
+            <p class="eyebrow">How To Use</p>
+            <h2>Use this result as a themed route draft</h2>
+            <p class="home-section-lead">This page explains why the recommended route matches the selected character mood. Use it as a travel concept, then validate timing and logistics in Planner or Explore.</p>
+            <div class="home-steps-grid">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Read the route strategy</h3>
+                    <p>Use the interpretation to understand the suggested pace, atmosphere, and route logic.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Shortlist places and food</h3>
+                    <p>Pick only the stops that fit your available time and travel energy for the day.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Validate with route tools</h3>
+                    <p>Use Planner and Explore to confirm maps, distances, and practical constraints.</p>
+                </article>
+            </div>
+            <div class="home-inline-note">
+                <span class="ui-chip tone-route">Theme + Practicality</span>
+                <p>This page is for themed inspiration. Final route decisions should be checked against map distance, hours, and budget.</p>
+            </div>
+        </section>
+
+        <section class="panel ad-placeholder-panel" aria-label="Ad placement placeholder">
+            <div class="adsense-slot-shell" data-adsense-slot-key="kcontent_result_candidate_a" data-adsense-layout="display">
+                <ins class="adsbygoogle goseoul-adsense-unit"
+                    style="display:block"
+                    data-ad-client="ca-pub-1001204090329044"
+                    data-ad-slot=""
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                    data-adtest="off"></ins>
+                <div class="ad-placeholder-box">
+                    <p class="ad-placeholder-label">Ad Placeholder (Candidate A)</p>
+                    <p class="ad-placeholder-note">Keep ad separate from result summary and core interpretation content.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2 id="kcontent-why-title">Interpretation and Route Strategy</h2>
             <div id="kcontent-why-analysis" class="saju-analysis"></div>
         </section>
 
         <section class="panel">
-            <h2 id="kcontent-spots-title">추천 여행지</h2>
+            <h2 id="kcontent-spots-title">Recommended Places</h2>
             <ul id="kcontent-place-list" class="hotel-list saju-place-list"></ul>
         </section>
 
         <section class="panel">
-            <h2 id="kcontent-food-title">추천 맛집</h2>
+            <h2 id="kcontent-food-title">Recommended Food Spots</h2>
             <ul id="kcontent-food-list" class="hotel-list saju-place-list"></ul>
+        </section>
+
+        <section class="panel">
+            <p class="eyebrow">Practical Checklist</p>
+            <h2>Before turning this result into a real itinerary</h2>
+            <div class="home-practical-grid">
+                <article class="home-practical-card">
+                    <h3>Time & Distance</h3>
+                    <ul class="review-list">
+                        <li>Check district-to-district travel time before locking the route</li>
+                        <li>Remove extra stops if you only have half a day</li>
+                        <li>Keep one same-area backup for weather or queues</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Trip Fit</h3>
+                    <ul class="review-list">
+                        <li>Match the route mood to your group pace and budget</li>
+                        <li>Verify place details in Explore before visiting</li>
+                        <li>Use Planner if you need a full day timeline</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-trust-panel">
+            <p class="eyebrow">Quality & Policy</p>
+            <h2>How this result page stays useful and clear</h2>
+            <div class="home-trust-grid">
+                <article>
+                    <h3>Themed recommendation framing</h3>
+                    <p>Recommendations are mood-based and should be adapted to real travel constraints.</p>
+                </article>
+                <article>
+                    <h3>Readable content hierarchy</h3>
+                    <p>Interpretation, place picks, and food picks remain the primary content blocks.</p>
+                </article>
+                <article>
+                    <h3>Planning handoff</h3>
+                    <p>Users are guided to Explore and Planner for final route validation and practical decisions.</p>
+                </article>
+                <article>
+                    <h3>AdSense-friendly intent</h3>
+                    <p>Ad placements should avoid immediate proximity to character selection CTAs and list interactions.</p>
+                </article>
+            </div>
         </section>
     </main>
 
@@ -111,15 +200,16 @@
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>
 
+    <script src="adsense-slots.js" defer></script>
     <script src="main.js" defer></script>
 </body>
 </html>

@@ -71,24 +71,50 @@
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
-                <a href="explore.html">여행지 탐색</a>
-                <a id="course-link" href="course.html">코스 플래너</a>
-                <a id="generation-link" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" href="comments.html">사주 플랜</a>
+                <a href="explore.html">Explore</a>
+                <a id="course-link" href="course.html">Planner</a>
+                <a id="generation-link" href="generation.html">Generations</a>
+                <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
+                <a id="comments-link" href="comments.html">Saju</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle language">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
 
     <main class="container narrow">
         <section class="panel">
             <p class="eyebrow">Screen-Inspired Plan</p>
-            <h1 id="kcontent-title">한국 콘텐츠 캐릭터 기반 여행 추천</h1>
-            <p id="kcontent-desc">해외 인지도가 높은 한국 콘텐츠 캐릭터를 사진으로 고르고, 캐릭터 무드에 맞는 서울 동선을 추천받으세요.</p>
-            <p id="kcontent-selected-note" class="data-source-note">캐릭터 카드를 누르면 결과 화면으로 넘어가 상세 추천이 표시됩니다.</p>
-            <div id="kcontent-character-grid" class="kcontent-character-grid" role="listbox" aria-label="캐릭터 선택"></div>
+            <h1 id="kcontent-title">K-Content Character Travel Recommender</h1>
+            <p id="kcontent-desc">Choose a character mood from popular Korean content and open a long-form recommendation page with Seoul route and food ideas.</p>
+            <p id="kcontent-selected-note" class="data-source-note">Tap a character card to open the recommendation result page.</p>
+            <div id="kcontent-character-grid" class="kcontent-character-grid" role="listbox" aria-label="Character selection"></div>
+        </section>
+        <section class="panel">
+            <p class="eyebrow">How To Use</p>
+            <h2>Use character mood as a theme, not a strict travel rule</h2>
+            <p class="home-section-lead">Screen Picks is best used as inspiration. Start with a character mood, then adapt the route to your budget, time, and walking pace in Planner or Explore.</p>
+            <div class="home-steps-grid">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Pick a character mood</h3>
+                    <p>Choose based on the travel vibe you want, not just fandom preference.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Read the long-form result</h3>
+                    <p>Use the explanation and route strategy as a planning concept for your day.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Adapt to reality</h3>
+                    <p>Move into Planner or Explore to fit weather, travel distance, and budget constraints.</p>
+                </article>
+            </div>
+            <div class="home-inline-note">
+                <span class="ui-chip tone-route">Content First</span>
+                <p>Character cards and route guidance are the main content. Keep any future ads separated from the selection grid and result CTA flow.</p>
+            </div>
         </section>
         <section class="panel">
             <h2>K-Content Search Topics</h2>
@@ -102,17 +128,63 @@
                 <li><a class="text-link" href="kcontent-result.html?char=lisa-blackpink">BLACKPINK Lisa Seoul recommendation</a></li>
             </ul>
         </section>
+
+        <section class="panel">
+            <p class="eyebrow">Practical Checklist</p>
+            <h2>Before you follow a screen-inspired route</h2>
+            <div class="home-practical-grid">
+                <article class="home-practical-card">
+                    <h3>Route Reality</h3>
+                    <ul class="review-list">
+                        <li>Confirm actual district distance between suggested spots</li>
+                        <li>Reduce route length if you have limited time</li>
+                        <li>Replace one stop with a same-area backup if needed</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Trip Fit</h3>
+                    <ul class="review-list">
+                        <li>Match the mood to your group’s pace and budget</li>
+                        <li>Use Explore to verify place details and maps</li>
+                        <li>Use Planner if you need a full day structure</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-trust-panel">
+            <p class="eyebrow">Quality & Policy</p>
+            <h2>How we keep Screen Picks useful</h2>
+            <div class="home-trust-grid">
+                <article>
+                    <h3>Inspiration with planning handoff</h3>
+                    <p>This page is for themed discovery and hands users off to route tools for practical decisions.</p>
+                </article>
+                <article>
+                    <h3>Clear content hierarchy</h3>
+                    <p>Selection and guidance content appears before optional supporting links.</p>
+                </article>
+                <article>
+                    <h3>Avoiding misleading expectations</h3>
+                    <p>Character-based recommendations are thematic and should be adapted for real travel constraints.</p>
+                </article>
+                <article>
+                    <h3>AdSense-friendly layout intent</h3>
+                    <p>Any ad placements should stay away from the character grid and immediate selection interactions.</p>
+                </article>
+            </div>
+        </section>
     </main>
 
     <footer class="site-footer">
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>

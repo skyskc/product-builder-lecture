@@ -114,6 +114,81 @@ const PUBLIC_ROOT_FILES = new Set([
 
 const PUBLIC_ASSET_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.svg', '.webp']);
 
+function toBooleanEnv(value, defaultValue = false) {
+  if (value == null || value === '') return defaultValue;
+  const normalized = String(value).trim().toLowerCase();
+  if (['1', 'true', 'yes', 'on'].includes(normalized)) return true;
+  if (['0', 'false', 'no', 'off'].includes(normalized)) return false;
+  return defaultValue;
+}
+
+function toNumberEnv(value, defaultValue) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : defaultValue;
+}
+
+function getAdSenseEnvConfig() {
+  const slots = {
+    home_candidate_a: String(process.env.ADSENSE_SLOT_HOME_CANDIDATE_A || '').trim(),
+    explore_candidate_b: String(process.env.ADSENSE_SLOT_EXPLORE_CANDIDATE_B || '').trim(),
+    course_candidate_b: String(process.env.ADSENSE_SLOT_COURSE_CANDIDATE_B || '').trim(),
+    kcontent_result_candidate_a: String(process.env.ADSENSE_SLOT_KCONTENT_RESULT_CANDIDATE_A || '').trim()
+  };
+
+  const settings = {
+    adClient: String(process.env.ADSENSE_CLIENT || '').trim(),
+    adTest: toBooleanEnv(process.env.ADSENSE_ADTEST, false),
+    rollout: {
+      mode: String(process.env.ADSENSE_ROLLOUT_MODE || 'page_ab').trim() || 'page_ab',
+      page: String(process.env.ADSENSE_ROLLOUT_PAGE || 'home').trim() || 'home',
+      slotKey: String(process.env.ADSENSE_ROLLOUT_SLOT_KEY || 'explore_candidate_b').trim() || 'explore_candidate_b',
+      ratio: toNumberEnv(process.env.ADSENSE_ROLLOUT_RATIO, 0.5),
+      experimentKey: String(process.env.ADSENSE_ROLLOUT_EXPERIMENT_KEY || 'goseoul_ads_rollout_v1').trim() || 'goseoul_ads_rollout_v1'
+    }
+  };
+
+  return { slots, settings };
+}
+
+function buildAdSenseRuntimeConfigScript() {
+  const { slots, settings } = getAdSenseEnvConfig();
+  const hasAnySlot = Object.values(slots).some(Boolean);
+  const hasAnySettings =
+    Boolean(settings.adClient)
+    || settings.adTest === true
+    || Boolean(settings.rollout && settings.rollout.mode);
+
+  if (!hasAnySlot && !hasAnySettings) return '';
+
+  const configJson = JSON.stringify({ slots, settings });
+  return `<script>
+(function () {
+  var cfg = ${configJson};
+  window.GOSEOUL_ADSENSE_SLOTS = Object.assign({}, window.GOSEOUL_ADSENSE_SLOTS || {}, cfg.slots || {});
+  window.GOSEOUL_ADSENSE_SETTINGS = Object.assign({}, window.GOSEOUL_ADSENSE_SETTINGS || {}, cfg.settings || {});
+  if (cfg.settings && cfg.settings.rollout) {
+    window.GOSEOUL_ADSENSE_SETTINGS.rollout = Object.assign(
+      {},
+      (window.GOSEOUL_ADSENSE_SETTINGS && window.GOSEOUL_ADSENSE_SETTINGS.rollout) || {},
+      cfg.settings.rollout
+    );
+  }
+})();
+</script>`;
+}
+
+function injectHtmlRuntimeConfig(html) {
+  const snippet = buildAdSenseRuntimeConfigScript();
+  if (!snippet) return html;
+  if (html.includes('src="main.js"')) {
+    return html.replace(/<script\b[^>]*\bsrc="main\.js"[^>]*><\/script>/i, `${snippet}\n<script defer src="main.js"></script>`);
+  }
+  if (html.includes('</body>')) {
+    return html.replace(/<\/body>/i, `${snippet}\n</body>`);
+  }
+  return html + snippet;
+}
+
 function getFromCache(cacheMap, cacheKey) {
   const cacheItem = cacheMap.get(cacheKey);
   if (!cacheItem) return null;
@@ -149,11 +224,16 @@ function sendFile(res, filePath) {
       return;
     }
     const ext = path.extname(filePath).toLowerCase();
+    let responseBody = data;
+    if (ext === '.html') {
+      responseBody = Buffer.from(injectHtmlRuntimeConfig(data.toString('utf8')), 'utf8');
+    }
     res.writeHead(200, {
       'Content-Type': MIME_TYPES[ext] || 'application/octet-stream',
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
+      'Content-Length': responseBody.length
     });
-    res.end(data);
+    res.end(responseBody);
   });
 }
 

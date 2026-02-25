@@ -69,28 +69,101 @@
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
-                <a href="explore.html">여행지 탐색</a>
-                <a id="course-link" href="course.html">코스 플래너</a>
-                <a id="generation-link" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" href="comments.html">사주 플랜</a>
+                <a href="explore.html">Explore</a>
+                <a id="course-link" href="course.html">Planner</a>
+                <a id="generation-link" href="generation.html">Generations</a>
+                <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
+                <a id="comments-link" href="comments.html">Saju</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle language">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
 
     <main class="container">
         <section class="hero">
             <p class="eyebrow">Generation Picks</p>
-            <h1 id="generation-hero-title">세대별 서울 추천 코스</h1>
-            <p id="generation-hero-desc">여행 목적과 이동 강도에 따라 세대별로 가장 만족도가 높은 코스를 빠르게 선택하세요.</p>
+            <h1 id="generation-hero-title">Seoul Courses by Age Group</h1>
+            <p id="generation-hero-desc">Compare route scenarios by pace and group profile, then move to the Planner page with a stronger starting point.</p>
         </section>
 
         <section class="panel">
-            <h2 id="generation-panel-title">세대별 추천 시나리오</h2>
+            <p class="eyebrow">How To Use</p>
+            <h2>Pick the closest group profile, then customize in Planner</h2>
+            <p class="home-section-lead">Generation Picks is a shortcut page. It helps you choose a realistic starting scenario by travel pace, walking intensity, and budget style before you fine-tune details.</p>
+            <div class="home-steps-grid">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Match your group</h3>
+                    <p>Choose the generation scenario that best reflects your actual travelers, not just your ideal schedule.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Check pace and budget</h3>
+                    <p>Use walking and budget labels to avoid routes that feel too dense or too expensive.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Open Planner to refine</h3>
+                    <p>Move into Planner and adjust food, hotel, and route order for your actual dates and weather.</p>
+                </article>
+            </div>
+            <div class="home-inline-note">
+                <span class="ui-chip tone-route">Content First</span>
+                <p>Scenario guidance appears before links and optional navigation so the page remains readable and AdSense-friendly.</p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2 id="generation-panel-title">Recommended Scenarios by Generation</h2>
             <div id="generation-grid" class="generation-grid"></div>
-            <p id="generation-note" class="data-source-note">팁: 실제 이동은 날씨/인원/예산에 맞춰 코스 페이지에서 바로 조정할 수 있습니다.</p>
+            <p id="generation-note" class="data-source-note">Tip: adjust route details in Planner by weather, group size, and budget.</p>
+        </section>
+
+        <section class="panel">
+            <p class="eyebrow">Practical Checklist</p>
+            <h2>Before choosing a generation-based route</h2>
+            <div class="home-practical-grid">
+                <article class="home-practical-card">
+                    <h3>Group Reality</h3>
+                    <ul class="review-list">
+                        <li>Match route pace to the slowest traveler in the group</li>
+                        <li>Plan rest stops for families and older travelers</li>
+                        <li>Avoid too many district jumps in one day</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Customization Plan</h3>
+                    <ul class="review-list">
+                        <li>Use generation picks as a template, not a fixed itinerary</li>
+                        <li>Refine meals and hotel choices in Planner</li>
+                        <li>Prepare one weather backup route</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-trust-panel">
+            <p class="eyebrow">Quality & Policy</p>
+            <h2>How this page supports planning quality</h2>
+            <div class="home-trust-grid">
+                <article>
+                    <h3>Scenario-based guidance</h3>
+                    <p>We organize by traveler profile to help users choose a realistic starting route faster.</p>
+                </article>
+                <article>
+                    <h3>Planner handoff</h3>
+                    <p>This page is designed to hand off to Planner for route-level decisions and practical adjustments.</p>
+                </article>
+                <article>
+                    <h3>Readable layout</h3>
+                    <p>Content blocks and scenario cards are kept ahead of optional links to preserve scanability.</p>
+                </article>
+                <article>
+                    <h3>AdSense-friendly intent</h3>
+                    <p>Future ad placements should remain separate from scenario cards and route decision content.</p>
+                </article>
+            </div>
         </section>
 
         <section class="panel">
@@ -107,11 +180,11 @@
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>

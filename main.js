@@ -2357,7 +2357,7 @@
             if (faqQ2) faqQ2.textContent = 'How often do map and rating data change?';
             if (faqA2) faqA2.textContent = 'Map and rating data can change with external providers, so check the detail-page map link again before visiting.';
             if (faqQ3) faqQ3.textContent = 'Can I use this site fully in English?';
-            if (faqA3) faqA3.textContent = 'Use the top language toggle to switch Korean UI when needed, and links will sync to the lang=ko state.';
+            if (faqA3) faqA3.textContent = 'Use the top language toggle to switch key UI and guide text between English and Korean.';
         }
         if (page === 'course') {
             const hero = document.querySelector('.hero');
@@ -2368,9 +2368,9 @@
             if (h1) h1.textContent = 'One-Day Seoul Course by Travel Style';
             if (p) p.textContent = 'A compact walking plan with district restaurants and hotel recommendations based on Google ratings.';
             const journeyTitle = document.getElementById('journey-nav-title');
-            if (journeyTitle) journeyTitle.textContent = 'Quick Move';
+            if (journeyTitle) journeyTitle.textContent = 'Quick Navigation';
             const styleTitle = document.getElementById('course-style-title');
-            if (styleTitle) styleTitle.textContent = 'Choose Course Style';
+            if (styleTitle) styleTitle.textContent = 'Choose a Course Style';
             const budgetTitle = document.getElementById('budget-mode-title');
             const budgetDesc = document.getElementById('budget-mode-desc');
             const insightTitle = document.getElementById('course-insight-title');
@@ -2418,10 +2418,12 @@
         if (page === 'place') {
             const back = document.querySelector('.back-link');
             if (back) back.textContent = '← Back to list';
-            const h2s = document.querySelectorAll('.panel h2');
-            if (h2s[0]) h2s[0].textContent = 'Google Map';
-            if (h2s[1]) h2s[1].textContent = 'Review Summary';
-            if (h2s[2]) h2s[2].textContent = 'Traveler Notes';
+            const placeMapTitle = document.getElementById('place-map-title');
+            const placeReviewTitle = document.getElementById('place-review-title');
+            const placeNotesTitle = document.getElementById('place-notes-title');
+            if (placeMapTitle) placeMapTitle.textContent = 'Google Map';
+            if (placeReviewTitle) placeReviewTitle.textContent = 'Review Summary';
+            if (placeNotesTitle) placeNotesTitle.textContent = 'Traveler Notes';
             const metaLabels = document.querySelectorAll('.label-value span');
             if (metaLabels[0]) metaLabels[0].textContent = 'Rank';
             if (metaLabels[1]) metaLabels[1].textContent = 'District';
@@ -2430,6 +2432,8 @@
             if (metaLabels[4]) metaLabels[4].textContent = 'Review Count';
             const mapExternalLink = document.getElementById('map-external-link');
             if (mapExternalLink) mapExternalLink.textContent = 'Open in Google Maps';
+            const shareCopyBtn = document.getElementById('place-share-copy-btn');
+            if (shareCopyBtn) shareCopyBtn.textContent = 'Copy Share Link';
             const guidePanel = document.querySelectorAll('.panel')[2];
             const guideParagraphs = guidePanel ? guidePanel.querySelectorAll('p') : [];
             if (guideParagraphs[0]) {
@@ -5640,6 +5644,150 @@
         renderKContentResultByCharacter(character, { summaryEl, chipsEl, listEl, foodListEl, analysisEl });
     }
 
+    function initAdSenseSlots() {
+        const shells = Array.from(document.querySelectorAll('.adsense-slot-shell'));
+        if (!shells.length) return;
+
+        const page = document.body.dataset.page || '';
+        const params = new URLSearchParams(window.location.search);
+        const slotConfig = window.GOSEOUL_ADSENSE_SLOTS && typeof window.GOSEOUL_ADSENSE_SLOTS === 'object'
+            ? window.GOSEOUL_ADSENSE_SLOTS
+            : {};
+        const adSettings = window.GOSEOUL_ADSENSE_SETTINGS && typeof window.GOSEOUL_ADSENSE_SETTINGS === 'object'
+            ? window.GOSEOUL_ADSENSE_SETTINGS
+            : {};
+        const rollout = adSettings.rollout && typeof adSettings.rollout === 'object' ? adSettings.rollout : null;
+
+        function logAdSenseEvent(name, paramsObj) {
+            if (typeof window.gtag !== 'function') return;
+            try {
+                window.gtag('event', name, Object.assign({
+                    event_category: 'adsense',
+                    ads_page: page,
+                    non_interaction: true
+                }, paramsObj || {}));
+            } catch (_) {
+                // Ignore analytics failures so ad rendering is not blocked.
+            }
+        }
+
+        function getPageAbVariant() {
+            if (!rollout || rollout.mode !== 'page_ab') return 'test';
+            const forceVariant = params.get('ads_variant');
+            if (forceVariant === 'control' || forceVariant === 'test') return forceVariant;
+            try {
+                const stored = localStorage.getItem(rollout.experimentKey || 'goseoul_ads_rollout_v1');
+                if (stored === 'control' || stored === 'test') return stored;
+                const ratio = Number.isFinite(Number(rollout.ratio)) ? Number(rollout.ratio) : 0.5;
+                const assigned = Math.random() < ratio ? 'test' : 'control';
+                localStorage.setItem(rollout.experimentKey || 'goseoul_ads_rollout_v1', assigned);
+                return assigned;
+            } catch (_) {
+                return 'test';
+            }
+        }
+
+        const abVariant = getPageAbVariant();
+        const forceEnableAll = params.get('ads_force') === 'on';
+        const forceDisableAll = params.get('ads_force') === 'off';
+        const adTestEnabled = adSettings.adTest === true || params.get('adtest') === '1';
+        const hasForcedVariant = params.get('ads_variant') === 'control' || params.get('ads_variant') === 'test';
+        const adsForceMode = forceEnableAll ? 'on' : (forceDisableAll ? 'off' : 'default');
+
+        if (rollout && rollout.mode === 'page_ab') {
+            logAdSenseEvent('adsense_ab_assignment', {
+                ads_exp_key: rollout.experimentKey || 'goseoul_ads_rollout_v1',
+                ads_exp_mode: rollout.mode,
+                ads_exp_page: rollout.page || '',
+                ads_exp_slot_key: rollout.slotKey || '',
+                ads_variant: abVariant,
+                ads_variant_forced: hasForcedVariant,
+                ads_force_mode: adsForceMode,
+                ads_adtest_enabled: adTestEnabled
+            });
+        }
+
+        shells.forEach((shell) => {
+            const ins = shell.querySelector('.adsbygoogle');
+            const slotKey = shell.getAttribute('data-adsense-slot-key') || '';
+            if (!ins || !slotKey) {
+                shell.classList.add('is-empty');
+                logAdSenseEvent('adsense_slot_state', {
+                    ads_slot_key: slotKey || 'unknown',
+                    ads_state: 'missing_markup'
+                });
+                return;
+            }
+
+            const slotId = String(slotConfig[slotKey] || '').trim();
+            if (!slotId) {
+                shell.classList.add('is-empty');
+                logAdSenseEvent('adsense_slot_state', {
+                    ads_slot_key: slotKey,
+                    ads_state: 'no_slot_id',
+                    ads_adtest_enabled: adTestEnabled
+                });
+                return;
+            }
+
+            const isRolloutSlot = rollout && rollout.slotKey === slotKey;
+            const isRolloutPage = rollout && rollout.page === page;
+            const slotEnabledByRollout = !rollout
+                || rollout.mode !== 'page_ab'
+                || !isRolloutSlot
+                || !isRolloutPage
+                || forceEnableAll
+                || (abVariant === 'test');
+
+            if (forceDisableAll || !slotEnabledByRollout) {
+                shell.classList.add('is-disabled');
+                shell.classList.add('is-empty');
+                logAdSenseEvent('adsense_slot_state', {
+                    ads_slot_key: slotKey,
+                    ads_state: 'disabled',
+                    ads_disable_reason: forceDisableAll ? 'force_off' : 'rollout_control',
+                    ads_variant: abVariant,
+                    ads_adtest_enabled: adTestEnabled
+                });
+                return;
+            }
+
+            shell.classList.remove('is-disabled');
+            ins.setAttribute('data-ad-slot', slotId);
+            ins.setAttribute('data-adtest', adTestEnabled ? 'on' : 'off');
+            shell.classList.remove('is-empty');
+            shell.classList.add('is-live');
+
+            if (ins.dataset.adsbygoogleStatus) {
+                logAdSenseEvent('adsense_slot_state', {
+                    ads_slot_key: slotKey,
+                    ads_state: 'already_initialized',
+                    ads_variant: abVariant,
+                    ads_adtest_enabled: adTestEnabled
+                });
+                return;
+            }
+            try {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+                logAdSenseEvent('adsense_slot_state', {
+                    ads_slot_key: slotKey,
+                    ads_state: 'requested',
+                    ads_variant: abVariant,
+                    ads_adtest_enabled: adTestEnabled
+                });
+            } catch (_) {
+                shell.classList.remove('is-live');
+                shell.classList.add('is-empty');
+                logAdSenseEvent('adsense_slot_state', {
+                    ads_slot_key: slotKey,
+                    ads_state: 'push_error',
+                    ads_variant: abVariant,
+                    ads_adtest_enabled: adTestEnabled
+                });
+            }
+        });
+    }
+
     function init() {
         initLanguage();
         initFxRateAutoSync();
@@ -5659,6 +5807,7 @@
         else if (page === 'kcontent-result') renderKContentResultPage();
         else if (page === 'partner') renderPartnerPage();
         else if (page === 'saju') renderSajuPage();
+        initAdSenseSlots();
     }
 
     if (document.readyState === 'loading') {

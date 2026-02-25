@@ -128,8 +128,8 @@
                 <span class="font-display text-lg font-bold tracking-tight">GoSeoul</span>
             </a>
             <div class="flex items-center gap-2">
-                <button id="lang-toggle-btn" class="theme-toggle-btn rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200" type="button" aria-label="언어 전환">EN</button>
-                <button id="theme-toggle-btn" class="theme-toggle-btn rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200" type="button" aria-label="다크 모드 전환">Dark</button>
+                <button id="lang-toggle-btn" class="theme-toggle-btn rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200" type="button" aria-label="Toggle language">EN</button>
+                <button id="theme-toggle-btn" class="theme-toggle-btn rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-200" type="button" aria-label="Toggle dark mode">Dark</button>
             </div>
         </div>
         <nav class="top-nav max-w-6xl mx-auto px-4 pb-3 flex items-center gap-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-400" aria-label="Primary">
@@ -145,7 +145,7 @@
         <div class="py-5">
             <a class="back-link inline-flex items-center gap-2 text-primary/85 hover:text-primary text-sm font-medium" href="explore.html">
                 <span class="material-symbols-outlined text-base">arrow_back</span>
-                목록으로 돌아가기
+                Back to list
             </a>
         </div>
 
@@ -166,23 +166,23 @@
 
                     <div class="mt-6 grid sm:grid-cols-2 gap-3">
                         <div class="label-value rounded-xl border border-white/10 bg-white/5 p-4">
-                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">순위</span>
+                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">Rank</span>
                             <strong id="place-rank" class="block mt-1 text-white text-lg font-bold"></strong>
                         </div>
                         <div class="label-value rounded-xl border border-white/10 bg-white/5 p-4">
-                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">지역</span>
+                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">District</span>
                             <strong id="place-district" class="block mt-1 text-white text-lg font-bold"></strong>
                         </div>
                         <div class="label-value rounded-xl border border-white/10 bg-white/5 p-4">
-                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">추천 시간</span>
+                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">Best Time</span>
                             <strong id="place-best-time" class="block mt-1 text-white text-lg font-bold"></strong>
                         </div>
                         <div class="label-value rounded-xl border border-white/10 bg-white/5 p-4">
-                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">평점</span>
+                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">Rating</span>
                             <strong id="place-rating" class="block mt-1 text-white text-lg font-bold"></strong>
                         </div>
                         <div class="label-value rounded-xl border border-white/10 bg-white/5 p-4 sm:col-span-2">
-                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">리뷰 수</span>
+                            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">Review Count</span>
                             <strong id="place-review-count" class="block mt-1 text-white text-lg font-bold"></strong>
                         </div>
                     </div>
@@ -192,10 +192,10 @@
 
         <section class="panel mt-8 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
             <div class="flex items-center justify-between gap-3 mb-4">
-                <h2 class="text-xl font-bold text-white">지도</h2>
+                <h2 id="place-map-title" class="text-xl font-bold text-white">Google Map</h2>
                 <div class="flex flex-wrap items-center justify-end gap-2">
-                    <button id="place-share-copy-btn" class="theme-toggle-btn min-h-9 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-slate-200" type="button">공유 링크 복사</button>
-                    <a id="map-external-link" class="text-link inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-primary" target="_blank" rel="noopener noreferrer">Google 지도에서 열기</a>
+                    <button id="place-share-copy-btn" class="theme-toggle-btn min-h-9 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-slate-200" type="button">Copy Share Link</button>
+                    <a id="map-external-link" class="text-link inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-primary" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
                 </div>
             </div>
             <p id="place-share-copy-status" class="data-source-note mb-3 text-xs text-slate-400"></p>
@@ -203,15 +203,87 @@
         </section>
 
         <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
-            <h2 class="text-xl font-bold text-white">리뷰 요약</h2>
+            <h2 id="place-review-title" class="text-xl font-bold text-white">Review Summary</h2>
             <ul id="review-list" class="review-list mt-4 space-y-3"></ul>
             <p id="place-data-source" class="data-source-note mt-4 text-xs text-slate-400"></p>
         </section>
 
         <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
-            <h2 class="text-xl font-bold text-white">여행자 참고 안내</h2>
-            <p class="mt-3 text-slate-300 text-sm leading-relaxed">본 페이지는 외국인 여행자가 이동 동선을 빠르게 파악할 수 있도록 장소 핵심 정보, 방문 권장 시간, 지도 링크를 함께 제공합니다. 실제 운영시간, 휴무일, 입장 요금은 계절 또는 운영 정책에 따라 바뀔 수 있으므로 방문 전 공식 채널에서 최종 확인을 권장합니다.</p>
-            <p class="mt-3 text-slate-300 text-sm leading-relaxed">평점과 리뷰 수는 편집 기준에 따라 제공되는 참고 지표이며, 개인 취향과 방문 시간대에 따라 체감은 달라질 수 있습니다. 리뷰는 장단점을 함께 확인하고, 혼잡 시간대를 피한 일정 구성을 추천합니다.</p>
+            <h2 id="place-notes-title" class="text-xl font-bold text-white">Traveler Notes</h2>
+            <p class="mt-3 text-slate-300 text-sm leading-relaxed">This page helps first-time visitors understand the stop quickly with route-friendly context, a recommended time window, and map access. Operating hours, closure days, and admission fees can change by season or operator policy, so verify details before you go.</p>
+            <p class="mt-3 text-slate-300 text-sm leading-relaxed">Ratings and review counts are reference signals. Actual experience can vary by timing, crowd level, and travel style. Check both strengths and tradeoffs in reviews, and avoid peak windows when possible.</p>
+        </section>
+
+        <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
+            <p class="eyebrow">How To Use This Page</p>
+            <h2 class="text-xl font-bold text-white">Plan around this stop in 3 quick steps</h2>
+            <div class="home-steps-grid mt-4">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Check fit</h3>
+                    <p>Use category, district, and best-time info to decide whether this stop should be an anchor or a short add-on.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Validate on map</h3>
+                    <p>Open Google Maps to confirm actual travel time, entrances, and nearby alternatives before locking your route.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Add backup options</h3>
+                    <p>Prepare one same-area backup stop in case of weather changes, closures, or long queues.</p>
+                </article>
+            </div>
+            <div class="home-inline-note mt-4">
+                <span class="ui-chip tone-route">Content First</span>
+                <p>Core travel information is shown before optional actions so the page stays readable and policy-safe for future ad placements.</p>
+            </div>
+        </section>
+
+        <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
+            <p class="eyebrow">Practical Checklist</p>
+            <h2 class="text-xl font-bold text-white">Before visiting this attraction</h2>
+            <div class="home-practical-grid mt-4">
+                <article class="home-practical-card">
+                    <h3>Hours & Access</h3>
+                    <ul class="review-list">
+                        <li>Confirm opening hours and closure dates</li>
+                        <li>Check the latest entrance and transit route</li>
+                        <li>Review any ticket or reservation requirements</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Route Efficiency</h3>
+                    <ul class="review-list">
+                        <li>Group nearby stops in the same district</li>
+                        <li>Avoid peak-time overlap if possible</li>
+                        <li>Leave buffer time for queues and walking</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
+            <p class="eyebrow">Quality & Sources</p>
+            <h2 class="text-xl font-bold text-white">How to read this information</h2>
+            <div class="home-trust-grid mt-4">
+                <article>
+                    <h3>Traveler-oriented summary</h3>
+                    <p>We present place details in route-planning order so you can decide faster whether this stop fits your day.</p>
+                </article>
+                <article>
+                    <h3>Provider-dependent data</h3>
+                    <p>Ratings, review counts, and map data may change. Recheck current status before your visit.</p>
+                </article>
+                <article>
+                    <h3>Editorial clarity</h3>
+                    <p>This page is intended to support planning decisions, not replace official operating information.</p>
+                </article>
+                <article>
+                    <h3>Policy-friendly layout</h3>
+                    <p>Content and navigation remain primary, with interactive/share actions kept separate from core travel info.</p>
+                </article>
+            </div>
         </section>
 
         <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
@@ -229,11 +301,11 @@
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>

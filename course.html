@@ -92,56 +92,83 @@
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls flex items-center gap-2">
             <nav class="top-nav flex items-center gap-1" aria-label="Primary">
-                <a class="px-3 py-2" href="explore.html">여행지 탐색</a>
-                <a id="course-link" class="px-3 py-2" href="course.html">코스 플래너</a>
-                <a id="generation-link" class="px-3 py-2" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" class="px-3 py-2" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" class="px-3 py-2" href="comments.html">사주 플랜</a>
+                <a class="px-3 py-2" href="explore.html">Explore</a>
+                <a id="course-link" class="px-3 py-2" href="course.html">Planner</a>
+                <a id="generation-link" class="px-3 py-2" href="generation.html">Generations</a>
+                <a id="kcontent-link" class="px-3 py-2" href="kcontent.html">Screen Picks</a>
+                <a id="comments-link" class="px-3 py-2" href="comments.html">Saju</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="Toggle language">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
 
     <main class="container relative">
         <section class="hero rounded-3xl border border-white/10 bg-card-dark/5 p-5 md:p-7">
             <p class="eyebrow">Walking Day Plan</p>
-            <h1>여행 스타일별 서울 도보 1일 코스</h1>
-            <p>걷기 이동을 기준으로 짧은 동선의 하루 코스를 제안합니다. 같은 스타일에서 숙소도 함께 추천합니다.</p>
+            <h1>One-Day Seoul Planner by Travel Style</h1>
+            <p>Build a compact, walkable Seoul day plan with route flow, hotel options, and district food picks in one screen.</p>
         </section>
 
-        <section class="panel journey-nav sticky-panel sticky-primary p-4 rounded-2xl" aria-label="코스 빠른 이동">
+        <section class="panel journey-nav sticky-panel sticky-primary p-4 rounded-2xl" aria-label="Course quick navigation">
             <div class="inline-control-row">
-                <p id="journey-nav-title" class="inline-control-title">빠른 이동</p>
+                <p id="journey-nav-title" class="inline-control-title">Quick Navigation</p>
                 <div class="journey-steps flex gap-2">
-                    <a class="journey-step-link px-3 py-2" href="#course-section-route">1. 코스 확인</a>
-                    <a class="journey-step-link px-3 py-2" href="#course-section-hotel">2. 숙소 선택</a>
-                    <a class="journey-step-link px-3 py-2" href="#course-section-food">3. 맛집 선택</a>
+                    <a class="journey-step-link px-3 py-2" href="#course-section-route">1. View Route</a>
+                    <a class="journey-step-link px-3 py-2" href="#course-section-hotel">2. Choose Hotel</a>
+                    <a class="journey-step-link px-3 py-2" href="#course-section-food">3. Choose Restaurants</a>
                 </div>
             </div>
         </section>
 
-        <section class="panel style-tab-panel sticky-panel sticky-secondary p-4 rounded-2xl" aria-label="코스 스타일 필터">
+        <section class="panel style-tab-panel sticky-panel sticky-secondary p-4 rounded-2xl" aria-label="Course style filter">
             <div class="inline-control-row">
-                <p id="course-style-title" class="inline-control-title">코스 스타일 선택</p>
-                <div id="course-style-tabs" class="style-tab-row flex gap-2" role="tablist" aria-label="코스 스타일">
-                    <button class="style-tab-btn px-3 py-2" data-style="history" role="tab" type="button">역사/문화</button>
-                    <button class="style-tab-btn px-3 py-2" data-style="shopping" role="tab" type="button">쇼핑/트렌드</button>
-                    <button class="style-tab-btn px-3 py-2" data-style="night" role="tab" type="button">야경/전망</button>
-                    <button class="style-tab-btn px-3 py-2" data-style="nature" role="tab" type="button">자연/산책</button>
-                    <button class="style-tab-btn px-3 py-2" data-style="family" role="tab" type="button">가족/테마</button>
-                    <button class="style-tab-btn px-3 py-2" data-style="art" role="tab" type="button">예술/뮤지엄</button>
-                    <button class="style-tab-btn px-3 py-2" data-style="local" role="tab" type="button">로컬/시장</button>
+                <p id="course-style-title" class="inline-control-title">Choose a Course Style</p>
+                <div id="course-style-tabs" class="style-tab-row flex gap-2" role="tablist" aria-label="Course style">
+                    <button class="style-tab-btn px-3 py-2" data-style="history" role="tab" type="button">History / Culture</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="shopping" role="tab" type="button">Shopping / Trend</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="night" role="tab" type="button">Night View</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="nature" role="tab" type="button">Nature / Walk</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="family" role="tab" type="button">Family / Theme</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="art" role="tab" type="button">Art / Museum</button>
+                    <button class="style-tab-btn px-3 py-2" data-style="local" role="tab" type="button">Local / Market</button>
                 </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <p class="eyebrow">How To Use Planner</p>
+            <h2>Lock the route first, then optimize cost and comfort</h2>
+            <p class="home-section-lead">Planner is designed to help you make one solid day plan quickly. Start with route structure, then adjust budget, lodging, and food choices without changing your whole day.</p>
+            <div class="home-steps-grid">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Select a travel style</h3>
+                    <p>Pick the style closest to your actual goal so the route stays coherent across the day.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Set budget mode</h3>
+                    <p>Use Budget / Standard / Premium to adjust lodging and meal expectations before booking.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Confirm route + backups</h3>
+                    <p>Check walking flow, then review hotel and restaurant options for flexibility.</p>
+                </article>
+            </div>
+            <div class="home-inline-note">
+                <span class="ui-chip tone-route">Content First</span>
+                <p>The page is structured so route information and planning details appear before optional sharing/export actions to keep it readable and AdSense-safe.</p>
             </div>
         </section>
 
         <section class="panel course-tools-panel p-5 md:p-6 rounded-3xl">
             <div class="course-tools-grid grid gap-4 lg:grid-cols-2">
                 <article class="course-tool-card p-4 rounded-2xl border border-white/10 bg-white/5">
-                    <h2 id="budget-mode-title">여행 예산 모드</h2>
-                    <p id="budget-mode-desc" class="data-source-note">예산 수준에 맞춰 가격대와 이동비 추정치를 자동 조정합니다.</p>
-                    <div id="course-budget-tabs" class="style-tab-row flex gap-2" role="tablist" aria-label="예산 모드">
+                    <h2 id="budget-mode-title">Travel Budget Mode</h2>
+                    <p id="budget-mode-desc" class="data-source-note">Automatically adjusts price ranges and estimated transport costs by budget level.</p>
+                    <div id="course-budget-tabs" class="style-tab-row flex gap-2" role="tablist" aria-label="Budget mode">
                         <button class="style-tab-btn budget-tab-btn active px-3 py-2" data-budget="budget" role="tab" type="button" aria-selected="true">Budget</button>
                         <button class="style-tab-btn budget-tab-btn px-3 py-2" data-budget="standard" role="tab" type="button" aria-selected="false">Standard</button>
                         <button class="style-tab-btn budget-tab-btn px-3 py-2" data-budget="premium" role="tab" type="button" aria-selected="false">Premium</button>
@@ -149,18 +176,18 @@
                 </article>
 
                 <article class="course-tool-card p-4 rounded-2xl border border-white/10 bg-white/5">
-                    <h2 id="course-insight-title">이동/비용 요약</h2>
+                    <h2 id="course-insight-title">Time and Cost Summary</h2>
                     <div id="course-insight-summary" class="course-insight-summary">
                         <p>-</p>
                     </div>
                     <div class="course-tool-actions flex flex-wrap gap-2">
-                        <button id="course-save-offline-btn" class="theme-toggle-btn min-h-10 px-3" type="button">오프라인 저장</button>
-                        <button id="course-share-card-btn" class="theme-toggle-btn min-h-10 px-3" type="button">공유 카드 생성</button>
+                        <button id="course-save-offline-btn" class="theme-toggle-btn min-h-10 px-3" type="button">Save Offline</button>
+                        <button id="course-share-card-btn" class="theme-toggle-btn min-h-10 px-3" type="button">Create Share Card</button>
                     </div>
-                    <h3 id="offline-plan-title" class="offline-plan-title">저장된 오프라인 코스</h3>
-                    <input id="offline-plan-search-input" class="search-input offline-plan-search-input min-h-10 px-3" type="text" placeholder="저장 코스 검색">
+                    <h3 id="offline-plan-title" class="offline-plan-title">Saved Offline Plans</h3>
+                    <input id="offline-plan-search-input" class="search-input offline-plan-search-input min-h-10 px-3" type="text" placeholder="Search saved plans">
                     <div id="offline-plan-list" class="offline-plan-list"></div>
-                    <p id="course-tools-note" class="data-source-note">저장된 코스는 기기 브라우저에 보관됩니다.</p>
+                    <p id="course-tools-note" class="data-source-note">Saved plans are stored in this browser on your device.</p>
                 </article>
             </div>
         </section>
@@ -168,27 +195,124 @@
         <section id="course-section-route" class="panel">
             <h2 id="day-course-title"></h2>
             <p id="day-course-summary"></p>
-            <a id="course-route-link" class="text-link" target="_blank" rel="noopener noreferrer">Google 지도에서 도보 코스 열기</a>
+            <a id="course-route-link" class="text-link" target="_blank" rel="noopener noreferrer">Open Walking Route in Google Maps</a>
             <div id="course-time-slots" class="course-time-slots"></div>
             <ol id="course-stop-list" class="course-stop-list"></ol>
         </section>
 
         <section id="course-section-hotel" class="panel">
-            <h2>추천 숙소 TOP 5 (Google 평점 기준)</h2>
+            <h2>Top 5 Hotels (Google Rating)</h2>
             <p id="hotel-source-note" class="data-source-note"></p>
             <ul id="hotel-list" class="hotel-list"></ul>
         </section>
 
         <section id="course-section-food" class="panel">
-            <h2>지역별 맛집 추천 (아침/점심/저녁/술자리)</h2>
+            <h2>District Restaurant Picks (Breakfast/Lunch/Dinner/Drinks)</h2>
             <p id="restaurant-source-note" class="data-source-note"></p>
             <div id="restaurant-sections" class="restaurant-sections"></div>
         </section>
 
+        <section class="panel ad-placeholder-panel" aria-label="Ad placement placeholder">
+            <div class="adsense-slot-shell" data-adsense-slot-key="course_candidate_b" data-adsense-layout="display">
+                <ins class="adsbygoogle goseoul-adsense-unit"
+                    style="display:block"
+                    data-ad-client="ca-pub-1001204090329044"
+                    data-ad-slot=""
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                    data-adtest="off"></ins>
+                <div class="ad-placeholder-box">
+                    <p class="ad-placeholder-label">Ad Placeholder (Course Candidate B)</p>
+                    <p class="ad-placeholder-note">Planned position: after food section, before practical checklist.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <p class="eyebrow">Practical Checklist</p>
+            <h2>Before you finalize your Seoul day plan</h2>
+            <div class="home-practical-grid">
+                <article class="home-practical-card">
+                    <h3>Route Feasibility</h3>
+                    <ul class="review-list">
+                        <li>Keep major stops in the same area when possible</li>
+                        <li>Avoid stacking too many peak-time attractions</li>
+                        <li>Leave one flexible slot for delays or queue time</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Hotel Decision</h3>
+                    <ul class="review-list">
+                        <li>Choose by next-day route and transit convenience</li>
+                        <li>Recheck check-in time and luggage policy</li>
+                        <li>Balance rating with neighborhood access at night</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Food Planning</h3>
+                    <ul class="review-list">
+                        <li>Save one backup restaurant for busy hours</li>
+                        <li>Check opening day/hours before moving districts</li>
+                        <li>Use budget mode to compare alternatives quickly</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>On-the-Day Use</h3>
+                    <ul class="review-list">
+                        <li>Save the route link before leaving Wi-Fi</li>
+                        <li>Keep offline plan notes for fast reference</li>
+                        <li>Adjust pace based on weather and group energy</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
         <section id="course-section-guide" class="panel">
-            <h2>코스 이용 가이드</h2>
-            <p>이 코스는 도보 이동 기준으로 구성되어 있어 지하철 한두 정거장 보완 이동만으로도 무리 없이 소화할 수 있도록 설계했습니다. 오전에는 역사·문화 지역, 점심 이후에는 카페·쇼핑, 저녁에는 야경 또는 로컬 식당으로 이어지는 흐름을 권장합니다.</p>
-            <p>숙소와 맛집 정보는 Google 평점과 리뷰 수를 중심으로 자동 정렬되며, 방송 큐레이션은 참고 정보로 함께 표시됩니다. 실제 대기시간, 영업시간, 예약 가능 여부는 방문일 기준으로 변동될 수 있으니 지도 링크에서 최신 정보를 확인해 주세요.</p>
+            <h2>How to Use This Course</h2>
+            <p>This route is optimized for walkable movement with optional short subway transfers. A common flow is history or culture in the morning, shopping or cafe time in the afternoon, and local dining or views in the evening.</p>
+            <p>Hotel and restaurant recommendations are prioritized using Google ratings and review volume, with additional curation shown as supporting context. Check map links for the latest opening hours, waiting time, and reservation availability.</p>
+        </section>
+
+        <section class="panel">
+            <p class="eyebrow">FAQ</p>
+            <h2>Planner questions from first-time visitors</h2>
+            <div class="home-faq-list">
+                <article>
+                    <h3>Can I use this planner for a half-day trip?</h3>
+                    <p>Yes. Start with one style, then keep only the first 2-3 route blocks and one meal stop to build a shorter plan.</p>
+                </article>
+                <article>
+                    <h3>Should I choose the hotel before the route?</h3>
+                    <p>Usually no. Lock the main route first, then pick a hotel that reduces next-day transfers and late-night travel.</p>
+                </article>
+                <article>
+                    <h3>Is this planner suitable for families or low-mobility travelers?</h3>
+                    <p>Yes, but choose family or nature-oriented styles and remove extra walking stops. Keep longer rest windows between anchors.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-trust-panel">
+            <p class="eyebrow">Quality & Policy</p>
+            <h2>How this planner stays useful and policy-safe</h2>
+            <div class="home-trust-grid">
+                <article>
+                    <h3>Route-first structure</h3>
+                    <p>Core itinerary details are shown before utility actions so users can make decisions without distraction.</p>
+                </article>
+                <article>
+                    <h3>Data-source clarity</h3>
+                    <p>Ratings and map-linked information are explained as provider-dependent and should be verified before visiting.</p>
+                </article>
+                <article>
+                    <h3>Readable content density</h3>
+                    <p>Sections are grouped by planning task (route, hotel, food, checklist) to reduce clutter and improve scanability.</p>
+                </article>
+                <article>
+                    <h3>AdSense-friendly layout intent</h3>
+                    <p>Content remains primary. Optional actions and future ad placements should stay separated from route controls and key navigation.</p>
+                </article>
+            </div>
         </section>
 
         <section class="panel">
@@ -207,11 +331,11 @@
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>
@@ -268,6 +392,7 @@
             ]
         }
     </script>
+    <script src="adsense-slots.js" defer></script>
     <script src="main.js" defer></script>
 </body>
 </html>

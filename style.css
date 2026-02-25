@@ -678,6 +678,276 @@ body.dark-mode .style-local { background: #4c2b18; color: #fed7aa; border-color:
     background: var(--card);
 }
 
+.home-section-title {
+    margin: 0;
+    font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+    letter-spacing: -0.02em;
+}
+
+.home-section-lead {
+    margin: 8px 0 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.home-inline-note {
+    margin-top: 12px;
+    border: 1px dashed var(--line);
+    border-radius: 14px;
+    padding: 10px 12px;
+    display: grid;
+    gap: 8px;
+    background: linear-gradient(145deg, rgba(29, 78, 216, 0.04), rgba(15, 23, 42, 0.01));
+}
+
+.home-inline-note p {
+    margin: 0;
+    font-size: 0.88rem;
+}
+
+.home-value-head {
+    margin-bottom: 12px;
+}
+
+.home-value-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-value-grid article,
+.home-step-card,
+.home-route-card,
+.home-practical-card,
+.home-trust-grid article,
+.home-faq-list article {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 12px;
+}
+
+.home-value-grid h3,
+.home-step-card h3,
+.home-route-card h3,
+.home-practical-card h3,
+.home-trust-grid h3,
+.home-faq-list h3 {
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+}
+
+.home-value-grid p,
+.home-step-card p,
+.home-route-card p,
+.home-practical-card p,
+.home-trust-grid p,
+.home-faq-list p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.62;
+    color: var(--muted);
+}
+
+.home-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-step-card {
+    position: relative;
+    padding-top: 14px;
+}
+
+.home-step-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(29, 78, 216, 0.22);
+    background: rgba(29, 78, 216, 0.08);
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.home-route-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-route-card {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+}
+
+.home-route-card .review-list {
+    margin-top: 0;
+    font-size: 0.84rem;
+}
+
+.home-route-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.home-practical-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-practical-card .review-list {
+    margin: 0;
+    font-size: 0.84rem;
+}
+
+.home-trust-panel {
+    background:
+        radial-gradient(circle at 0% 0%, rgba(29, 78, 216, 0.09), transparent 42%),
+        linear-gradient(155deg, rgba(15, 23, 42, 0.02), rgba(29, 78, 216, 0.04));
+}
+
+.home-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-faq-list {
+    display: grid;
+    gap: 10px;
+}
+
+.ad-placeholder-panel {
+    border-style: dashed;
+}
+
+.adsense-slot-shell {
+    position: relative;
+    width: 100%;
+    min-height: 140px;
+    border-radius: 12px;
+    overflow: clip;
+    content-visibility: auto;
+    contain-intrinsic-size: 140px;
+}
+
+.goseoul-adsense-unit {
+    width: 100%;
+    min-height: 128px;
+}
+
+.adsense-slot-shell[data-adsense-layout="display"] {
+    min-height: 156px;
+    contain-intrinsic-size: 156px;
+}
+
+.adsense-slot-shell[data-adsense-layout="in-article"] {
+    min-height: 132px;
+    contain-intrinsic-size: 132px;
+}
+
+.adsense-slot-shell.is-live .ad-placeholder-box {
+    display: none;
+}
+
+.adsense-slot-shell.is-empty .goseoul-adsense-unit {
+    display: none !important;
+}
+
+.adsense-slot-shell.is-disabled {
+    display: none;
+}
+
+.adsense-slot-shell[data-adsense-slot-key="explore_candidate_b"],
+.adsense-slot-shell[data-adsense-slot-key="course_candidate_b"] {
+    min-height: 168px;
+    contain-intrinsic-size: 168px;
+}
+
+.adsense-slot-shell[data-adsense-slot-key="home_candidate_a"] {
+    min-height: 144px;
+    contain-intrinsic-size: 144px;
+}
+
+.adsense-slot-shell[data-adsense-slot-key="kcontent_result_candidate_a"] {
+    min-height: 152px;
+    contain-intrinsic-size: 152px;
+}
+
+.ad-placeholder-box {
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            color-mix(in srgb, var(--chip) 70%, transparent) 0 8px,
+            transparent 8px 16px
+        ),
+        var(--card);
+    padding: 12px;
+}
+
+.ad-placeholder-label {
+    margin: 0;
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.ad-placeholder-note {
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+    .adsense-slot-shell {
+        min-height: 120px;
+        contain-intrinsic-size: 120px;
+    }
+
+    .goseoul-adsense-unit {
+        min-height: 108px;
+    }
+
+    .adsense-slot-shell[data-adsense-layout="display"] {
+        min-height: 132px;
+        contain-intrinsic-size: 132px;
+    }
+
+    .adsense-slot-shell[data-adsense-layout="in-article"] {
+        min-height: 116px;
+        contain-intrinsic-size: 116px;
+    }
+
+    .adsense-slot-shell[data-adsense-slot-key="explore_candidate_b"],
+    .adsense-slot-shell[data-adsense-slot-key="course_candidate_b"] {
+        min-height: 136px;
+        contain-intrinsic-size: 136px;
+    }
+
+    .adsense-slot-shell[data-adsense-slot-key="home_candidate_a"] {
+        min-height: 120px;
+        contain-intrinsic-size: 120px;
+    }
+
+    .adsense-slot-shell[data-adsense-slot-key="kcontent_result_candidate_a"] {
+        min-height: 128px;
+        contain-intrinsic-size: 128px;
+    }
+}
+
 .open-plan-grid {
     margin-top: 14px;
     display: grid;
@@ -1786,6 +2056,25 @@ body.dark-mode .entry-primary-cta {
         width: calc(100% - 16px);
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+@media (max-width: 980px) {
+    .home-steps-grid,
+    .home-route-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .home-value-grid,
+    .home-practical-grid,
+    .home-trust-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-inline-note {
+        padding: 10px;
     }
 }
 

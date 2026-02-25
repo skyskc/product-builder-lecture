@@ -128,8 +128,8 @@
                 <a id="course-link" class="px-3 py-2" href="course.html">Planner</a>
                 <a class="px-3 py-2" href="#entry-fun-lab">Fun Lab</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="Toggle language">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn min-h-9 px-3" type="button" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
 
@@ -176,6 +176,8 @@
 
         <section class="panel open-secondary p-5 md:p-6 rounded-3xl">
             <p id="entry-secondary-title" class="eyebrow entry-secondary-title">Or start with another path</p>
+            <h2 class="home-section-title">Choose the planning mode that fits your trip stage</h2>
+            <p class="home-section-lead">Start with a quick route, browse spots first, or test ideas in the interactive lab. The goal is to make your first Seoul plan fast, then improve it step by step.</p>
             <div class="open-plan-grid grid gap-3 md:grid-cols-3">
                 <a class="open-plan-card block p-4" id="entry-card-explore" href="explore.html">
                     <strong>Explore Top Spots</strong>
@@ -189,6 +191,199 @@
                     <strong>Try Fun Planner</strong>
                     <span>Quiz + budget + weather</span>
                 </a>
+            </div>
+            <div class="home-inline-note">
+                <span class="ui-chip tone-route">Best for first-time visitors</span>
+                <p>Recommended flow: <strong>Planner</strong> first, then refine your route with <strong>Explore</strong>.</p>
+            </div>
+        </section>
+
+        <section class="panel home-value-panel">
+            <div class="home-value-head">
+                <p class="eyebrow">What Makes GoSeoul Useful</p>
+                <h2>Clear planning, not endless scrolling</h2>
+                <p class="home-section-lead">This site is designed for travelers who want a practical Seoul route quickly. We focus on route-building, decision support, and easy next actions instead of long generic travel blog content.</p>
+            </div>
+            <div class="home-value-grid">
+                <article>
+                    <h3>1-Day Route First</h3>
+                    <p>Build a working plan for today or tomorrow, then expand to food, neighborhoods, and backup options.</p>
+                </article>
+                <article>
+                    <h3>Actionable Picks</h3>
+                    <p>Explore mode helps you compare places by trip style so you can choose faster with less noise.</p>
+                </article>
+                <article>
+                    <h3>Fallback Planning</h3>
+                    <p>Weather switch and budget tools help you adjust without rebuilding your whole itinerary.</p>
+                </article>
+                <article>
+                    <h3>Mobile-Friendly Use</h3>
+                    <p>Cards, route tools, and quick actions are structured for travelers making decisions on the go.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-steps-panel" aria-labelledby="how-it-works-title">
+            <p class="eyebrow">How To Use</p>
+            <h2 id="how-it-works-title">Plan a solid Seoul day in 3 steps</h2>
+            <div class="home-steps-grid">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Pick your trip mood</h3>
+                    <p>Use Planner for the fastest start, or Explore if you already know what kind of day you want.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Lock your core route</h3>
+                    <p>Choose 3-5 anchor stops in the same area before adding restaurants, cafes, and shopping.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Add backups</h3>
+                    <p>Use weather and budget tools to prepare one indoor option and one lower-cost option.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-route-panel" aria-labelledby="starter-routes-title">
+            <p class="eyebrow">Starter Ideas</p>
+            <h2 id="starter-routes-title">Popular Seoul route patterns for first-time visitors</h2>
+            <p class="home-section-lead">Use these as templates when you are not sure where to begin. You can recreate these patterns with Planner + Explore in a few minutes.</p>
+            <div class="home-route-grid">
+                <article class="home-route-card">
+                    <div class="home-route-meta">
+                        <span class="ui-chip tone-spot">History</span>
+                        <span class="ui-chip tone-route">Walk + Transit</span>
+                    </div>
+                    <h3>Classic Seoul Starter Day</h3>
+                    <p>Palace area -> traditional streets -> local lunch -> river or viewpoint at sunset.</p>
+                    <ul class="review-list">
+                        <li>Best for first visit and short stays</li>
+                        <li>Easy to expand with museum or shopping stop</li>
+                    </ul>
+                </article>
+                <article class="home-route-card">
+                    <div class="home-route-meta">
+                        <span class="ui-chip tone-food">Food</span>
+                        <span class="ui-chip tone-route">Neighborhood Hop</span>
+                    </div>
+                    <h3>Local Food + Trendy District Day</h3>
+                    <p>Brunch area -> shopping street -> cafe break -> dinner alley -> night walk.</p>
+                    <ul class="review-list">
+                        <li>Good for couples and friends</li>
+                        <li>Works well with rainy-day indoor backups</li>
+                    </ul>
+                </article>
+                <article class="home-route-card">
+                    <div class="home-route-meta">
+                        <span class="ui-chip tone-map">Scenic</span>
+                        <span class="ui-chip tone-route">Slow Pace</span>
+                    </div>
+                    <h3>Scenic + Relaxed Seoul Day</h3>
+                    <p>Park or riverside -> gallery/cafe -> panoramic sunset stop -> easy dinner zone.</p>
+                    <ul class="review-list">
+                        <li>Good for family trips and low-energy days</li>
+                        <li>Flexible timing and fewer transfers</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel ad-placeholder-panel" aria-label="Ad placement placeholder">
+            <div class="adsense-slot-shell" data-adsense-slot-key="home_candidate_a" data-adsense-layout="in-article">
+                <ins class="adsbygoogle goseoul-adsense-unit"
+                    style="display:block"
+                    data-ad-client="ca-pub-1001204090329044"
+                    data-ad-slot=""
+                    data-ad-format="fluid"
+                    data-ad-layout="in-article"
+                    data-adtest="off"></ins>
+                <div class="ad-placeholder-box">
+                    <p class="ad-placeholder-label">Ad Placeholder (Home Candidate A)</p>
+                    <p class="ad-placeholder-note">Planned position: between route templates and practical checklist.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel home-practical-panel" aria-labelledby="before-you-go-title">
+            <p class="eyebrow">Practical Prep</p>
+            <h2 id="before-you-go-title">Before you go: a simple Seoul planning checklist</h2>
+            <div class="home-practical-grid">
+                <article class="home-practical-card">
+                    <h3>Route Planning</h3>
+                    <ul class="review-list">
+                        <li>Group stops by area to reduce transit time</li>
+                        <li>Choose one anchor stop per time block</li>
+                        <li>Keep one flexible slot for delays or spontaneous picks</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>On-the-Day Readiness</h3>
+                    <ul class="review-list">
+                        <li>Prepare a rainy-day indoor backup</li>
+                        <li>Save key addresses and station names</li>
+                        <li>Check opening hours before moving across the city</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Budget Control</h3>
+                    <ul class="review-list">
+                        <li>Set your daily budget first, then choose areas</li>
+                        <li>Balance one premium stop with lower-cost meals</li>
+                        <li>Use the budget tool to test alternatives quickly</li>
+                    </ul>
+                </article>
+                <article class="home-practical-card">
+                    <h3>Comfort & Pace</h3>
+                    <ul class="review-list">
+                        <li>Avoid overloading the schedule with long transfers</li>
+                        <li>Plan rest time between major stops</li>
+                        <li>Mobile-first route notes help when walking outdoors</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-trust-panel" aria-labelledby="trust-title">
+            <p class="eyebrow">Quality & Trust</p>
+            <h2 id="trust-title">How we improve site quality for travelers</h2>
+            <div class="home-trust-grid">
+                <article>
+                    <h3>Cleaner navigation</h3>
+                    <p>We organize tools by traveler intent (explore, plan, test ideas) so visitors can choose faster without confusion.</p>
+                </article>
+                <article>
+                    <h3>Useful information first</h3>
+                    <p>The homepage now prioritizes planning guidance, practical checklists, and route templates before optional interactive tools.</p>
+                </article>
+                <article>
+                    <h3>Policy-friendly layout</h3>
+                    <p>Content sections lead the page, with clearer structure and less visual ambiguity around interactive areas and calls to action.</p>
+                </article>
+                <article>
+                    <h3>Continuous updates</h3>
+                    <p>We can keep improving page depth, local guides, and multilingual clarity across the site after this homepage refresh.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel home-faq-panel" aria-labelledby="faq-title">
+            <p class="eyebrow">FAQ</p>
+            <h2 id="faq-title">Quick answers before planning Seoul</h2>
+            <div class="home-faq-list">
+                <article>
+                    <h3>Should I start with Explore or Planner?</h3>
+                    <p>If you are visiting Seoul for the first time or have limited time, start with <strong>Planner</strong>. If you already know your travel style or district preferences, start with <strong>Explore</strong>.</p>
+                </article>
+                <article>
+                    <h3>Can I plan for rainy days?</h3>
+                    <p>Yes. Use the weather switch tool in Fun Lab to prepare a backup route, then replace outdoor stops with indoor options in the same area.</p>
+                </article>
+                <article>
+                    <h3>Can I use this on mobile during the trip?</h3>
+                    <p>Yes. The site is designed to work on mobile so you can adjust routes, check options, and make quick decisions while moving.</p>
+                </article>
             </div>
         </section>
 
@@ -303,15 +498,16 @@
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>
 
+    <script src="adsense-slots.js" defer></script>
     <script src="main.js" defer></script>
 </body>
 </html>

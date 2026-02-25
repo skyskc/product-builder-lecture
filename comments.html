@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="google-adsense-account" content="ca-pub-1001204090329044">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoSeoul | 사주 여행 추천</title>
-    <meta name="description" content="태어난 날짜와 양력/음력 구분을 입력하면 간이 사주 성향과 맞춤 서울 여행 코스를 추천해주는 페이지입니다.">
+    <title>GoSeoul | Saju-Based Seoul Travel Recommender</title>
+    <meta name="description" content="Enter your birth date and calendar type to get a lightweight saju-style travel profile and Seoul route recommendations.">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <meta property="og:type" content="website">
     <meta property="og:title" content="GoSeoul | Saju-Based Seoul Route Finder">
@@ -69,52 +69,80 @@
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls">
             <nav class="top-nav" aria-label="Primary">
-                <a href="explore.html">여행지 탐색</a>
-                <a id="course-link" href="course.html">코스 플래너</a>
-                <a id="generation-link" href="generation.html">세대별 플랜</a>
-                <a id="kcontent-link" href="kcontent.html">콘텐츠 플랜</a>
-                <a id="comments-link" href="comments.html">사주 플랜</a>
+                <a href="explore.html">Explore</a>
+                <a id="course-link" href="course.html">Planner</a>
+                <a id="generation-link" href="generation.html">Generations</a>
+                <a id="kcontent-link" href="kcontent.html">Screen Picks</a>
+                <a id="comments-link" href="comments.html">Saju</a>
             </nav>
-            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="언어 전환">EN</button>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="다크 모드 전환">Dark</button>
+            <button id="lang-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle language">EN</button>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" aria-label="Toggle dark mode">Dark</button>
         </div>
     </header>
 
     <main class="container narrow">
         <section class="panel">
             <p class="eyebrow">Saju Travel Guide</p>
-            <h1 id="saju-page-title">사주 기반 여행 추천</h1>
-            <p id="saju-page-desc">생년월일과 양력/음력 구분을 입력하면, 간이 사주 성향과 맞는 서울 코스를 추천해 드립니다.</p>
+            <h1 id="saju-page-title">Saju-Based Travel Recommender</h1>
+            <p id="saju-page-desc">Enter your birth date and calendar type to generate a lightweight saju profile and matching Seoul route ideas.</p>
+
+            <div class="home-inline-note">
+                <span class="ui-chip tone-route">Entertainment Tool</span>
+                <p>This feature is for fun travel-style exploration. Use Explore and Planner to validate routes and practical details.</p>
+            </div>
 
             <form id="saju-form" class="clean-form" autocomplete="off">
                 <div class="saju-grid">
                     <div class="saju-field">
-                        <label id="birth-year-label" for="birth-year">태어난 년도</label>
-                        <input id="birth-year" name="birth-year" type="number" min="1900" max="2100" placeholder="예: 1992" required>
+                        <label id="birth-year-label" for="birth-year">Birth Year</label>
+                        <input id="birth-year" name="birth-year" type="number" min="1900" max="2100" placeholder="e.g. 1992" required>
                     </div>
                     <div class="saju-field">
-                        <label id="birth-month-label" for="birth-month">태어난 월</label>
-                        <input id="birth-month" name="birth-month" type="number" min="1" max="12" placeholder="예: 8" required>
+                        <label id="birth-month-label" for="birth-month">Birth Month</label>
+                        <input id="birth-month" name="birth-month" type="number" min="1" max="12" placeholder="e.g. 8" required>
                     </div>
                     <div class="saju-field">
-                        <label id="birth-day-label" for="birth-day">태어난 일</label>
-                        <input id="birth-day" name="birth-day" type="number" min="1" max="31" placeholder="예: 14" required>
+                        <label id="birth-day-label" for="birth-day">Birth Day</label>
+                        <input id="birth-day" name="birth-day" type="number" min="1" max="31" placeholder="e.g. 14" required>
                     </div>
                     <div class="saju-field">
-                        <label id="calendar-type-label" for="calendar-type">달력 구분</label>
+                        <label id="calendar-type-label" for="calendar-type">Calendar Type</label>
                         <select id="calendar-type" name="calendar-type" class="sort-select">
-                            <option value="solar">양력</option>
-                            <option value="lunar">음력</option>
+                            <option value="solar">Solar</option>
+                            <option value="lunar">Lunar</option>
                         </select>
                     </div>
                 </div>
-                <button id="saju-submit-btn" type="submit">사주/추천 보기</button>
+                <button id="saju-submit-btn" type="submit">Show Saju & Recommendations</button>
             </form>
         </section>
 
         <section class="panel">
-            <h2 id="saju-result-title">사주 결과</h2>
-            <p id="saju-result-note" class="data-source-note">입력 후 결과가 표시됩니다.</p>
+            <p class="eyebrow">How To Use</p>
+            <h2>Treat the result as a travel mood guide</h2>
+            <p class="home-section-lead">This page is intentionally lightweight and entertainment-oriented. Use the result to discover a travel tone, then verify place details and route flow with Explore and Planner.</p>
+            <div class="home-steps-grid">
+                <article class="home-step-card">
+                    <span class="home-step-index">01</span>
+                    <h3>Enter your birth date</h3>
+                    <p>Provide year, month, day, and calendar type to generate a simple saju-style profile.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">02</span>
+                    <h3>Read the travel style summary</h3>
+                    <p>Focus on pace and mood suggestions rather than literal fortune interpretation.</p>
+                </article>
+                <article class="home-step-card">
+                    <span class="home-step-index">03</span>
+                    <h3>Validate the route</h3>
+                    <p>Open Explore and Planner to confirm map distance, timing, and budget fit.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2 id="saju-result-title">Saju Result</h2>
+            <p id="saju-result-note" class="data-source-note">Fill the form to generate your result.</p>
             <div id="saju-pillars" class="saju-pillars"></div>
             <p id="saju-summary"></p>
             <div id="saju-analysis-long" class="saju-analysis"></div>
@@ -122,15 +150,38 @@
         </section>
 
         <section class="panel">
-            <h2 id="saju-reco-title">추천 여행 코스</h2>
+            <h2 id="saju-reco-title">Recommended Travel Courses</h2>
             <div id="saju-style-chips" class="generation-meta"></div>
             <ul id="saju-place-list" class="hotel-list saju-place-list"></ul>
         </section>
 
         <section class="panel">
-            <h2 id="saju-guide-title">안내</h2>
-            <p id="saju-guide-1">본 기능은 여행 취향 탐색을 위한 간이 사주 해석입니다. 전문 역학 감정 결과와는 차이가 있을 수 있습니다.</p>
-            <p id="saju-guide-2">음력 입력은 간이 계산 방식으로 해석되며, 정확한 개인 사주 감정을 원하면 전문 서비스를 이용하세요.</p>
+            <h2 id="saju-guide-title">Notes</h2>
+            <p id="saju-guide-1">This feature is a lightweight interpretation for travel style exploration and is not professional fortune reading.</p>
+            <p id="saju-guide-2">Lunar input uses a simplified conversion model. For exact reading, consult a professional service.</p>
+        </section>
+
+        <section class="panel">
+            <p class="eyebrow">Quality & Policy</p>
+            <h2>How we keep this feature safe and useful</h2>
+            <div class="home-trust-grid">
+                <article>
+                    <h3>Entertainment-first framing</h3>
+                    <p>The page is clearly presented as a lightweight travel-style exploration tool, not a professional service.</p>
+                </article>
+                <article>
+                    <h3>Planning handoff</h3>
+                    <p>Users are guided to Explore and Planner for route validation and practical travel decisions.</p>
+                </article>
+                <article>
+                    <h3>Readable content hierarchy</h3>
+                    <p>Input form, result explanation, and recommendation content remain the primary focus of the page.</p>
+                </article>
+                <article>
+                    <h3>AdSense-friendly intent</h3>
+                    <p>Any future ad placements should avoid appearing inside the input form or immediately around result actions.</p>
+                </article>
+            </div>
         </section>
     </main>
 
@@ -138,11 +189,11 @@
         <div class="footer-inner">
             <span>© 2026 GoSeoul</span>
             <nav aria-label="Footer">
-                <a href="about.html">사이트 소개</a>
-                <a href="partner.html">문의</a>
-                <a href="editorial.html">콘텐츠 원칙</a>
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
+                <a href="about.html">About</a>
+                <a href="partner.html">Contact</a>
+                <a href="editorial.html">Editorial Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
             </nav>
         </div>
     </footer>
