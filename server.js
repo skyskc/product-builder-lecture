@@ -462,7 +462,8 @@ function resolveStaticPath(urlPathname) {
     const ext = path.extname(pathSegments[pathSegments.length - 1]).toLowerCase();
     const isPublicAsset = root === 'assets' && ['kcontent', 'og'].includes(subRoot) && PUBLIC_ASSET_EXTENSIONS.has(ext);
     const isShareHtml = root === 'share' && subRoot === 'places' && ext === '.html';
-    if (!isPublicAsset && !isShareHtml && !isWellKnownAdsPath) return null;
+    const isPlaceHtml = root === 'places' && ext === '.html';
+    if (!isPublicAsset && !isShareHtml && !isPlaceHtml && !isWellKnownAdsPath) return null;
   }
   const resolved = path.resolve(ROOT_DIR, `.${relativePath}`);
   if (resolved !== ROOT_DIR && !resolved.startsWith(`${ROOT_DIR}${path.sep}`)) {

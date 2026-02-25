@@ -120,7 +120,7 @@ for (let index = 0; index < PLACE_SEEDS.length; index++) {
 
   const title = `${seed.name} | 서울 ${seed.category} | GoSeoul`;
   const desc = `${seed.district}의 ${seed.category} 여행지 ${seed.name}. 지도 링크, 방문 팁, 동선 계획용 정보를 GoSeoul에서 확인하세요.`;
-  const canonical = `https://goseoul.space/place?id=${id}`;
+  const canonical = `https://goseoul.space/places/${id}.html`;
   const shareUrl = `https://goseoul.space/share/places/${id}.html`;
   const ogImage = `https://goseoul.space/assets/og/places/${id}.svg`;
 

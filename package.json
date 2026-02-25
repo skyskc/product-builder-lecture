@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
+    "build:place-pages": "node tools/generate-place-pages.js",
     "adsense:check": "node tools/adsense-check.js",
     "adsense:live-check": "node tools/adsense-live-check.js",
     "deploy:live-check": "node tools/deploy-live-check.js",

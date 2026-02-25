@@ -2691,6 +2691,9 @@
     }
 
     function getPlaceLink(page, id) {
+        if ((page === 'place.html' || page === 'place') && id) {
+            return withCurrentLang(`/places/${encodeURIComponent(id)}.html`);
+        }
         return withCurrentLang(`${page}?id=${encodeURIComponent(id)}`);
     }
 
@@ -4387,7 +4390,7 @@
             .join('');
 
         const mapQuery = encodeURIComponent(place.mapQuery);
-        const sharePageUrl = `${window.location.origin}/share/places/${encodeURIComponent(place.id)}`;
+        const sharePageUrl = `${window.location.origin}/places/${encodeURIComponent(place.id)}.html`;
         mapEl.src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
         mapExternal.href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
         mapExternal.textContent = CURRENT_LANG === 'en' ? 'Open in Google Maps' : 'Google 지도에서 열기';
