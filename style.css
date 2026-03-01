@@ -1501,6 +1501,23 @@ body.dark-mode .entry-primary-cta {
     color: color-mix(in srgb, var(--accent) 76%, var(--text));
 }
 
+.saju-route-evidence {
+    margin: 0 0 10px;
+    border: 1px solid color-mix(in srgb, var(--line) 74%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--card) 90%, transparent);
+    padding: 10px 12px;
+}
+
+.saju-route-evidence-title {
+    margin: 0 0 6px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 78%, var(--text));
+}
+
 .saju-route-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1533,6 +1550,12 @@ body.dark-mode .entry-primary-cta {
     margin: 0;
     font-size: 0.78rem;
     color: var(--muted);
+}
+
+.saju-route-confidence {
+    margin: 8px 0 0;
+    font-size: 0.74rem;
+    color: color-mix(in srgb, var(--muted) 78%, var(--text));
 }
 
 .saju-route-transit {

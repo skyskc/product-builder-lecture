@@ -3733,7 +3733,19 @@
                     const elementSlotBonus = (primaryBiasBySlot[primaryElement] && primaryBiasBySlot[primaryElement][slotKey]) || 0;
                     const total = item.baseScore + timeScore + districtScore + geoScore + elementSlotBonus;
                     if (!best || total > best.total) {
-                        best = { ...item, slotKey, slotLabel: slotLabels[slotKey], total };
+                        best = {
+                            ...item,
+                            slotKey,
+                            slotLabel: slotLabels[slotKey],
+                            total,
+                            breakdown: {
+                                baseScore: item.baseScore,
+                                timeScore,
+                                districtScore,
+                                geoScore,
+                                elementSlotBonus
+                            }
+                        };
                     }
                 });
 
@@ -3751,7 +3763,14 @@
                     ...item,
                     slotKey: 'backup',
                     slotLabel: isEn ? `Backup ${idx + 1}` : `예비 코스 ${idx + 1}`,
-                    total: item.baseScore
+                    total: item.baseScore,
+                    breakdown: {
+                        baseScore: item.baseScore,
+                        timeScore: 0,
+                        districtScore: 0,
+                        geoScore: 0,
+                        elementSlotBonus: 0
+                    }
                 }));
 
             return [...route, ...backup];
@@ -3766,6 +3785,18 @@
 
             const route = buildSajuDayRoute(styles, primaryElement, secondaryElement);
             const coreRoute = route.filter((item) => item.slotKey !== 'backup');
+            const normalizeScore = (value, min, max) => {
+                const ratio = (value - min) / (max - min);
+                return Math.max(0, Math.min(100, Math.round(ratio * 100)));
+            };
+            route.forEach((item) => {
+                const b = item.breakdown || {};
+                const styleFit = normalizeScore(b.baseScore || 0, 20, 70);
+                const timingFit = normalizeScore(b.timeScore || 0, -8, 12);
+                const flowFit = normalizeScore((b.districtScore || 0) + (b.geoScore || 0), -2, 19);
+                item.confidence = Math.round((styleFit * 0.5) + (timingFit * 0.25) + (flowFit * 0.25));
+                item.explain = { styleFit, timingFit, flowFit };
+            });
             let totalTransitMins = 0;
             const transitByIndex = new Map();
             coreRoute.forEach((item, idx) => {
@@ -3780,6 +3811,9 @@
             });
             const estimatedStayMins = coreRoute.length * 95;
             const totalDayMins = estimatedStayMins + totalTransitMins;
+            const confidenceAvg = coreRoute.length
+                ? Math.round(coreRoute.reduce((sum, item) => sum + (item.confidence || 0), 0) / coreRoute.length)
+                : 0;
 
             if (routePlanEl) {
                 const routeIntro = isEn
@@ -3788,15 +3822,34 @@
                 const routeSummary = isEn
                     ? `Transit estimate: about ${formatDuration(totalTransitMins)} by public transport. Total route: around ${formatDuration(totalDayMins)}.`
                     : `대중교통 이동시간 추정: 약 ${formatDuration(totalTransitMins)}. 전체 루트 소요: 약 ${formatDuration(totalDayMins)}.`;
+                const trustTitle = isEn ? 'Why this route is reliable' : '이 루트가 신뢰되는 이유';
+                const trustLine1 = isEn
+                    ? `Overall route confidence: ${confidenceAvg}/100 (element-fit + time-fit + movement flow).`
+                    : `루트 신뢰도 평균: ${confidenceAvg}/100 (오행 적합 + 시간대 적합 + 이동 흐름).`;
+                const trustLine2 = isEn
+                    ? `Each stop is scored by your dominant element and preferred slot timing.`
+                    : `각 코스는 주요 오행과 시간대 적합도를 함께 점수화해 선정했습니다.`;
+                const trustLine3 = isEn
+                    ? `District continuity and geo distance are applied to reduce unnecessary transfers.`
+                    : `같은 구역 연속성과 좌표 거리 점수를 반영해 불필요한 환승을 줄였습니다.`;
                 routePlanEl.innerHTML = `
                     <p class="saju-route-intro">${escapeHtml(routeIntro)}</p>
                     <p class="saju-route-summary">${escapeHtml(routeSummary)}</p>
+                    <div class="saju-route-evidence">
+                        <p class="saju-route-evidence-title">${escapeHtml(trustTitle)}</p>
+                        <ul class="review-list compact-list">
+                            <li>${escapeHtml(trustLine1)}</li>
+                            <li>${escapeHtml(trustLine2)}</li>
+                            <li>${escapeHtml(trustLine3)}</li>
+                        </ul>
+                    </div>
                     <div class="saju-route-grid">
                         ${route.map((item, idx) => `
                             <article class="saju-route-card">
                                 <p class="saju-route-slot">${escapeHtml(item.slotLabel)}</p>
                                 <h3>${idx + 1}. ${escapeHtml(getPlaceName(item.place))}</h3>
                                 <p class="saju-route-meta">${escapeHtml(getDistrictLabel(item.place.district))} · ${escapeHtml(item.place.bestTime || '')}</p>
+                                <p class="saju-route-confidence">${isEn ? 'Confidence' : '신뢰도'} ${item.confidence || 0}/100 · ${isEn ? 'Element' : '오행'} ${item.explain?.styleFit || 0} · ${isEn ? 'Time' : '시간'} ${item.explain?.timingFit || 0} · ${isEn ? 'Flow' : '동선'} ${item.explain?.flowFit || 0}</p>
                                 ${item.slotKey === 'backup'
                                     ? `<p class="saju-route-transit">${isEn ? 'Optional replacement stop' : '상황별 대체 코스'}</p>`
                                     : (idx === 0
