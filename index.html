@@ -134,11 +134,25 @@
     </header>
 
     <main class="container relative">
-        <div class="entry-first-screen grid gap-3">
-            <section class="panel open-landing backdrop-blur-[2px] p-5 md:p-7 rounded-3xl border border-white/10">
+        <div class="entry-first-screen entry-hero-shell">
+            <section class="panel open-landing entry-hero-main p-5 md:p-7 rounded-3xl border border-white/10">
                 <p id="entry-eyebrow" class="eyebrow">GoSeoul</p>
                 <h1 id="entry-title">Start Your Seoul Plan in 10 Seconds</h1>
                 <p id="entry-desc">Pick one path and start now.</p>
+                <div class="entry-hero-kpis">
+                    <div class="entry-kpi">
+                        <strong>130+</strong>
+                        <span>Curated spots</span>
+                    </div>
+                    <div class="entry-kpi">
+                        <strong>3</strong>
+                        <span>Start modes</span>
+                    </div>
+                    <div class="entry-kpi">
+                        <strong>1</strong>
+                        <span>Fast route builder</span>
+                    </div>
+                </div>
                 <p class="data-source-note">Top queries: Seoul itinerary 1 day, best places to visit in Seoul, Seoul travel route, Korea trip planner for foreigners.</p>
                 <div class="entry-quick-ui flex flex-wrap gap-2">
                     <span class="ui-chip tone-spot">Top Pick</span>
@@ -146,30 +160,37 @@
                     <span class="ui-chip tone-map">Map</span>
                 </div>
                 <p id="entry-desc-extra">Only essentials.</p>
-                <div class="entry-spark-box">
-                    <p id="entry-spark-title" class="eyebrow entry-spark-title">Entrance Mood Check</p>
-                    <button id="entry-spark-btn" class="theme-toggle-btn entry-spark-btn w-full" type="button">Draw Today's Seoul Mood</button>
-                    <div id="entry-spark-result" class="entry-spark-result mt-2">
-                        <p class="data-source-note">Press once to get a quick travel mood and instant route.</p>
+                <div class="entry-hero-actions">
+                    <div class="entry-primary-cta-wrap mt-4">
+                        <a id="entry-primary-cta" class="entry-primary-cta" href="course.html">Get My Seoul Route Now</a>
+                        <p id="entry-primary-note" class="data-source-note">Fastest start: build a one-day route first, then expand with spot details.</p>
                     </div>
-                </div>
-                <div class="entry-primary-cta-wrap mt-4">
-                    <a id="entry-primary-cta" class="entry-primary-cta" href="course.html">Get My Seoul Route Now</a>
-                    <p id="entry-primary-note" class="data-source-note">Fastest start: build a one-day route first, then expand with spot details.</p>
+                    <div class="entry-spark-box">
+                        <p id="entry-spark-title" class="eyebrow entry-spark-title">Entrance Mood Check</p>
+                        <button id="entry-spark-btn" class="theme-toggle-btn entry-spark-btn w-full" type="button">Draw Today's Seoul Mood</button>
+                        <div id="entry-spark-result" class="entry-spark-result mt-2">
+                            <p class="data-source-note">Press once to get a quick travel mood and instant route.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section class="panel korea-showcase border border-white/20 p-5 md:p-6 rounded-3xl">
-                <h2 id="entry-showcase-title">Today's Featured Pick</h2>
-                <p id="entry-showcase-desc">Start here first.</p>
-                <p id="entry-showcase-date" class="data-source-note"></p>
+            <section class="panel korea-showcase entry-hero-spotlight border border-white/20 p-5 md:p-6 rounded-3xl">
+                <div class="entry-spotlight-head">
+                    <h2 id="entry-showcase-title">Today's Featured Pick</h2>
+                    <p id="entry-showcase-desc">Start here first.</p>
+                    <p id="entry-showcase-date" class="data-source-note"></p>
+                </div>
                 <div class="korea-mood-grid grid grid-cols-1 gap-3">
-                    <figure class="korea-mood-card">
+                    <figure class="korea-mood-card entry-spotlight-card">
                         <a id="entry-showcase-link-1" href="/places/place-001">
                             <img id="entry-showcase-img-1" src="assets/home/gyeongbokgung.jpg" alt="Gyeongbokgung" fetchpriority="high" decoding="async">
                             <figcaption id="entry-showcase-cap-1">Pick 1</figcaption>
                         </a>
                     </figure>
+                </div>
+                <div class="entry-spotlight-note">
+                    <p>Use this as your first anchor stop, then connect nearby food and sunset spots.</p>
                 </div>
             </section>
         </div>
