@@ -3655,6 +3655,41 @@
             return -2;
         }
 
+        function geoDistanceKm(a, b) {
+            if (!a?.geo || !b?.geo) return null;
+            const toRad = (deg) => deg * Math.PI / 180;
+            const R = 6371;
+            const dLat = toRad(b.geo.lat - a.geo.lat);
+            const dLng = toRad(b.geo.lng - a.geo.lng);
+            const lat1 = toRad(a.geo.lat);
+            const lat2 = toRad(b.geo.lat);
+            const sinLat = Math.sin(dLat / 2);
+            const sinLng = Math.sin(dLng / 2);
+            const h = sinLat * sinLat + Math.cos(lat1) * Math.cos(lat2) * sinLng * sinLng;
+            const c = 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+            return R * c;
+        }
+
+        function estimateTransitMinutes(prevPlace, nextPlace) {
+            if (!prevPlace || !nextPlace) return 0;
+            const km = geoDistanceKm(prevPlace, nextPlace);
+            if (km == null) return prevPlace.district === nextPlace.district ? 20 : 35;
+            const speedKmh = 20;
+            const transferBuffer = 10;
+            const walkBuffer = 4;
+            const raw = (km / speedKmh) * 60 + transferBuffer + walkBuffer;
+            const adjusted = prevPlace.district === nextPlace.district ? raw - 5 : raw;
+            return Math.max(10, Math.min(75, Math.round(adjusted)));
+        }
+
+        function formatDuration(minutes) {
+            const total = Math.max(0, Math.round(minutes));
+            const h = Math.floor(total / 60);
+            const m = total % 60;
+            if (isEn) return h > 0 ? `${h}h ${m}m` : `${m}m`;
+            return h > 0 ? `${h}시간 ${m}분` : `${m}분`;
+        }
+
         function buildSajuDayRoute(styles, primaryElement, secondaryElement) {
             const slotKeys = ['morning', 'lunch', 'afternoon', 'evening'];
             const slotLabels = isEn
@@ -3730,18 +3765,43 @@
             }).join('');
 
             const route = buildSajuDayRoute(styles, primaryElement, secondaryElement);
+            const coreRoute = route.filter((item) => item.slotKey !== 'backup');
+            let totalTransitMins = 0;
+            const transitByIndex = new Map();
+            coreRoute.forEach((item, idx) => {
+                if (idx === 0) {
+                    transitByIndex.set(item.place.id, 0);
+                    return;
+                }
+                const prev = coreRoute[idx - 1].place;
+                const mins = estimateTransitMinutes(prev, item.place);
+                totalTransitMins += mins;
+                transitByIndex.set(item.place.id, mins);
+            });
+            const estimatedStayMins = coreRoute.length * 95;
+            const totalDayMins = estimatedStayMins + totalTransitMins;
+
             if (routePlanEl) {
                 const routeIntro = isEn
                     ? `One-day route optimized by your dominant ${ELEMENT_LABEL.en[primaryElement]} pattern:`
                     : `${ELEMENT_LABEL.ko[primaryElement]} 중심 기운에 맞춰 최적화한 1일 루트:`;
+                const routeSummary = isEn
+                    ? `Transit estimate: about ${formatDuration(totalTransitMins)} by public transport. Total route: around ${formatDuration(totalDayMins)}.`
+                    : `대중교통 이동시간 추정: 약 ${formatDuration(totalTransitMins)}. 전체 루트 소요: 약 ${formatDuration(totalDayMins)}.`;
                 routePlanEl.innerHTML = `
                     <p class="saju-route-intro">${escapeHtml(routeIntro)}</p>
+                    <p class="saju-route-summary">${escapeHtml(routeSummary)}</p>
                     <div class="saju-route-grid">
                         ${route.map((item, idx) => `
                             <article class="saju-route-card">
                                 <p class="saju-route-slot">${escapeHtml(item.slotLabel)}</p>
                                 <h3>${idx + 1}. ${escapeHtml(getPlaceName(item.place))}</h3>
                                 <p class="saju-route-meta">${escapeHtml(getDistrictLabel(item.place.district))} · ${escapeHtml(item.place.bestTime || '')}</p>
+                                ${item.slotKey === 'backup'
+                                    ? `<p class="saju-route-transit">${isEn ? 'Optional replacement stop' : '상황별 대체 코스'}</p>`
+                                    : (idx === 0
+                                        ? `<p class="saju-route-transit">${isEn ? 'Starting point' : '루트 시작점'}</p>`
+                                        : `<p class="saju-route-transit">${isEn ? 'Move from previous: ~' : '이전 코스에서 이동: 약 '}${formatDuration(transitByIndex.get(item.place.id) || 0)}</p>`)}
                             </article>
                         `).join('')}
                     </div>

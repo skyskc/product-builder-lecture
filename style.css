@@ -1494,6 +1494,13 @@ body.dark-mode .entry-primary-cta {
     color: var(--muted);
 }
 
+.saju-route-summary {
+    margin: 0 0 10px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--accent) 76%, var(--text));
+}
+
 .saju-route-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1525,6 +1532,12 @@ body.dark-mode .entry-primary-cta {
 .saju-route-meta {
     margin: 0;
     font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.saju-route-transit {
+    margin: 8px 0 0;
+    font-size: 0.75rem;
     color: var(--muted);
 }
 
