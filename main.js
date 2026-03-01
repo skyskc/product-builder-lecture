@@ -3300,6 +3300,7 @@
         const warningEl = document.getElementById('saju-warning');
         const recoTitle = document.getElementById('saju-reco-title');
         const styleChipsEl = document.getElementById('saju-style-chips');
+        const routePlanEl = document.getElementById('saju-route-plan');
         const placeListEl = document.getElementById('saju-place-list');
         const guideTitle = document.getElementById('saju-guide-title');
         const guide1 = document.getElementById('saju-guide-1');
@@ -3634,6 +3635,93 @@
             };
         }
 
+        function parseStartHour(bestTime) {
+            const match = /^(\d{1,2})/.exec(String(bestTime || ''));
+            if (!match) return 13;
+            const hour = Number(match[1]);
+            if (!Number.isFinite(hour)) return 13;
+            return Math.max(0, Math.min(23, hour));
+        }
+
+        function geoDistanceScore(prevPlace, nextPlace) {
+            if (!prevPlace?.geo || !nextPlace?.geo) return 0;
+            const dx = prevPlace.geo.lat - nextPlace.geo.lat;
+            const dy = prevPlace.geo.lng - nextPlace.geo.lng;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist <= 0.01) return 10;
+            if (dist <= 0.02) return 7;
+            if (dist <= 0.04) return 4;
+            if (dist <= 0.06) return 2;
+            return -2;
+        }
+
+        function buildSajuDayRoute(styles, primaryElement, secondaryElement) {
+            const slotKeys = ['morning', 'lunch', 'afternoon', 'evening'];
+            const slotLabels = isEn
+                ? { morning: 'Morning', lunch: 'Lunch Time', afternoon: 'Afternoon', evening: 'Evening' }
+                : { morning: '오전', lunch: '점심 시간', afternoon: '오후', evening: '저녁' };
+            const slotTargets = { morning: 10, lunch: 12, afternoon: 15, evening: 19 };
+            const primaryBiasBySlot = {
+                wood: { morning: 4, lunch: 2, afternoon: 3, evening: 1 },
+                fire: { morning: 1, lunch: 2, afternoon: 3, evening: 5 },
+                earth: { morning: 3, lunch: 3, afternoon: 2, evening: 2 },
+                metal: { morning: 2, lunch: 2, afternoon: 4, evening: 3 },
+                water: { morning: 2, lunch: 2, afternoon: 3, evening: 4 }
+            };
+
+            const candidates = places
+                .filter((place) => styles.some((style) => place.styles.includes(style)))
+                .map((place) => {
+                    const matchCount = place.styles.filter((style) => styles.includes(style)).length;
+                    const primaryHit = place.styles.includes((styleMapByElement[primaryElement] || [])[0]) || place.styles.includes((styleMapByElement[primaryElement] || [])[1]);
+                    const secondaryHit = place.styles.includes((styleMapByElement[secondaryElement] || [])[0]) || place.styles.includes((styleMapByElement[secondaryElement] || [])[1]);
+                    return {
+                        place,
+                        baseScore: (matchCount * 12) + (primaryHit ? 14 : 0) + (secondaryHit ? 8 : 0) + (place.popularityScore || 0) * 0.015
+                    };
+                });
+
+            const used = new Set();
+            const route = [];
+
+            slotKeys.forEach((slotKey) => {
+                const targetHour = slotTargets[slotKey];
+                let best = null;
+
+                candidates.forEach((item) => {
+                    if (used.has(item.place.id)) return;
+                    const hour = parseStartHour(item.place.bestTime);
+                    const timeScore = Math.max(-8, 12 - Math.abs(hour - targetHour) * 1.8);
+                    const prev = route[route.length - 1]?.place || null;
+                    const districtScore = prev ? (prev.district === item.place.district ? 9 : 0) : 0;
+                    const geoScore = prev ? geoDistanceScore(prev, item.place) : 0;
+                    const elementSlotBonus = (primaryBiasBySlot[primaryElement] && primaryBiasBySlot[primaryElement][slotKey]) || 0;
+                    const total = item.baseScore + timeScore + districtScore + geoScore + elementSlotBonus;
+                    if (!best || total > best.total) {
+                        best = { ...item, slotKey, slotLabel: slotLabels[slotKey], total };
+                    }
+                });
+
+                if (best) {
+                    used.add(best.place.id);
+                    route.push(best);
+                }
+            });
+
+            const backup = candidates
+                .filter((item) => !used.has(item.place.id))
+                .sort((a, b) => b.baseScore - a.baseScore)
+                .slice(0, 2)
+                .map((item, idx) => ({
+                    ...item,
+                    slotKey: 'backup',
+                    slotLabel: isEn ? `Backup ${idx + 1}` : `예비 코스 ${idx + 1}`,
+                    total: item.baseScore
+                }));
+
+            return [...route, ...backup];
+        }
+
         function renderRecommendations(primaryElement, secondaryElement) {
             const styles = [...new Set([...(styleMapByElement[primaryElement] || []), ...(styleMapByElement[secondaryElement] || [])])];
             styleChipsEl.innerHTML = styles.map((style) => {
@@ -3641,16 +3729,35 @@
                 return `<a class="generation-chip" href="${href}">${escapeHtml(getStyleLabel(style))}</a>`;
             }).join('');
 
-            const picked = places.filter((place) => styles.some((style) => place.styles.includes(style))).slice(0, 5);
-            placeListEl.innerHTML = picked.map((place, idx) => {
+            const route = buildSajuDayRoute(styles, primaryElement, secondaryElement);
+            if (routePlanEl) {
+                const routeIntro = isEn
+                    ? `One-day route optimized by your dominant ${ELEMENT_LABEL.en[primaryElement]} pattern:`
+                    : `${ELEMENT_LABEL.ko[primaryElement]} 중심 기운에 맞춰 최적화한 1일 루트:`;
+                routePlanEl.innerHTML = `
+                    <p class="saju-route-intro">${escapeHtml(routeIntro)}</p>
+                    <div class="saju-route-grid">
+                        ${route.map((item, idx) => `
+                            <article class="saju-route-card">
+                                <p class="saju-route-slot">${escapeHtml(item.slotLabel)}</p>
+                                <h3>${idx + 1}. ${escapeHtml(getPlaceName(item.place))}</h3>
+                                <p class="saju-route-meta">${escapeHtml(getDistrictLabel(item.place.district))} · ${escapeHtml(item.place.bestTime || '')}</p>
+                            </article>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            placeListEl.innerHTML = route.map((item, idx) => {
+                const place = item.place;
                 const href = getPlaceLink('place.html', place.id);
                 const matchStyles = place.styles.filter((style) => styles.includes(style)).slice(0, 2);
                 const reasonByStyle = matchStyles.map((style) => `${getStyleLabel(style)} ${isEn ? 'theme' : '테마'}`).join(isEn ? ' + ' : ' + ');
                 const elementReason = styleReasonByElement[isEn ? 'en' : 'ko'][primaryElement];
                 const reasonText = isEn
-                    ? `Why this place: ${place.nameEn || place.name} aligns with ${reasonByStyle || 'your element profile'}, and its ${getCategoryLabel(place.category)} character supports your ${ELEMENT_LABEL.en[primaryElement]}-driven travel rhythm. ${elementReason}`
-                    : `추천 이유: ${getPlaceName(place)}은(는) ${reasonByStyle || '오행 성향'}과 맞물리고, ${getCategoryLabel(place.category)} 성격이 ${ELEMENT_LABEL.ko[primaryElement]} 중심 기운의 이동 리듬과 잘 맞습니다. ${elementReason}`;
-                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))})</span><p class="saju-reason">${escapeHtml(reasonText)}</p></li>`;
+                    ? `${item.slotLabel}: ${place.nameEn || place.name} aligns with ${reasonByStyle || 'your element profile'}, and its ${getCategoryLabel(place.category)} character supports your ${ELEMENT_LABEL.en[primaryElement]}-driven rhythm. ${elementReason}`
+                    : `${item.slotLabel}: ${getPlaceName(place)}은(는) ${reasonByStyle || '오행 성향'}과 맞물리고, ${getCategoryLabel(place.category)} 성격이 ${ELEMENT_LABEL.ko[primaryElement]} 중심 이동 리듬과 잘 맞습니다. ${elementReason}`;
+                return `<li><a class="hotel-name" href="${href}">${idx + 1}. ${escapeHtml(getPlaceName(place))}</a> <span class="hotel-meta">(${escapeHtml(getDistrictLabel(place.district))} · ${escapeHtml(place.bestTime || '')})</span><p class="saju-reason">${escapeHtml(reasonText)}</p></li>`;
             }).join('');
         }
 
@@ -3667,6 +3774,7 @@
                 summaryEl.textContent = '';
                 analysisLongEl.innerHTML = '';
                 styleChipsEl.innerHTML = '';
+                if (routePlanEl) routePlanEl.innerHTML = '';
                 placeListEl.innerHTML = '';
                 if (fortuneOverall) fortuneOverall.textContent = '';
                 if (fortuneTiming) fortuneTiming.textContent = '';
@@ -3683,6 +3791,7 @@
                 summaryEl.textContent = '';
                 analysisLongEl.innerHTML = '';
                 styleChipsEl.innerHTML = '';
+                if (routePlanEl) routePlanEl.innerHTML = '';
                 placeListEl.innerHTML = '';
                 if (fortuneOverall) fortuneOverall.textContent = '';
                 if (fortuneTiming) fortuneTiming.textContent = '';

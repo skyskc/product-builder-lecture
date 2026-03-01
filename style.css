@@ -1484,6 +1484,50 @@ body.dark-mode .entry-primary-cta {
     background: var(--card);
 }
 
+.saju-route-plan {
+    margin: 8px 0 12px;
+}
+
+.saju-route-intro {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.saju-route-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.saju-route-card {
+    border: 1px solid color-mix(in srgb, var(--line) 74%, transparent);
+    border-radius: 12px;
+    padding: 10px;
+    background: color-mix(in srgb, var(--card) 90%, transparent);
+}
+
+.saju-route-slot {
+    margin: 0 0 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 78%, var(--text));
+}
+
+.saju-route-card h3 {
+    margin: 0 0 4px;
+    font-size: 0.92rem;
+    line-height: 1.35;
+}
+
+.saju-route-meta {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
 .saju-reason {
     margin-top: 6px;
     font-size: 0.86rem;
@@ -2774,6 +2818,10 @@ body {
     }
 
     .saju-fortune-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .saju-route-grid {
         grid-template-columns: 1fr;
     }
 
