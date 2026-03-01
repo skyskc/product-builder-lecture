@@ -3304,6 +3304,16 @@
         const guideTitle = document.getElementById('saju-guide-title');
         const guide1 = document.getElementById('saju-guide-1');
         const guide2 = document.getElementById('saju-guide-2');
+        const tojeongTitle = document.getElementById('saju-tojeong-title');
+        const fortuneOverallLabel = document.getElementById('saju-fortune-overall-label');
+        const fortuneTimingLabel = document.getElementById('saju-fortune-timing-label');
+        const fortuneCautionLabel = document.getElementById('saju-fortune-caution-label');
+        const fortuneRouteLabel = document.getElementById('saju-fortune-route-label');
+        const fortuneOverall = document.getElementById('saju-fortune-overall');
+        const fortuneTiming = document.getElementById('saju-fortune-timing');
+        const fortuneCaution = document.getElementById('saju-fortune-caution');
+        const fortuneRoute = document.getElementById('saju-fortune-route');
+        const elementLightsEl = document.getElementById('saju-element-lights');
         const yearInput = document.getElementById('birth-year');
         const monthInput = document.getElementById('birth-month');
         const dayInput = document.getElementById('birth-day');
@@ -3349,6 +3359,11 @@
         if (calendarType.options[0]) calendarType.options[0].textContent = isEn ? 'Solar' : '양력';
         if (calendarType.options[1]) calendarType.options[1].textContent = isEn ? 'Lunar' : '음력';
         resultNote.textContent = isEn ? 'Fill the form to generate your result.' : '입력 후 결과가 표시됩니다.';
+        if (tojeongTitle) tojeongTitle.textContent = isEn ? 'Tojeong-style Travel Reading' : '토정비결 스타일 여행 해설';
+        if (fortuneOverallLabel) fortuneOverallLabel.textContent = isEn ? 'Overall Flow' : '총운 흐름';
+        if (fortuneTimingLabel) fortuneTimingLabel.textContent = isEn ? 'Timing' : '시기 운';
+        if (fortuneCautionLabel) fortuneCautionLabel.textContent = isEn ? 'Caution' : '주의 포인트';
+        if (fortuneRouteLabel) fortuneRouteLabel.textContent = isEn ? 'Route Tip' : '동선 조언';
         if (westernTitle) westernTitle.textContent = isEn
             ? 'How to read Saju if you are new to East Asian astrology'
             : '동양 점성 개념이 익숙하지 않은 분을 위한 사주 읽기';
@@ -3379,6 +3394,11 @@
         summaryEl.textContent = '';
         analysisLongEl.innerHTML = '';
         warningEl.textContent = '';
+        if (fortuneOverall) fortuneOverall.textContent = '';
+        if (fortuneTiming) fortuneTiming.textContent = '';
+        if (fortuneCaution) fortuneCaution.textContent = '';
+        if (fortuneRoute) fortuneRoute.textContent = '';
+        if (elementLightsEl) elementLightsEl.innerHTML = '';
 
         const STEMS = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
         const BRANCHES = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
@@ -3530,6 +3550,90 @@
             ];
         }
 
+        function renderElementLights(counts, primaryElement) {
+            if (!elementLightsEl) return;
+            const order = ['wood', 'fire', 'earth', 'metal', 'water'];
+            const labels = ELEMENT_LABEL[isEn ? 'en' : 'ko'];
+            elementLightsEl.innerHTML = order.map((el) => {
+                const score = Math.max(0, Number(counts[el] || 0));
+                const dots = [0, 1, 2, 3].map((idx) => {
+                    const active = idx < score ? 'is-on' : '';
+                    return `<span class="saju-light-dot ${active}"></span>`;
+                }).join('');
+                const dominant = el === primaryElement ? 'is-dominant' : '';
+                return `
+                    <article class="saju-element-card ${dominant}">
+                        <p class="saju-element-name">${escapeHtml(labels[el])}</p>
+                        <div class="saju-light-row">${dots}</div>
+                        <p class="saju-element-score">${isEn ? 'Power' : '강도'} ${score}/4</p>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function buildTojeongTravelReading(primary, secondary, month, calendar) {
+            const relation = relationBetween(primary, secondary);
+            const primaryLabel = ELEMENT_LABEL[isEn ? 'en' : 'ko'][primary];
+            const secondaryLabel = ELEMENT_LABEL[isEn ? 'en' : 'ko'][secondary];
+            if (isEn) {
+                const overallByRelation = {
+                    generate: `Your main flow is constructive. ${primaryLabel} and ${secondaryLabel} reinforce each other, so travel momentum improves after the first stop.`,
+                    control: `Your chart shows productive tension. ${primaryLabel} leads while ${secondaryLabel} restrains excess, giving strong execution when plans stay simple.`,
+                    same: `Your energy is concentrated on one tone. This increases consistency but requires intentional variation to avoid fatigue.`,
+                    neutral: `Your flow is neutral and adaptive. The day quality depends more on timing and pacing than fixed destination order.`
+                };
+                const cautionByElement = {
+                    wood: 'Avoid over-expanding your route. Too many neighborhood jumps can dilute the experience.',
+                    fire: 'Avoid stacking too many high-energy night spots. Keep one recovery block before late evening.',
+                    earth: 'Avoid over-fixing your schedule. Leave one flexible slot for local discoveries.',
+                    metal: 'Avoid perfection overload. Keep practical transport margins instead of optimizing every stop.',
+                    water: 'Avoid drifting without anchors. Set at least two fixed core stops to stabilize the day.'
+                };
+                const routeByElement = {
+                    wood: 'Start with open-air and local areas, then close with one structured cultural stop.',
+                    fire: 'Start with trend zones and finish with skyline/night-view highlights.',
+                    earth: 'Begin with history/family-friendly cores and keep transfer count low.',
+                    metal: 'Pair one museum/design cluster with one curated dining district.',
+                    water: 'Use river-park-cultural flow and keep transitions smooth rather than rushed.'
+                };
+                const timing = `Month signal: ${seasonByMonth.en[month]}. ${calendar === 'lunar' ? 'Lunar input is interpreted as directional guidance.' : 'Solar input gives a direct seasonal pacing cue.'}`;
+                return {
+                    overall: overallByRelation[relation] || overallByRelation.neutral,
+                    timing,
+                    caution: cautionByElement[primary],
+                    route: routeByElement[primary]
+                };
+            }
+
+            const overallByRelation = {
+                generate: `총운은 상생 흐름입니다. ${primaryLabel}과 ${secondaryLabel}이 서로 힘을 보태 첫 코스 이후 운세 흐름이 점점 좋아지는 편입니다.`,
+                control: `총운은 긴장 속 실행형입니다. ${primaryLabel}이 주도하고 ${secondaryLabel}이 과잉을 제어해, 단순하고 명확한 일정일수록 성과가 좋습니다.`,
+                same: `총운은 단일 성향 집중형입니다. 장점은 선명하지만 리듬 변화가 부족하면 피로가 빨리 올 수 있습니다.`,
+                neutral: `총운은 중립·유동형입니다. 고정 운세보다 시간대와 페이스 조절이 하루 만족도를 좌우합니다.`
+            };
+            const cautionByElement = {
+                wood: '동선을 과도하게 넓히지 마세요. 지역을 많이 옮기면 집중도가 떨어질 수 있습니다.',
+                fire: '야간 고에너지 스팟을 연달아 넣지 마세요. 늦은 시간 전 회복 구간을 1회 확보하세요.',
+                earth: '일정을 너무 고정하지 마세요. 현장 변수에 대응할 유동 슬롯 1개를 남겨두세요.',
+                metal: '완벽주의 과부하를 피하세요. 모든 스팟 최적화보다 이동 여유 시간을 우선 확보하세요.',
+                water: '흐름만 따라가다 중심을 잃지 마세요. 핵심 앵커 스팟 2곳은 고정해 두는 것이 좋습니다.'
+            };
+            const routeByElement = {
+                wood: '오픈형 산책/로컬 구역으로 시작하고, 마무리는 구조화된 문화 스팟으로 닫아보세요.',
+                fire: '트렌드 구역으로 시동을 걸고, 마지막은 전망·야경 포인트로 정리하는 구성이 좋습니다.',
+                earth: '역사/가족 친화 코스를 먼저 두고, 환승 횟수를 최소화하는 동선이 잘 맞습니다.',
+                metal: '뮤지엄/디자인 클러스터 1개와 정제된 식음 구역 1개를 짝지어 구성해 보세요.',
+                water: '강변-공원-문화 구간을 흐름형으로 연결하고 급한 이동보다 리듬 유지를 우선하세요.'
+            };
+            const timing = `시기 운: ${seasonByMonth.ko[month]} 흐름이 강조됩니다. ${calendar === 'lunar' ? '음력 입력은 방향성 참고용으로 해석됩니다.' : '양력 입력 기준으로 계절 페이스를 직접 반영합니다.'}`;
+            return {
+                overall: overallByRelation[relation] || overallByRelation.neutral,
+                timing,
+                caution: cautionByElement[primary],
+                route: routeByElement[primary]
+            };
+        }
+
         function renderRecommendations(primaryElement, secondaryElement) {
             const styles = [...new Set([...(styleMapByElement[primaryElement] || []), ...(styleMapByElement[secondaryElement] || [])])];
             styleChipsEl.innerHTML = styles.map((style) => {
@@ -3564,6 +3668,11 @@
                 analysisLongEl.innerHTML = '';
                 styleChipsEl.innerHTML = '';
                 placeListEl.innerHTML = '';
+                if (fortuneOverall) fortuneOverall.textContent = '';
+                if (fortuneTiming) fortuneTiming.textContent = '';
+                if (fortuneCaution) fortuneCaution.textContent = '';
+                if (fortuneRoute) fortuneRoute.textContent = '';
+                if (elementLightsEl) elementLightsEl.innerHTML = '';
                 return;
             }
 
@@ -3575,6 +3684,11 @@
                 analysisLongEl.innerHTML = '';
                 styleChipsEl.innerHTML = '';
                 placeListEl.innerHTML = '';
+                if (fortuneOverall) fortuneOverall.textContent = '';
+                if (fortuneTiming) fortuneTiming.textContent = '';
+                if (fortuneCaution) fortuneCaution.textContent = '';
+                if (fortuneRoute) fortuneRoute.textContent = '';
+                if (elementLightsEl) elementLightsEl.innerHTML = '';
                 return;
             }
 
@@ -3591,6 +3705,12 @@
             summaryEl.textContent = summaryByElement[isEn ? 'en' : 'ko'][primary];
             const analysisParagraphs = buildLongAnalysis(primary, secondary, elementMeta.counts, pillars, month, calendar);
             analysisLongEl.innerHTML = analysisParagraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('');
+            renderElementLights(elementMeta.counts, primary);
+            const tojeongReading = buildTojeongTravelReading(primary, secondary, month, calendar);
+            if (fortuneOverall) fortuneOverall.textContent = tojeongReading.overall;
+            if (fortuneTiming) fortuneTiming.textContent = tojeongReading.timing;
+            if (fortuneCaution) fortuneCaution.textContent = tojeongReading.caution;
+            if (fortuneRoute) fortuneRoute.textContent = tojeongReading.route;
             warningEl.textContent = calendar === 'lunar'
                 ? (isEn ? 'Lunar date uses simplified conversion for entertainment purposes.' : '음력 입력은 오락용 간이 변환을 사용합니다.')
                 : (isEn ? 'This result is a lightweight, entertainment-oriented interpretation.' : '본 결과는 오락용 간이 해석입니다.');

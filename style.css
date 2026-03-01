@@ -1384,6 +1384,99 @@ body.dark-mode .entry-primary-cta {
     font-size: 0.92rem;
 }
 
+.saju-tojeong-card {
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    border-radius: 14px;
+    padding: 12px;
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+    margin: 8px 0 10px;
+}
+
+.saju-tojeong-card h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+}
+
+.saju-fortune-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.saju-fortune-item {
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    border-radius: 12px;
+    padding: 10px;
+    background: color-mix(in srgb, var(--card) 88%, transparent);
+}
+
+.saju-fortune-label {
+    margin: 0 0 5px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 72%, var(--text));
+}
+
+.saju-fortune-text {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.saju-element-lights {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 0 10px;
+}
+
+.saju-element-card {
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    border-radius: 12px;
+    padding: 8px;
+    background: color-mix(in srgb, var(--card) 88%, transparent);
+}
+
+.saju-element-card.is-dominant {
+    border-color: color-mix(in srgb, var(--accent) 65%, var(--line));
+    box-shadow: 0 8px 16px rgba(234, 60, 33, 0.16);
+}
+
+.saju-element-name {
+    margin: 0 0 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.saju-light-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 6px;
+}
+
+.saju-light-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--line) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+}
+
+.saju-light-dot.is-on {
+    background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 74%, var(--accent-2)) 100%);
+    border-color: color-mix(in srgb, var(--accent) 75%, var(--accent-2));
+    box-shadow: 0 0 0 2px rgba(234, 60, 33, 0.15);
+}
+
+.saju-element-score {
+    margin: 0;
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
 .saju-place-list li {
     border: 1px solid var(--line);
     border-radius: 10px;
@@ -2678,6 +2771,14 @@ body {
 
     .entry-hero-actions {
         grid-template-columns: 1fr;
+    }
+
+    .saju-fortune-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .saju-element-lights {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
