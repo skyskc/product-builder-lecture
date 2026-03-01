@@ -2680,3 +2680,79 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+.open-secondary-shell {
+    background:
+        linear-gradient(150deg, color-mix(in srgb, var(--card) 92%, #fff) 0%, color-mix(in srgb, var(--card) 82%, var(--chip)) 100%);
+}
+
+.open-plan-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+}
+
+.open-plan-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 72%, var(--accent-2)) 100%);
+    box-shadow: 0 8px 16px rgba(234, 60, 33, 0.26);
+}
+
+.home-route-shell .home-route-grid {
+    gap: 12px;
+}
+
+.home-route-card {
+    border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--card) 90%, transparent);
+    padding: 16px;
+}
+
+.home-route-duration {
+    margin: 10px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--muted) 74%, var(--accent));
+}
+
+.home-practical-shell .home-practical-card,
+.home-trust-shell .home-trust-grid article {
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    border-radius: 16px;
+    padding: 14px;
+    background: color-mix(in srgb, var(--card) 90%, transparent);
+}
+
+.home-practical-tag,
+.home-trust-tag {
+    margin: 0 0 8px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 82%, var(--text));
+    background: color-mix(in srgb, var(--accent) 14%, #fff);
+    border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line));
+}
+
+@media (max-width: 760px) {
+    .home-route-card,
+    .home-practical-shell .home-practical-card,
+    .home-trust-shell .home-trust-grid article {
+        padding: 13px;
+    }
+}
