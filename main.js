@@ -3312,6 +3312,15 @@
         const monthLabel = document.getElementById('birth-month-label');
         const dayLabel = document.getElementById('birth-day-label');
         const calendarLabel = document.getElementById('calendar-type-label');
+        const westernTitle = document.getElementById('saju-western-title');
+        const westernDesc = document.getElementById('saju-western-desc');
+        const westernPoint1 = document.getElementById('saju-western-point-1');
+        const westernPoint2 = document.getElementById('saju-western-point-2');
+        const westernPoint3 = document.getElementById('saju-western-point-3');
+        const travelWhyTitle = document.getElementById('saju-travel-why-title');
+        const travelWhy1 = document.getElementById('saju-travel-why-1');
+        const travelWhy2 = document.getElementById('saju-travel-why-2');
+        const travelWhy3 = document.getElementById('saju-travel-why-3');
 
         if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !analysisLongEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType || !yearLabel || !monthLabel || !dayLabel || !calendarLabel) return;
 
@@ -3340,6 +3349,33 @@
         if (calendarType.options[0]) calendarType.options[0].textContent = isEn ? 'Solar' : '양력';
         if (calendarType.options[1]) calendarType.options[1].textContent = isEn ? 'Lunar' : '음력';
         resultNote.textContent = isEn ? 'Fill the form to generate your result.' : '입력 후 결과가 표시됩니다.';
+        if (westernTitle) westernTitle.textContent = isEn
+            ? 'How to read Saju if you are new to East Asian astrology'
+            : '동양 점성 개념이 익숙하지 않은 분을 위한 사주 읽기';
+        if (westernDesc) westernDesc.textContent = isEn
+            ? 'Saju can be read as an energy-pattern framework. In this page, it is simplified into travel pace, mood, and route style so first-time users can apply it without technical terms.'
+            : '사주는 에너지 패턴을 읽는 프레임으로 볼 수 있습니다. 이 페이지에서는 이를 여행 속도, 분위기, 동선 스타일로 단순화해 처음 보는 분도 쉽게 활용할 수 있게 구성했습니다.';
+        if (westernPoint1) westernPoint1.textContent = isEn
+            ? 'Think of Saju as a personality-energy map, not a fixed prediction of fate.'
+            : '사주를 고정된 운명 예측이 아니라 성향/에너지 지도처럼 이해해 보세요.';
+        if (westernPoint2) westernPoint2.textContent = isEn
+            ? 'The five elements (Wood, Fire, Earth, Metal, Water) are used here as travel-style signals.'
+            : '이 페이지에서는 오행(목·화·토·금·수)을 여행 스타일 신호로 활용합니다.';
+        if (westernPoint3) westernPoint3.textContent = isEn
+            ? 'Use the result as a starting hypothesis, then adjust with your real budget, weather, and walking stamina.'
+            : '결과를 출발 가설로 쓰고, 실제 예산·날씨·체력에 맞춰 조정하는 방식이 가장 좋습니다.';
+        if (travelWhyTitle) travelWhyTitle.textContent = isEn
+            ? 'Why planning travel with Saju can still be useful'
+            : '사주 기반으로 여행계획을 세우면 좋은 이유';
+        if (travelWhy1) travelWhy1.textContent = isEn
+            ? 'Faster decisions: it narrows options when you are overwhelmed by too many places.'
+            : '의사결정 속도 향상: 선택지가 너무 많아 막힐 때 후보를 빠르게 줄여줍니다.';
+        if (travelWhy2) travelWhy2.textContent = isEn
+            ? 'Better trip rhythm: it helps balance high-energy spots and recovery stops.'
+            : '여행 리듬 최적화: 에너지 높은 스팟과 회복 구간의 균형을 잡기 쉽습니다.';
+        if (travelWhy3) travelWhy3.textContent = isEn
+            ? 'More personal routes: it encourages style-fit choices rather than generic top-10 lists.'
+            : '개인화된 동선: 획일적인 인기 순위보다 본인 성향에 맞는 코스 선택을 돕습니다.';
         summaryEl.textContent = '';
         analysisLongEl.innerHTML = '';
         warningEl.textContent = '';
