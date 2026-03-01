@@ -3,12 +3,14 @@ const path = require("path");
 
 const ROOT = process.cwd();
 const MAIN_JS_PATH = path.join(ROOT, "main.js");
+const SITE_DATA_PATH = path.join(ROOT, "assets", "data", "site-data.js");
 const PLACES_DIR = path.join(ROOT, "places");
 const SITEMAP_PATH = path.join(ROOT, "sitemap.xml");
-const PRIORITY_URLS_PATH = path.join(ROOT, "search-console-priority-urls.txt");
+const PRIORITY_URLS_PATH = path.join(ROOT, "docs", "seo", "search-console-priority-urls.txt");
 const PLACE_EDITORIAL_OVERRIDES = require("./place-editorial-overrides");
 
 const mainJs = fs.readFileSync(MAIN_JS_PATH, "utf8");
+const siteDataJs = fs.existsSync(SITE_DATA_PATH) ? fs.readFileSync(SITE_DATA_PATH, "utf8") : "";
 
 function extractLiteral(source, varName, openChar, closeChar) {
   const marker = `const ${varName} = ${openChar}`;
@@ -45,7 +47,46 @@ function extractArrayLiteral(source, varName) {
   return extractLiteral(source, varName, "[", "]");
 }
 
-const PLACE_SEEDS = Function(`return (${extractArrayLiteral(mainJs, "PLACE_SEEDS")});`)();
+function extractArrayByProperty(source, propertyName) {
+  const markers = [`${propertyName}: [`, `${propertyName} = [`];
+  let start = -1;
+  for (const marker of markers) {
+    start = source.indexOf(marker);
+    if (start >= 0) break;
+  }
+  if (start < 0) return null;
+  const literalStart = source.indexOf("[", start);
+  let depth = 0;
+  let inSingle = false;
+  let inDouble = false;
+  let inTemplate = false;
+  let prev = "";
+  for (let i = literalStart; i < source.length; i++) {
+    const ch = source[i];
+    if (!inSingle && !inDouble && !inTemplate) {
+      if (ch === "[") depth++;
+      if (ch === "]") {
+        depth--;
+        if (depth === 0) return source.slice(literalStart, i + 1);
+      }
+      if (ch === "'") inSingle = true;
+      else if (ch === '"') inDouble = true;
+      else if (ch === "`") inTemplate = true;
+    } else {
+      if (inSingle && ch === "'" && prev !== "\\") inSingle = false;
+      if (inDouble && ch === '"' && prev !== "\\") inDouble = false;
+      if (inTemplate && ch === "`" && prev !== "\\") inTemplate = false;
+    }
+    prev = ch;
+  }
+  throw new Error(`Unterminated array for ${propertyName}`);
+}
+
+const placeSeedsLiteral =
+  extractArrayByProperty(siteDataJs, "PLACE_SEEDS") ||
+  extractArrayLiteral(mainJs, "PLACE_SEEDS");
+
+const PLACE_SEEDS = Function(`return (${placeSeedsLiteral});`)();
 
 const DISTRICT_EN = {
   "종로구": "Jongno-gu",

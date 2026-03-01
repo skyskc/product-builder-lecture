@@ -15,7 +15,7 @@
 4. `place?id=` URL이 색인되면 제거/대체 신호 모니터링
 
 ## 우선 제출 URL (Top priority)
-참고 파일: `search-console-priority-urls.txt`
+참고 파일: `docs/seo/search-console-priority-urls.txt`
 
 특히 먼저 넣을 것:
 - `https://goseoul.space/`

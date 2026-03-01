@@ -34,6 +34,8 @@ npm start
 - `place.html`: 장소 상세(지도/평점/리뷰)
 - `partner.html`: Formspree 제휴문의
 - `comments.html`: Disqus 댓글
+- `assets/data/site-data.js`: 대용량 정적 데이터(장소 seed, K-content 캐릭터)
+- `assets/data/site-lookups.js`: 대형 룩업 데이터(영문 이름, 구 좌표/카테고리 맵)
 - `server.js`: 정적 파일 + Google Places API 백엔드
 
 ## 5) AdSense `ads.txt` 점검 체크
@@ -70,7 +72,14 @@ npm run seo:recrawl-check
 - `deploy:live-check`: 라이브 사이트가 최신 배포(스크립트 defer, GEO/FAQ 섹션, 구조화데이터)까지 반영됐는지 확인
 - `seo:recrawl-check`: 주요 URL의 canonical/hreflang/OG/Twitter/JSON-LD/robots/sitemap 상태 점검
 
-Cloudflare Pages 반영이 늦거나 실패할 때는 `CLOUDFLARE_PAGES_DEBUG.md`를 확인하세요.
+Cloudflare Pages 반영이 늦거나 실패할 때는 `docs/ops/CLOUDFLARE_PAGES_DEBUG.md`를 확인하세요.
 
-SEO 재크롤링 이후 24~48시간 운영 모니터링은 `SEO_MONITORING_PLAYBOOK_24_48H_2026-02-19.md`를 사용하세요.
-실사용 기록지는 `SEO_MONITORING_LOG_T24_TEMPLATE.md`를 복사해 사용하세요.
+SEO 재크롤링 이후 24~48시간 운영 모니터링은 `docs/seo/SEO_MONITORING_PLAYBOOK_24_48H_2026-02-19.md`를 사용하세요.
+실사용 기록지는 `docs/seo/SEO_MONITORING_LOG_T24_TEMPLATE.md`를 복사해 사용하세요.
+
+## 8) 운영 문서 위치
+
+- AdSense 문서: `docs/adsense/`
+- SEO 문서: `docs/seo/`
+- 운영/배포 문서: `docs/ops/`
+- 로컬 로그: `logs/`

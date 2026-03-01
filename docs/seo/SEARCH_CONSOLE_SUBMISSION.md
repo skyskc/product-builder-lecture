@@ -21,7 +21,7 @@
   - `https://goseoul.space/about.html`
   - `https://goseoul.space/editorial.html`
   - `https://goseoul.space/privacy.html`
-- 상세 페이지 우선 목록: `search-console-priority-urls.txt` 참고
+- 상세 페이지 우선 목록: `docs/seo/search-console-priority-urls.txt` 참고
 
 ## 3) 2~7일 모니터링 체크
 - 성능 > 검색결과:
