@@ -75,6 +75,7 @@
 
 </head>
 <body data-page="home" class="min-h-screen bg-background-light">
+    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
     <header class="site-header shadow-lg shadow-slate-900/5">
         <a class="logo" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls flex items-center gap-2">
@@ -101,6 +102,41 @@
                 <span class="badge-lite">Google Maps Ready</span>
                 <span class="badge-lite">Walking Itinerary</span>
                 <span class="badge-lite">Local Food Picks</span>
+            </div>
+            <div class="explore-hero-summary">
+                <article class="explore-summary-card">
+                    <span id="explore-summary-label-1">Best for</span>
+                    <strong id="explore-summary-value-1">Choosing areas before routing</strong>
+                </article>
+                <article class="explore-summary-card">
+                    <span id="explore-summary-label-2">Fastest flow</span>
+                    <strong id="explore-summary-value-2">Style -> tag -> top 3 picks</strong>
+                </article>
+                <article class="explore-summary-card">
+                    <span id="explore-summary-label-3">Outcome</span>
+                    <strong id="explore-summary-value-3">Cleaner shortlist for Planner</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel explore-state-panel">
+            <div class="explore-state-grid">
+                <article class="explore-state-card">
+                    <span id="explore-state-label-style">Active style</span>
+                    <strong id="explore-active-style">All</strong>
+                </article>
+                <article class="explore-state-card">
+                    <span id="explore-state-label-tag">Active tag</span>
+                    <strong id="explore-active-tag">All</strong>
+                </article>
+                <article class="explore-state-card">
+                    <span id="explore-state-label-query">Search</span>
+                    <strong id="explore-active-query">No keyword</strong>
+                </article>
+                <article class="explore-state-card">
+                    <span id="explore-state-label-next">Suggested next step</span>
+                    <strong id="explore-active-next">Open 3 detail pages, then move to Planner</strong>
+                </article>
             </div>
         </section>
 
@@ -140,6 +176,19 @@
             </div>
         </section>
 
+        <section id="explore-empty-panel" class="panel explore-empty-panel" hidden>
+            <div class="explore-empty-head">
+                <p class="eyebrow" id="explore-empty-eyebrow">Reset path</p>
+                <h2 id="explore-empty-title">No places match this exact mix yet</h2>
+                <p id="explore-empty-desc" class="home-section-lead">Widen one filter first, then keep only the places that still feel right for your day.</p>
+            </div>
+            <div class="explore-empty-actions">
+                <button id="explore-empty-reset-tag" class="theme-toggle-btn min-h-10 px-3" type="button">Reset tag only</button>
+                <button id="explore-empty-reset-all" class="theme-toggle-btn min-h-10 px-3" type="button">Clear all filters</button>
+                <a id="explore-empty-open-planner" class="entry-secondary-link" href="course.html?style=history">Open Planner with current style</a>
+            </div>
+        </section>
+
         <section class="panel">
             <p class="eyebrow">How To Explore Better</p>
             <h2>Use filters first, then open only the places that fit your day</h2>
@@ -159,6 +208,34 @@
                     <span class="home-step-index">03</span>
                     <h3>Save top 3-5 picks</h3>
                     <p>Move your shortlisted places into Planner and build a route before adding optional stops.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel explore-shortcut-panel">
+            <div class="explore-shortcut-head">
+                <p class="eyebrow" id="explore-shortcut-eyebrow">Shortcut</p>
+                <h2 id="explore-shortcut-title">When you already know your trip mood</h2>
+                <p id="explore-shortcut-desc" class="home-section-lead">Use one of these fast starts instead of browsing the full list.</p>
+            </div>
+            <div class="home-decision-grid">
+                <article class="home-decision-card">
+                    <p class="home-decision-tag" id="explore-shortcut-tag-1">Classic first trip</p>
+                    <h3 id="explore-shortcut-card-title-1">History-heavy starter day</h3>
+                    <p id="explore-shortcut-card-desc-1">Palaces, hanok streets, and easy walking anchors.</p>
+                    <a id="explore-shortcut-link-1" class="text-link" href="explore.html?style=history&tag=palace">Open this filter</a>
+                </article>
+                <article class="home-decision-card">
+                    <p class="home-decision-tag" id="explore-shortcut-tag-2">Food and trend</p>
+                    <h3 id="explore-shortcut-card-title-2">Local market and neighborhood browse</h3>
+                    <p id="explore-shortcut-card-desc-2">Markets, local food, and trend zones with less route friction.</p>
+                    <a id="explore-shortcut-link-2" class="text-link" href="explore.html?style=local&tag=local-market">Open this filter</a>
+                </article>
+                <article class="home-decision-card">
+                    <p class="home-decision-tag" id="explore-shortcut-tag-3">Low-effort scenic day</p>
+                    <h3 id="explore-shortcut-card-title-3">Nature and night-view browse</h3>
+                    <p id="explore-shortcut-card-desc-3">Parks, riverside stops, and scenic points that pair well with sunset.</p>
+                    <a id="explore-shortcut-link-3" class="text-link" href="explore.html?style=nature&tag=night-view">Open this filter</a>
                 </article>
             </div>
         </section>

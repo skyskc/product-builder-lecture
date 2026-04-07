@@ -522,6 +522,27 @@
             const faqA2 = document.getElementById('faq-a2');
             const faqQ3 = document.getElementById('faq-q3');
             const faqA3 = document.getElementById('faq-a3');
+            const summaryLabel1 = document.getElementById('explore-summary-label-1');
+            const summaryValue1 = document.getElementById('explore-summary-value-1');
+            const summaryLabel2 = document.getElementById('explore-summary-label-2');
+            const summaryValue2 = document.getElementById('explore-summary-value-2');
+            const summaryLabel3 = document.getElementById('explore-summary-label-3');
+            const summaryValue3 = document.getElementById('explore-summary-value-3');
+            const shortcutEyebrow = document.getElementById('explore-shortcut-eyebrow');
+            const shortcutTitle = document.getElementById('explore-shortcut-title');
+            const shortcutDesc = document.getElementById('explore-shortcut-desc');
+            const shortcutTag1 = document.getElementById('explore-shortcut-tag-1');
+            const shortcutTitle1 = document.getElementById('explore-shortcut-card-title-1');
+            const shortcutDesc1 = document.getElementById('explore-shortcut-card-desc-1');
+            const shortcutLink1 = document.getElementById('explore-shortcut-link-1');
+            const shortcutTag2 = document.getElementById('explore-shortcut-tag-2');
+            const shortcutTitle2 = document.getElementById('explore-shortcut-card-title-2');
+            const shortcutDesc2 = document.getElementById('explore-shortcut-card-desc-2');
+            const shortcutLink2 = document.getElementById('explore-shortcut-link-2');
+            const shortcutTag3 = document.getElementById('explore-shortcut-tag-3');
+            const shortcutTitle3 = document.getElementById('explore-shortcut-card-title-3');
+            const shortcutDesc3 = document.getElementById('explore-shortcut-card-desc-3');
+            const shortcutLink3 = document.getElementById('explore-shortcut-link-3');
             if (geoPanelTitle) geoPanelTitle.textContent = 'Seoul Area Coverage';
             if (geoPanelDesc) geoPanelDesc.textContent = 'We prioritize high-demand visitor zones and provide direct map-ready movement links.';
             if (geoCoreTitle) geoCoreTitle.textContent = 'Core City Zone';
@@ -537,6 +558,27 @@
             if (faqA2) faqA2.textContent = 'Map and rating data can change with external providers, so check the detail-page map link again before visiting.';
             if (faqQ3) faqQ3.textContent = 'Can I use this site fully in English?';
             if (faqA3) faqA3.textContent = 'Use the top language toggle to switch key UI and guide text between English and Korean.';
+            if (summaryLabel1) summaryLabel1.textContent = 'Best for';
+            if (summaryValue1) summaryValue1.textContent = 'Choosing areas before routing';
+            if (summaryLabel2) summaryLabel2.textContent = 'Fastest flow';
+            if (summaryValue2) summaryValue2.textContent = 'Style -> tag -> top 3 picks';
+            if (summaryLabel3) summaryLabel3.textContent = 'Outcome';
+            if (summaryValue3) summaryValue3.textContent = 'Cleaner shortlist for Planner';
+            if (shortcutEyebrow) shortcutEyebrow.textContent = 'Shortcut';
+            if (shortcutTitle) shortcutTitle.textContent = 'When you already know your trip mood';
+            if (shortcutDesc) shortcutDesc.textContent = 'Use one of these fast starts instead of browsing the full list.';
+            if (shortcutTag1) shortcutTag1.textContent = 'Classic first trip';
+            if (shortcutTitle1) shortcutTitle1.textContent = 'History-heavy starter day';
+            if (shortcutDesc1) shortcutDesc1.textContent = 'Palaces, hanok streets, and easy walking anchors.';
+            if (shortcutLink1) shortcutLink1.textContent = 'Open this filter';
+            if (shortcutTag2) shortcutTag2.textContent = 'Food and trend';
+            if (shortcutTitle2) shortcutTitle2.textContent = 'Local market and neighborhood browse';
+            if (shortcutDesc2) shortcutDesc2.textContent = 'Markets, local food, and trend zones with less route friction.';
+            if (shortcutLink2) shortcutLink2.textContent = 'Open this filter';
+            if (shortcutTag3) shortcutTag3.textContent = 'Low-effort scenic day';
+            if (shortcutTitle3) shortcutTitle3.textContent = 'Nature and night-view browse';
+            if (shortcutDesc3) shortcutDesc3.textContent = 'Parks, riverside stops, and scenic points that pair well with sunset.';
+            if (shortcutLink3) shortcutLink3.textContent = 'Open this filter';
         }
         if (page === 'course') {
             const hero = document.querySelector('.hero');
@@ -558,6 +600,16 @@
             const offlinePlanTitle = document.getElementById('offline-plan-title');
             const offlinePlanSearchInput = document.getElementById('offline-plan-search-input');
             const toolsNote = document.getElementById('course-tools-note');
+            const summaryLabel1 = document.getElementById('course-summary-label-1');
+            const summaryValue1 = document.getElementById('course-summary-value-1');
+            const summaryLabel2 = document.getElementById('course-summary-label-2');
+            const summaryValue2 = document.getElementById('course-summary-value-2');
+            const summaryLabel3 = document.getElementById('course-summary-label-3');
+            const summaryValue3 = document.getElementById('course-summary-value-3');
+            const statusLabelStyle = document.getElementById('course-status-label-style');
+            const statusLabelBudget = document.getElementById('course-status-label-budget');
+            const statusLabelStops = document.getElementById('course-status-label-stops');
+            const statusLabelDuration = document.getElementById('course-status-label-duration');
             if (budgetTitle) budgetTitle.textContent = 'Travel Budget Mode';
             if (budgetDesc) budgetDesc.textContent = 'Automatically adjusts price level and transport cost estimate by budget.';
             if (insightTitle) insightTitle.textContent = 'Time and Cost Summary';
@@ -566,6 +618,16 @@
             if (offlinePlanTitle) offlinePlanTitle.textContent = 'Saved Offline Plans';
             if (offlinePlanSearchInput) offlinePlanSearchInput.placeholder = 'Search saved plans';
             if (toolsNote) toolsNote.textContent = 'Saved plans are stored in your browser on this device.';
+            if (summaryLabel1) summaryLabel1.textContent = 'Best for';
+            if (summaryValue1) summaryValue1.textContent = 'Turning ideas into one route';
+            if (summaryLabel2) summaryLabel2.textContent = 'What changes live';
+            if (summaryValue2) summaryValue2.textContent = 'Budget, walking time, hotels, meals';
+            if (summaryLabel3) summaryLabel3.textContent = 'Output';
+            if (summaryValue3) summaryValue3.textContent = 'Route, lodging, food, backup notes';
+            if (statusLabelStyle) statusLabelStyle.textContent = 'Selected style';
+            if (statusLabelBudget) statusLabelBudget.textContent = 'Budget mode';
+            if (statusLabelStops) statusLabelStops.textContent = 'Stop count';
+            if (statusLabelDuration) statusLabelDuration.textContent = 'Estimated day';
             document.querySelectorAll('.style-tab-btn').forEach((btn) => {
                 const styleKey = btn.dataset.style;
                 if (styleKey) btn.textContent = getStyleLabel(styleKey);
@@ -930,9 +992,18 @@
     function initGlobalMobileDock() {
         if (document.querySelector('.mobile-bottom-dock')) return;
         const page = document.body.dataset.page;
-        const labels = CURRENT_LANG === 'en'
-            ? { explore: 'Explore', planner: 'Planner', labs: 'Labs', profile: 'Contact' }
-            : { explore: '탐색', planner: '플래너', labs: '랩', profile: '문의' };
+        const labels = (() => {
+            if (CURRENT_LANG === 'en') {
+                if (page === 'kcontent-result') return { explore: 'Places', planner: 'Planner', labs: 'Picks', profile: 'Contact' };
+                if (page === 'saju') return { explore: 'Verify', planner: 'Planner', labs: 'Saju', profile: 'Contact' };
+                if (page === 'generation') return { explore: 'Spots', planner: 'Planner', labs: 'Groups', profile: 'Contact' };
+                return { explore: 'Explore', planner: 'Planner', labs: 'Labs', profile: 'Contact' };
+            }
+            if (page === 'kcontent-result') return { explore: '장소', planner: '플래너', labs: '픽스', profile: '문의' };
+            if (page === 'saju') return { explore: '검증', planner: '플래너', labs: '사주', profile: '문의' };
+            if (page === 'generation') return { explore: '장소', planner: '플래너', labs: '세대', profile: '문의' };
+            return { explore: '탐색', planner: '플래너', labs: '랩', profile: '문의' };
+        })();
 
         const links = [
             { key: 'explore', href: withCurrentLang('explore.html'), pages: ['home', 'place', 'entry'] },
@@ -1316,7 +1387,58 @@
         const sortSelect = document.getElementById('sort-select');
         const tagButtons = Array.from(document.querySelectorAll('#quick-tag-list .tag-chip'));
         const resultCount = document.getElementById('result-count');
+        const activeStyleEl = document.getElementById('explore-active-style');
+        const activeTagEl = document.getElementById('explore-active-tag');
+        const activeQueryEl = document.getElementById('explore-active-query');
+        const activeNextEl = document.getElementById('explore-active-next');
+        const emptyPanelEl = document.getElementById('explore-empty-panel');
+        const emptyResetTagBtn = document.getElementById('explore-empty-reset-tag');
+        const emptyResetAllBtn = document.getElementById('explore-empty-reset-all');
+        const emptyOpenPlannerLink = document.getElementById('explore-empty-open-planner');
         if (!grid || !styleTabs || !styleButtons.length || !searchInput || !sortSelect || !tagButtons.length || !resultCount) return;
+        if (CURRENT_LANG === 'en') {
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+            setText('explore-summary-label-1', 'Best for');
+            setText('explore-summary-value-1', 'Choosing areas before routing');
+            setText('explore-summary-label-2', 'Fastest flow');
+            setText('explore-summary-value-2', 'Style -> tag -> top 3 picks');
+            setText('explore-summary-label-3', 'Outcome');
+            setText('explore-summary-value-3', 'Cleaner shortlist for Planner');
+            setText('explore-state-label-style', 'Active style');
+            setText('explore-state-label-tag', 'Active tag');
+            setText('explore-state-label-query', 'Search');
+            setText('explore-state-label-next', 'Suggested next step');
+            setText('explore-empty-eyebrow', 'Reset path');
+            setText('explore-empty-title', 'No places match this exact mix yet');
+            setText('explore-empty-desc', 'Widen one filter first, then keep only the places that still feel right for your day.');
+            setText('explore-empty-reset-tag', 'Reset tag only');
+            setText('explore-empty-reset-all', 'Clear all filters');
+            setText('explore-empty-open-planner', 'Open Planner with current style');
+        } else {
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+            setText('explore-summary-label-1', '추천 대상');
+            setText('explore-summary-value-1', '루트 짜기 전 지역 고르기');
+            setText('explore-summary-label-2', '가장 빠른 흐름');
+            setText('explore-summary-value-2', '스타일 -> 태그 -> 상위 3곳');
+            setText('explore-summary-label-3', '결과');
+            setText('explore-summary-value-3', '플래너로 넘길 짧은 후보군');
+            setText('explore-state-label-style', '현재 스타일');
+            setText('explore-state-label-tag', '현재 태그');
+            setText('explore-state-label-query', '검색어');
+            setText('explore-state-label-next', '다음 추천 행동');
+            setText('explore-empty-eyebrow', '다시 여는 방법');
+            setText('explore-empty-title', '지금 조합에 맞는 장소가 없습니다');
+            setText('explore-empty-desc', '필터 하나만 먼저 넓힌 뒤, 다시 마음에 드는 곳만 남기는 방식이 가장 빠릅니다.');
+            setText('explore-empty-reset-tag', '태그만 초기화');
+            setText('explore-empty-reset-all', '필터 전체 초기화');
+            setText('explore-empty-open-planner', '현재 스타일로 플래너 열기');
+        }
 
         const params = new URLSearchParams(window.location.search);
         let selectedStyle = params.get('style') && styleLabels()[params.get('style')] ? params.get('style') : 'all';
@@ -1395,6 +1517,35 @@
             window.history.replaceState({}, '', url.toString());
         }
 
+        function updateExploreState(filtered) {
+            if (activeStyleEl) activeStyleEl.textContent = selectedStyle === 'all' ? (CURRENT_LANG === 'en' ? 'All styles' : '전체 스타일') : getStyleLabel(selectedStyle);
+            if (activeTagEl) activeTagEl.textContent = TAG_LABELS_BY_LANG[CURRENT_LANG]?.[selectedTag] || TAG_LABELS_BY_LANG.ko?.[selectedTag] || selectedTag;
+            if (activeQueryEl) activeQueryEl.textContent = searchQuery || (CURRENT_LANG === 'en' ? 'No keyword' : '검색어 없음');
+            if (activeNextEl) {
+                if (!filtered.length) {
+                    if (searchQuery) {
+                        activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Remove the search term first' : '검색어부터 먼저 지워 보세요';
+                    } else if (selectedTag !== 'all') {
+                        activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Reset the tag, keep the style' : '태그를 풀고 스타일은 유지하세요';
+                    } else {
+                        activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Broaden style or switch to Planner' : '스타일을 넓히거나 플래너로 이동하세요';
+                    }
+                } else if (filtered.length <= 5) {
+                    activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Open details and move to Planner' : '상세 페이지 확인 후 플래너로 이동';
+                } else {
+                    activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Open 3 detail pages, then move to Planner' : '상세 3곳 확인 후 플래너로 이동';
+                }
+            }
+        }
+
+        function syncExploreEmptyState(filtered) {
+            if (emptyOpenPlannerLink) {
+                emptyOpenPlannerLink.href = withCurrentLang(`course.html?style=${selectedStyle === 'all' ? 'history' : selectedStyle}`);
+            }
+            if (!emptyPanelEl) return;
+            emptyPanelEl.hidden = filtered.length > 0;
+        }
+
         function applyFilter() {
             const styleFiltered = selectedStyle === 'all'
                 ? places
@@ -1411,6 +1562,9 @@
                     : '선택한 여행 형식에 맞는 추천 장소가 없습니다.';
                 grid.appendChild(empty);
                 resultCount.textContent = CURRENT_LANG === 'en' ? '0 results' : '0개 추천';
+                syncHomeUrlState();
+                updateExploreState([]);
+                syncExploreEmptyState([]);
                 return;
             }
 
@@ -1421,6 +1575,8 @@
                 ? `${filtered.length} results`
                 : `${filtered.length}개 추천`;
             syncHomeUrlState();
+            updateExploreState(filtered);
+            syncExploreEmptyState(filtered);
         }
 
         if (CURRENT_LANG === 'en') {
@@ -1477,6 +1633,22 @@
             searchQuery = searchInput.value.trim();
             applyFilter();
         });
+        emptyResetTagBtn?.addEventListener('click', () => {
+            selectedTag = 'all';
+            markActiveTag(selectedTag);
+            applyFilter();
+        });
+        emptyResetAllBtn?.addEventListener('click', () => {
+            selectedStyle = 'all';
+            selectedTag = 'all';
+            searchQuery = '';
+            selectedSort = 'popular';
+            searchInput.value = '';
+            sortSelect.value = selectedSort;
+            markActiveStyle(selectedStyle);
+            markActiveTag(selectedTag);
+            applyFilter();
+        });
         sortSelect.addEventListener('change', () => {
             selectedSort = sortSelect.value;
             applyFilter();
@@ -1484,6 +1656,7 @@
         markActiveStyle(selectedStyle);
         markActiveTag(selectedTag);
         applyFilter();
+        initScrollProgress();
     }
 
     function initEntryFunLab() {
@@ -2002,6 +2175,61 @@
         budgetResult.innerHTML = `<p class="data-source-note">${isEn ? 'Click run to generate your budget-based route and food picks.' : '실행 버튼을 누르면 예산 맞춤 코스와 식당 추천 결과가 표시됩니다.'}</p>`;
     }
 
+    function initEntrySectionNavigator() {
+        const progressBar = document.getElementById('scroll-progress-bar');
+        const navLinks = Array.from(document.querySelectorAll('.home-quick-link[data-nav-target]'));
+        const sections = Array.from(document.querySelectorAll('[data-section-nav-target]'));
+        if (!progressBar && !navLinks.length) return;
+
+        const setActiveNav = (key) => {
+            navLinks.forEach((link) => {
+                link.classList.toggle('is-active', link.dataset.navTarget === key);
+            });
+        };
+
+        const updateScrollState = () => {
+            const doc = document.documentElement;
+            const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
+            const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+            if (progressBar) progressBar.style.width = `${progress * 100}%`;
+
+            if (!sections.length) return;
+            const pivot = window.innerHeight * 0.24;
+            let activeKey = sections[0].dataset.sectionNavTarget || '';
+            sections.forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top - pivot <= 0) {
+                    activeKey = section.dataset.sectionNavTarget || activeKey;
+                }
+            });
+            if (activeKey) setActiveNav(activeKey);
+        };
+
+        if (!document.body.dataset.entryNavBound) {
+            window.addEventListener('scroll', updateScrollState, { passive: true });
+            window.addEventListener('resize', updateScrollState);
+            document.body.dataset.entryNavBound = '1';
+        }
+        updateScrollState();
+    }
+
+    function initScrollProgress() {
+        const progressBar = document.getElementById('scroll-progress-bar');
+        if (!progressBar) return;
+        const update = () => {
+            const doc = document.documentElement;
+            const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 1);
+            const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+            progressBar.style.width = `${progress * 100}%`;
+        };
+        if (!document.body.dataset.scrollProgressBound) {
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            document.body.dataset.scrollProgressBound = '1';
+        }
+        update();
+    }
+
     function renderEntryPage() {
         const eyebrow = document.getElementById('entry-eyebrow');
         const title = document.getElementById('entry-title');
@@ -2024,6 +2252,18 @@
         const explore = document.getElementById('entry-card-explore');
         const course = document.getElementById('entry-card-course');
         const funCard = document.getElementById('entry-card-fun');
+        const summaryLabel1 = document.getElementById('entry-summary-label-1');
+        const summaryLabel2 = document.getElementById('entry-summary-label-2');
+        const summaryLabel3 = document.getElementById('entry-summary-label-3');
+        const summaryValue1 = document.getElementById('entry-summary-value-1');
+        const summaryValue2 = document.getElementById('entry-summary-value-2');
+        const summaryValue3 = document.getElementById('entry-summary-value-3');
+        const secondaryCtaExplore = document.getElementById('entry-secondary-cta-explore');
+        const secondaryCtaGuides = document.getElementById('entry-secondary-cta-guides');
+        const spotlightStatLabel1 = document.getElementById('entry-spotlight-stat-label-1');
+        const spotlightStatValue1 = document.getElementById('entry-spotlight-stat-value-1');
+        const spotlightStatLabel2 = document.getElementById('entry-spotlight-stat-label-2');
+        const spotlightStatValue2 = document.getElementById('entry-spotlight-stat-value-2');
         const navLinks = document.querySelectorAll('.top-nav a');
         if (!eyebrow || !title || !desc || !descExtra || !cta || !ctaNote || !secondaryTitle || !sparkTitle || !sparkBtn || !sparkResult || !explore || !course) return;
         const setChipTexts = (selector, labels) => {
@@ -2031,6 +2271,10 @@
             chips.forEach((chip, idx) => {
                 if (labels[idx]) chip.textContent = labels[idx];
             });
+        };
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
         };
 
         const isEn = CURRENT_LANG === 'en';
@@ -2188,6 +2432,43 @@
             ctaNote.textContent = ctaVariant === 'A'
                 ? 'Fastest start: build a one-day route first, then expand with spot details.'
                 : 'One tap is enough to generate your route, hotel, and food flow.';
+            if (summaryLabel1) summaryLabel1.textContent = 'Best for';
+            if (summaryLabel2) summaryLabel2.textContent = 'Time to start';
+            if (summaryLabel3) summaryLabel3.textContent = 'What you get';
+            if (summaryValue1) summaryValue1.textContent = 'First-time visitors';
+            if (summaryValue2) summaryValue2.textContent = 'Under 1 minute';
+            if (summaryValue3) summaryValue3.textContent = 'Route, map, backups';
+            if (secondaryCtaExplore) secondaryCtaExplore.textContent = 'Browse areas first';
+            if (secondaryCtaGuides) secondaryCtaGuides.textContent = 'Read practical guides';
+            if (spotlightStatLabel1) spotlightStatLabel1.textContent = 'Best window';
+            if (spotlightStatValue1) spotlightStatValue1.textContent = 'Morning to sunset';
+            if (spotlightStatLabel2) spotlightStatLabel2.textContent = 'Pairs well with';
+            if (spotlightStatValue2) spotlightStatValue2.textContent = 'Bukchon, Ikseon-dong';
+            setText('quick-nav-label-start', 'Start');
+            setText('quick-nav-desc-start', 'Fast entry');
+            setText('quick-nav-label-modes', 'Modes');
+            setText('quick-nav-desc-modes', 'Pick your tool');
+            setText('quick-nav-label-routes', 'Routes');
+            setText('quick-nav-desc-routes', 'Starter patterns');
+            setText('quick-nav-label-prep', 'Prep');
+            setText('quick-nav-desc-prep', 'Checklist');
+            setText('quick-nav-label-lab', 'Fun Lab');
+            setText('quick-nav-desc-lab', 'Backup tools');
+            setText('decision-eyebrow', 'Decision Helper');
+            setText('decision-title', 'What do you need right now?');
+            setText('decision-desc', 'Choose the shortest path instead of reading everything. Each option below leads to one specific next step.');
+            setText('decision-tag-1', 'Need a route now');
+            setText('decision-card-title-1', 'Build a same-day plan fast');
+            setText('decision-card-desc-1', 'Start in Planner if you want a clean route, food area, and hotel flow without extra browsing.');
+            setText('decision-card-link-1', 'Open Planner');
+            setText('decision-tag-2', 'Need area ideas');
+            setText('decision-card-title-2', 'Compare neighborhoods and spot types');
+            setText('decision-card-desc-2', 'Start in Explore if you want to filter by mood, district, or trip style before locking your route.');
+            setText('decision-card-link-2', 'Open Explore');
+            setText('decision-tag-3', 'Need backup options');
+            setText('decision-card-title-3', 'Prepare for weather or budget changes');
+            setText('decision-card-desc-3', 'Open Fun Lab for a rainy-day switch, budget test, or quick random route when plans change.');
+            setText('decision-card-link-3', 'Open Fun Lab');
             secondaryTitle.textContent = 'Or start with another path';
             explore.innerHTML = '<strong>Explore Top Spots</strong><span>Spots + maps</span>';
             course.innerHTML = '<strong>Build 1-Day Plan</strong><span>Route + food + hotel</span>';
@@ -2215,6 +2496,43 @@
             ctaNote.textContent = ctaVariant === 'A'
                 ? '가장 빠른 시작: 1일 코스를 먼저 만든 뒤, 명소를 채워가세요.'
                 : '한 번의 클릭으로 동선, 호텔, 식당 추천을 바로 받아보세요.';
+            if (summaryLabel1) summaryLabel1.textContent = '추천 대상';
+            if (summaryLabel2) summaryLabel2.textContent = '시작 시간';
+            if (summaryLabel3) summaryLabel3.textContent = '얻는 결과';
+            if (summaryValue1) summaryValue1.textContent = '서울 초행 여행자';
+            if (summaryValue2) summaryValue2.textContent = '1분 이내 시작';
+            if (summaryValue3) summaryValue3.textContent = '동선, 지도, 대안 코스';
+            if (secondaryCtaExplore) secondaryCtaExplore.textContent = '지역부터 둘러보기';
+            if (secondaryCtaGuides) secondaryCtaGuides.textContent = '실전 가이드 읽기';
+            if (spotlightStatLabel1) spotlightStatLabel1.textContent = '추천 시간대';
+            if (spotlightStatValue1) spotlightStatValue1.textContent = '오전 시작, 노을 마감';
+            if (spotlightStatLabel2) spotlightStatLabel2.textContent = '함께 묶기 좋은 곳';
+            if (spotlightStatValue2) spotlightStatValue2.textContent = '북촌, 익선동';
+            setText('quick-nav-label-start', '시작');
+            setText('quick-nav-desc-start', '빠른 진입');
+            setText('quick-nav-label-modes', '모드');
+            setText('quick-nav-desc-modes', '도구 선택');
+            setText('quick-nav-label-routes', '루트');
+            setText('quick-nav-desc-routes', '추천 패턴');
+            setText('quick-nav-label-prep', '준비');
+            setText('quick-nav-desc-prep', '체크리스트');
+            setText('quick-nav-label-lab', '재미랩');
+            setText('quick-nav-desc-lab', '대안 도구');
+            setText('decision-eyebrow', '결정 도우미');
+            setText('decision-title', '지금 필요한 시작점은 무엇인가요?');
+            setText('decision-desc', '전부 읽지 말고 가장 짧은 경로로 시작하세요. 아래 카드마다 다음 행동이 하나씩만 연결됩니다.');
+            setText('decision-tag-1', '지금 루트가 필요함');
+            setText('decision-card-title-1', '당일 코스를 바로 만들기');
+            setText('decision-card-desc-1', '추가 탐색 없이 동선, 식사 지역, 숙소 흐름까지 빠르게 잡고 싶다면 플래너부터 시작하세요.');
+            setText('decision-card-link-1', '플래너 열기');
+            setText('decision-tag-2', '지역 아이디어가 필요함');
+            setText('decision-card-title-2', '동네와 스팟 유형 비교하기');
+            setText('decision-card-desc-2', '분위기, 지역, 여행 스타일을 먼저 비교하고 싶다면 탐색부터 시작하세요.');
+            setText('decision-card-link-2', '탐색 열기');
+            setText('decision-tag-3', '대안이 필요함');
+            setText('decision-card-title-3', '날씨와 예산 변화에 대비하기');
+            setText('decision-card-desc-3', '비 오는 날 전환, 예산 테스트, 랜덤 코스가 필요하면 재미 플래너를 여세요.');
+            setText('decision-card-link-3', '재미 플래너 열기');
             secondaryTitle.textContent = '또는 원하는 방식으로 시작';
             explore.innerHTML = '<strong>핵심 명소 둘러보기</strong><span>명소 + 지도</span>';
             course.innerHTML = '<strong>1일 코스 바로 만들기</strong><span>동선 + 식당 + 호텔</span>';
@@ -2323,6 +2641,7 @@
             const timerId = setTimeout(openFirstOverlay, 3000);
             firstOverlay.dataset.timerId = String(timerId);
         }
+        initEntrySectionNavigator();
         initEntryFunLab();
     }
 
@@ -2332,9 +2651,19 @@
         const panelTitle = document.getElementById('generation-panel-title');
         const gridEl = document.getElementById('generation-grid');
         const noteEl = document.getElementById('generation-note');
+        const stateValue1 = document.getElementById('generation-state-value-1');
+        const stateValue2 = document.getElementById('generation-state-value-2');
+        const stateValue3 = document.getElementById('generation-state-value-3');
+        const stateNote1 = document.getElementById('generation-state-note-1');
+        const stateNote2 = document.getElementById('generation-state-note-2');
+        const stateNote3 = document.getElementById('generation-state-note-3');
         if (!heroTitle || !heroDesc || !panelTitle || !gridEl || !noteEl) return;
 
         const isEn = CURRENT_LANG === 'en';
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
         heroTitle.textContent = isEn ? 'Seoul Courses by Age Group' : '세대별 서울 추천 코스';
         heroDesc.textContent = isEn
             ? 'Choose by travel pace and group profile, then jump directly to the matching course.'
@@ -2343,6 +2672,18 @@
         noteEl.textContent = isEn
             ? 'Tip: adjust route details in the course page by weather, group size, and budget.'
             : '팁: 실제 이동은 날씨/인원/예산에 맞춰 코스 페이지에서 바로 조정할 수 있습니다.';
+        setText('generation-state-eyebrow', isEn ? 'Quick Read' : '빠른 판단');
+        setText('generation-state-title', isEn ? 'Choose the closest real group, not the ideal version' : '이상적인 일정이 아니라 실제 그룹에 가까운 쪽을 고르세요');
+        setText('generation-state-desc', isEn ? 'This page works best when you pick the scenario that matches the slowest walker and the true budget range of your group.' : '가장 걷기 느린 사람과 실제 예산 범위에 맞는 시나리오를 고를 때 가장 잘 작동합니다.');
+        setText('generation-state-label-1', isEn ? 'Best use' : '가장 좋은 활용');
+        setText('generation-state-label-2', isEn ? 'What changes later' : '나중에 바뀌는 것');
+        setText('generation-state-label-3', isEn ? 'Next move' : '다음 행동');
+        if (stateValue1) stateValue1.textContent = isEn ? 'Pick a starting scenario' : '출발 시나리오 선택';
+        if (stateValue2) stateValue2.textContent = isEn ? 'Budget and route density' : '예산과 루트 밀도';
+        if (stateValue3) stateValue3.textContent = isEn ? 'Open one matching Planner route' : '맞는 플래너 1개 열기';
+        if (stateNote1) stateNote1.textContent = isEn ? 'Use this page before fine tuning stops and hotels.' : '세부 스팟과 숙소를 조정하기 전에 쓰는 페이지입니다.';
+        if (stateNote2) stateNote2.textContent = isEn ? 'Planner is where you reduce walking or upgrade comfort.' : '도보 강도 완화나 편의 업그레이드는 플래너에서 조정합니다.';
+        if (stateNote3) stateNote3.textContent = isEn ? 'Do not compare all scenarios for too long.' : '모든 시나리오를 오래 비교하지 말고 하나를 먼저 여세요.';
 
         const budgetLabel = {
             ko: { low: '예산대: 절약형', mid: '예산대: 보통', high: '예산대: 여유형' },
@@ -2558,6 +2899,98 @@
         const shareCopyStatusEl = document.getElementById('place-share-copy-status');
         const reviewList = document.getElementById('review-list');
         const dataSourceEl = document.getElementById('place-data-source');
+        const decisionValue1 = document.getElementById('place-decision-value-1');
+        const decisionValue2 = document.getElementById('place-decision-value-2');
+        const decisionValue3 = document.getElementById('place-decision-value-3');
+        const quickTitleEl = document.getElementById('place-quick-title');
+        const quickValue1 = document.getElementById('place-quick-value-1');
+        const quickNote1 = document.getElementById('place-quick-note-1');
+        const quickValue2 = document.getElementById('place-quick-value-2');
+        const quickNote2 = document.getElementById('place-quick-note-2');
+        const quickValue3 = document.getElementById('place-quick-value-3');
+        const quickNote3 = document.getElementById('place-quick-note-3');
+        const reviewReadoutValue1 = document.getElementById('place-review-readout-value-1');
+        const reviewReadoutNote1 = document.getElementById('place-review-readout-note-1');
+        const reviewReadoutValue2 = document.getElementById('place-review-readout-value-2');
+        const reviewReadoutNote2 = document.getElementById('place-review-readout-note-2');
+        const reviewReadoutValue3 = document.getElementById('place-review-readout-value-3');
+        const reviewReadoutNote3 = document.getElementById('place-review-readout-note-3');
+        const toPlannerLink = document.getElementById('place-to-planner-link');
+        const backToExploreLink = document.getElementById('place-back-to-explore-link');
+
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
+        const primaryStyle = Array.isArray(place.styles) && place.styles[0] ? place.styles[0] : 'history';
+        const anchorCandidate = ['history', 'art', 'family'].includes(primaryStyle);
+        const districtLabel = getDistrictLabel(place.district);
+        const categoryLabel = getCategoryLabel(place.category);
+        const bestTimeLabel = place.bestTime || (CURRENT_LANG === 'en' ? 'Check map and reviews' : '지도와 리뷰 확인');
+
+        if (CURRENT_LANG === 'en') {
+            setText('place-decision-label-1', 'Best use');
+            setText('place-decision-label-2', 'Ideal timing');
+            setText('place-decision-label-3', 'Pairs well with');
+            if (decisionValue1) decisionValue1.textContent = anchorCandidate ? 'Strong anchor stop' : 'Flexible add-on stop';
+            if (decisionValue2) decisionValue2.textContent = bestTimeLabel;
+            if (decisionValue3) decisionValue3.textContent = `${districtLabel} cluster`;
+            setText('place-quick-label-1', 'Visit role');
+            if (quickTitleEl) quickTitleEl.textContent = 'Should this be a main stop or a short add-on?';
+            if (quickValue1) quickValue1.textContent = anchorCandidate ? 'Use as a main stop' : 'Use as a short supporting stop';
+            if (quickNote1) quickNote1.textContent = anchorCandidate
+                ? `This ${categoryLabel.toLowerCase()} stop works well as a route anchor before adding food or nearby neighborhoods.`
+                : `This stop fits best when paired with a stronger anchor in ${districtLabel}.`;
+            setText('place-quick-label-2', 'Crowd strategy');
+            if (quickValue2) quickValue2.textContent = 'Avoid peak overlap';
+            if (quickNote2) quickNote2.textContent = `Check ${bestTimeLabel} first, then confirm queue and transit conditions on the map.`;
+            setText('place-quick-label-3', 'Next move');
+            if (quickValue3) quickValue3.textContent = 'Connect same-area stops';
+            if (quickNote3) quickNote3.textContent = `Bundle this with 2-3 places in ${districtLabel} before opening Planner.`;
+            setText('place-review-readout-label-1', 'Good sign');
+            if (reviewReadoutValue1) reviewReadoutValue1.textContent = place.ratingValue >= 4.4 ? 'Strong review signal' : 'Solid enough for shortlist';
+            if (reviewReadoutNote1) reviewReadoutNote1.textContent = 'Use rating and review count together, not rating alone.';
+            setText('place-review-readout-label-2', 'Watch out');
+            if (reviewReadoutValue2) reviewReadoutValue2.textContent = 'Static score is not everything';
+            if (reviewReadoutNote2) reviewReadoutNote2.textContent = 'Crowd level, timing, and route fit matter more than a small rating difference.';
+            setText('place-review-readout-label-3', 'Best planning use');
+            if (reviewReadoutValue3) reviewReadoutValue3.textContent = 'Decision support, not final proof';
+            if (reviewReadoutNote3) reviewReadoutNote3.textContent = 'Use reviews to choose timing and route role, then recheck the live map before visiting.';
+            setText('place-review-readout-title', 'How to interpret the review signals');
+            if (toPlannerLink) toPlannerLink.textContent = 'Build route from this style';
+            if (backToExploreLink) backToExploreLink.textContent = 'Browse similar places';
+        } else {
+            setText('place-decision-label-1', '추천 활용');
+            setText('place-decision-label-2', '적정 시간대');
+            setText('place-decision-label-3', '함께 묶기 좋은 동선');
+            if (decisionValue1) decisionValue1.textContent = anchorCandidate ? '메인 앵커 스팟' : '보조 추가 스팟';
+            if (decisionValue2) decisionValue2.textContent = bestTimeLabel;
+            if (decisionValue3) decisionValue3.textContent = `${districtLabel} 권역`;
+            setText('place-quick-label-1', '방문 역할');
+            if (quickTitleEl) quickTitleEl.textContent = '메인 스팟으로 갈지, 짧은 추가 코스로 넣을지 빠르게 판단하세요';
+            if (quickValue1) quickValue1.textContent = anchorCandidate ? '메인 스팟으로 사용' : '짧은 보조 스팟으로 사용';
+            if (quickNote1) quickNote1.textContent = anchorCandidate
+                ? `${categoryLabel} 성격이 강해 이 지역 동선의 시작점으로 쓰기 좋습니다.`
+                : `${districtLabel}의 더 강한 앵커 스팟과 함께 묶을 때 효율이 좋습니다.`;
+            setText('place-quick-label-2', '혼잡 대응');
+            if (quickValue2) quickValue2.textContent = '피크 시간 겹침 피하기';
+            if (quickNote2) quickNote2.textContent = `${bestTimeLabel} 기준으로 먼저 보고, 지도에서 대기/이동 상황을 다시 확인하세요.`;
+            setText('place-quick-label-3', '다음 행동');
+            if (quickValue3) quickValue3.textContent = '같은 지역 스팟 연결';
+            if (quickNote3) quickNote3.textContent = `${districtLabel} 안에서 2~3곳 더 묶은 뒤 플래너로 넘기면 효율적입니다.`;
+            setText('place-review-readout-label-1', '좋은 신호');
+            if (reviewReadoutValue1) reviewReadoutValue1.textContent = place.ratingValue >= 4.4 ? '리뷰 신호가 강한 편' : '후보로 넣기에는 충분';
+            if (reviewReadoutNote1) reviewReadoutNote1.textContent = '평점만 보지 말고 리뷰 수를 함께 보세요.';
+            setText('place-review-readout-label-2', '주의할 점');
+            if (reviewReadoutValue2) reviewReadoutValue2.textContent = '점수 차이만으로 결정하지 않기';
+            if (reviewReadoutNote2) reviewReadoutNote2.textContent = '혼잡도, 시간대, 동선 적합성이 소수점 평점보다 더 중요합니다.';
+            setText('place-review-readout-label-3', '가장 좋은 활용법');
+            if (reviewReadoutValue3) reviewReadoutValue3.textContent = '결정 보조 자료로 사용';
+            if (reviewReadoutNote3) reviewReadoutNote3.textContent = '리뷰는 시간대와 동선 역할을 정하는 데 쓰고, 방문 직전에는 지도를 다시 확인하세요.';
+            setText('place-review-readout-title', '리뷰 신호를 읽는 방법');
+            if (toPlannerLink) toPlannerLink.textContent = '이 스타일로 코스 만들기';
+            if (backToExploreLink) backToExploreLink.textContent = '비슷한 장소 더 보기';
+        }
 
         document.title = `${getPlaceName(place)} | GoSeoul`;
         nameEl.textContent = getPlaceName(place);
@@ -2605,11 +3038,14 @@
                 ? `Share URL: ${sharePageUrl}`
                 : `공유 URL: ${sharePageUrl}`;
         }
+        if (toPlannerLink) toPlannerLink.href = withCurrentLang(`course.html?style=${encodeURIComponent(primaryStyle)}`);
+        if (backToExploreLink) backToExploreLink.href = withCurrentLang(`explore.html?style=${encodeURIComponent(primaryStyle)}`);
         renderReviews(reviewList, place.reviews);
         dataSourceEl.textContent = CURRENT_LANG === 'en'
             ? 'Ratings/Reviews: Static data mode is active.'
             : '리뷰/평점: 정적 데이터 모드로 운영 중입니다.';
         updatePlaceStructuredData(place, null);
+        initScrollProgress();
 
         try {
             const details = await fetchLivePlaceDetails(place, CURRENT_LANG === 'en' ? 'en' : 'ko');
@@ -2684,7 +3120,60 @@
         const hotelSourceEl = document.getElementById('hotel-source-note');
         const restaurantSourceEl = document.getElementById('restaurant-source-note');
         const restaurantSectionsEl = document.getElementById('restaurant-sections');
+        const activeStyleEl = document.getElementById('course-active-style');
+        const activeBudgetEl = document.getElementById('course-active-budget');
+        const activeStopCountEl = document.getElementById('course-active-stop-count');
+        const activeDurationEl = document.getElementById('course-active-duration');
+        const helperValue1El = document.getElementById('course-helper-value-1');
+        const helperValue2El = document.getElementById('course-helper-value-2');
+        const helperValue3El = document.getElementById('course-helper-value-3');
+        const helperNote1El = document.getElementById('course-helper-note-1');
+        const helperNote2El = document.getElementById('course-helper-note-2');
+        const helperNote3El = document.getElementById('course-helper-note-3');
         if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !offlinePlanSearchInput || !offlinePlanListEl || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
+        if (CURRENT_LANG === 'en') {
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+            setText('course-summary-label-1', 'Best for');
+            setText('course-summary-value-1', 'Turning ideas into one route');
+            setText('course-summary-label-2', 'What changes live');
+            setText('course-summary-value-2', 'Budget, walking time, hotels, meals');
+            setText('course-summary-label-3', 'Output');
+            setText('course-summary-value-3', 'Route, lodging, food, backup notes');
+            setText('course-status-label-style', 'Selected style');
+            setText('course-status-label-budget', 'Budget mode');
+            setText('course-status-label-stops', 'Stop count');
+            setText('course-status-label-duration', 'Estimated day');
+            setText('course-helper-eyebrow', 'Route Focus');
+            setText('course-helper-title', 'Build the route first, then fine-tune comfort');
+            setText('course-helper-desc', 'Use the current style as your route spine. Budget changes should adjust comfort, not the whole trip logic.');
+            setText('course-helper-label-1', 'Current route mood');
+            setText('course-helper-label-2', 'Budget effect');
+            setText('course-helper-label-3', 'Best next move');
+        } else {
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+            setText('course-summary-label-1', '추천 대상');
+            setText('course-summary-value-1', '아이디어를 하루 동선으로 정리');
+            setText('course-summary-label-2', '즉시 바뀌는 요소');
+            setText('course-summary-value-2', '예산, 도보 시간, 숙소, 식당');
+            setText('course-summary-label-3', '최종 결과');
+            setText('course-summary-value-3', '루트, 숙소, 식당, 대안 메모');
+            setText('course-status-label-style', '선택 스타일');
+            setText('course-status-label-budget', '예산 모드');
+            setText('course-status-label-stops', '스팟 수');
+            setText('course-status-label-duration', '예상 일정');
+            setText('course-helper-eyebrow', '루트 포커스');
+            setText('course-helper-title', '동선을 먼저 고정하고 편의만 미세 조정하세요');
+            setText('course-helper-desc', '현재 스타일을 하루의 중심축으로 두고, 예산은 이동 논리보다 숙소와 식사 수준을 조절하는 데 쓰는 편이 좋습니다.');
+            setText('course-helper-label-1', '현재 루트 분위기');
+            setText('course-helper-label-2', '예산이 바꾸는 것');
+            setText('course-helper-label-3', '가장 좋은 다음 행동');
+        }
 
         const BUDGET_PRESETS = {
             budget: { ko: '실속형', en: 'Budget', lodgingFactor: 0.82, foodFactor: 0.86, transitFarePerLeg: 1500, transitMinutesPerLeg: 14 },
@@ -2786,6 +3275,33 @@
                 <p><strong>${CURRENT_LANG === 'en' ? 'Local transit cost' : '교통비 추정'}</strong>: ₩${formatNumber(transitCostKrw, 0)} (${CURRENT_LANG === 'en' ? 'about' : '약'} $${formatNumber(transitCostUsd, 0)})</p>
             `;
             return { transitMinutes, transitCostKrw, totalCourseMinutes, budgetLabel };
+        }
+
+        function updateCourseStatus(filtered, insight) {
+            if (activeStyleEl) activeStyleEl.textContent = getStyleLabel(currentStyle);
+            if (activeBudgetEl) activeBudgetEl.textContent = insight.budgetLabel;
+            if (activeStopCountEl) activeStopCountEl.textContent = CURRENT_LANG === 'en' ? `${filtered.length} stops` : `${filtered.length}개 스팟`;
+            if (activeDurationEl) activeDurationEl.textContent = formatDuration(insight.totalCourseMinutes);
+            if (helperValue1El) helperValue1El.textContent = CURRENT_LANG === 'en' ? `${getStyleLabel(currentStyle)} route` : `${getStyleLabel(currentStyle)} 루트`;
+            const firstDistrict = filtered[0] ? getDistrictLabel(filtered[0].district) : (CURRENT_LANG === 'en' ? 'Central' : '첫 권역');
+            const lastDistrict = filtered[filtered.length - 1] ? getDistrictLabel(filtered[filtered.length - 1].district) : (CURRENT_LANG === 'en' ? 'final' : '마지막 권역');
+            if (helperNote1El) helperNote1El.textContent = CURRENT_LANG === 'en'
+                ? `${firstDistrict} to ${lastDistrict} with the same trip mood kept intact.`
+                : `${firstDistrict}에서 ${lastDistrict}까지 같은 여행 무드를 유지하는 구성입니다.`;
+            if (helperValue2El) helperValue2El.textContent = insight.budgetLabel;
+            if (helperNote2El) helperNote2El.textContent = CURRENT_LANG === 'en'
+                ? 'Hotels, meal level, and transfer comfort move first. The core stop order stays stable.'
+                : '숙소, 식사 수준, 환승 편의가 먼저 바뀌고 핵심 스팟 순서는 크게 흔들리지 않습니다.';
+            if (helperValue3El) helperValue3El.textContent = filtered.length >= 5
+                ? (CURRENT_LANG === 'en' ? 'Check hotel zone next' : '다음은 숙소 권역 확인')
+                : (CURRENT_LANG === 'en' ? 'Add one backup stop' : '대체 스팟 1개 추가');
+            if (helperNote3El) helperNote3El.textContent = filtered.length >= 5
+                ? (CURRENT_LANG === 'en'
+                    ? 'If the route feels fixed, choose the hotel near the first or last district.'
+                    : '루트가 고정됐다면 첫 구역 또는 마지막 구역 근처 숙소를 고르면 됩니다.')
+                : (CURRENT_LANG === 'en'
+                    ? 'One short backup stop makes the day more resilient when weather or energy changes.'
+                    : '짧은 대체 스팟 하나를 더 두면 날씨나 체력 변수에 대응하기 쉬워집니다.');
         }
 
         function drawWrappedLines(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
@@ -2998,6 +3514,7 @@
                 return sum + makeWalkingMinutes(place, filtered[idx + 1], idx);
             }, 0);
             const insight = renderInsightSummary(filtered, totalWalking, currentBudget);
+            updateCourseStatus(filtered, insight);
 
             summaryEl.textContent = `총 ${filtered.length}개 스팟, 예상 도보 이동 ${totalWalking}분 기준 추천 코스입니다. (${budgetLabel})`;
             if (CURRENT_LANG === 'en') {
@@ -3268,6 +3785,7 @@
         markActiveBudget(currentBudget);
         renderOfflinePlanList();
         drawCourse(currentStyle);
+        initScrollProgress();
     }
 
     function renderPartnerPage() {
@@ -3332,10 +3850,20 @@
         const travelWhy1 = document.getElementById('saju-travel-why-1');
         const travelWhy2 = document.getElementById('saju-travel-why-2');
         const travelWhy3 = document.getElementById('saju-travel-why-3');
+        const stateValue1 = document.getElementById('saju-state-value-1');
+        const stateValue2 = document.getElementById('saju-state-value-2');
+        const stateValue3 = document.getElementById('saju-state-value-3');
+        const stateNote1 = document.getElementById('saju-state-note-1');
+        const stateNote2 = document.getElementById('saju-state-note-2');
+        const stateNote3 = document.getElementById('saju-state-note-3');
 
         if (!form || !pageTitle || !pageDesc || !submitBtn || !resultTitle || !resultNote || !pillarsEl || !summaryEl || !analysisLongEl || !warningEl || !recoTitle || !styleChipsEl || !placeListEl || !guideTitle || !guide1 || !guide2 || !yearInput || !monthInput || !dayInput || !calendarType || !yearLabel || !monthLabel || !dayLabel || !calendarLabel) return;
 
         const isEn = CURRENT_LANG === 'en';
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
         pageTitle.textContent = isEn ? 'Saju-Based Travel Recommender' : '사주 기반 여행 추천';
         pageDesc.textContent = isEn
             ? 'Enter birth date and calendar type to get a lightweight saju profile and matching Seoul courses.'
@@ -3392,6 +3920,18 @@
         if (travelWhy3) travelWhy3.textContent = isEn
             ? 'More personal routes: it encourages style-fit choices rather than generic top-10 lists.'
             : '개인화된 동선: 획일적인 인기 순위보다 본인 성향에 맞는 코스 선택을 돕습니다.';
+        setText('saju-state-eyebrow', isEn ? 'Result State' : '결과 상태');
+        setText('saju-state-title', isEn ? 'Use Saju as a route mood signal' : '사주를 동선 무드 신호로 활용하세요');
+        setText('saju-state-desc', isEn ? 'This tool becomes useful after you generate one result and convert it into an actual route check in Explore or Planner.' : '결과를 한 번 생성한 뒤 Explore나 Planner에서 실제 동선으로 확인할 때 이 도구가 가장 유용합니다.');
+        setText('saju-state-label-1', isEn ? 'Current status' : '현재 상태');
+        setText('saju-state-label-2', isEn ? 'Best interpretation' : '가장 좋은 해석');
+        setText('saju-state-label-3', isEn ? 'Next move' : '다음 행동');
+        if (stateValue1) stateValue1.textContent = isEn ? 'Waiting for input' : '입력 대기 중';
+        if (stateValue2) stateValue2.textContent = isEn ? 'Travel rhythm guide' : '여행 리듬 가이드';
+        if (stateValue3) stateValue3.textContent = isEn ? 'Generate one route' : '루트 1개 생성';
+        if (stateNote1) stateNote1.textContent = isEn ? 'Enter date details first. The route is not meaningful before that.' : '먼저 날짜를 입력해야 실제 추천 루트가 의미를 갖습니다.';
+        if (stateNote2) stateNote2.textContent = isEn ? 'Treat the output as pace and mood guidance, not literal fortune advice.' : '결과는 예언보다 페이스와 무드 가이드로 보는 편이 좋습니다.';
+        if (stateNote3) stateNote3.textContent = isEn ? 'Then verify the actual stops with maps, time, and budget tools.' : '생성 후에는 지도, 시간, 예산 도구로 실제 스팟을 검증하세요.';
         summaryEl.textContent = '';
         analysisLongEl.innerHTML = '';
         warningEl.textContent = '';
@@ -3924,6 +4464,11 @@
             const secondary = topElements[1];
             const elementLabel = isEn ? ELEMENT_LABEL.en[primary] : ELEMENT_LABEL.ko[primary];
             resultNote.textContent = isEn ? `Dominant element: ${elementLabel}` : `주요 오행: ${elementLabel}`;
+            if (stateValue1) stateValue1.textContent = isEn ? `${elementLabel} dominant` : `${elementLabel} 우세`;
+            if (stateValue2) stateValue2.textContent = isEn ? 'Generated mood + route axis' : '무드와 루트 축 생성됨';
+            if (stateValue3) stateValue3.textContent = isEn ? 'Open Explore or Planner next' : '다음은 Explore/Planner 열기';
+            if (stateNote1) stateNote1.textContent = isEn ? 'Your dominant element is now reflected in route tone and time-slot advice.' : '주요 오행이 루트 분위기와 시간대 조언에 반영된 상태입니다.';
+            if (stateNote3) stateNote3.textContent = isEn ? 'Use the suggested styles below as your next validation path.' : '아래 제안 스타일을 다음 검증 경로로 활용하면 됩니다.';
             summaryEl.textContent = summaryByElement[isEn ? 'en' : 'ko'][primary];
             const analysisParagraphs = buildLongAnalysis(primary, secondary, elementMeta.counts, pillars, month, calendar);
             analysisLongEl.innerHTML = analysisParagraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join('');
@@ -4065,9 +4610,31 @@
         const selectedNoteEl = document.getElementById('kcontent-selected-note');
         const gridEl = document.getElementById('kcontent-character-grid');
         const eyebrowEl = document.querySelector('body[data-page="kcontent"] .panel .eyebrow');
+        const stateValue1 = document.getElementById('kcontent-state-value-1');
+        const stateValue2 = document.getElementById('kcontent-state-value-2');
+        const stateValue3 = document.getElementById('kcontent-state-value-3');
+        const stateNote1 = document.getElementById('kcontent-state-note-1');
+        const stateNote2 = document.getElementById('kcontent-state-note-2');
+        const stateNote3 = document.getElementById('kcontent-state-note-3');
         if (!titleEl || !descEl || !selectedNoteEl || !gridEl) return;
 
         const isEn = CURRENT_LANG === 'en';
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
+        setText('kcontent-state-eyebrow', isEn ? 'Selection Logic' : '선택 기준');
+        setText('kcontent-state-title', isEn ? 'Pick by travel mood, not only by fandom' : '팬심보다 여행 무드 기준으로 고르세요');
+        setText('kcontent-state-desc', isEn ? 'The best result comes from choosing the character whose rhythm matches your actual day: calm, trend-heavy, scenic, or local.' : '차분함, 트렌드 밀도, 풍경 위주, 로컬 감도 중 실제 하루와 맞는 리듬을 고를 때 결과가 좋아집니다.');
+        setText('kcontent-state-label-1', isEn ? 'Current state' : '현재 상태');
+        setText('kcontent-state-label-2', isEn ? 'Best use' : '가장 좋은 활용');
+        setText('kcontent-state-label-3', isEn ? 'Next move' : '다음 행동');
+        if (stateValue1) stateValue1.textContent = isEn ? 'No character selected yet' : '아직 캐릭터 미선택';
+        if (stateValue2) stateValue2.textContent = isEn ? 'Theme discovery' : '테마 발견';
+        if (stateValue3) stateValue3.textContent = isEn ? 'Open one result page' : '결과 페이지 1개 열기';
+        if (stateNote1) stateNote1.textContent = isEn ? 'Start with one card and read the long-form route before comparing others.' : '먼저 카드 하나를 열고 긴 설명형 루트를 본 뒤 비교하세요.';
+        if (stateNote2) stateNote2.textContent = isEn ? 'Use this page to set mood, then validate places in Explore or Planner.' : '이 페이지는 무드 결정용이고, 실제 장소 검증은 Explore나 Planner에서 합니다.';
+        if (stateNote3) stateNote3.textContent = isEn ? 'Avoid scanning every card first. One route is enough to establish direction.' : '모든 카드를 먼저 훑지 말고, 한 개 루트만 봐도 방향은 잡힙니다.';
         if (eyebrowEl) eyebrowEl.textContent = isEn ? 'Screen Picks' : '스크린픽 추천';
         titleEl.textContent = isEn ? 'K-Content Character Travel Recommender' : '한국 콘텐츠 캐릭터 기반 여행 추천';
         descEl.textContent = isEn
@@ -4125,6 +4692,8 @@
             selectedNoteEl.textContent = isEn
                 ? `Tap a character card to open full recommendations. ${rows.length} unique profiles shown in random order.`
                 : `캐릭터 카드를 누르면 상세 추천 결과가 열립니다. 중복 제거된 ${rows.length}개 프로필을 랜덤 순서로 표시합니다.`;
+            if (stateValue1) stateValue1.textContent = isEn ? `${rows.length} profiles ready` : `${rows.length}개 프로필 준비됨`;
+            if (stateNote1) stateNote1.textContent = isEn ? 'The grid is randomized, so pick by vibe instead of top-left position.' : '카드 순서는 랜덤이므로 좌상단보다 무드 기준으로 고르는 편이 좋습니다.';
 
             gridEl.innerHTML = rows.map((entry) => {
                 const charName = isEn ? entry.character.en : entry.character.ko;
@@ -4182,14 +4751,30 @@
         const whyTitleEl = document.getElementById('kcontent-why-title');
         const spotsTitleEl = document.getElementById('kcontent-spots-title');
         const foodTitleEl = document.getElementById('kcontent-food-title');
+        const stateValue1 = document.getElementById('kcontent-result-state-value-1');
+        const stateValue2 = document.getElementById('kcontent-result-state-value-2');
+        const stateValue3 = document.getElementById('kcontent-result-state-value-3');
+        const stateNote1 = document.getElementById('kcontent-result-state-note-1');
+        const stateNote2 = document.getElementById('kcontent-result-state-note-2');
+        const stateNote3 = document.getElementById('kcontent-result-state-note-3');
         if (!backEl || !pageTitleEl || !pageDescEl || !summaryEl || !chipsEl || !analysisEl || !listEl || !foodListEl || !whyTitleEl || !spotsTitleEl || !foodTitleEl) return;
 
         const isEn = CURRENT_LANG === 'en';
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
         const charId = getKContentCharacterIdFromQuery();
         const character = getKContentCharacterById(charId);
         if (!character) return;
 
         backEl.href = withCurrentLang('kcontent.html');
+        setText('kcontent-result-state-eyebrow', isEn ? 'Route Read' : '루트 읽기');
+        setText('kcontent-result-state-title', isEn ? 'Turn this character mood into one usable day' : '이 캐릭터 무드를 실제 하루 동선으로 바꾸세요');
+        setText('kcontent-result-state-desc', isEn ? 'Read the route logic first, then keep only the places and food stops that fit your actual energy, budget, and available time.' : '먼저 루트 논리를 읽고, 실제 체력과 예산, 시간에 맞는 장소와 식당만 남기는 방식이 좋습니다.');
+        setText('kcontent-result-state-label-1', isEn ? 'Selected profile' : '선택 프로필');
+        setText('kcontent-result-state-label-2', isEn ? 'Best use' : '가장 좋은 활용');
+        setText('kcontent-result-state-label-3', isEn ? 'Next move' : '다음 행동');
         pageTitleEl.textContent = isEn ? 'Character-Based Seoul Recommendation' : '캐릭터 기반 서울 추천 결과';
         pageDescEl.textContent = isEn
             ? 'A long-form interpretation and route recommendation based on your selected character.'
@@ -4197,6 +4782,12 @@
         whyTitleEl.textContent = isEn ? 'Interpretation and Route Strategy' : '해석과 이동 전략';
         spotsTitleEl.textContent = isEn ? 'Recommended Places' : '추천 여행지';
         foodTitleEl.textContent = isEn ? 'Recommended Food Spots' : '추천 맛집';
+        if (stateValue1) stateValue1.textContent = isEn ? `${character.character.en} profile` : `${character.character.ko} 프로필`;
+        if (stateValue2) stateValue2.textContent = isEn ? 'Themed day draft' : '테마형 하루 초안';
+        if (stateValue3) stateValue3.textContent = isEn ? 'Validate in Planner' : '다음은 Planner 검증';
+        if (stateNote1) stateNote1.textContent = isEn ? `The route rhythm is derived from ${character.character.en}'s narrative tone.` : `${character.character.ko}의 서사 리듬을 기준으로 동선 분위기를 잡았습니다.`;
+        if (stateNote2) stateNote2.textContent = isEn ? 'Use this page for direction, then cut the list down to a realistic route.' : '이 페이지는 방향 설정용이고, 실제 루트는 더 짧게 줄이는 편이 좋습니다.';
+        if (stateNote3) stateNote3.textContent = isEn ? 'Check distance, timing, and map flow before treating it as final.' : '최종 확정 전에는 거리, 시간, 지도 흐름을 꼭 확인하세요.';
 
         renderKContentResultByCharacter(character, { summaryEl, chipsEl, listEl, foodListEl, analysisEl });
     }

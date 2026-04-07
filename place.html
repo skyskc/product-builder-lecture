@@ -121,6 +121,7 @@
     </script>
 </head>
 <body data-page="place" class="bg-background-light text-slate-900 min-h-screen">
+    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
     <header class="sticky top-0 z-50 border-b border-white/10 glass-header">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <a class="flex items-center gap-2 text-white" href="index.html">
@@ -164,6 +165,21 @@
                 <div class="p-5 md:p-7 lg:p-8 bg-card-dark/78">
                     <p id="place-description" class="text-slate-300 text-sm md:text-base leading-relaxed"></p>
 
+                    <div class="place-decision-grid mt-6">
+                        <article class="place-decision-card">
+                            <span id="place-decision-label-1">Best use</span>
+                            <strong id="place-decision-value-1">Anchor stop</strong>
+                        </article>
+                        <article class="place-decision-card">
+                            <span id="place-decision-label-2">Ideal timing</span>
+                            <strong id="place-decision-value-2">Check best time first</strong>
+                        </article>
+                        <article class="place-decision-card">
+                            <span id="place-decision-label-3">Pairs well with</span>
+                            <strong id="place-decision-value-3">Same-district stops</strong>
+                        </article>
+                    </div>
+
                     <div class="mt-6 grid sm:grid-cols-2 gap-3">
                         <div class="label-value rounded-xl border border-white/10 bg-white/5 p-4">
                             <span class="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">Rank</span>
@@ -203,9 +219,57 @@
         </section>
 
         <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
+            <p class="eyebrow">Quick Decision</p>
+            <h2 id="place-quick-title" class="text-xl font-bold text-white">Should this be a main stop or a short add-on?</h2>
+            <div class="place-quick-grid mt-4">
+                <article class="place-quick-card">
+                    <span id="place-quick-label-1">Visit role</span>
+                    <strong id="place-quick-value-1">-</strong>
+                    <p id="place-quick-note-1">-</p>
+                </article>
+                <article class="place-quick-card">
+                    <span id="place-quick-label-2">Crowd strategy</span>
+                    <strong id="place-quick-value-2">-</strong>
+                    <p id="place-quick-note-2">-</p>
+                </article>
+                <article class="place-quick-card">
+                    <span id="place-quick-label-3">Next move</span>
+                    <strong id="place-quick-value-3">-</strong>
+                    <p id="place-quick-note-3">-</p>
+                </article>
+            </div>
+            <div class="entry-secondary-actions mt-4">
+                <a id="place-to-planner-link" class="entry-secondary-link" href="course.html">Build route from this style</a>
+                <a id="place-back-to-explore-link" class="entry-secondary-link" href="explore.html">Browse similar places</a>
+            </div>
+        </section>
+
+        <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
             <h2 id="place-review-title" class="text-xl font-bold text-white">Review Summary</h2>
             <ul id="review-list" class="review-list mt-4 space-y-3"></ul>
             <p id="place-data-source" class="data-source-note mt-4 text-xs text-slate-400"></p>
+        </section>
+
+        <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">
+            <p class="eyebrow">Review Readout</p>
+            <h2 id="place-review-readout-title" class="text-xl font-bold text-white">How to interpret the review signals</h2>
+            <div class="place-quick-grid mt-4">
+                <article class="place-quick-card">
+                    <span id="place-review-readout-label-1">Good sign</span>
+                    <strong id="place-review-readout-value-1">-</strong>
+                    <p id="place-review-readout-note-1">-</p>
+                </article>
+                <article class="place-quick-card">
+                    <span id="place-review-readout-label-2">Watch out</span>
+                    <strong id="place-review-readout-value-2">-</strong>
+                    <p id="place-review-readout-note-2">-</p>
+                </article>
+                <article class="place-quick-card">
+                    <span id="place-review-readout-label-3">Best planning use</span>
+                    <strong id="place-review-readout-value-3">-</strong>
+                    <p id="place-review-readout-note-3">-</p>
+                </article>
+            </div>
         </section>
 
         <section class="panel mt-6 rounded-2xl border border-white/10 bg-card-dark/75 p-5 md:p-6">

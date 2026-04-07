@@ -3,13 +3,15 @@ const path = require("path");
 
 const ROOT = process.cwd();
 const mainJsPath = path.join(ROOT, "main.js");
+const siteDataPath = path.join(ROOT, "assets", "data", "site-data.js");
 const mainJs = fs.readFileSync(mainJsPath, "utf8");
+const siteDataJs = fs.existsSync(siteDataPath) ? fs.readFileSync(siteDataPath, "utf8") : "";
 
-function extractArrayLiteral(source, varName) {
-  const marker = `const ${varName} = [`;
+function extractLiteral(source, varName, openChar, closeChar) {
+  const marker = `const ${varName} = ${openChar}`;
   const start = source.indexOf(marker);
   if (start < 0) throw new Error(`Could not find ${varName}`);
-  const arrayStart = source.indexOf("[", start);
+  const arrayStart = source.indexOf(openChar, start);
   let depth = 0;
   let inSingle = false;
   let inDouble = false;
@@ -18,8 +20,8 @@ function extractArrayLiteral(source, varName) {
   for (let i = arrayStart; i < source.length; i++) {
     const ch = source[i];
     if (!inSingle && !inDouble && !inTemplate) {
-      if (ch === "[") depth++;
-      if (ch === "]") {
+      if (ch === openChar) depth++;
+      if (ch === closeChar) {
         depth--;
         if (depth === 0) {
           return source.slice(arrayStart, i + 1);
@@ -35,10 +37,51 @@ function extractArrayLiteral(source, varName) {
     }
     prev = ch;
   }
-  throw new Error(`Unterminated array literal for ${varName}`);
+  throw new Error(`Unterminated literal for ${varName}`);
 }
 
-const placeSeedsLiteral = extractArrayLiteral(mainJs, "PLACE_SEEDS");
+function extractArrayLiteral(source, varName) {
+  return extractLiteral(source, varName, "[", "]");
+}
+
+function extractArrayByProperty(source, propertyName) {
+  const markers = [`${propertyName}: [`, `${propertyName} = [`];
+  let start = -1;
+  for (const marker of markers) {
+    start = source.indexOf(marker);
+    if (start >= 0) break;
+  }
+  if (start < 0) return null;
+  const arrayStart = source.indexOf("[", start);
+  let depth = 0;
+  let inSingle = false;
+  let inDouble = false;
+  let inTemplate = false;
+  let prev = "";
+  for (let i = arrayStart; i < source.length; i++) {
+    const ch = source[i];
+    if (!inSingle && !inDouble && !inTemplate) {
+      if (ch === "[") depth++;
+      if (ch === "]") {
+        depth--;
+        if (depth === 0) return source.slice(arrayStart, i + 1);
+      }
+      if (ch === "'") inSingle = true;
+      else if (ch === '"') inDouble = true;
+      else if (ch === "`") inTemplate = true;
+    } else {
+      if (inSingle && ch === "'" && prev !== "\\") inSingle = false;
+      if (inDouble && ch === '"' && prev !== "\\") inDouble = false;
+      if (inTemplate && ch === "`" && prev !== "\\") inTemplate = false;
+    }
+    prev = ch;
+  }
+  throw new Error(`Unterminated array for ${propertyName}`);
+}
+
+const placeSeedsLiteral =
+  extractArrayByProperty(siteDataJs, "PLACE_SEEDS") ||
+  extractArrayLiteral(mainJs, "PLACE_SEEDS");
 const PLACE_SEEDS = Function(`return (${placeSeedsLiteral});`)();
 
 const styleVisual = {
@@ -118,8 +161,18 @@ for (let index = 0; index < PLACE_SEEDS.length; index++) {
 
   fs.writeFileSync(path.join(ogDir, `${id}.svg`), svg);
 
+  const primaryStyle = Array.isArray(seed.styles) && seed.styles[0] ? seed.styles[0] : "history";
+  const styleLabel = {
+    history: "핵심 역사 동선",
+    shopping: "쇼핑/트렌드 동선",
+    night: "야경 동선",
+    nature: "산책 중심 동선",
+    family: "가족형 동선",
+    art: "전시 중심 동선",
+    local: "로컬 탐방 동선"
+  }[primaryStyle] || "서울 여행 동선";
   const title = `${seed.name} | 서울 ${seed.category} | GoSeoul`;
-  const desc = `${seed.district}의 ${seed.category} 여행지 ${seed.name}. 지도 링크, 방문 팁, 동선 계획용 정보를 GoSeoul에서 확인하세요.`;
+  const desc = `${seed.district}의 ${seed.category} 여행지 ${seed.name}. ${styleLabel} 후보로 검토하기 좋은 스팟이며 지도 링크와 방문 팁을 바로 확인할 수 있습니다.`;
   const canonical = `https://goseoul.space/places/${id}`;
   const shareUrl = `https://goseoul.space/share/places/${id}.html`;
   const ogImage = `https://goseoul.space/assets/og/places/${id}.svg`;
@@ -140,6 +193,7 @@ for (let index = 0; index < PLACE_SEEDS.length; index++) {
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:url" content="${shareUrl}">
   <meta property="og:image" content="${ogImage}">
+  <meta property="og:image:alt" content="${esc(seed.name)} GoSeoul place share card">
   <meta property="og:image:type" content="image/svg+xml">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -147,6 +201,7 @@ for (let index = 0; index < PLACE_SEEDS.length; index++) {
   <meta name="twitter:title" content="${esc(title)}">
   <meta name="twitter:description" content="${esc(desc)}">
   <meta name="twitter:image" content="${ogImage}">
+  <meta name="twitter:image:alt" content="${esc(seed.name)} GoSeoul place share card">
   <meta http-equiv="refresh" content="0; url=${canonical}">
   <script>location.replace(${JSON.stringify(canonical)});</script>
 </head>

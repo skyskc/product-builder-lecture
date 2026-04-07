@@ -120,6 +120,7 @@
 
 </head>
 <body data-page="entry" class="min-h-screen bg-background-light">
+    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
     <header class="site-header shadow-lg shadow-slate-900/5">
         <a class="logo inline-flex items-center" href="index.html"><span class="logo-mark">GS</span><span class="logo-text"><span class="logo-go">Go</span><span class="logo-seoul">Seoul</span></span></a>
         <div class="header-controls flex items-center gap-2">
@@ -136,10 +137,24 @@
 
     <main class="container relative">
         <div class="entry-first-screen entry-hero-shell">
-            <section class="panel open-landing entry-hero-main p-5 md:p-7 rounded-3xl border border-white/10">
+            <section id="entry-start" data-section-nav-target="start" class="panel open-landing entry-hero-main p-5 md:p-7 rounded-3xl border border-white/10">
                 <p id="entry-eyebrow" class="eyebrow">GoSeoul</p>
                 <h1 id="entry-title">Start Your Seoul Plan in 10 Seconds</h1>
                 <p id="entry-desc">Pick one path and start now.</p>
+                <div class="entry-hero-summary" aria-label="Quick start summary">
+                    <div class="entry-hero-summary-card">
+                        <span id="entry-summary-label-1" class="entry-summary-label">Best for</span>
+                        <strong id="entry-summary-value-1">First-time visitors</strong>
+                    </div>
+                    <div class="entry-hero-summary-card">
+                        <span id="entry-summary-label-2" class="entry-summary-label">Time to start</span>
+                        <strong id="entry-summary-value-2">Under 1 minute</strong>
+                    </div>
+                    <div class="entry-hero-summary-card">
+                        <span id="entry-summary-label-3" class="entry-summary-label">What you get</span>
+                        <strong id="entry-summary-value-3">Route, map, backups</strong>
+                    </div>
+                </div>
                 <div class="entry-hero-kpis">
                     <div class="entry-kpi">
                         <strong>130+</strong>
@@ -165,6 +180,10 @@
                     <div class="entry-primary-cta-wrap mt-4">
                         <a id="entry-primary-cta" class="entry-primary-cta" href="course.html">Get My Seoul Route Now</a>
                         <p id="entry-primary-note" class="data-source-note">Fastest start: build a one-day route first, then expand with spot details.</p>
+                        <div class="entry-secondary-actions">
+                            <a id="entry-secondary-cta-explore" class="entry-secondary-link" href="explore.html">Browse areas first</a>
+                            <a id="entry-secondary-cta-guides" class="entry-secondary-link" href="articles/articles.html">Read practical guides</a>
+                        </div>
                     </div>
                     <div class="entry-spark-box">
                         <p id="entry-spark-title" class="eyebrow entry-spark-title">Entrance Mood Check</p>
@@ -193,10 +212,45 @@
                 <div class="entry-spotlight-note">
                     <p>Use this as your first anchor stop, then connect nearby food and sunset spots.</p>
                 </div>
+                <div class="entry-spotlight-stats">
+                    <div>
+                        <span id="entry-spotlight-stat-label-1">Best window</span>
+                        <strong id="entry-spotlight-stat-value-1">Morning to sunset</strong>
+                    </div>
+                    <div>
+                        <span id="entry-spotlight-stat-label-2">Pairs well with</span>
+                        <strong id="entry-spotlight-stat-value-2">Bukchon, Ikseon-dong</strong>
+                    </div>
+                </div>
             </section>
         </div>
 
-        <section class="panel open-secondary p-5 md:p-6 mb-6 rounded-3xl bg-slate-50 dark:bg-card-dark border border-slate-200 dark:border-white/10" aria-labelledby="latest-guides-title">
+        <section class="panel home-quick-nav-panel" aria-label="Quick section navigation">
+            <div class="home-quick-nav">
+                <a class="home-quick-link is-active" href="#entry-start" data-nav-target="start">
+                    <span id="quick-nav-label-start">Start</span>
+                    <strong id="quick-nav-desc-start">Fast entry</strong>
+                </a>
+                <a class="home-quick-link" href="#entry-modes" data-nav-target="modes">
+                    <span id="quick-nav-label-modes">Modes</span>
+                    <strong id="quick-nav-desc-modes">Pick your tool</strong>
+                </a>
+                <a class="home-quick-link" href="#entry-routes" data-nav-target="routes">
+                    <span id="quick-nav-label-routes">Routes</span>
+                    <strong id="quick-nav-desc-routes">Starter patterns</strong>
+                </a>
+                <a class="home-quick-link" href="#entry-prep" data-nav-target="prep">
+                    <span id="quick-nav-label-prep">Prep</span>
+                    <strong id="quick-nav-desc-prep">Checklist</strong>
+                </a>
+                <a class="home-quick-link" href="#entry-fun-lab" data-nav-target="lab">
+                    <span id="quick-nav-label-lab">Fun Lab</span>
+                    <strong id="quick-nav-desc-lab">Backup tools</strong>
+                </a>
+            </div>
+        </section>
+
+        <section id="entry-guides" data-section-nav-target="guides" class="panel open-secondary p-5 md:p-6 mb-6 rounded-3xl bg-slate-50 dark:bg-card-dark border border-slate-200 dark:border-white/10" aria-labelledby="latest-guides-title">
             <p class="eyebrow text-primary font-bold tracking-wider mb-2">Editorial Guides</p>
             <h2 id="latest-guides-title" class="text-3xl font-display font-bold mb-4">Start Reading: Latest Seoul Guides</h2>
             <p class="mb-6 text-slate-600 dark:text-slate-400">Google and Naver love high-quality text. To help you plan your perfect trip, we have published 30 massive, incredibly detailed travel guides. From survival tips to 3-day itineraries, start your research here.</p>
@@ -219,7 +273,7 @@
             <a href="articles/articles.html" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-primary transition">View All 30 Guides &rarr;</a>
         </section>
 
-        <section class="panel open-secondary open-secondary-shell p-5 md:p-6 rounded-3xl">
+        <section id="entry-modes" data-section-nav-target="modes" class="panel open-secondary open-secondary-shell p-5 md:p-6 rounded-3xl">
             <p id="entry-secondary-title" class="eyebrow entry-secondary-title">Or start with another path</p>
             <h2 class="home-section-title">Choose the planning mode that fits your trip stage</h2>
             <p class="home-section-lead">Start with a quick route, browse spots first, or test ideas in the interactive lab. The goal is to make your first Seoul plan fast, then improve it step by step.</p>
@@ -243,6 +297,34 @@
             <div class="home-inline-note">
                 <span class="ui-chip tone-route">Best for first-time visitors</span>
                 <p>Recommended flow: <strong>Planner</strong> first, then refine your route with <strong>Explore</strong>.</p>
+            </div>
+        </section>
+
+        <section class="panel home-decision-panel" aria-labelledby="decision-title">
+            <div class="home-decision-head">
+                <p class="eyebrow" id="decision-eyebrow">Decision Helper</p>
+                <h2 id="decision-title">What do you need right now?</h2>
+                <p id="decision-desc" class="home-section-lead">Choose the shortest path instead of reading everything. Each option below leads to one specific next step.</p>
+            </div>
+            <div class="home-decision-grid">
+                <article class="home-decision-card">
+                    <p class="home-decision-tag" id="decision-tag-1">Need a route now</p>
+                    <h3 id="decision-card-title-1">Build a same-day plan fast</h3>
+                    <p id="decision-card-desc-1">Start in Planner if you want a clean route, food area, and hotel flow without extra browsing.</p>
+                    <a id="decision-card-link-1" class="text-link" href="course.html">Open Planner</a>
+                </article>
+                <article class="home-decision-card">
+                    <p class="home-decision-tag" id="decision-tag-2">Need area ideas</p>
+                    <h3 id="decision-card-title-2">Compare neighborhoods and spot types</h3>
+                    <p id="decision-card-desc-2">Start in Explore if you want to filter by mood, district, or trip style before locking your route.</p>
+                    <a id="decision-card-link-2" class="text-link" href="explore.html">Open Explore</a>
+                </article>
+                <article class="home-decision-card">
+                    <p class="home-decision-tag" id="decision-tag-3">Need backup options</p>
+                    <h3 id="decision-card-title-3">Prepare for weather or budget changes</h3>
+                    <p id="decision-card-desc-3">Open Fun Lab for a rainy-day switch, budget test, or quick random route when plans change.</p>
+                    <a id="decision-card-link-3" class="text-link" href="#entry-fun-lab">Open Fun Lab</a>
+                </article>
             </div>
         </section>
 
@@ -294,7 +376,7 @@
             </div>
         </section>
 
-        <section class="panel home-route-panel home-route-shell" aria-labelledby="starter-routes-title">
+        <section id="entry-routes" data-section-nav-target="routes" class="panel home-route-panel home-route-shell" aria-labelledby="starter-routes-title">
             <p class="eyebrow">Starter Ideas</p>
             <h2 id="starter-routes-title">Popular Seoul route patterns for first-time visitors</h2>
             <p class="home-section-lead">Use these as templates when you are not sure where to begin. You can recreate these patterns with Planner + Explore in a few minutes.</p>
@@ -310,7 +392,10 @@
                         <li>Best for first visit and short stays</li>
                         <li>Easy to expand with museum or shopping stop</li>
                     </ul>
-                    <p class="home-route-duration">Typical pace: 7-9 hours</p>
+                    <div class="home-route-footer">
+                        <span class="home-route-duration">Typical pace: 7-9 hours</span>
+                        <a class="text-link" href="course.html?style=history">Use this route</a>
+                    </div>
                 </article>
                 <article class="home-route-card">
                     <div class="home-route-meta">
@@ -323,7 +408,10 @@
                         <li>Good for couples and friends</li>
                         <li>Works well with rainy-day indoor backups</li>
                     </ul>
-                    <p class="home-route-duration">Typical pace: 8-10 hours</p>
+                    <div class="home-route-footer">
+                        <span class="home-route-duration">Typical pace: 8-10 hours</span>
+                        <a class="text-link" href="course.html?style=local">Use this route</a>
+                    </div>
                 </article>
                 <article class="home-route-card">
                     <div class="home-route-meta">
@@ -336,7 +424,10 @@
                         <li>Good for family trips and low-energy days</li>
                         <li>Flexible timing and fewer transfers</li>
                     </ul>
-                    <p class="home-route-duration">Typical pace: 6-8 hours</p>
+                    <div class="home-route-footer">
+                        <span class="home-route-duration">Typical pace: 6-8 hours</span>
+                        <a class="text-link" href="course.html?style=nature">Use this route</a>
+                    </div>
                 </article>
             </div>
         </section>
@@ -357,7 +448,7 @@
             </div>
         </section>
 
-        <section class="panel home-practical-panel home-practical-shell" aria-labelledby="before-you-go-title">
+        <section id="entry-prep" data-section-nav-target="prep" class="panel home-practical-panel home-practical-shell" aria-labelledby="before-you-go-title">
             <p class="eyebrow">Practical Prep</p>
             <h2 id="before-you-go-title">Before you go: a simple Seoul planning checklist</h2>
             <div class="home-practical-grid">

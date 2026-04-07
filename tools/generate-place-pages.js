@@ -286,6 +286,36 @@ function buildFaq(seed) {
   ];
 }
 
+function buildDecisionData(seed, related) {
+  const primaryStyle = seed.styles?.[0] || "history";
+  const districtLabel = seed.district;
+  const anchorLike = ["history", "art", "family"].includes(primaryStyle);
+  const nearbyNames = related.sameDistrict.slice(0, 2).map((p) => p.name).join(", ");
+  return {
+    useLabel: anchorLike ? "메인 앵커 스팟" : "보조 추가 스팟",
+    timingLabel: seed.bestTime,
+    pairLabel: nearbyNames || `${districtLabel} 권역 스팟`,
+    roleTitle: anchorLike ? "메인 일정의 출발점으로 적합" : "기존 코스에 짧게 추가하기 적합",
+    roleNote: anchorLike
+      ? `${seed.category} 성격이 뚜렷해 하루 동선의 기준점으로 잡기 좋습니다.`
+      : `${districtLabel} 안의 강한 메인 스팟과 함께 묶을 때 일정 밀도가 안정적입니다.`,
+    crowdTitle: "혼잡 시간 겹침 피하기",
+    crowdNote: `${seed.bestTime} 전후로 움직이면 상대적으로 계획이 쉽습니다. 현장 대기와 날씨 변수는 지도 최신 정보로 다시 확인하세요.`,
+    nextTitle: "같은 지역 2~3곳과 연결",
+    nextNote: nearbyNames
+      ? `${nearbyNames} 같은 ${districtLabel} 권역 후보와 함께 묶은 뒤 플래너로 넘기면 효율적입니다.`
+      : `${districtLabel} 안에서 카페/식사/산책 후보를 추가한 뒤 플래너에서 최종 동선을 정리하세요.`,
+    reviewGood: seed.styles?.includes("history") || seed.styles?.includes("family")
+      ? "일정 앵커로 쓰기 쉬운 유형"
+      : "후보군 압축용으로 유용",
+    reviewGoodNote: "리뷰는 평점만 보지 말고 시간대, 동선 적합성, 체류 만족도를 함께 읽는 것이 좋습니다.",
+    reviewWatch: "혼잡도와 체감 시간 확인 필요",
+    reviewWatchNote: "높은 평점이어도 대기/이동 피로가 크면 하루 코스 만족도가 떨어질 수 있습니다.",
+    reviewUse: "방문 여부보다 배치 순서를 정하는 데 활용",
+    reviewUseNote: "이 장소를 메인으로 둘지 보조로 둘지 판단한 뒤, 같은 권역 스팟과 연결하세요."
+  };
+}
+
 function renderPlacePage(seed, index, seeds) {
   const id = slugId(index);
   const url = placeUrl(id);
@@ -308,6 +338,7 @@ function renderPlacePage(seed, index, seeds) {
   const manualKo = Array.isArray(override?.koManual) ? override.koManual : [];
   const manualEn = Array.isArray(override?.enManual) ? override.enManual : [];
   const localChecks = Array.isArray(override?.localChecks) ? override.localChecks : [];
+  const decision = buildDecisionData(seed, related);
 
   const ld = {
     "@context": "https://schema.org",
@@ -410,6 +441,21 @@ function renderPlacePage(seed, index, seeds) {
       background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px;
     }
     .meta-card strong { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    .decision-grid, .quick-grid {
+      display: grid; gap: 10px; grid-template-columns: 1fr;
+    }
+    .decision-card, .quick-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px;
+    }
+    .decision-card strong, .quick-card strong {
+      display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px;
+    }
+    .decision-card b, .quick-card b {
+      display: block; font-size: 16px; line-height: 1.35; margin-bottom: 4px;
+    }
+    .action-row {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
+    }
     .section {
       margin-top: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px;
     }
@@ -431,6 +477,7 @@ function renderPlacePage(seed, index, seeds) {
     @media (min-width: 760px) {
       .two-col { grid-template-columns: 1fr 1fr; }
       .meta-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+      .decision-grid, .quick-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
     }
   </style>
   <script type="application/ld+json">${ldJson}</script>
@@ -460,6 +507,38 @@ function renderPlacePage(seed, index, seeds) {
           <div class="meta-card"><strong>추천 시간</strong>${esc(seed.bestTime)}</div>
           <div class="meta-card"><strong>스타일</strong>${esc((seed.styles || []).map((s) => STYLE_KO[s] || s).join(" · "))}</div>
         </div>
+
+        <div class="decision-grid" style="margin-top:14px" aria-label="판단 카드">
+          <div class="decision-card"><strong>추천 활용</strong><b>${esc(decision.useLabel)}</b><span>${esc(decision.roleNote)}</span></div>
+          <div class="decision-card"><strong>적정 시간대</strong><b>${esc(decision.timingLabel)}</b><span>${esc(decision.crowdNote)}</span></div>
+          <div class="decision-card"><strong>함께 묶기 좋은 동선</strong><b>${esc(decision.pairLabel)}</b><span>${esc(decision.nextNote)}</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>빠른 판단 가이드</h2>
+        <div class="quick-grid">
+          <div class="quick-card">
+            <strong>방문 역할</strong>
+            <b>${esc(decision.roleTitle)}</b>
+            <p>${esc(decision.roleNote)}</p>
+          </div>
+          <div class="quick-card">
+            <strong>혼잡 대응</strong>
+            <b>${esc(decision.crowdTitle)}</b>
+            <p>${esc(decision.crowdNote)}</p>
+          </div>
+          <div class="quick-card">
+            <strong>다음 행동</strong>
+            <b>${esc(decision.nextTitle)}</b>
+            <p>${esc(decision.nextNote)}</p>
+          </div>
+        </div>
+        <div class="action-row">
+          <a class="pill" href="/course.html?style=${esc(seed.styles?.[0] || "history")}">이 스타일로 플래너 열기</a>
+          <a class="pill" href="/explore.html?style=${esc(seed.styles?.[0] || "history")}">비슷한 장소 더 보기</a>
+          <a class="pill" href="/place.html?id=${id}">앱 상세 페이지 열기</a>
+        </div>
       </section>
 
       <section class="section">
@@ -476,6 +555,27 @@ function renderPlacePage(seed, index, seeds) {
         ${enParagraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
         ${manualEn.map((p) => `<p>${esc(p)}</p>`).join("")}
         <p><a href="/place.html?id=${id}">Open the app detail page</a> for map embed, interactive UI, and share tools.</p>
+      </section>
+
+      <section class="section">
+        <h2>리뷰 신호를 읽는 방법</h2>
+        <div class="quick-grid">
+          <div class="quick-card">
+            <strong>좋은 신호</strong>
+            <b>${esc(decision.reviewGood)}</b>
+            <p>${esc(decision.reviewGoodNote)}</p>
+          </div>
+          <div class="quick-card">
+            <strong>주의할 점</strong>
+            <b>${esc(decision.reviewWatch)}</b>
+            <p>${esc(decision.reviewWatchNote)}</p>
+          </div>
+          <div class="quick-card">
+            <strong>가장 좋은 활용법</strong>
+            <b>${esc(decision.reviewUse)}</b>
+            <p>${esc(decision.reviewUseNote)}</p>
+          </div>
+        </div>
       </section>
 
       <section class="section">

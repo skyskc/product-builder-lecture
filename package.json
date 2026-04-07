@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "build:place-pages": "node tools/generate-place-pages.js",
+    "build:place-social-assets": "node tools/generate-place-social-assets.js",
     "adsense:check": "node tools/adsense-check.js",
     "adsense:live-check": "node tools/adsense-live-check.js",
     "deploy:live-check": "node tools/deploy-live-check.js",
