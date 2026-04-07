@@ -155,7 +155,7 @@ for (let index = 0; index < PLACE_SEEDS.length; index++) {
   ${titleLines.map((line, i) => `<text x="86" y="${270 + i * 86}" fill="#ffffff" font-family="Noto Sans KR, Arial, sans-serif" font-size="72" font-weight="800">${esc(line)}</text>`).join("\n  ")}
   <text x="86" y="430" fill="#dbeafe" font-family="Noto Sans KR, Arial, sans-serif" font-size="34" font-weight="600">${esc(subtitle)}</text>
   <text x="86" y="490" fill="#cbd5e1" font-family="Space Grotesk, Arial, sans-serif" font-size="24">Seoul travel route · map-ready · itinerary support</text>
-  <text x="86" y="548" fill="#ffffff" fill-opacity="0.78" font-family="Space Grotesk, Arial, sans-serif" font-size="22">https://goseoul.space/place?id=${id}</text>
+  <text x="86" y="548" fill="#ffffff" fill-opacity="0.78" font-family="Space Grotesk, Arial, sans-serif" font-size="22">https://goseoul.space/places/${id}.html</text>
   <text x="1060" y="548" text-anchor="end" fill="#ffffff" fill-opacity="0.8" font-family="Space Grotesk, Arial, sans-serif" font-size="22">${id.toUpperCase()}</text>
 </svg>`;
 
@@ -173,7 +173,7 @@ for (let index = 0; index < PLACE_SEEDS.length; index++) {
   }[primaryStyle] || "서울 여행 동선";
   const title = `${seed.name} | 서울 ${seed.category} | GoSeoul`;
   const desc = `${seed.district}의 ${seed.category} 여행지 ${seed.name}. ${styleLabel} 후보로 검토하기 좋은 스팟이며 지도 링크와 방문 팁을 바로 확인할 수 있습니다.`;
-  const canonical = `https://goseoul.space/places/${id}`;
+  const canonical = `https://goseoul.space/places/${id}.html`;
   const shareUrl = `https://goseoul.space/share/places/${id}.html`;
   const ogImage = `https://goseoul.space/assets/og/places/${id}.svg`;
 

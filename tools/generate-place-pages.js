@@ -172,7 +172,11 @@ function slugId(index) {
 }
 
 function placeUrl(id) {
-  return `https://goseoul.space/places/${id}`;
+  return `https://goseoul.space/places/${id}.html`;
+}
+
+function placeAppPreviewUrl(id) {
+  return `https://goseoul.space/place.html?id=${id}&view=app`;
 }
 
 function shareImageUrl(id) {
@@ -499,7 +503,7 @@ function renderPlacePage(seed, index, seeds) {
         <p class="eyebrow">GoSeoul Editorial Place Guide</p>
         <h1>${esc(seed.name)}</h1>
         <p>${esc(seed.district)} · ${esc(seed.category)} · 추천 방문 시간 ${esc(seed.bestTime)}</p>
-        <p>${esc(seed.name)}은(는) 단순 장소 소개가 아니라 실제 서울 여행 동선에서 어떻게 넣으면 좋은지 판단할 수 있도록 편집한 안내 페이지입니다. 지도 이동은 기존 앱 상세 페이지(place.html?id=${esc(id)})에서 계속 사용할 수 있고, 이 페이지는 심사/검색 친화적인 정적 본문과 실전 계획 팁에 집중합니다.</p>
+        <p>${esc(seed.name)}은(는) 단순 장소 소개가 아니라 실제 서울 여행 동선에서 어떻게 넣으면 좋은지 판단할 수 있도록 편집한 안내 페이지입니다. 이 페이지 자체가 기본 상세 URL이며, 지도 임베드와 실험적 인터랙션이 필요할 때만 앱 미리보기 화면으로 이동하면 됩니다.</p>
 
         <div class="meta-grid" aria-label="핵심 정보">
           <div class="meta-card"><strong>권역</strong>${esc(seed.district)}</div>
@@ -537,7 +541,7 @@ function renderPlacePage(seed, index, seeds) {
         <div class="action-row">
           <a class="pill" href="/course.html?style=${esc(seed.styles?.[0] || "history")}">이 스타일로 플래너 열기</a>
           <a class="pill" href="/explore.html?style=${esc(seed.styles?.[0] || "history")}">비슷한 장소 더 보기</a>
-          <a class="pill" href="/place.html?id=${id}">앱 상세 페이지 열기</a>
+          <a class="pill" href="${placeAppPreviewUrl(id)}">앱 미리보기 열기</a>
         </div>
       </section>
 
@@ -554,7 +558,7 @@ function renderPlacePage(seed, index, seeds) {
         <h2>How to Use This Stop in a Seoul Itinerary (English)</h2>
         ${enParagraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
         ${manualEn.map((p) => `<p>${esc(p)}</p>`).join("")}
-        <p><a href="/place.html?id=${id}">Open the app detail page</a> for map embed, interactive UI, and share tools.</p>
+        <p><a href="${placeAppPreviewUrl(id)}">Open the app preview page</a> if you want the legacy interactive map embed and preview tools.</p>
       </section>
 
       <section class="section">
@@ -613,7 +617,7 @@ function renderPlacePage(seed, index, seeds) {
       <section class="section">
         <h2>편집 원칙 및 출처 안내</h2>
         <p>이 페이지는 GoSeoul이 서울 여행자 관점에서 재구성한 편집형 가이드입니다. 장소명/권역/카테고리/추천 시간은 내부 큐레이션 데이터 기준으로 제공되며, 운영 정보는 시점에 따라 달라질 수 있습니다.</p>
-        <p>실시간 지도, 상세 평점, 사용자 리뷰 요약 등 상호작용 중심 정보는 앱 상세 페이지에서 제공될 수 있으며, 본 정적 페이지는 검색/심사 환경에서 본문 가독성과 콘텐츠 설명력을 높이기 위한 목적의 문서형 페이지입니다.</p>
+        <p>실시간 지도, 상세 평점, 사용자 리뷰 요약 등 상호작용 중심 정보는 앱 미리보기 화면에서 보강할 수 있으며, 본 정적 페이지는 검색/심사 환경에서도 그대로 사용 가능한 기본 상세 페이지 역할을 맡습니다.</p>
         <p>콘텐츠가 페이지의 중심이 되도록 구성했으며, 향후 광고/프로모션 요소가 추가되더라도 본문 이해를 방해하지 않도록 분리 배치하는 원칙을 유지합니다.</p>
         <p class="eyebrow">Last updated: 2026-02-25 · District: ${esc(seed.district)} (${esc(districtEn)}) · Category: ${esc(seed.category)} (${esc(categoryEn)})</p>
       </section>

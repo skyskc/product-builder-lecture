@@ -321,6 +321,8 @@
     const FX_RATE_REFRESH_MS = 30 * 60 * 1000;
     const COURSE_BUDGET_STORAGE_KEY = 'seoul-explorer-course-budget';
     const OFFLINE_COURSE_PLAN_STORAGE_KEY = 'seoul-explorer-offline-course-plan-v1';
+    const PLACE_SHORTLIST_STORAGE_KEY = 'goseoul-place-shortlist-v1';
+    const PLACE_SHORTLIST_LIMIT = 6;
     let CURRENT_FX_RATE = FX_RATE_DEFAULT;
     let CURRENT_FX_UPDATED_AT = null;
     const DISTRICT_LABELS_EN = (window.GOSEOUL_LOOKUPS && window.GOSEOUL_LOOKUPS.DISTRICT_LABELS_EN)
@@ -935,9 +937,19 @@
         return places[0].id;
     }
 
+    function getPlaceStaticPath(id) {
+        if (!id) return withCurrentLang('/places/place-001.html');
+        return withCurrentLang(`/places/${encodeURIComponent(id)}.html`);
+    }
+
+    function getPlaceAppPreviewLink(id) {
+        if (!id) return withCurrentLang('place.html?id=place-001&view=app');
+        return withCurrentLang(`place.html?id=${encodeURIComponent(id)}&view=app`);
+    }
+
     function getPlaceLink(page, id) {
         if ((page === 'place.html' || page === 'place') && id) {
-            return withCurrentLang(`/places/${encodeURIComponent(id)}`);
+            return getPlaceStaticPath(id);
         }
         return withCurrentLang(`${page}?id=${encodeURIComponent(id)}`);
     }
@@ -1238,6 +1250,46 @@
         return copied;
     }
 
+    function readPlaceShortlist() {
+        try {
+            const raw = localStorage.getItem(PLACE_SHORTLIST_STORAGE_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed)) return [];
+            return parsed.filter((id) => typeof id === 'string' && placeMap[id]).slice(0, PLACE_SHORTLIST_LIMIT);
+        } catch (_) {
+            return [];
+        }
+    }
+
+    function writePlaceShortlist(ids) {
+        try {
+            const cleaned = Array.from(new Set((ids || []).filter((id) => typeof id === 'string' && placeMap[id]))).slice(0, PLACE_SHORTLIST_LIMIT);
+            localStorage.setItem(PLACE_SHORTLIST_STORAGE_KEY, JSON.stringify(cleaned));
+            window.dispatchEvent(new CustomEvent('goseoul-shortlist-updated', { detail: { ids: cleaned } }));
+        } catch (_) {
+            // Ignore storage failures.
+        }
+    }
+
+    function togglePlaceShortlist(id) {
+        const current = readPlaceShortlist();
+        if (current.includes(id)) {
+            writePlaceShortlist(current.filter((entry) => entry !== id));
+            return false;
+        }
+        writePlaceShortlist([...current, id]);
+        return true;
+    }
+
+    function clearPlaceShortlist() {
+        writePlaceShortlist([]);
+    }
+
+    function getShortlistPlaces() {
+        return readPlaceShortlist().map((id) => placeMap[id]).filter(Boolean);
+    }
+
     function renderTravelerTools() {
         const titleEl = document.getElementById('travel-kit-title');
         const introEl = document.getElementById('travel-kit-intro');
@@ -1355,6 +1407,7 @@
     function createPlaceCard(place) {
         const card = document.createElement('article');
         card.className = 'place-card';
+        const shortlisted = readPlaceShortlist().includes(place.id);
         const styleBadges = place.styles.slice(0, 3)
             .map((style) => `<span class=\"${styleClass(style)}\">${getStyleLabel(style)}</span>`)
             .join('');
@@ -1365,9 +1418,23 @@
                 <div class="place-meta">${getCategoryLabel(place.category)} · ${getDistrictLabel(place.district)}</div>
                 <div class="style-badges">${styleBadges}</div>
                 <p class="place-desc">${CURRENT_LANG === 'en' ? place.shortDescriptionEn : place.shortDescription}</p>
-                <a class="button-link" href="${getPlaceLink('place.html', place.id)}">${CURRENT_LANG === 'en' ? 'View Details' : '상세 보기'}</a>
+                <div class="place-card-actions">
+                    <a class="button-link" href="${getPlaceLink('place.html', place.id)}">${CURRENT_LANG === 'en' ? 'View Details' : '상세 보기'}</a>
+                    <button class="theme-toggle-btn shortlist-toggle-btn${shortlisted ? ' is-active' : ''}" type="button" data-place-id="${place.id}" aria-pressed="${shortlisted ? 'true' : 'false'}">${shortlisted ? (CURRENT_LANG === 'en' ? 'Saved' : '저장됨') : (CURRENT_LANG === 'en' ? 'Save' : '저장')}</button>
+                </div>
             </div>
         `;
+        const toggleBtn = card.querySelector('.shortlist-toggle-btn');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const active = togglePlaceShortlist(place.id);
+                toggleBtn.classList.toggle('is-active', active);
+                toggleBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+                toggleBtn.textContent = active
+                    ? (CURRENT_LANG === 'en' ? 'Saved' : '저장됨')
+                    : (CURRENT_LANG === 'en' ? 'Save' : '저장');
+            });
+        }
         return card;
     }
 
@@ -1391,6 +1458,10 @@
         const activeTagEl = document.getElementById('explore-active-tag');
         const activeQueryEl = document.getElementById('explore-active-query');
         const activeNextEl = document.getElementById('explore-active-next');
+        const shortlistCountEl = document.getElementById('explore-shortlist-count');
+        const shortlistListEl = document.getElementById('explore-shortlist-list');
+        const shortlistClearBtn = document.getElementById('explore-shortlist-clear-btn');
+        const shortlistPlannerLink = document.getElementById('explore-shortlist-open-planner');
         const emptyPanelEl = document.getElementById('explore-empty-panel');
         const emptyResetTagBtn = document.getElementById('explore-empty-reset-tag');
         const emptyResetAllBtn = document.getElementById('explore-empty-reset-all');
@@ -1417,6 +1488,12 @@
             setText('explore-empty-reset-tag', 'Reset tag only');
             setText('explore-empty-reset-all', 'Clear all filters');
             setText('explore-empty-open-planner', 'Open Planner with current style');
+            setText('explore-shortlist-eyebrow', 'Saved shortlist');
+            setText('explore-shortlist-title', 'Keep 3 to 5 places before routing');
+            setText('explore-shortlist-desc', 'Save only the places that still fit your actual energy, budget, and district flow.');
+            setText('explore-shortlist-label-count', 'Saved places');
+            setText('explore-shortlist-open-planner', 'Open Planner with shortlist');
+            setText('explore-shortlist-clear-btn', 'Clear shortlist');
         } else {
             const setText = (id, value) => {
                 const el = document.getElementById(id);
@@ -1438,6 +1515,12 @@
             setText('explore-empty-reset-tag', '태그만 초기화');
             setText('explore-empty-reset-all', '필터 전체 초기화');
             setText('explore-empty-open-planner', '현재 스타일로 플래너 열기');
+            setText('explore-shortlist-eyebrow', '저장한 쇼트리스트');
+            setText('explore-shortlist-title', '동선 전에 3~5곳만 남기세요');
+            setText('explore-shortlist-desc', '실제 체력, 예산, 권역 흐름에 맞는 장소만 저장해 두는 편이 가장 정확합니다.');
+            setText('explore-shortlist-label-count', '저장한 장소');
+            setText('explore-shortlist-open-planner', '쇼트리스트로 플래너 열기');
+            setText('explore-shortlist-clear-btn', '쇼트리스트 비우기');
         }
 
         const params = new URLSearchParams(window.location.search);
@@ -1502,6 +1585,31 @@
             });
         }
 
+        function renderExploreShortlist() {
+            const shortlist = getShortlistPlaces();
+            if (shortlistCountEl) shortlistCountEl.textContent = String(shortlist.length);
+            if (shortlistPlannerLink) {
+                shortlistPlannerLink.href = withCurrentLang(`course.html${shortlist.length ? '?source=shortlist' : ''}`);
+            }
+            if (!shortlistListEl) return;
+            if (!shortlist.length) {
+                shortlistListEl.innerHTML = `<p class="data-source-note">${CURRENT_LANG === 'en' ? 'No saved places yet. Save 3-5 places from the cards below.' : '아직 저장된 장소가 없습니다. 아래 카드에서 3~5곳을 저장해 보세요.'}</p>`;
+                return;
+            }
+            shortlistListEl.innerHTML = shortlist.map((place) => `
+                <article class="explore-shortlist-item">
+                    <div>
+                        <strong>${escapeHtml(getPlaceName(place))}</strong>
+                        <p>${escapeHtml(getDistrictLabel(place.district))} · ${escapeHtml(getCategoryLabel(place.category))}</p>
+                    </div>
+                    <div class="explore-shortlist-item-actions">
+                        <a class="text-link" href="${getPlaceLink('place.html', place.id)}">${CURRENT_LANG === 'en' ? 'Detail' : '상세'}</a>
+                        <button class="offline-plan-btn" type="button" data-remove-shortlist="${place.id}">${CURRENT_LANG === 'en' ? 'Remove' : '제거'}</button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
         function syncHomeUrlState() {
             const url = new URL(window.location.href);
             if (selectedStyle && selectedStyle !== 'all') url.searchParams.set('style', selectedStyle);
@@ -1522,6 +1630,7 @@
             if (activeTagEl) activeTagEl.textContent = TAG_LABELS_BY_LANG[CURRENT_LANG]?.[selectedTag] || TAG_LABELS_BY_LANG.ko?.[selectedTag] || selectedTag;
             if (activeQueryEl) activeQueryEl.textContent = searchQuery || (CURRENT_LANG === 'en' ? 'No keyword' : '검색어 없음');
             if (activeNextEl) {
+                const shortlistCount = readPlaceShortlist().length;
                 if (!filtered.length) {
                     if (searchQuery) {
                         activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Remove the search term first' : '검색어부터 먼저 지워 보세요';
@@ -1530,6 +1639,8 @@
                     } else {
                         activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Broaden style or switch to Planner' : '스타일을 넓히거나 플래너로 이동하세요';
                     }
+                } else if (shortlistCount >= 3) {
+                    activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Shortlist is ready. Open Planner now' : '쇼트리스트가 준비되었습니다. 지금 플래너로 이동하세요';
                 } else if (filtered.length <= 5) {
                     activeNextEl.textContent = CURRENT_LANG === 'en' ? 'Open details and move to Planner' : '상세 페이지 확인 후 플래너로 이동';
                 } else {
@@ -1565,6 +1676,7 @@
                 syncHomeUrlState();
                 updateExploreState([]);
                 syncExploreEmptyState([]);
+                renderExploreShortlist();
                 return;
             }
 
@@ -1577,6 +1689,7 @@
             syncHomeUrlState();
             updateExploreState(filtered);
             syncExploreEmptyState(filtered);
+            renderExploreShortlist();
         }
 
         if (CURRENT_LANG === 'en') {
@@ -1649,12 +1762,30 @@
             markActiveTag(selectedTag);
             applyFilter();
         });
+        shortlistClearBtn?.addEventListener('click', () => {
+            clearPlaceShortlist();
+            renderExploreShortlist();
+            applyFilter();
+        });
+        shortlistListEl?.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-remove-shortlist]');
+            if (!button) return;
+            const id = button.getAttribute('data-remove-shortlist');
+            if (!id) return;
+            writePlaceShortlist(readPlaceShortlist().filter((entry) => entry !== id));
+            renderExploreShortlist();
+            applyFilter();
+        });
         sortSelect.addEventListener('change', () => {
             selectedSort = sortSelect.value;
             applyFilter();
         });
+        window.addEventListener('goseoul-shortlist-updated', () => {
+            applyFilter();
+        });
         markActiveStyle(selectedStyle);
         markActiveTag(selectedTag);
+        renderExploreShortlist();
         applyFilter();
         initScrollProgress();
     }
@@ -2763,14 +2894,13 @@
     }
 
     function updatePlaceStructuredData(place, details) {
-        const langParam = CURRENT_LANG === 'ko' ? '&lang=ko' : '';
-        const canonicalUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}${langParam}`;
+        const canonicalUrl = new URL(getPlaceStaticPath(place.id), window.location.origin).toString();
         const canonicalEl = document.getElementById('canonical-link');
         const altKoEl = document.getElementById('alternate-ko-link');
         const altEnEl = document.getElementById('alternate-en-link');
         if (canonicalEl) canonicalEl.href = canonicalUrl;
-        if (altKoEl) altKoEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}&lang=ko`;
-        if (altEnEl) altEnEl.href = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(place.id)}`;
+        if (altKoEl) altKoEl.href = new URL(`/places/${encodeURIComponent(place.id)}.html?lang=ko`, window.location.origin).toString();
+        if (altEnEl) altEnEl.href = new URL(`/places/${encodeURIComponent(place.id)}.html`, window.location.origin).toString();
 
         const breadcrumbScript = document.getElementById('ld-breadcrumb');
         const attractionScript = document.getElementById('ld-attraction');
@@ -2881,6 +3011,12 @@
     async function renderPlaceDetail() {
         const place = placeMap[getPlaceIdFromQuery()];
         if (!place) return;
+        const params = new URLSearchParams(window.location.search);
+        const viewMode = params.get('view');
+        if (viewMode !== 'app') {
+            window.location.replace(new URL(getPlaceStaticPath(place.id), window.location.origin).toString());
+            return;
+        }
 
         updateTopNavLinks(place.id);
 
@@ -3130,6 +3266,10 @@
         const helperNote1El = document.getElementById('course-helper-note-1');
         const helperNote2El = document.getElementById('course-helper-note-2');
         const helperNote3El = document.getElementById('course-helper-note-3');
+        const shortlistModeEl = document.getElementById('course-shortlist-mode');
+        const shortlistListEl = document.getElementById('course-shortlist-list');
+        const shortlistClearBtn = document.getElementById('course-shortlist-clear-btn');
+        const shortlistBrowseLink = document.getElementById('course-shortlist-browse-link');
         if (!styleTabs || !styleButtons.length || !budgetTabs || !budgetButtons.length || !insightSummaryEl || !saveOfflineBtn || !shareCardBtn || !offlinePlanSearchInput || !offlinePlanListEl || !toolsNoteEl || !titleEl || !summaryEl || !routeLinkEl || !timeSlotsEl || !stopListEl || !hotelListEl || !hotelSourceEl || !restaurantSourceEl || !restaurantSectionsEl) return;
         if (CURRENT_LANG === 'en') {
             const setText = (id, value) => {
@@ -3152,6 +3292,12 @@
             setText('course-helper-label-1', 'Current route mood');
             setText('course-helper-label-2', 'Budget effect');
             setText('course-helper-label-3', 'Best next move');
+            setText('course-shortlist-eyebrow', 'Shortlist input');
+            setText('course-shortlist-title', 'Planner can start from saved places first');
+            setText('course-shortlist-desc', 'When you already saved places in Explore, Planner uses them before filling the rest of the day.');
+            setText('course-shortlist-label-mode', 'Current route source');
+            setText('course-shortlist-browse-link', 'Refine shortlist in Explore');
+            setText('course-shortlist-clear-btn', 'Clear shortlist');
         } else {
             const setText = (id, value) => {
                 const el = document.getElementById(id);
@@ -3173,6 +3319,12 @@
             setText('course-helper-label-1', '현재 루트 분위기');
             setText('course-helper-label-2', '예산이 바꾸는 것');
             setText('course-helper-label-3', '가장 좋은 다음 행동');
+            setText('course-shortlist-eyebrow', '쇼트리스트 입력');
+            setText('course-shortlist-title', '플래너는 저장한 장소부터 동선을 시작할 수 있습니다');
+            setText('course-shortlist-desc', 'Explore에서 장소를 저장해 두면, 플래너가 그 후보를 먼저 반영한 뒤 하루를 채웁니다.');
+            setText('course-shortlist-label-mode', '현재 루트 출처');
+            setText('course-shortlist-browse-link', 'Explore에서 쇼트리스트 다듬기');
+            setText('course-shortlist-clear-btn', '쇼트리스트 비우기');
         }
 
         const BUDGET_PRESETS = {
@@ -3186,6 +3338,118 @@
         if (!BUDGET_PRESETS[currentBudget]) currentBudget = 'standard';
         let latestCourseSnapshot = null;
         let offlineSearchQuery = '';
+
+        function parseBestStartHour(bestTime) {
+            const match = String(bestTime || '').match(/^(\d{1,2}):/);
+            return match ? Number(match[1]) : 12;
+        }
+
+        function getPlaceCoord(place) {
+            if (place?.geo && Number.isFinite(Number(place.geo.lat)) && Number.isFinite(Number(place.geo.lng))) {
+                return { lat: Number(place.geo.lat), lng: Number(place.geo.lng) };
+            }
+            const districtCoord = DISTRICT_GEO_COORDS[place?.district];
+            if (districtCoord && Number.isFinite(Number(districtCoord.lat)) && Number.isFinite(Number(districtCoord.lng))) {
+                return { lat: Number(districtCoord.lat), lng: Number(districtCoord.lng) };
+            }
+            return null;
+        }
+
+        function distanceKmBetweenPlaces(a, b) {
+            const coordA = getPlaceCoord(a);
+            const coordB = getPlaceCoord(b);
+            if (!coordA || !coordB) return 4.2;
+            const toRad = (deg) => deg * Math.PI / 180;
+            const dLat = toRad(coordB.lat - coordA.lat);
+            const dLng = toRad(coordB.lng - coordA.lng);
+            const lat1 = toRad(coordA.lat);
+            const lat2 = toRad(coordB.lat);
+            const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+            return 6371 * 2 * Math.asin(Math.sqrt(h));
+        }
+
+        function buildCourseCandidatePool(styleKey) {
+            const shortlist = getShortlistPlaces();
+            const shortlistMatching = shortlist.filter((place) => place.styles.includes(styleKey));
+            const sourceParam = new URLSearchParams(window.location.search).get('source');
+            if ((sourceParam === 'shortlist' && shortlist.length >= 2) || shortlistMatching.length >= 2) {
+                return {
+                    mode: shortlistMatching.length >= 2 ? 'shortlist_style' : 'shortlist_mixed',
+                    pool: (shortlistMatching.length >= 2 ? shortlistMatching : shortlist).slice(0, PLACE_SHORTLIST_LIMIT)
+                };
+            }
+            return {
+                mode: 'style',
+                pool: places.filter((place) => place.styles.includes(styleKey))
+            };
+        }
+
+        function scoreCourseCandidates(pool, styleKey) {
+            const districtCounts = pool.reduce((acc, place) => {
+                acc[place.district] = (acc[place.district] || 0) + 1;
+                return acc;
+            }, {});
+            return [...pool].sort((a, b) => {
+                const getScore = (place) => {
+                    const primary = Array.isArray(place.styles) ? place.styles[0] : '';
+                    const anchorBonus = ['history', 'art', 'family'].includes(primary) ? 12 : 0;
+                    const styleBonus = place.styles.includes(styleKey) ? 16 : 0;
+                    const districtBonus = (districtCounts[place.district] || 0) * 4;
+                    const reviewBonus = Math.min(Math.round((place.reviewCountValue || 0) / 1200), 10);
+                    const hour = parseBestStartHour(place.bestTime);
+                    const timeBonus = hour <= 11 ? 6 : hour <= 15 ? 4 : 2;
+                    return anchorBonus + styleBonus + districtBonus + reviewBonus + timeBonus + ((place.popularityScore || 0) / 8);
+                };
+                return getScore(b) - getScore(a);
+            });
+        }
+
+        function orderCourseRoute(pool, styleKey) {
+            const ranked = scoreCourseCandidates(pool, styleKey).slice(0, PLACE_SHORTLIST_LIMIT);
+            if (ranked.length <= 2) return ranked;
+            const remaining = [...ranked];
+            const route = [remaining.shift()];
+            while (remaining.length) {
+                const prev = route[route.length - 1];
+                remaining.sort((a, b) => {
+                    const distA = distanceKmBetweenPlaces(prev, a);
+                    const distB = distanceKmBetweenPlaces(prev, b);
+                    const timeA = Math.abs(parseBestStartHour(a.bestTime) - parseBestStartHour(prev.bestTime));
+                    const timeB = Math.abs(parseBestStartHour(b.bestTime) - parseBestStartHour(prev.bestTime));
+                    const stylePenaltyA = a.styles.includes(styleKey) ? 0 : 3;
+                    const stylePenaltyB = b.styles.includes(styleKey) ? 0 : 3;
+                    return (distA * 2.5) + timeA + stylePenaltyA - ((distB * 2.5) + timeB + stylePenaltyB);
+                });
+                route.push(remaining.shift());
+            }
+            return route;
+        }
+
+        function renderCourseShortlistState(styleKey, mode) {
+            const shortlist = getShortlistPlaces();
+            if (shortlistBrowseLink) shortlistBrowseLink.href = withCurrentLang(`explore.html?style=${encodeURIComponent(styleKey)}`);
+            if (shortlistModeEl) {
+                shortlistModeEl.textContent = mode === 'style'
+                    ? (CURRENT_LANG === 'en' ? 'Style route' : '스타일 기반')
+                    : mode === 'shortlist_style'
+                        ? (CURRENT_LANG === 'en' ? 'Shortlist + style' : '쇼트리스트 + 스타일')
+                        : (CURRENT_LANG === 'en' ? 'Shortlist override' : '쇼트리스트 우선');
+            }
+            if (!shortlistListEl) return;
+            if (!shortlist.length) {
+                shortlistListEl.innerHTML = `<p class="offline-plan-meta">${CURRENT_LANG === 'en' ? 'No saved places yet. Planner is using style-based recommendations.' : '저장된 장소가 없어 스타일 기반 추천으로 코스를 만듭니다.'}</p>`;
+                return;
+            }
+            shortlistListEl.innerHTML = shortlist.map((place) => `
+                <article class="course-shortlist-item">
+                    <div>
+                        <strong>${escapeHtml(getPlaceName(place))}</strong>
+                        <p>${escapeHtml(getDistrictLabel(place.district))} · ${escapeHtml(getCategoryLabel(place.category))}</p>
+                    </div>
+                    <a class="text-link" href="${getPlaceLink('place.html', place.id)}">${CURRENT_LANG === 'en' ? 'Detail' : '상세'}</a>
+                </article>
+            `).join('');
+        }
 
         function getBudgetPreset(budgetKey) {
             return BUDGET_PRESETS[budgetKey] || BUDGET_PRESETS.standard;
@@ -3501,10 +3765,12 @@
         }
 
         async function drawCourse(selectedStyle) {
-            const filtered = places.filter((place) => place.styles.includes(selectedStyle)).slice(0, 6);
+            const source = buildCourseCandidatePool(selectedStyle);
+            const filtered = orderCourseRoute(source.pool, selectedStyle).slice(0, PLACE_SHORTLIST_LIMIT);
             if (filtered.length < 2) return;
             const budgetPreset = getBudgetPreset(currentBudget);
             const budgetLabel = CURRENT_LANG === 'en' ? budgetPreset.en : budgetPreset.ko;
+            renderCourseShortlistState(selectedStyle, source.mode);
 
             titleEl.textContent = CURRENT_LANG === 'en'
                 ? `${getStyleLabel(selectedStyle)} One-Day Walking Course`
@@ -3519,6 +3785,11 @@
             summaryEl.textContent = `총 ${filtered.length}개 스팟, 예상 도보 이동 ${totalWalking}분 기준 추천 코스입니다. (${budgetLabel})`;
             if (CURRENT_LANG === 'en') {
                 summaryEl.textContent = `${filtered.length} spots with about ${totalWalking} minutes of walking in total (${budgetLabel} mode).`;
+            }
+            if (source.mode !== 'style') {
+                summaryEl.textContent += CURRENT_LANG === 'en'
+                    ? ' Shortlist inputs were used first.'
+                    : ' 저장한 쇼트리스트를 우선 반영했습니다.';
             }
 
             const grouped = {
@@ -3728,6 +3999,11 @@
 
         saveOfflineBtn.addEventListener('click', saveCurrentPlanOffline);
         shareCardBtn.addEventListener('click', shareCurrentPlanCard);
+        shortlistClearBtn?.addEventListener('click', () => {
+            clearPlaceShortlist();
+            renderCourseShortlistState(currentStyle, 'style');
+            drawCourse(currentStyle);
+        });
         offlinePlanSearchInput.addEventListener('input', () => {
             offlineSearchQuery = offlinePlanSearchInput.value || '';
             renderOfflinePlanList();
@@ -3780,9 +4056,13 @@
         window.addEventListener('fx-rate-updated', () => {
             drawCourse(currentStyle);
         });
+        window.addEventListener('goseoul-shortlist-updated', () => {
+            drawCourse(currentStyle);
+        });
 
         markActiveStyle(currentStyle);
         markActiveBudget(currentBudget);
+        renderCourseShortlistState(currentStyle, 'style');
         renderOfflinePlanList();
         drawCourse(currentStyle);
         initScrollProgress();

@@ -410,6 +410,26 @@ a {
     font-size: 1.06rem;
 }
 
+.place-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.shortlist-toggle-btn {
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.shortlist-toggle-btn.is-active {
+    background: rgba(29, 78, 216, 0.14);
+    border-color: rgba(29, 78, 216, 0.26);
+    color: #1d4ed8;
+}
+
 .place-rank {
     display: inline-block;
     margin-bottom: 8px;
@@ -3021,18 +3041,24 @@ html {
 }
 
 .explore-empty-panel,
-.course-helper-panel {
+.course-helper-panel,
+.explore-shortlist-panel,
+.course-shortlist-panel {
     background:
         radial-gradient(circle at 0% 0%, rgba(15, 123, 159, 0.08), transparent 34%),
         linear-gradient(150deg, color-mix(in srgb, var(--card) 92%, #fff) 0%, color-mix(in srgb, var(--card) 84%, var(--chip)) 100%);
 }
 
 .explore-empty-head,
-.course-helper-head {
+.course-helper-head,
+.explore-shortlist-head,
+.course-shortlist-head {
     margin-bottom: 12px;
 }
 
-.explore-empty-actions {
+.explore-empty-actions,
+.explore-shortlist-actions,
+.course-shortlist-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -3043,6 +3069,62 @@ html {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
+}
+
+.explore-shortlist-list,
+.course-shortlist-list {
+    display: grid;
+    gap: 10px;
+}
+
+.explore-shortlist-item,
+.course-shortlist-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--card) 88%, white 12%);
+}
+
+.explore-shortlist-item strong,
+.course-shortlist-item strong {
+    display: block;
+    font-size: 0.96rem;
+}
+
+.explore-shortlist-item p,
+.course-shortlist-item p {
+    margin: 4px 0 0;
+    font-size: 0.84rem;
+    color: var(--muted);
+}
+
+.explore-shortlist-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.explore-shortlist-summary,
+.course-shortlist-summary {
+    display: inline-grid;
+    gap: 4px;
+    justify-items: end;
+}
+
+.explore-shortlist-summary span,
+.course-shortlist-summary span {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.explore-shortlist-summary strong,
+.course-shortlist-summary strong {
+    font-size: 1.35rem;
+    font-weight: 800;
 }
 
 .course-helper-card {
@@ -3126,6 +3208,8 @@ html {
     .explore-state-grid,
     .course-status-grid,
     .course-helper-grid,
+    .explore-shortlist-head,
+    .course-shortlist-head,
     .place-decision-grid,
     .place-quick-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3171,6 +3255,8 @@ html {
     .course-status-grid,
     .explore-empty-actions,
     .course-helper-grid,
+    .explore-shortlist-actions,
+    .course-shortlist-actions,
     .place-decision-grid,
     .place-quick-grid {
         display: grid;
@@ -3192,6 +3278,8 @@ html {
     .explore-state-card,
     .course-status-card,
     .course-helper-card,
+    .explore-shortlist-item,
+    .course-shortlist-item,
     .place-decision-card,
     .place-quick-card {
         padding: 12px;
